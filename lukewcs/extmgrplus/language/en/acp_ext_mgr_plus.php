@@ -65,8 +65,8 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED'		=> 'Not installed extensions',
 
 	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'			=> 'This extension has new migration files that are applied when activating the extension.',
-	'EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE'			=> 'Disable selected extensions.',
-	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'			=> 'Enable selected extensions.',
+	'EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE'			=> 'Disable all selected extensions.',
+	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'			=> 'Enable all selected extensions.',
 
 	// misc
 	'EXTMGRPLUS_EXTENSION_PLURAL'				=> [

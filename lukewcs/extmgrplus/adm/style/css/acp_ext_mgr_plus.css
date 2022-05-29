@@ -1,4 +1,4 @@
-/* Ext manager settings */
+/* Settings */
 
 fieldset {
 	border-radius: 5px;
@@ -27,19 +27,13 @@ input[type="submit"]:disabled {
 }
 
 .extmgrplus_legend {
-    font-family: Tahoma,arial,Verdana,Sans-serif;
-    font-size: .9em;
-    font-weight: bold;
-    color: #115098;
+	font-family: Tahoma,arial,Verdana,Sans-serif;
+	font-size: .9em;
+	font-weight: bold;
+	color: #115098;
 }
 
-.extmgrplus_footer {
-	margin-top: 1em;
-	text-align: center;
-	font-size: .75em;
-}
-
-/* Ext manager list*/
+/* List*/
 
 #extmgrplus_button_enable,
 #extmgrplus_button_disable {
@@ -47,19 +41,18 @@ input[type="submit"]:disabled {
 }
 
 .extmgrplus_available_extensions {
-    padding: 5px 0 0 0;
+	margin: 5px 0 0 0;
 	float: left;
 }
 
-.extmgrplus_migration_icon {
-	float: right;
+.extmgrplus_migration_files {
 	cursor: help;
-	white-space: nowrap;
 }
 
-.extmgrplus_migration_icon:after {
-	font-family: FontAwesome;
-	content: "\f062";
+.extmgrplus_footer {
+	margin-top: 1em;
+	text-align: center;
+	font-size: .75em;
 }
 
 /* Confirm box */
