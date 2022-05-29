@@ -1,0 +1,69 @@
+/* Ext manager settings */
+
+fieldset {
+	border-radius: 5px;
+}
+
+legend {
+	background: inherit;
+	margin: 2px 0px 0px -11px;
+	border-top: inherit;
+	border-left: inherit;
+	border-radius: 5px 5px 0 0;
+	padding: 2px 10px;
+	top: 0;
+}
+
+@media (max-width: 700px){
+	legend {
+		margin: 2px 0px 0px -6px;
+		padding: 2px 5px;
+	}
+}
+
+input[type="submit"]:disabled {
+	opacity: .4;
+	cursor: not-allowed;
+}
+
+.extmgrplus_legend {
+    font-family: Tahoma,arial,Verdana,Sans-serif;
+    font-size: .9em;
+    font-weight: bold;
+    color: #115098;
+}
+
+.extmgrplus_footer {
+	margin-top: 1em;
+	text-align: center;
+	font-size: .75em;
+}
+
+/* Ext manager list*/
+
+#extmgrplus_button_enable,
+#extmgrplus_button_disable {
+	padding: 1px 5px 1px 5px;
+}
+
+.extmgrplus_available_extensions {
+    padding: 5px 0 0 0;
+	float: left;
+}
+
+.extmgrplus_migration_icon {
+	float: right;
+	cursor: help;
+	white-space: nowrap;
+}
+
+.extmgrplus_migration_icon:after {
+	font-family: FontAwesome;
+	content: "\f062";
+}
+
+/* Confirm box */
+
+#confirm h2 {
+	margin-bottom: .25em;
+}

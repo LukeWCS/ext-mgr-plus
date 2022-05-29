@@ -1,0 +1,23 @@
+{% INCLUDE 'overall_header.html' %}
+
+<h1>{{ lang('EXTMGRPLUS_TITLE') }}</h1>
+
+<p>{{ lang('EXTENSIONS_EXPLAIN') }}</p>
+
+<form id="confirm" method="post" action="{{ S_CONFIRM_ACTION }}">
+	<fieldset>
+		<h2>{MESSAGE_TITLE}</h1>
+		<p>{MESSAGE_TEXT}</p>
+
+		{S_HIDDEN_FIELDS}
+
+		<fieldset class="submit-buttons">
+			<input type="submit" name="confirm" value="{{ lang('YES') }}" class="button1">&nbsp; 
+			<input type="submit" name="cancel" value="{{ lang('NO') }}" class="button2">
+		</fieldset>
+	</fieldset>
+</form>
+
+{% INCLUDE 'overall_footer.html' %}
+
+{% INCLUDECSS '@lukewcs_extmgrplus/css/acp_ext_mgr_plus.css' %}

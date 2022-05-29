@@ -1,0 +1,16 @@
+{% if EXTMGRPLUS_LAST_EXT_NAME %}
+	{% set extmgrplus_last_ext_msg = lang('EXTMGRPLUS_MSG_ACTIVATION_ABORTED') ~ lang('COLON') ~ '<br><br><strong>' ~ EXTMGRPLUS_LAST_EXT_DISPLAY_NAME ~ ' (' ~ EXTMGRPLUS_LAST_EXT_NAME ~ ')</strong>' %}
+	<noscript>
+		<div class="errorbox">
+			{{ extmgrplus_last_ext_msg }}
+		</div>
+	</noscript>
+	<script>
+		var ExtMgrPlus = {
+			TemplateVars: {
+				LastExtMsg: '{{ extmgrplus_last_ext_msg }}' + '<br><br>',
+			}
+		};
+	</script>
+	{% INCLUDEJS 'js/ext_mgr_errorbox.js' %}
+{% endif %}

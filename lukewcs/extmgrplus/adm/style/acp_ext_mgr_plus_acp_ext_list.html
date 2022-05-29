@@ -1,0 +1,282 @@
+{% INCLUDE 'overall_header.html' %}
+
+<a id="maincontent"></a>
+
+	<h1>{{ lang('EXTMGRPLUS_TITLE') }}</h1>
+
+	<p>{{ lang('EXTENSIONS_EXPLAIN') }}</p>
+
+	{% if EXTMGRPLUS_NOTES %}
+		<div class="errorbox notice">
+			{{ EXTMGRPLUS_NOTES }}
+		</div>
+	{% endif %}
+
+	<p class="extmgrplus_available_extensions">
+		{{ lang('EXTMGRPLUS_AVAILABLE_EXTENSIONS') }}{{ _self.extmgrplus_section(_context, 'available') }}
+	</p>
+
+	<fieldset class="quick">
+		<span class="small"><a href="https://www.phpbb.com/go/customise/extensions/{{ CDB_EXT_VER }}" target="_blank">{{ lang('BROWSE_EXTENSIONS_DATABASE') }}</a> &bull; <a href="{{ U_VERSIONCHECK_FORCE }}">{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</a> &bull; <a href="javascript:phpbb.toggleDisplay('version_check_settings');">{{ lang('SETTINGS') }}</a></a> &bull; <a href="javascript:phpbb.toggleDisplay('extmgrplus_settings');">{{ lang('EXTMGRPLUS_SETTINGS_TITLE') }}</a></span>
+	</fieldset>
+
+	<form id="version_check_settings" method="post" action="{{ U_ACTION }}" style="display:none">
+
+		<fieldset>
+			<legend>{{ lang('EXTENSIONS_VERSION_CHECK_SETTINGS') }}</legend>
+			<dl>
+				<dt><label for="force_unstable">{{ lang('FORCE_UNSTABLE') }}{{ lang('COLON') }}</label></dt>
+				<dd>
+					<label><input type="radio" id="force_unstable" name="force_unstable" class="radio" value="1"{% if FORCE_UNSTABLE %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+					<label><input type="radio" name="force_unstable" class="radio" value="0"{% if not FORCE_UNSTABLE %} checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+				</dd>
+			</dl>
+
+			<p class="submit-buttons">
+				<input class="button1" type="submit" name="update" value="{{ lang('SUBMIT') }}" />&nbsp;
+				<input class="button2" type="reset" name="reset" value="{{ lang('RESET') }}" />
+				<input type="hidden" name="action" value="set_config_version_check_force_unstable" />
+				{{ S_FORM_TOKEN }}
+			</p>
+		</fieldset>
+
+	</form>
+
+	<form id="extmgrplus_settings" method="post" action="{{ U_ACTION }}" style="display:none">
+
+		<fieldset>
+			<legend>{{ lang('EXTMGRPLUS_SETTINGS_TITLE') }}</legend>
+
+			<dl>
+				<dt>
+					<label>{{ lang('EXTMGRPLUS_LOG') ~ lang('COLON') }}</label><br>
+					<span>{{ lang('EXTMGRPLUS_LOG_EXPLAIN') }}</span>
+				</dt>
+				<dd>
+					<label><input type="radio" class="radio" name="extmgrplus_enable_log" value="1"{{ EXTMGRPLUS_ENABLE_LOG == 1 ? ' checked' }}> {{ lang('YES') }}</label>
+					<label><input type="radio" class="radio" name="extmgrplus_enable_log" value="0"{{ EXTMGRPLUS_ENABLE_LOG == 0 ? ' checked' }}> {{ lang('NO') }}</label>
+				</dd>
+			</dl>
+		
+			<dl>
+				<dt>
+					<label>{{ lang('EXTMGRPLUS_CONFIRMATION') ~ lang('COLON') }}</label><br>
+					<span>{{ lang('EXTMGRPLUS_CONFIRMATION_EXPLAIN') }}</span>
+				</dt>
+				<dd>
+					<label><input type="radio" class="radio" name="extmgrplus_enable_confirmation" value="1"{{ EXTMGRPLUS_ENABLE_CONFIRMATION == 1 ? ' checked' }}> {{ lang('YES') }}</label>
+					<label><input type="radio" class="radio" name="extmgrplus_enable_confirmation" value="0"{{ EXTMGRPLUS_ENABLE_CONFIRMATION == 0 ? ' checked' }}> {{ lang('NO') }}</label>
+				</dd>
+			</dl>
+			
+			<hr>
+			<p class="extmgrplus_legend">{{ lang('EXTMGRPLUS_EXPERT_SETTINGS_TITLE') }}</p>
+			
+			<dl>
+				<dt>
+					<label>{{ lang('EXTMGRPLUS_MIGRATIONS') ~ lang('COLON') }}</label><br>
+					<span>{{ lang('EXTMGRPLUS_MIGRATIONS_EXPLAIN') }}</span>
+				</dt>
+				<dd>
+					<label><input type="radio" class="radio" name="extmgrplus_enable_migrations" value="1"{{ EXTMGRPLUS_ENABLE_MIGRATIONS == 1 ? ' checked' }}> {{ lang('YES') }}</label>
+					<label><input type="radio" class="radio" name="extmgrplus_enable_migrations" value="0"{{ EXTMGRPLUS_ENABLE_MIGRATIONS == 0 ? ' checked' }}> {{ lang('NO') }}</label>
+				</dd>
+			</dl>
+		
+			<p class="submit-buttons">
+				<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}">&nbsp;
+				<input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}">
+				<input type="hidden" name="action" value="list" />
+				<input type="hidden" name="extmgrplus_save_settings" value="1" />
+			</p>
+
+		</fieldset>
+
+	{S_FORM_TOKEN}
+	</form>
+
+	<form method="post" action="{{ U_ACTION }}">
+
+	<table class="table1">
+		<col class="row1" ><col class="row1" ><col class="row2" ><col class="row2" ><col class="row2">
+	<thead>
+		<tr>
+			<th>{{ lang('EXTENSION_NAME') }}</th>
+			<th style="text-align: center; width: 20%;">{{ lang('CURRENT_VERSION') }}</th>
+			<th style="text-align: center; width: 10%;">{{ lang('EXTENSION_OPTIONS') }}</th>
+			<th style="text-align: center; width: 25%;">{{ lang('EXTENSION_ACTIONS') }}</th>
+			<th style="text-align: center; width: 0%;"><span class="icon fa-check"></span></th>
+		</tr>
+	</thead>
+	<tbody>
+		{% if loops.enabled|length %}
+		<tr>
+			<td class="row3" colspan="3"><strong>{{ lang('EXTENSIONS_ENABLED') }}{{ _self.extmgrplus_section(_context, 'enabled') }}</strong>{% EVENT acp_ext_list_enabled_title_after %}</td>
+			<td class="row3" style="text-align: center;">{{ _self.extmgrplus_button('disable', (EXTMGRPLUS_COUNT_ENABLED_CLEAN > 0)) }}</td>
+			<td class="row3" style="text-align: center;">{{ _self.extmgrplus_checkbox_all('enabled') }}</td>
+		</tr>
+		{% for enabled in loops.enabled %}
+		<tr class="ext_enabled row-highlight">
+			<td>
+				<strong title="{{ enabled.NAME }}">{{ enabled.META_DISPLAY_NAME }}</strong>{% EVENT acp_ext_list_enabled_name_after %}
+			</td>
+			<td style="text-align: center;">
+				{% if enabled.S_VERSIONCHECK %}
+				<strong class="{% if enabled.S_UP_TO_DATE %}current-ext{% else %}outdated-ext{% endif %}">{{ enabled.META_VERSION }}</strong>
+				{% if not enabled.S_UP_TO_DATE %}<i class="fa fa-exclamation-circle outdated-ext" aria-hidden="true"></i>{% endif %}
+				{% else %}
+				{{ enabled.META_VERSION }}
+				{% endif %}
+			</td>
+			<td style="text-align: center;">
+				<a href="{{ enabled.U_DETAILS }}">{{ lang('DETAILS') }}</a>
+			</td>
+			<td style="text-align: center;">
+				{% for actions in enabled.actions %}
+					<a href="{{ actions.U_ACTION }}"{% if actions.L_ACTION_EXPLAIN %} title="{{ actions.L_ACTION_EXPLAIN }}"{% endif %}>{{ actions.L_ACTION }}</a>
+					{% if not actions.S_LAST_ROW %}&nbsp;|&nbsp;{% endif %}
+				{% endfor %}
+			</td>
+			<td style="text-align: center; padding: 0;">
+				{% set chkbox_enabled = (enabled.NAME != 'lukewcs/extmgrplus') %}
+				{{ _self.extmgrplus_checkbox('enabled', enabled.NAME, chkbox_enabled) }}
+			</td>
+		</tr>
+		{% endfor %}
+		{% endif %}
+
+		{% if loops.disabled|length %}
+		{% if EXTMGRPLUS_COUNT_DISABLED %}
+		<tr>
+			<td class="row3" colspan="3"><strong>{{ lang('EXTENSIONS_DISABLED') }}{{ _self.extmgrplus_section(_context, 'disabled') }}</strong>{% EVENT acp_ext_list_disabled_title_after %}</td>
+			<td class="row3" style="text-align: center;">{{ _self.extmgrplus_button('enable', (EXTMGRPLUS_COUNT_DISABLED_CLEAN > 0)) }}</td>
+			<td class="row3" style="text-align: center;">{{ _self.extmgrplus_checkbox_all('disabled') }}</td>
+		</tr>
+		{% endif %}
+		{% for disabled in loops.disabled %}
+		{% if disabled.actions|length == 1 && !section_not_installed %}
+			{% set section_not_installed = true %}
+			{{ _self.extmgrplus_section(_context, 'not_installed') }}
+		{% endif %}
+		<tr class="ext_disabled row-highlight">
+			<td>
+				<strong title="{{ disabled.NAME }}">{{ disabled.META_DISPLAY_NAME }}</strong>{{ _self.extmgrplus_has_migration(_context) }}{% EVENT acp_ext_list_disabled_name_after %}
+			</td>
+			<td style="text-align: center;">
+				{% if disabled.S_VERSIONCHECK %}
+				<strong class="{% if disabled.S_UP_TO_DATE %}current-ext{% else %}outdated-ext{% endif %}">{{ disabled.META_VERSION }}</strong>
+				{% if not disabled.S_UP_TO_DATE %}<i class="fa fa-exclamation-circle outdated-ext" aria-hidden="true"></i>{% endif %}
+				{% else %}
+				{{ disabled.META_VERSION }}
+				{% endif %}
+			</td>
+			<td style="text-align: center;">
+				{% if disabled.U_DETAILS %}<a href="{{ disabled.U_DETAILS }}">{{ lang('DETAILS') }}</a>{% endif %}
+			</td>
+			<td style="text-align: center;">
+				{% for actions in disabled.actions %}
+					<a href="{{ actions.U_ACTION }}"{% if actions.L_ACTION_EXPLAIN %} title="{{ actions.L_ACTION_EXPLAIN }}"{% endif %}>{{ actions.L_ACTION }}</a>
+					{% if not actions.S_LAST_ROW %}&nbsp;|&nbsp;{% endif %}
+				{% endfor %}
+			</td>
+			<td style="text-align: center; padding: 0;">
+				{% if disabled.actions|length == 2 %}
+					{% set chkbox_enabled = (EXTMGRPLUS_MIGRATION_EXTS[disabled.NAME] is not defined || EXTMGRPLUS_ALLOW_MIGRATIONS) %}
+					{{ _self.extmgrplus_checkbox('disabled', disabled.NAME, chkbox_enabled) }}
+				{% endif %}
+			</td>
+		</tr>
+		{% endfor %}
+		{% endif %}
+	</tbody>
+	</table>
+
+	</form>
+
+	<table class="table1">
+	<tr>
+		<th>{{ lang('EXTENSION_INSTALL_HEADLINE') }}</th>
+	</tr>
+	<tr>
+		<td class="row3">{{ lang('EXTENSION_INSTALL_EXPLAIN') }}</td>
+	</tr>
+	<tr>
+		<th>{{ lang('EXTENSION_UPDATE_HEADLINE') }}</th>
+	</tr>
+	<tr>
+		<td class="row3">{{ lang('EXTENSION_UPDATE_EXPLAIN') }}</td>
+	</tr>
+	<tr>
+		<th>{{ lang('EXTENSION_REMOVE_HEADLINE') }}</th>
+	</tr>
+	<tr>
+		<td class="row3">{{ lang('EXTENSION_REMOVE_EXPLAIN') }}</td>
+	</tr>
+	</tbody>
+	</table>
+
+	<p class="extmgrplus_footer">
+		{{ EXTMGRPLUS_EXT_NAME }} ({{ EXTMGRPLUS_EXT_VER }}) &copy; LukeWCS<br>
+		{{ lang('EXTMGRPLUS_LANG_DESC')|e('html') }} ({{ lang('EXTMGRPLUS_LANG_EXT_VER')|e('html') }}) &bull; {{ lang('EXTMGRPLUS_LANG_AUTHOR')|e('html') }}
+	</p>
+
+{% INCLUDE 'overall_footer.html' %}
+
+{% INCLUDECSS '@lukewcs_extmgrplus/css/acp_ext_mgr_plus.css' %}
+{% INCLUDEJS '@lukewcs_extmgrplus/js/ext_mgr_helper.js' %}
+
+{% macro extmgrplus_section(context, action) %}
+{% spaceless %}
+	{% if action == 'available' %}
+		{{ lang('COLON') ~ ' ' ~ context.EXTMGRPLUS_COUNT_AVAILABLE }}
+	{% elseif action == 'enabled' %}
+		{{ lang('COLON') ~ ' ' ~ context.EXTMGRPLUS_COUNT_ENABLED }}
+	{% elseif action == 'disabled' %}
+		{{ lang('COLON') ~ ' ' ~ context.EXTMGRPLUS_COUNT_DISABLED ~ ' (' ~ lang('EXTMGRPLUS_HAS_MIGRATION') ~ lang('COLON') ~ ' ' ~ context.EXTMGRPLUS_COUNT_HAS_MIGRATION ~ ')' }}
+	{% elseif action == 'not_installed' %}
+		<tr>
+			<td class="row3" colspan="3"><strong>{{ lang('EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED') }}{{ lang('COLON') ~ ' ' ~ context.EXTMGRPLUS_COUNT_NOT_INSTALLED }}</strong></td>
+			<td class="row3"></td>
+			<td class="row3"></td>
+		</tr>
+	{% endif %}
+{% endspaceless %}
+{% endmacro %}
+
+{% macro extmgrplus_button(action, enabled = true) %}
+{% spaceless %}
+	{% if action == 'disable' %}
+		<input id="extmgrplus_button_disable" class="button1" type="submit" name="extmgrplus_disable_all" value="{{ lang('EXTMGRPLUS_ALL_DISABLE') }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE')|e('html') }}"{{ !enabled ? ' disabled' }}>
+	{% elseif action == 'enable' %}
+		<input id="extmgrplus_button_enable" class="button1" type="submit" name="extmgrplus_enable_all" value="{{ lang('EXTMGRPLUS_ALL_ENABLE') }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE')|e('html') }}"{{ !enabled ? ' disabled' }}>
+	{% endif %}
+{% endspaceless %}
+{% endmacro %}
+
+{% macro extmgrplus_checkbox_all(checkboxes) %}
+{% spaceless %}
+	{% if checkboxes == 'enabled' %}
+		<input type="checkbox" class="radio" id="ext_enabled_mark_all" onchange="ExtMgrPlus.CheckUncheckAll('enabled', 'disable')" name="ext_enabled_mark_all" value="1" checked>
+	{% elseif checkboxes == 'disabled' %}
+		<input type="checkbox" class="radio" id="ext_disabled_mark_all" onchange="ExtMgrPlus.CheckUncheckAll('disabled', 'enable')" name="ext_disabled_mark_all" value="1" checked>
+	{% endif %}
+{% endspaceless %}
+{% endmacro %}
+
+{% macro extmgrplus_checkbox(checkboxes, value, enabled = true) %}
+{% spaceless %}
+	{% if checkboxes == 'enabled' %}
+		<input type="checkbox" class="radio"{{ enabled ? ' onchange="ExtMgrPlus.SetButtonState(\'enabled\', \'disable\')"' }}{{ enabled ? ' name="ext_enabled_mark[]"' }} value="{{ enabled ? value : '' }}"{{ enabled ? ' checked' }}{{ !enabled ? ' disabled' }}>
+	{% elseif checkboxes == 'disabled' %}
+		<input type="checkbox" class="radio"{{ enabled ? ' onchange="ExtMgrPlus.SetButtonState(\'disabled\', \'enable\')"' }}{{ enabled ? ' name="ext_disabled_mark[]"' }} value="{{ enabled ? value : '' }}"{{ enabled ? ' checked' }}{{ !enabled ? ' disabled' }}>
+	{% endif %}
+{% endspaceless %}
+{% endmacro %}
+
+{% macro extmgrplus_has_migration(context) %}
+{% spaceless %}
+	{% if context.EXTMGRPLUS_MIGRATION_EXTS[context.disabled.NAME] is defined %}
+		<span class="extmgrplus_migration_icon" title="{{ lang('EXTMGRPLUS_TOOLTIP_HAS_MIGRATION')|e('html') }}">({{ context.EXTMGRPLUS_MIGRATION_EXTS[context.disabled.NAME] }}) </span>
+	{% endif %}
+	{% endspaceless %}
+{% endmacro %}
