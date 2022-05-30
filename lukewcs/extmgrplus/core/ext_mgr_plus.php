@@ -488,6 +488,6 @@ class ext_mgr_plus
 	private function todo_get($name)
 	{
 		$jobs = json_decode($this->config_text->get('extmgrplus_todo_list'), true);
-		return ($jobs !== null) ? $jobs[$name] : null;
+		return ($jobs !== null && isset($jobs[$name])) ? $jobs[$name] : null;
 	}
 }

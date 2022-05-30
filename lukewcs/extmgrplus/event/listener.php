@@ -37,7 +37,7 @@ class listener implements EventSubscriberInterface
 
 	public function todo()
 	{
-		if ($this->config_text->get('extmgrplus_jobs') !== '')
+		if ($this->config_text->get('extmgrplus_todo_list') != '')
 		{
 			$this->extmgrplus->todo();
 		}
