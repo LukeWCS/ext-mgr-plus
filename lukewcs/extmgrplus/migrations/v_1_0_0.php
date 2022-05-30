@@ -24,10 +24,7 @@ class v_1_0_0 extends \phpbb\db\migration\migration
 			['config.add',		['extmgrplus_enable_confirmation', 1]],
 			['config.add',		['extmgrplus_enable_self_disable', 0]],
 			['config.add',		['extmgrplus_enable_migrations', 0]],
-			['config.add',		['extmgrplus_exec_todo', 0]],
-			['config.add',		['extmgrplus_todo_purge_cache', 0]],
-			['config_text.add', ['extmgrplus_todo_add_log', '']],
-			['config_text.add', ['extmgrplus_todo_self_disable', '']],
+			['config_text.add', ['extmgrplus_todo_list', '']],
 		];
 	}
 }

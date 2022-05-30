@@ -54,6 +54,8 @@ $lang = array_merge($lang, [
 
 	// settings expert
 	'EXTMGRPLUS_EXPERT_SETTINGS_TITLE'			=> 'Einstellungen (Plus) - Experten-Einstellungen',
+	'EXTMGRPLUS_SELF_DISABLE'					=> 'Erlaube Eigendeaktivierung',
+	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'			=> 'Wenn du diese Option aktivierst, dann kann sich „Extension Manager Plus“ bei der Aktion „Ausgewählte deaktivieren“ auch selbst deaktivieren, da diese Erweiterung dann wie jede andere ausgewählt werden kann.',
 	'EXTMGRPLUS_MIGRATIONS'						=> 'Erlaube Migrationen',
 	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'				=> 'Wenn du diese Option aktivierst, dann können bei der Aktion „Ausgewählte aktivieren“ auch diejenigen Erweiterungen aktiviert werden, bei denen neue Migrationsdateien vorliegen. Das trifft auf aktualisierte Erweiterungen zu, die einen Ordner „migrations“ enthalten. Ohne diese Option müssen solche Erweiterungen manuell aktiviert werden, was empfohlen wird.',
 
@@ -65,8 +67,8 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED'		=> 'Nicht installierte Erweiterungen',
 
 	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'			=> 'Diese Erweiterung hat neue Migrationsdateien, die beim aktivieren der Erweiterung übernommen werden.',
-	'EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE'			=> 'Alle ausgewählte Erweiterungen deaktivieren.',
-	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'			=> 'Alle ausgewählte Erweiterungen aktivieren.',
+	'EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE'			=> 'Alle ausgewählten Erweiterungen deaktivieren.',
+	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'			=> 'Alle ausgewählten Erweiterungen aktivieren.',
 
 	// misc
 	'EXTMGRPLUS_EXTENSION_PLURAL'				=> [

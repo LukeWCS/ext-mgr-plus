@@ -15,7 +15,8 @@ services:
     lukewcs.extmgrplus.listener:
         class: lukewcs\extmgrplus\event\listener
         arguments:
-            - '@config'
+            - '@config_text'
             - '@lukewcs.extmgrplus.core'
+            - '@ext.manager' 
         tags:
             - { name: event.listener }

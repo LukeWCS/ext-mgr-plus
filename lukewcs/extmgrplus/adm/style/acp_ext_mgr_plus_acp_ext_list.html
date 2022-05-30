@@ -69,6 +69,17 @@
 				</dd>
 			</dl>
 			
+			<dl>
+				<dt>
+					<label>{{ lang('EXTMGRPLUS_SELF_DISABLE') ~ lang('COLON') }}</label><br>
+					<span>{{ lang('EXTMGRPLUS_SELF_DISABLE_EXPLAIN') }}</span>
+				</dt>
+				<dd>
+					<label><input type="radio" class="radio" name="extmgrplus_enable_self_disable" value="1"{{ EXTMGRPLUS_ENABLE_SELF_DISABLE == 1 ? ' checked' }}> {{ lang('YES') }}</label>
+					<label><input type="radio" class="radio" name="extmgrplus_enable_self_disable" value="0"{{ EXTMGRPLUS_ENABLE_SELF_DISABLE == 0 ? ' checked' }}> {{ lang('NO') }}</label>
+				</dd>
+			</dl>
+		
 			<hr>
 			<p class="extmgrplus_legend">{{ lang('EXTMGRPLUS_EXPERT_SETTINGS_TITLE') }}</p>
 			
@@ -88,11 +99,11 @@
 				<input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}">
 				<input type="hidden" name="action" value="list" />
 				<input type="hidden" name="extmgrplus_save_settings" value="1" />
+				{{ S_FORM_TOKEN }}
 			</p>
 
 		</fieldset>
 
-	{S_FORM_TOKEN}
 	</form>
 
 	<form method="post" action="{{ U_ACTION }}">
@@ -151,7 +162,7 @@
 								{% endfor %}
 							</td>
 							<td style="text-align: center; padding: 0;">
-								{% set chkbox_enabled = (enabled.NAME != 'lukewcs/extmgrplus') %}
+								{% set chkbox_enabled = (enabled.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_ENABLE_SELF_DISABLE) %}
 								{{ _self.extmgrplus_checkbox('enabled', enabled.NAME, chkbox_enabled) }}
 							</td>
 						</tr>
@@ -224,7 +235,8 @@
 				{% endif %}
 			</tbody>
 		</table>
-
+	
+	{{ S_FORM_TOKEN }}
 	</form>
 
 	<table class="table1">
@@ -257,7 +269,7 @@
 {% INCLUDE 'overall_footer.html' %}
 
 {% INCLUDECSS '@lukewcs_extmgrplus/css/acp_ext_mgr_plus.css' %}
-{% INCLUDEJS '@lukewcs_extmgrplus/js/ext_mgr_helper.js' %}
+{% INCLUDEJS '@lukewcs_extmgrplus/js/acp_ext_mgr_plus_helper' %}
 
 {% macro extmgrplus_button(action, enabled = true) %}
 {% spaceless %}

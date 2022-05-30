@@ -54,6 +54,8 @@ $lang = array_merge($lang, [
 
 	// settings expert
 	'EXTMGRPLUS_EXPERT_SETTINGS_TITLE'			=> 'Settings (Plus) - Expert settings',
+	'EXTMGRPLUS_SELF_DISABLE'					=> 'Allow self-deactivation',
+	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'			=> 'If you activate this option, then "Extension Manager Plus" can also deactivate itself in the "Disable selected" action, since this extension can then be selected like any other.',
 	'EXTMGRPLUS_MIGRATIONS'						=> 'Allow migrations',
 	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'				=> 'If you activate this option, the "Enable selected" action can also activate those extensions that have new migration files. This applies to updated extensions that contain a "migrations" folder. Without this option, such extensions must be activated manually, which is recommended.',
 
