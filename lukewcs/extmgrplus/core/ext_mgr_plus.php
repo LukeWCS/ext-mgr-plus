@@ -149,7 +149,7 @@ class ext_mgr_plus
 		if ($this->todo_get('add_log'))
 		{
 			$last_job = $this->todo_get('add_log');
-			$this->todo_set('add_log', []);
+			$this->todo_set('add_log', false);
 
 			if ($last_job !== null)
 			{
@@ -446,7 +446,7 @@ class ext_mgr_plus
 			}
 			else // Fallback if the current language package does not yet have the required variable.
 			{
-				$lang_outdated_msg = 'Note: The language pack for this extension is no longer up-to-date. (Installed: %1$s / Needed: %2$s)';
+				$lang_outdated_msg = 'Note: The language pack for the extension <strong>%1$s</strong> is no longer up-to-date. (installed: %2$s / needed: %3$s)';
 			}
 			$lang_outdated_msg = sprintf($lang_outdated_msg, $ext_name, $ext_lang_ver, $ext_lang_min_ver);
 		}
@@ -460,7 +460,7 @@ class ext_mgr_plus
 		return $messages . (($messages != '') ? "\n" : '') . sprintf('<p>%s</p>', $text);
 	}
 
-	// Set a todo job in config_text or delete one or all jobs
+	// Set a todo job in config_text or delete one or all todo jobs
 	private function todo_set($name, $value)
 	{
 		$jobs = json_decode($this->config_text->get('extmgrplus_todo_list'), true);

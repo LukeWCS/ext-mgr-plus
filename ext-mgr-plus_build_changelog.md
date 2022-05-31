@@ -1,5 +1,17 @@
 ### 1.0.0
 
+#### 1.0.0-b5
+* Fix: Bei der Umbenennung der JS Datei für die Checkboxen hat das Suffix gefehlt. Dadurch wurde in den Entwicklertools von FF eine Warnung bezüglich "ungültiger MIME Typ" ausgegeben.
+* ExtMgr Template:
+  * Wenn es in einer Sektion keine schaltbaren Exts gibt, dann wird jetzt auch die zugehörige Alle-Checkbox deaktiviert.
+  * Bei deaktivierten Elementen werden jetzt unnötige Attribute wie `name=`, `value=` und `onchange=` gar nicht erst hinzugefügt.
+  * Die Anzahl der verfügbaren Erweiterungen und die Link-Leiste in eine Blind-Tabelle gepackt und Flow entfernt. Dadurch passt sich dieser Abschnitt bei Responsive automatisch an.
+  * Restliches XHTML entfernt.
+* CSS:
+  * `cursor: not-allowed` auch bei deaktivierten Checkboxen hinzugefügt.
+  * CSS für die Blind-Tabelle hinzugefügt.
+* Code Optimierung.
+  
 #### 1.0.0-b4
 * Fix: Die neue Methode für die ToDo Variablen hatte noch 2 kleinere Fehler, weshalb es je nach Aktion zu Array Index Fehlern kam.
 
@@ -20,12 +32,12 @@
 * Sprachdateien:
   * Neue Sprachvariablen für die Eigendeaktivierung.
   * Kleinere Änderungen
-* Code Optimierungen.
+* Code Optimierung.
 * Debugs aus PHP und JS entfernt.
 
 #### 1.0.0-b2
-* Die Anzahl der neuen Migrationsdateien wird jetzt nicht mehr in der Spalte der Ext Namen angezeigt, sondern in einer neuen Spalte.
 * ExtMgr Template:
+  * Die Anzahl der neuen Migrationsdateien wird jetzt nicht mehr in der Spalte der Ext Namen angezeigt, sondern in einer neuen Spalte.
   * HTML besser strukturiert.
   * Einrückungen korrigiert.
   * Ein Twig Makro entfernt und Variablen direkt eingebaut.

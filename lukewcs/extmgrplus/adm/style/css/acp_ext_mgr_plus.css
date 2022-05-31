@@ -26,6 +26,10 @@ input[type="submit"]:disabled {
 	cursor: not-allowed;
 }
 
+input[type="checkbox"]:disabled {
+	cursor: not-allowed;
+}
+
 .extmgrplus_legend {
 	font-family: Tahoma,arial,Verdana,Sans-serif;
 	font-size: .9em;
@@ -35,14 +39,27 @@ input[type="submit"]:disabled {
 
 /* List*/
 
+.extmgrplus_hidden_table {
+	background-color: inherit;
+	border: 0;
+	border-collapse: collapse;
+	margin: 12px 0 5px 0;
+}
+
+#extmgrplus_available_extensions {
+	font-size: 0.90em;
+	padding: 0;
+}
+
+#extmgrplus_link_bar {
+	font-size: inherit;
+	padding: 0;
+	text-align: right;
+}
+
 #extmgrplus_button_enable,
 #extmgrplus_button_disable {
 	padding: 1px 5px 1px 5px;
-}
-
-.extmgrplus_available_extensions {
-	margin: 5px 0 0 0;
-	float: left;
 }
 
 .extmgrplus_migration_files {
