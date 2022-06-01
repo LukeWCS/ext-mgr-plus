@@ -51,11 +51,13 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_LOG_EXPLAIN'					=> 'Hier kannst du festlegen, ob bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ ein Eintrag im Administrator-Log hinzugefügt werden soll.',
 	'EXTMGRPLUS_CONFIRMATION'					=> 'Rückfrage',
 	'EXTMGRPLUS_CONFIRMATION_EXPLAIN'			=> 'Hier kannst du festlegen, ob bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ eine Rückfrage erfolgen soll, die bestätigt werden muss.',
+	'EXTMGRPLUS_CHECKBOXES_ALL_SET'				=> 'Kontrollkästchen setzen',
+	'EXTMGRPLUS_CHECKBOXES_ALL_SET_EXPLAIN'		=> 'Wenn diese Option aktiviert ist, werden alle Kontrollkästchen automatisch gesetzt.',
+	'EXTMGRPLUS_SELF_DISABLE'					=> 'Erlaube Eigendeaktivierung',
+	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'			=> 'Wenn du diese Option aktivierst, dann kann sich „Extension Manager Plus“ bei der Aktion „Ausgewählte deaktivieren“ auch selbst deaktivieren, da diese Erweiterung dann wie jede andere ausgewählt werden kann.',
 
 	// settings expert
 	'EXTMGRPLUS_EXPERT_SETTINGS_TITLE'			=> 'Einstellungen (Plus) - Experten-Einstellungen',
-	'EXTMGRPLUS_SELF_DISABLE'					=> 'Erlaube Eigendeaktivierung',
-	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'			=> 'Wenn du diese Option aktivierst, dann kann sich „Extension Manager Plus“ bei der Aktion „Ausgewählte deaktivieren“ auch selbst deaktivieren, da diese Erweiterung dann wie jede andere ausgewählt werden kann.',
 	'EXTMGRPLUS_MIGRATIONS'						=> 'Erlaube Migrationen',
 	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'				=> 'Wenn du diese Option aktivierst, dann können bei der Aktion „Ausgewählte aktivieren“ auch diejenigen Erweiterungen aktiviert werden, bei denen neue Migrationsdateien vorliegen. Das trifft auf aktualisierte Erweiterungen zu, die einen Ordner „migrations“ enthalten. Ohne diese Option müssen solche Erweiterungen manuell aktiviert werden, was empfohlen wird.',
 

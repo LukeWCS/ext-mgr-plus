@@ -51,11 +51,13 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_LOG_EXPLAIN'					=> 'Here you can specify whether an entry should be added to the administrator log for the actions "Enable selected" and "Disable selected".',
 	'EXTMGRPLUS_CONFIRMATION'					=> 'Confirmation',
 	'EXTMGRPLUS_CONFIRMATION_EXPLAIN'			=> 'Here you can specify whether the actions "Enable selected" and "Disable selected" should be prompted and must be confirmed.',
+	'EXTMGRPLUS_CHECKBOXES_ALL_SET'				=> 'Set ceck boxes',
+	'EXTMGRPLUS_CHECKBOXES_ALL_SET_EXPLAIN'		=> 'If this option is activated, all checkboxes will be checked automatically.',
+	'EXTMGRPLUS_SELF_DISABLE'					=> 'Allow self-deactivation',
+	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'			=> 'If you activate this option, then "Extension Manager Plus" can also deactivate itself in the "Disable selected" action, since this extension can then be selected like any other.',
 
 	// settings expert
 	'EXTMGRPLUS_EXPERT_SETTINGS_TITLE'			=> 'Settings (Plus) - Expert settings',
-	'EXTMGRPLUS_SELF_DISABLE'					=> 'Allow self-deactivation',
-	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'			=> 'If you activate this option, then "Extension Manager Plus" can also deactivate itself in the "Disable selected" action, since this extension can then be selected like any other.',
 	'EXTMGRPLUS_MIGRATIONS'						=> 'Allow migrations',
 	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'				=> 'If you activate this option, the "Enable selected" action can also activate those extensions that have new migration files. This applies to updated extensions that contain a "migrations" folder. Without this option, such extensions must be activated manually, which is recommended.',
 

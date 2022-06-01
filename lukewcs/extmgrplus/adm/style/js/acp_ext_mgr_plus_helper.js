@@ -23,4 +23,12 @@ var ExtMgrPlus = {
 
 		$('#extmgrplus_button_' + Button).prop('disabled', CheckBoxesChecked == 0);
 	},
+	ShowSettings: function () {
+		'use strict';
+
+		var SettingsState = $('#version_check_settings').css('display');
+		var SettingsStateNew = ((SettingsState == 'none') ? 'block ': 'none');
+		$('#version_check_settings').css('display', SettingsStateNew);
+		$('#extmgrplus_settings').css('display', SettingsStateNew);
+	}
 };

@@ -1,5 +1,14 @@
 ### 1.0.0
 
+#### 1.0.0-b6
+* ExtMgr Template:
+  * Es gibt jetzt ein neuen Schalter mit dem man festlegen kann, ob die Checkboxen standardmässig alle gesetzt sind oder nicht. [Vorschlag von Kirk]
+  * Etliche Anpassungen für die Checkbox Option.
+* Statt zwei Einstellungen-Links gibt es nur noch einen. Mit diesem Link werden also gleichzeitig beide Formulare von phpBB und ExtMgrPlus angezeigt oder ausgeblendet. [Vorschlag von Scanialady]
+  * JS Hilfsfunktion dafür eingebaut, mit der mehrere Elemente gleichzeitig ein/ausgeblendet werden können.
+* Sprachdateien:
+  * Neue Sprachvariablen für die Checkbox Option.
+
 #### 1.0.0-b5
 * Fix: Bei der Umbenennung der JS Datei für die Checkboxen hat das Suffix gefehlt. Dadurch wurde in den Entwicklertools von FF eine Warnung bezüglich "ungültiger MIME Typ" ausgegeben.
 * ExtMgr Template:
@@ -20,7 +29,7 @@
   * Methode komplett geändert. Um auf das HTML Event verzichten zu können, eine eigene Funktion eingebaut, mit der eine ErrorBox Meldung abgefangen und manipuliert werden kann. Damit ist die Handhabung des Aktivierungsabbruchs kein Workaround mehr, sondern eine ordentliche Lösung.
   * HTML Event `acp_overall_header_body_before.html` entfernt.
   * Javascript `ext_mgr_errorbox.js` entfernt.
-* Durch die neue Methode der ErrorBox Handhabung, wurde es nun möglich, die Eigendeaktivierung als Option einzubauen.
+* Durch die neue Methode der ErrorBox Handhabung, wurde es nun möglich, die Eigendeaktivierung als Option einzubauen. [Vorschlag von 69bruno]
 * ExtMgr Template:
   * Security Token auch beim Listen-Formular (Buttons und Checkboxen) und beim Rückfrage-Formular hinzugefügt. Damit ist jetzt jede Aktion von EMP mit Token gesichert.
   * Neuer Schalter für die Eigendeaktivierung.

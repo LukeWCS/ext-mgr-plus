@@ -76,6 +76,7 @@ class ext_mgr_plus
 			$this->config->set('extmgrplus_enable_log', $this->request->variable('extmgrplus_enable_log', 0));
 			$this->config->set('extmgrplus_enable_confirmation', $this->request->variable('extmgrplus_enable_confirmation', 0));
 			$this->config->set('extmgrplus_enable_self_disable', $this->request->variable('extmgrplus_enable_self_disable', 0));
+			$this->config->set('extmgrplus_enable_checkboxes_all_set', $this->request->variable('extmgrplus_enable_checkboxes_all_set', 0));
 			$this->config->set('extmgrplus_enable_migrations', $this->request->variable('extmgrplus_enable_migrations', 0));
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_SETTINGS_SAVED') . adm_back_link($this->u_action));
 		}
@@ -100,24 +101,25 @@ class ext_mgr_plus
 		$notes				= ($lang_outdated_msg) ? $this->add_note($notes, $lang_outdated_msg) : '';
 
 		$this->template->assign_vars([
-			'EXTMGRPLUS_ALLOW_MIGRATIONS'		=> $this->config['extmgrplus_enable_migrations'],
-			'EXTMGRPLUS_COUNT_AVAILABLE'		=> $ext_count_available,
-			'EXTMGRPLUS_COUNT_ENABLED'			=> $ext_count_enabled,
-			'EXTMGRPLUS_COUNT_ENABLED_CLEAN'	=> $ext_count_enabled_clean,
-			'EXTMGRPLUS_COUNT_DISABLED'			=> $ext_count_disabled,
-			'EXTMGRPLUS_COUNT_DISABLED_CLEAN'	=> $ext_count_disabled_clean,
-			'EXTMGRPLUS_COUNT_HAS_MIGRATION'	=> $ext_count_migrations,
-			'EXTMGRPLUS_COUNT_NOT_INSTALLED'	=> $ext_count_available - $ext_count_configured,
-			'EXTMGRPLUS_MIGRATION_EXTS'			=> $ext_list_migrations,
-			'EXTMGRPLUS_EXT_NAME'				=> $ext_display_name,
-			'EXTMGRPLUS_EXT_VER'				=> $ext_ver,
-			'EXTMGRPLUS_NOTES'					=> $notes,
-			'CDB_EXT_VER'						=> vsprintf('%u.%u', explode('.', PHPBB_VERSION)),
+			'EXTMGRPLUS_ALLOW_MIGRATIONS'			=> $this->config['extmgrplus_enable_migrations'],
+			'EXTMGRPLUS_COUNT_AVAILABLE'			=> $ext_count_available,
+			'EXTMGRPLUS_COUNT_ENABLED'				=> $ext_count_enabled,
+			'EXTMGRPLUS_COUNT_ENABLED_CLEAN'		=> $ext_count_enabled_clean,
+			'EXTMGRPLUS_COUNT_DISABLED'				=> $ext_count_disabled,
+			'EXTMGRPLUS_COUNT_DISABLED_CLEAN'		=> $ext_count_disabled_clean,
+			'EXTMGRPLUS_COUNT_HAS_MIGRATION'		=> $ext_count_migrations,
+			'EXTMGRPLUS_COUNT_NOT_INSTALLED'		=> $ext_count_available - $ext_count_configured,
+			'EXTMGRPLUS_MIGRATION_EXTS'				=> $ext_list_migrations,
+			'EXTMGRPLUS_EXT_NAME'					=> $ext_display_name,
+			'EXTMGRPLUS_EXT_VER'					=> $ext_ver,
+			'EXTMGRPLUS_NOTES'						=> $notes,
+			'CDB_EXT_VER'							=> vsprintf('%u.%u', explode('.', PHPBB_VERSION)),
 
-			'EXTMGRPLUS_ENABLE_LOG'				=> $this->config['extmgrplus_enable_log'],
-			'EXTMGRPLUS_ENABLE_CONFIRMATION'	=> $this->config['extmgrplus_enable_confirmation'],
-			'EXTMGRPLUS_ENABLE_SELF_DISABLE'	=> $this->config['extmgrplus_enable_self_disable'],
-			'EXTMGRPLUS_ENABLE_MIGRATIONS'		=> $this->config['extmgrplus_enable_migrations'],
+			'EXTMGRPLUS_ENABLE_LOG'					=> $this->config['extmgrplus_enable_log'],
+			'EXTMGRPLUS_ENABLE_CONFIRMATION'		=> $this->config['extmgrplus_enable_confirmation'],
+			'EXTMGRPLUS_ENABLE_SELF_DISABLE'		=> $this->config['extmgrplus_enable_self_disable'],
+			'EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET'	=> $this->config['extmgrplus_enable_checkboxes_all_set'],
+			'EXTMGRPLUS_ENABLE_MIGRATIONS'			=> $this->config['extmgrplus_enable_migrations'],
 		]);
 	}
 
