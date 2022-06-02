@@ -26,6 +26,7 @@ class v_1_0_0 extends \phpbb\db\migration\migration
 			['config.add',		['extmgrplus_enable_self_disable', 0]],
 			['config.add',		['extmgrplus_enable_migrations', 0]],
 			['config_text.add', ['extmgrplus_todo_list', '']],
+			['config_text.add', ['extmgrplus_order_and_ignore_list', '']],
 		];
 	}
 }

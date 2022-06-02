@@ -80,17 +80,38 @@ class ext_mgr_plus
 			$this->config->set('extmgrplus_enable_migrations', $this->request->variable('extmgrplus_enable_migrations', 0));
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_SETTINGS_SAVED') . adm_back_link($this->u_action));
 		}
+		else if ($this->request->is_set_post('extmgrplus_order_and_ignore'))
+		{
+			$order_and_ignore_list = $this->request->variable('ext_order_and_ignore', ['' => '']);
+			$order_and_ignore_list = array_filter($order_and_ignore_list, function($value) {
+				return preg_match('/[0-9-]/', $value);
+			});
+			$this->config_text_set('extmgrplus_order_and_ignore_list', 'tech_names', $order_and_ignore_list);
+			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED') . adm_back_link($this->u_action));
+		}
 
 		$ext_list_disabled = $this->extension_manager->all_disabled();
 		$ext_list_migrations = $this->get_exts_with_new_migration($ext_list_disabled);
+		$ext_list_order_and_ignore = $this->config_text_get('extmgrplus_order_and_ignore_list', 'tech_names');
+		if (!is_array($ext_list_order_and_ignore))
+		{
+			$ext_list_order_and_ignore = [];
+		}
+		$ext_list_enabled_and_ignored = array_filter($ext_list_order_and_ignore, function($value, $key) {
+			return preg_match('/[-]/', $value) && $this->extension_manager->is_enabled($key);
+		}, ARRAY_FILTER_USE_BOTH);
+		$ext_list_disabled_and_ignored = array_filter($ext_list_order_and_ignore, function($value, $key) {
+			return preg_match('/[-]/', $value) && $this->extension_manager->is_disabled($key);
+		}, ARRAY_FILTER_USE_BOTH);
 
 		$ext_count_available		= count($this->extension_manager->all_available());
 		$ext_count_configured		= count($this->extension_manager->all_configured());
 		$ext_count_migrations		= count($ext_list_migrations);
 		$ext_count_enabled			= count($this->extension_manager->all_enabled());
-		$ext_count_enabled_clean	= $ext_count_enabled - (!$this->config['extmgrplus_enable_self_disable'] ? 1 : 0);
+		$ext_count_enabled_clean	= $ext_count_enabled - (!$this->config['extmgrplus_enable_self_disable'] ? 1 : 0) - count($ext_list_enabled_and_ignored);
+
 		$ext_count_disabled			= count($ext_list_disabled);
-		$ext_count_disabled_clean	= $ext_count_disabled - (!$this->config['extmgrplus_enable_migrations'] ? $ext_count_migrations : 0);
+		$ext_count_disabled_clean	= $ext_count_disabled - (!$this->config['extmgrplus_enable_migrations'] ? $ext_count_migrations : 0) - count($ext_list_disabled_and_ignored);
 
 		$ext_display_name	= $this->md_manager->get_metadata('display-name');
 		$ext_ver			= $this->md_manager->get_metadata('version');
@@ -102,6 +123,7 @@ class ext_mgr_plus
 
 		$this->template->assign_vars([
 			'EXTMGRPLUS_ALLOW_MIGRATIONS'			=> $this->config['extmgrplus_enable_migrations'],
+			'EXTMGRPLUS_ORDER_AND_IGNORE'			=> $ext_list_order_and_ignore,
 			'EXTMGRPLUS_COUNT_AVAILABLE'			=> $ext_count_available,
 			'EXTMGRPLUS_COUNT_ENABLED'				=> $ext_count_enabled,
 			'EXTMGRPLUS_COUNT_ENABLED_CLEAN'		=> $ext_count_enabled_clean,
@@ -125,9 +147,9 @@ class ext_mgr_plus
 
 	public function todo()
 	{
-		if ($this->todo_get('self_disable'))
+		if ($this->config_text_get('extmgrplus_todo_list', 'self_disable'))
 		{
-			$this->todo_set('self_disable', false);
+			$this->config_text_set('extmgrplus_todo_list', 'self_disable', false);
 
 			$safe_time_limit = (ini_get('max_execution_time') / 2);
 			$start_time = time();
@@ -142,16 +164,16 @@ class ext_mgr_plus
 			}
 		}
 
-		if ($this->todo_get('purge_cache'))
+		if ($this->config_text_get('extmgrplus_todo_list', 'purge_cache'))
 		{
-			$this->todo_set('purge_cache', false);
+			$this->config_text_set('extmgrplus_todo_list', 'purge_cache', false);
 			$this->cache->purge();
 		}
 
-		if ($this->todo_get('add_log'))
+		if ($this->config_text_get('extmgrplus_todo_list', 'add_log'))
 		{
-			$last_job = $this->todo_get('add_log');
-			$this->todo_set('add_log', false);
+			$last_job = $this->config_text_get('extmgrplus_todo_list', 'add_log');
+			$this->config_text_set('extmgrplus_todo_list', 'add_log', false);
 
 			if ($last_job !== null)
 			{
@@ -169,7 +191,7 @@ class ext_mgr_plus
 			}
 
 		}
-		$this->todo_set(null, null);
+		$this->config_text_set('extmgrplus_todo_list', null, null);
 	}
 
 	public function catch_errorbox()
@@ -197,8 +219,8 @@ class ext_mgr_plus
 	{
 		if ($this->request->is_set_post('extmgrplus_disable_all'))
 		{
-			$ext_marked = $this->request->variable('ext_enabled_mark', ['']);
-			$ext_count_enabled = count($ext_marked);
+			$ext_list_marked = $this->request->variable('ext_enabled_mark', ['']);
+			$ext_count_enabled = count($ext_list_marked);
 
 			if ($this->config['extmgrplus_enable_confirmation'])
 			{
@@ -214,7 +236,7 @@ class ext_mgr_plus
 						build_hidden_fields([
 							'extmgrplus_disable_all'	=> true,
 							'extmgrplus_confirm_box'	=> true,
-							'ext_enabled_mark'			=> $ext_marked,
+							'ext_enabled_mark'			=> $ext_list_marked,
 							'u_action'					=> $this->u_action
 						]),
 						'@lukewcs_extmgrplus/acp_ext_mgr_plus_confirm_body.html'
@@ -228,8 +250,8 @@ class ext_mgr_plus
 		}
 		else if ($this->request->is_set_post('extmgrplus_enable_all'))
 		{
-			$ext_marked = $this->request->variable('ext_disabled_mark', ['']);
-			$ext_count_disabled = count($ext_marked);
+			$ext_list_marked = $this->request->variable('ext_disabled_mark', ['']);
+			$ext_count_disabled = count($ext_list_marked);
 
 			if ($this->config['extmgrplus_enable_confirmation'])
 			{
@@ -245,7 +267,7 @@ class ext_mgr_plus
 						build_hidden_fields([
 							'extmgrplus_enable_all'		=> true,
 							'extmgrplus_confirm_box'	=> true,
-							'ext_disabled_mark'			=> $ext_marked,
+							'ext_disabled_mark'			=> $ext_list_marked,
 							'u_action'					=> $this->u_action
 						]),
 						'@lukewcs_extmgrplus/acp_ext_mgr_plus_confirm_body.html'
@@ -268,12 +290,12 @@ class ext_mgr_plus
 
 		if ($action == "disable")
 		{
-			$ext_marked = $this->request->variable('ext_enabled_mark', ['']);
-			$ext_list_enabled = array_flip($ext_marked);
+			$ext_list_marked = $this->request->variable('ext_enabled_mark', ['']);
+			$ext_list_enabled = array_flip($ext_list_marked);
 			$ext_count_enabled = count($ext_list_enabled);
 			$ext_count_success = 0;
 
-			$this->todo_set('purge_cache', true);
+			$this->config_text_set('extmgrplus_todo_list', 'purge_cache', true);
 
 			foreach ($ext_list_enabled as $ext_name => $value)
 			{
@@ -291,7 +313,7 @@ class ext_mgr_plus
 					}
 					else
 					{
-						$this->todo_set('self_disable', true);
+						$this->config_text_set('extmgrplus_todo_list', 'self_disable', true);
 						$ext_count_success++;
 					}
 				}
@@ -304,7 +326,7 @@ class ext_mgr_plus
 
 			if ($this->config['extmgrplus_enable_log'])
 			{
-				$this->todo_set('add_log', $this->get_log_data(
+				$this->config_text_set('extmgrplus_todo_list', 'add_log', $this->get_log_data(
 					'EXTMGRPLUS_LOG_EXT_DISABLE_ALL',
 					$ext_count_success,
 					$ext_count_enabled
@@ -315,12 +337,24 @@ class ext_mgr_plus
 		}
 		else if ($action == "enable")
 		{
-			$ext_marked = $this->request->variable('ext_disabled_mark', ['']);
-			$ext_list_disabled = array_flip($ext_marked);
+			$ext_list_marked = $this->request->variable('ext_disabled_mark', ['']);
+			$ext_list_disabled = array_flip($ext_list_marked);
+
+			$ext_list_order_and_ignore = $this->config_text_get('extmgrplus_order_and_ignore_list', 'tech_names');
+			if (!is_array($ext_list_order_and_ignore))
+			{
+				$ext_list_order_and_ignore = [];
+			}
+			$ext_list_order_and_ignore = array_filter($ext_list_order_and_ignore, function($value, $key) {
+				return preg_match('/[0-9]/', $value) && $this->extension_manager->is_disabled($key);
+			}, ARRAY_FILTER_USE_BOTH);
+			asort($ext_list_order_and_ignore, SORT_NUMERIC);
+			$ext_list_disabled = array_merge($ext_list_order_and_ignore, $ext_list_disabled);
+
 			$ext_count_disabled = count($ext_list_disabled);
 			$ext_count_success = 0;
 
-			$this->todo_set('purge_cache', true);
+			$this->config_text_set('extmgrplus_todo_list', 'purge_cache', true);
 
 			foreach ($ext_list_disabled as $ext_name => $value)
 			{
@@ -345,7 +379,7 @@ class ext_mgr_plus
 
 				if ($this->config['extmgrplus_enable_log'])
 				{
-					$this->todo_set('add_log', $this->get_log_data(
+					$this->config_text_set('extmgrplus_todo_list', 'add_log', $this->get_log_data(
 						'EXTMGRPLUS_LOG_EXT_ENABLE_ALL',
 						$ext_count_success,
 						$ext_count_disabled
@@ -416,7 +450,7 @@ class ext_mgr_plus
 		return count($migrations);
 	}
 
-	// Generate a log data package and convert it to JSON
+	// Generate a log data package
 	private function get_log_data(string $log_lang_var, int $ext_count_success, int $ext_count_total): array
 	{
 		return [
@@ -462,34 +496,45 @@ class ext_mgr_plus
 		return $messages . (($messages != '') ? "\n" : '') . sprintf('<p>%s</p>', $text);
 	}
 
-	// Set a todo job in config_text or delete one or all todo jobs
-	private function todo_set($name, $value)
+	// Set a variable/array in a config_text variable container or delete one or all variables/arrays
+	private function config_text_set($container, $name, $value)
 	{
-		$jobs = json_decode($this->config_text->get('extmgrplus_todo_list'), true);
+		if ($this->config_text->get($container) === null)
+		{
+			$vars = null;
+		}
+		else
+		{
+			$vars = json_decode($this->config_text->get($container), true);
+		}
 		if ($name !== null && $value !== null)
 		{
-			if ($jobs === null)
+			if ($vars === null)
 			{
-				$jobs = [];
+				$vars = [];
 			}
-			$jobs[$name] = $value;
-			$this->config_text->set('extmgrplus_todo_list', json_encode($jobs));
+			$vars[$name] = $value;
+			$this->config_text->set($container, json_encode($vars));
 		}
 		else if ($name !== null && $value === null)
 		{
-			unset($jobs[$name]);
-			$this->config_text->set('extmgrplus_todo_list', json_encode($jobs));
+			unset($vars[$name]);
+			$this->config_text->set($container, json_encode($vars));
 		}
 		else if ($name === null && $value === null)
 		{
-			$this->config_text->set('extmgrplus_todo_list', '');
+			$this->config_text->set($container, '');
 		}
 	}
 
-	// Get a todo job from config_text
-	private function todo_get($name)
+	// Get a variable from a config_text variable container
+	private function config_text_get($container, $name)
 	{
-		$jobs = json_decode($this->config_text->get('extmgrplus_todo_list'), true);
-		return ($jobs !== null && isset($jobs[$name])) ? $jobs[$name] : null;
+		if ($this->config_text->get($container) === null)
+		{
+			return null;
+		}
+		$vars = json_decode($this->config_text->get($container), true);
+		return ($vars !== null && isset($vars[$name])) ? $vars[$name] : null;
 	}
 }

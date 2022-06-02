@@ -31,6 +31,7 @@
 
 		<fieldset>
 			<legend>{{ lang('EXTENSIONS_VERSION_CHECK_SETTINGS') }}</legend>
+
 			<dl>
 				<dt><label for="force_unstable">{{ lang('FORCE_UNSTABLE') }}{{ lang('COLON') }}</label></dt>
 				<dd>
@@ -124,10 +125,24 @@
 
 	</form>
 	
-	<form method="post" action="{{ U_ACTION }}">
+	<form id="extmgrplus_list" method="post" action="{{ U_ACTION }}">
+
+		<fieldset id="extmgrplus_order_and_ignore_settings" style="display: none;">
+			<legend>{{ lang('EXTMGRPLUS_SETTINGS_TITLE') }}</legend>
+			
+			<dl>
+				<dt>
+					<label>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE') ~ lang('COLON') }}</label><br>
+					<span>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN') }}</span>
+				</dt>
+				<dd>
+					<input class="button1" type="submit" id="extmgrplus_button_order" name="extmgrplus_order_and_ignore" value="{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE_SAVE') }}">
+				</dd>
+			</dl>
+		</fieldset>
 
 		<table class="table1">
-			<col class="row1"><col class="row1"><col class="row1"><col class="row1"><col class="row2"><col class="row2">
+			<col class="row1"><col class="row1"><col class="row1"><col class="row1"><col class="row2"><col class="row2"><col class="row2">
 			<thead>
 				<tr>
 					<th>{{ lang('EXTENSION_NAME') }}</th>
@@ -135,7 +150,8 @@
 					<th style="text-align: center; width: 2%;"><span class="icon fa-arrow-up"></span></th>
 					<th style="text-align: center; width: 10%;">{{ lang('EXTENSION_OPTIONS') }}</th>
 					<th style="text-align: center; width: 25%;">{{ lang('EXTENSION_ACTIONS') }}</th>
-					<th style="text-align: center; width: 2%;"><span class="icon fa-check"></span></th>
+					<th style="text-align: center; width: 2%;" class="extmgrplus_checkboxes"><span class="icon fa-check"></span></th>
+					<th style="text-align: center; width: 1%; display: none" class="extmgrplus_order_and_ignore"><span class="icon fa-sort"></span></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -150,12 +166,14 @@
 								(EXTMGRPLUS_COUNT_ENABLED_CLEAN > 0) && EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 							) }}
 						</td>
-						<td class="row3" style="text-align: center;">
+						<td class="row3 extmgrplus_checkboxes" style="text-align: center;">
 							{{ _self.extmgrplus_checkbox_all(
 								'enabled', 
 								(EXTMGRPLUS_COUNT_ENABLED_CLEAN > 0), 
 								EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 							) }}
+						</td>
+						<td class="row3 extmgrplus_order_and_ignore" style="display: none;">
 						</td>
 					</tr>
 					{% for enabled in loops.enabled %}
@@ -186,13 +204,18 @@
 									{% if not actions.S_LAST_ROW %}&nbsp;|&nbsp;{% endif %}
 								{% endfor %}
 							</td>
-							<td style="text-align: center; padding: 0;">
+							<td style="text-align: center; padding: 0;" class="extmgrplus_checkboxes">
 								{{ _self.extmgrplus_checkbox(
 									'enabled', 
 									enabled.NAME, 
-									(enabled.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_ENABLE_SELF_DISABLE), 
+									(enabled.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_ENABLE_SELF_DISABLE) && EXTMGRPLUS_ORDER_AND_IGNORE[enabled.NAME] != '-', 
 									EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 								) }}
+							</td>
+							<td style="text-align: center; padding: 0; display: none;" class="extmgrplus_order_and_ignore">
+								{% if enabled.NAME != 'lukewcs/extmgrplus' %}
+									{{ _self.extmgrplus_inputbox(enabled.NAME, EXTMGRPLUS_ORDER_AND_IGNORE[enabled.NAME]) }}
+								{% endif %}
 							</td>
 						</tr>
 					{% endfor %}
@@ -210,12 +233,14 @@
 									(EXTMGRPLUS_COUNT_DISABLED_CLEAN > 0) && EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 								) }}
 							</td>
-							<td class="row3" style="text-align: center;">
+							<td class="row3 extmgrplus_checkboxes" style="text-align: center;">
 								{{ _self.extmgrplus_checkbox_all(
 									'disabled', 
 									(EXTMGRPLUS_COUNT_DISABLED_CLEAN > 0), 
 									EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 								) }}
+							</td>
+							<td class="row3 extmgrplus_order_and_ignore" style="display: none;">
 							</td>
 						</tr>
 					{% endif %}
@@ -228,7 +253,9 @@
 								</td>
 								<td class="row3">
 								</td>
-								<td class="row3">
+								<td class="row3 extmgrplus_checkboxes">
+								</td>
+								<td class="row3 extmgrplus_order_and_ignore" style="display: none;">
 								</td>
 							</tr>
 						{% endif %}
@@ -260,15 +287,18 @@
 									{% if not actions.S_LAST_ROW %}&nbsp;|&nbsp;{% endif %}
 								{% endfor %}
 							</td>
-							<td style="text-align: center; padding: 0;">
+							<td style="text-align: center; padding: 0;" class="extmgrplus_checkboxes">
 								{% if disabled.actions|length == 2 %}
 									{{ _self.extmgrplus_checkbox(
 										'disabled', 
 										disabled.NAME, 
-										(EXTMGRPLUS_MIGRATION_EXTS[disabled.NAME] is not defined || EXTMGRPLUS_ALLOW_MIGRATIONS),
+										(EXTMGRPLUS_MIGRATION_EXTS[disabled.NAME] is not defined || EXTMGRPLUS_ALLOW_MIGRATIONS) && EXTMGRPLUS_ORDER_AND_IGNORE[disabled.NAME] != '-',
 										EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 									) }}
 								{% endif %}
+							</td>
+							<td class="extmgrplus_order_and_ignore" style="display: none;">
+								{{ _self.extmgrplus_inputbox(disabled.NAME, EXTMGRPLUS_ORDER_AND_IGNORE[disabled.NAME]) }}
 							</td>
 						</tr>
 					{% endfor %}
@@ -311,40 +341,46 @@
 {% INCLUDECSS '@lukewcs_extmgrplus/css/acp_ext_mgr_plus.css' %}
 {% INCLUDEJS '@lukewcs_extmgrplus/js/acp_ext_mgr_plus_helper.js' %}
 
-{% macro extmgrplus_button(action, enabled = true) %}
-{% spaceless %}
-	{% if action == 'disable' %}
-		<input class="button1" type="submit" id="extmgrplus_button_disable" name="extmgrplus_disable_all" value="{{ lang('EXTMGRPLUS_ALL_DISABLE') }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE')|e('html') }}"{{ !enabled ? ' disabled' }}>
-	{% elseif action == 'enable' %}
-		<input class="button1" type="submit" id="extmgrplus_button_enable" name="extmgrplus_enable_all" value="{{ lang('EXTMGRPLUS_ALL_ENABLE') }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE')|e('html') }}"{{ !enabled ? ' disabled' }}>
-	{% endif %}
-{% endspaceless %}
-{% endmacro %}
-
-{% macro extmgrplus_checkbox_all(checkboxes, enabled = true, checked = true) %}
-{% spaceless %}
-	{% if checkboxes == 'enabled' %}
-		<input type="checkbox" class="radio"{{ enabled ? ' onchange="ExtMgrPlus.CheckUncheckAll(\'enabled\', \'disable\')"' }} id="ext_enabled_mark_all"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
-	{% elseif checkboxes == 'disabled' %}
-		<input type="checkbox" class="radio"{{ enabled ? ' onchange="ExtMgrPlus.CheckUncheckAll(\'disabled\', \'enable\')"' }} id="ext_disabled_mark_all"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
-	{% endif %}
-{% endspaceless %}
-{% endmacro %}
-
-{% macro extmgrplus_checkbox(checkboxes, value, enabled = true, checked = true) %}
-{% spaceless %}
-	{% if checkboxes == 'enabled' %}
-		<input type="checkbox" class="radio"{{ enabled ? ' onchange="ExtMgrPlus.SetButtonState(\'enabled\', \'disable\')"' }}{{ enabled ? ' name="ext_enabled_mark[]"' }}{{ enabled ? ' value="' ~ value ~ '"' }}{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
-	{% elseif checkboxes == 'disabled' %}
-		<input type="checkbox" class="radio"{{ enabled ? ' onchange="ExtMgrPlus.SetButtonState(\'disabled\', \'enable\')"' }}{{ enabled ? ' name="ext_disabled_mark[]"' }}{{ enabled ? ' value="' ~ value ~ '"' }}{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
-	{% endif %}
-{% endspaceless %}
-{% endmacro %}
-
 {% macro extmgrplus_has_migration(context) %}
 {% spaceless %}
 	{% if context.EXTMGRPLUS_MIGRATION_EXTS[context.disabled.NAME] is defined %}
 		<span class="extmgrplus_migration_files" title="{{ lang('EXTMGRPLUS_TOOLTIP_HAS_MIGRATION')|e('html') }}">{{ context.EXTMGRPLUS_MIGRATION_EXTS[context.disabled.NAME] }}</span>
 	{% endif %}
 	{% endspaceless %}
+{% endmacro %}
+
+{% macro extmgrplus_button(action, enabled = true) %}
+{% spaceless %}
+	{% if action == 'disable' %}
+		<input type="submit" class="button1" id="extmgrplus_button_disable" name="extmgrplus_disable_all" value="{{ lang('EXTMGRPLUS_ALL_DISABLE') }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE')|e('html') }}"{{ !enabled ? ' disabled' }}>
+	{% elseif action == 'enable' %}
+		<input type="submit" class="button1" id="extmgrplus_button_enable" name="extmgrplus_enable_all" value="{{ lang('EXTMGRPLUS_ALL_ENABLE') }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE')|e('html') }}"{{ !enabled ? ' disabled' }}>
+	{% endif %}
+{% endspaceless %}
+{% endmacro %}
+
+{% macro extmgrplus_checkbox_all(section, enabled = true, checked = true) %}
+{% spaceless %}
+	{% if section == 'enabled' %}
+		<input type="checkbox" class="radio"{{ enabled ? ' onchange="ExtMgrPlus.CheckUncheckAll(\'enabled\', \'disable\')"' }} id="ext_enabled_mark_all"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
+	{% elseif section == 'disabled' %}
+		<input type="checkbox" class="radio"{{ enabled ? ' onchange="ExtMgrPlus.CheckUncheckAll(\'disabled\', \'enable\')"' }} id="ext_disabled_mark_all"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
+	{% endif %}
+{% endspaceless %}
+{% endmacro %}
+
+{% macro extmgrplus_checkbox(section, value, enabled = true, checked = true) %}
+{% spaceless %}
+	{% if section == 'enabled' %}
+		<input type="checkbox" class="radio"{{ enabled ? ' onchange="ExtMgrPlus.SetButtonState(\'enabled\', \'disable\')"' }}{{ enabled ? ' name="ext_enabled_mark[]"' }}{{ enabled ? ' value="' ~ value ~ '"' }}{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
+	{% elseif section == 'disabled' %}
+		<input type="checkbox" class="radio"{{ enabled ? ' onchange="ExtMgrPlus.SetButtonState(\'disabled\', \'enable\')"' }}{{ enabled ? ' name="ext_disabled_mark[]"' }}{{ enabled ? ' value="' ~ value ~ '"' }}{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
+	{% endif %}
+{% endspaceless %}
+{% endmacro %}
+
+{% macro extmgrplus_inputbox(ext_name, value) %}
+{% spaceless %}
+	<input type="text" size="1" maxlength="2" title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER_AND_IGNORE')|e('html') }}" name="ext_order_and_ignore[{{ ext_name }}]" value="{{ value }}" pattern="[0-9-]" title="0-9, -">
+{% endspaceless %}
 {% endmacro %}

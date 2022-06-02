@@ -61,6 +61,11 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MIGRATIONS'						=> 'Erlaube Migrationen',
 	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'				=> 'Wenn du diese Option aktivierst, dann können bei der Aktion „Ausgewählte aktivieren“ auch diejenigen Erweiterungen aktiviert werden, bei denen neue Migrationsdateien vorliegen. Das trifft auf aktualisierte Erweiterungen zu, die einen Ordner „migrations“ enthalten. Ohne diese Option müssen solche Erweiterungen manuell aktiviert werden, was empfohlen wird.',
 
+	// order and ignore
+	'EXTMGRPLUS_ORDER_AND_IGNORE'				=> 'Reihenfolge und Ignorieren',
+	'EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN'		=> 'In der rechten Spalte der Erweiterungen-Liste kannst du Reihenfolge-Gruppen im Bereich 0 bis 99 für die Aktivierung definieren. Damit können Erweiterungen, von denen andere Erweiterungen abhängig sind, vor diesen aktiviert werden, um Fehlermeldungen zu vermeiden. Erweiterungen die zu einer solchen Gruppe gehören, werden zuerst aktiviert und zwar beginnend bei Gruppe 0, dann Gruppe 1 und so weiter. Die gleiche Gruppe kann bei beliebig vielen Erweiterungen definiert sein.<br><br>Zusätzlich gibt es die Möglichkeit eine Erweiterung sowohl bei Deaktivierung als auch Aktivierung zu ignorieren, indem statt einer Zahl der Bindestrich „-“ definiert wird. In diesem Fall wird das zugehörige Kontrollkästchen deaktiviert.',
+	'EXTMGRPLUS_ORDER_AND_IGNORE_SAVE'			=> 'Spalte speichern',
+
 	// ext manager
 	'EXTMGRPLUS_ALL_DISABLE'					=> 'Ausgewählte deaktivieren',
 	'EXTMGRPLUS_ALL_ENABLE'						=> 'Ausgewählte aktivieren',
@@ -71,6 +76,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'			=> 'Diese Erweiterung hat neue Migrationsdateien, die beim aktivieren der Erweiterung übernommen werden.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE'			=> 'Alle ausgewählten Erweiterungen deaktivieren.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'			=> 'Alle ausgewählten Erweiterungen aktivieren.',
+	'EXTMGRPLUS_TOOLTIP_ORDER_AND_IGNORE'		=> 'Reihenfolge-Gruppe im Bereich 0-99 oder ein Bindestrich „-“ um die Erweiterung zu ignorieren.',
 
 	// misc
 	'EXTMGRPLUS_EXTENSION_PLURAL'				=> [
@@ -83,6 +89,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_CONFIRM_DISABLE'			=> 'Bist du dir sicher, dass du %s deaktivieren möchtest?',
 	'EXTMGRPLUS_MSG_CONFIRM_ENABLE'				=> 'Bist du dir sicher, dass du %s aktivieren möchtest?',
 	'EXTMGRPLUS_MSG_SETTINGS_SAVED'				=> 'ExtMgrPlus: Einstellungen erfolgreich gespeichert.',
+	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'		=> 'ExtMgrPlus: Spalte für Reihenfolge und Ignorieren erfolgreich gespeichert.',
 	'EXTMGRPLUS_MSG_ACTIVATION_ABORTED'			=> 'ExtMgrPlus: Der Vorgang „Ausgewählte aktivieren“ wurde von folgender Erweiterung unterbrochen',
 	'EXTMGRPLUS_MSG_DEACTIVATION_SUCCESFULL'	=> 'ExtMgrPlus: %1$u von %2$u aktivierten Erweiterungen wurden deaktiviert.',
 	'EXTMGRPLUS_MSG_ACTIVATION_SUCCESFULL'		=> 'ExtMgrPlus: %1$u von %2$u deaktivierten Erweiterungen wurden aktiviert.',

@@ -14,13 +14,6 @@ legend {
 	top: 0;
 }
 
-@media (max-width: 700px){
-	legend {
-		margin: 2px 0px 0px -6px;
-		padding: 2px 5px;
-	}
-}
-
 input[type="submit"]:disabled {
 	opacity: .4;
 	cursor: not-allowed;
@@ -37,7 +30,7 @@ input[type="checkbox"]:disabled {
 	color: #115098;
 }
 
-/* List*/
+/* List */
 
 .extmgrplus_hidden_table {
 	background-color: inherit;
@@ -58,12 +51,20 @@ input[type="checkbox"]:disabled {
 }
 
 #extmgrplus_button_enable,
-#extmgrplus_button_disable {
+#extmgrplus_button_disable,
+#extmgrplus_button_order {
 	padding: 1px 5px 1px 5px;
 }
 
 .extmgrplus_migration_files {
 	cursor: help;
+}
+
+input[type="text"] {
+	text-align: right;
+	padding: 0 2px;
+	margin: 0 2px;
+	background-color: #F9F9F9;
 }
 
 .extmgrplus_footer {
@@ -76,4 +77,13 @@ input[type="checkbox"]:disabled {
 
 #confirm h2 {
 	margin-bottom: .25em;
+}
+
+/* Responsive */
+
+@media (max-width: 700px){
+	legend {
+		margin: 2px 0px 0px -6px;
+		padding: 2px 5px;
+	}
 }

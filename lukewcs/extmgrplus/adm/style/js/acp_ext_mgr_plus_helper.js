@@ -7,6 +7,16 @@
 *
 */
 
+$('#extmgrplus_list').keypress(function(event) {
+	if (event.which == '13') {
+		event.preventDefault();
+	}
+});
+
+$(window).ready(function () {
+	// ExtMgrPlus.ShowSettings();
+});
+
 var ExtMgrPlus = {
 	CheckUncheckAll: function (CheckBoxes, Button) {
 		'use strict';
@@ -27,8 +37,16 @@ var ExtMgrPlus = {
 		'use strict';
 
 		var SettingsState = $('#version_check_settings').css('display');
-		var SettingsStateNew = ((SettingsState == 'none') ? 'block ': 'none');
+		var SettingsStateNew = ((SettingsState == 'none') ? '' : 'none');
+
 		$('#version_check_settings').css('display', SettingsStateNew);
 		$('#extmgrplus_settings').css('display', SettingsStateNew);
-	}
+
+		$('#extmgrplus_order_and_ignore_settings').css('display', SettingsStateNew);
+		$('.extmgrplus_order_and_ignore').css('display', SettingsStateNew);
+
+		$('#extmgrplus_button_disable').css('display', ((SettingsStateNew == 'none') ? '' : 'none'));
+		$('#extmgrplus_button_enable').css('display', ((SettingsStateNew == 'none') ? '' : 'none'));
+		$('.extmgrplus_checkboxes').css('display', ((SettingsStateNew == 'none') ? '' : 'none'));
+	},
 };

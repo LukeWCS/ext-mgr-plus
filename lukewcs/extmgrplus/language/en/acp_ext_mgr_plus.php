@@ -61,6 +61,11 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MIGRATIONS'						=> 'Allow migrations',
 	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'				=> 'If you activate this option, the "Enable selected" action can also activate those extensions that have new migration files. This applies to updated extensions that contain a "migrations" folder. Without this option, such extensions must be activated manually, which is recommended.',
 
+	// order and ignore
+	'EXTMGRPLUS_ORDER_AND_IGNORE'				=> 'Order and ignore',
+	'EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN'		=> 'In the right column of the extensions list you can define order groups in the range 0 to 99 for activation. This allows extensions that other extensions depend on to be activated before them to avoid error messages. Extensions belonging to such a group are activated first, starting with group 0, then group 1 and so on. The same group can be defined for any number of extensions.<br><br>In addition, there is the option of ignoring an extension for both deactivation and activation by defining the hyphen "-" instead of a number. In this case, the associated check box is disabled.',
+	'EXTMGRPLUS_ORDER_AND_IGNORE_SAVE'			=> 'Save column',
+
 	// ext manager
 	'EXTMGRPLUS_ALL_DISABLE'					=> 'Disable selected',
 	'EXTMGRPLUS_ALL_ENABLE'						=> 'Enable selected',
@@ -71,6 +76,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'			=> 'This extension has new migration files that are applied when activating the extension.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE'			=> 'Disable all selected extensions.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'			=> 'Enable all selected extensions.',
+	'EXTMGRPLUS_TOOLTIP_ORDER_AND_IGNORE'		=> 'Order group in the range 0-99 or a hyphen "-" to ignore the extension.',
 
 	// misc
 	'EXTMGRPLUS_EXTENSION_PLURAL'				=> [
@@ -83,6 +89,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_CONFIRM_DISABLE'			=> 'Are you sure that you wish to disable %s?',
 	'EXTMGRPLUS_MSG_CONFIRM_ENABLE'				=> 'Are you sure that you wish to enable %s?',
 	'EXTMGRPLUS_MSG_SETTINGS_SAVED'				=> 'ExtMgrPlus: Settings saved successfully.',
+	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'		=> 'ExtMgrPlus: Column for order and ignore saved successfully.',
 	'EXTMGRPLUS_MSG_ACTIVATION_ABORTED'			=> 'ExtMgrPlus: The "Enable selected" operation was interrupted by the following extension',
 	'EXTMGRPLUS_MSG_DEACTIVATION_SUCCESFULL'	=> 'ExtMgrPlus: %1$u of %2$u enabled extensions have been disabled.',
 	'EXTMGRPLUS_MSG_ACTIVATION_SUCCESFULL'		=> 'ExtMgrPlus: %1$u of %2$u disabled extensions have been enabled.',
