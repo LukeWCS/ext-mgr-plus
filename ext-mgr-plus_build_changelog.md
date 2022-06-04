@@ -1,5 +1,22 @@
 ### 1.0.0
 
+#### 1.0.0-b8
+* Fix: In der Spalte für Reihenfolge/Ignorieren konnten keine 2-stellige Werte eingetragen werden. Im HTML wurde schlicht das RegEx für die Eingabeprüfung falsch definiert. [Meldung von Kirk]
+* In der Responsive-Ansicht werden nun auch bei den neuen EMP Spalten (neue Migrationsdateien, Auswählen, Reihenfolge/Ignorieren) einleitende Spaltenüberschriften angezeigt, wie das phpBB auch bei den Standard-Spalten macht. Bislang wurden gar keine Texte angezeigt, da die Spalten in der normalen Ansicht nur FA Icons enthalten.
+* ExtMgr Template:
+  * Wenn die Einstellungen geöffnet werden, dann werden jetzt in der Erweiterungen-Liste auch alle Links für "Aktivieren", "Deaktivieren" und "Arbeitsdaten löschen" ausgeblendet. Somit gibt es bei geöffneten Einstellungen nur noch die Textfelder als aktive Elemente in der Erweiterungen-Liste.
+  * Sämtliches Inline-CSS entfernt. Damit enthält das HTML keinerlei Style-Definitionen mehr.
+  * Weiteres XHTML entdeckt und entfernt.
+  * Twig: Unnötige `{% if ... %}...{% endif %}` Konstrukte durch Ternarys ersetzt.
+* Code Optimierungen.
+* Sprachdateien:
+  * Neue Sprachvariablen für die Responsive-Ansicht.
+  * Kleinere Änderungen
+* CSS:
+  * CSS für die Responsive-Ansicht hinzugefügt.
+  * Bisheriges Inline-CSS zur CSS Datei hinzugefügt.
+  * Optimierungen.
+
 #### 1.0.0-b7
 * Erweiterungen können jetzt in einer definierten Reihenfolge aktiviert werden, indem diesen eine numerische Gruppe im Bereich 0-99 zugewiesen wird. Erweiterungen mit einer Reihenfolge-Gruppe werden immer vor Erweiterungen aktiviert, die keine Gruppe haben.
 * Erweiterungen können jetzt auch komplett ignoriert werden, indem statt der numerischen Gruppe einfach ein `-` zugewiesen wird.

@@ -15,14 +15,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class listener implements EventSubscriberInterface
 {
 	public function __construct(
-		\phpbb\config\db_text $config_text,
-		\lukewcs\extmgrplus\core\ext_mgr_plus $extmgrplus,
-		\phpbb\extension\manager $ext_manager
+		\lukewcs\extmgrplus\core\ext_mgr_plus $extmgrplus
 )
 	{
-		$this->config_text			= $config_text;
-		$this->extmgrplus			= $extmgrplus;
-		$this->extension_manager	= $ext_manager;
+		$this->extmgrplus = $extmgrplus;
 	}
 
 	public static function getSubscribedEvents()
@@ -37,33 +33,21 @@ class listener implements EventSubscriberInterface
 
 	public function todo()
 	{
-		if ($this->config_text->get('extmgrplus_todo_list') != '')
-		{
-			$this->extmgrplus->todo();
-		}
+		$this->extmgrplus->todo();
 	}
 
 	public function ext_manager($event)
 	{
-		if ($event['action'] == 'list' && $this->extension_manager->is_enabled('lukewcs/extmgrplus'))
-		{
-			$this->extmgrplus->ext_manager($event);
-		}
+		$this->extmgrplus->ext_manager($event);
 	}
 
 	public function ext_manager_tpl($event)
 	{
-		if ($event['action'] == 'list' && $this->extension_manager->is_enabled('lukewcs/extmgrplus'))
-		{
-			$event['tpl_name'] = '@lukewcs_extmgrplus/acp_ext_mgr_plus_acp_ext_list';
-		}
+		$this->extmgrplus->ext_manager_tpl($event);
 	}
 
 	public function catch_errorbox()
 	{
-		if ($this->extension_manager->is_enabled('lukewcs/extmgrplus'))
-		{
-			$this->extmgrplus->catch_errorbox();
-		}
+		$this->extmgrplus->catch_errorbox();
 	}
 }

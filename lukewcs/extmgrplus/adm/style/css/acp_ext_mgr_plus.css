@@ -1,4 +1,4 @@
-/* Settings */
+/* SETTINGS */
 
 fieldset {
 	border-radius: 5px;
@@ -30,13 +30,28 @@ input[type="checkbox"]:disabled {
 	color: #115098;
 }
 
-/* List */
+#version_check_settings,
+#extmgrplus_settings,
+#extmgrplus_order_and_ignore_settings {
+	display: none;
+}
+
+/* LIST */
 
 .extmgrplus_hidden_table {
 	background-color: inherit;
 	border: 0;
 	border-collapse: collapse;
 	margin: 12px 0 5px 0;
+}
+
+.extmgrplus_responsive,
+.extmgrplus_order_and_ignore {
+	display: none;
+}
+
+#extmgrplus_button_order_and_ignore {
+	padding: 3px 2px;
 }
 
 #extmgrplus_available_extensions {
@@ -50,10 +65,46 @@ input[type="checkbox"]:disabled {
 	text-align: right;
 }
 
+#extmgrplus_list th:nth-child(1n + 2), /* ext_ver and other columns to the right of it */
+#extmgrplus_list td:nth-child(1n + 2) {
+	text-align: center;
+}
+
+#extmgrplus_list th:nth-child(2) { /* ext_ver */
+	width: 16%;
+}
+
+#extmgrplus_list th:nth-child(3) { /* migrations files */
+	width: 2%;
+}
+
+#extmgrplus_list th:nth-child(4) { /* options */
+	width: 10%;
+}
+
+#extmgrplus_list th:nth-child(5) { /* actions */
+	width: 25%;
+}
+
+#extmgrplus_list th:nth-child(6) { /* checkboxes */
+	width: 1%;
+}
+
+#extmgrplus_list th:nth-child(7) { /* order and ignore */
+	width: 1%;
+}
+
+#extmgrplus_list td:nth-child(6) { /* checkboxes */
+	padding: 0 4px;
+}
+
+#extmgrplus_list td:nth-child(7) { /* order and ignore */
+	padding: 0;
+}
+
 #extmgrplus_button_enable,
-#extmgrplus_button_disable,
-#extmgrplus_button_order {
-	padding: 1px 5px 1px 5px;
+#extmgrplus_button_disable {
+	padding: 1px 5px;
 }
 
 .extmgrplus_migration_files {
@@ -73,13 +124,13 @@ input[type="text"] {
 	font-size: .75em;
 }
 
-/* Confirm box */
+/* CONFIRM BOX */
 
 #confirm h2 {
 	margin-bottom: .25em;
 }
 
-/* Responsive */
+/* RESPONSIVE */
 
 @media (max-width: 700px){
 	legend {

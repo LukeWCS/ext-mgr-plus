@@ -3,20 +3,18 @@ services:
         class: lukewcs\extmgrplus\core\ext_mgr_plus
         arguments:
             - '@ext.manager' 
+            - '@migrator'
+            - '@cache.driver'
             - '@request'
-            - '@language'
-            - '@config'
-            - '@config_text'
-            - '@template'
             - '@log'
             - '@user'
-            - '@cache.driver'
-            - '@migrator'
+            - '@config'
+            - '@config_text'
+            - '@language'
+            - '@template'
     lukewcs.extmgrplus.listener:
         class: lukewcs\extmgrplus\event\listener
         arguments:
-            - '@config_text'
             - '@lukewcs.extmgrplus.core'
-            - '@ext.manager' 
         tags:
             - { name: event.listener }

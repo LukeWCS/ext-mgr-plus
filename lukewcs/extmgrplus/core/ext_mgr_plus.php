@@ -26,31 +26,90 @@ class ext_mgr_plus
 
 	public function __construct(
 		\phpbb\extension\manager $ext_manager,
+		\phpbb\db\migrator $migrator,
+		\phpbb\cache\driver\driver_interface $cache,
 		\phpbb\request\request $request,
-		\phpbb\language\language $language,
-		\phpbb\config\config $config,
-		\phpbb\config\db_text $config_text,
-		\phpbb\template\template $template,
 		\phpbb\log\log $log,
 		\phpbb\user $user,
-		\phpbb\cache\driver\driver_interface $cache,
-		\phpbb\db\migrator $migrator
+		\phpbb\config\config $config,
+		\phpbb\config\db_text $config_text,
+		\phpbb\language\language $language,
+		\phpbb\template\template $template
 	)
 	{
 		$this->extension_manager	= $ext_manager;
+		$this->migrator				= $migrator;
+		$this->cache				= $cache;
 		$this->request				= $request;
-		$this->language				= $language;
-		$this->config				= $config;
-		$this->config_text			= $config_text;
-		$this->template				= $template;
 		$this->log					= $log;
 		$this->user					= $user;
-		$this->cache				= $cache;
-		$this->migrator				= $migrator;
+		$this->config				= $config;
+		$this->config_text			= $config_text;
+		$this->language				= $language;
+		$this->template				= $template;
+	}
+
+	public function todo()
+	{
+		if ($this->config_text->get('extmgrplus_todo_list') == '')
+		{
+			return;
+		}
+
+		if ($this->config_text_get('extmgrplus_todo_list', 'self_disable'))
+		{
+			$this->config_text_set('extmgrplus_todo_list', 'self_disable', false);
+
+			$safe_time_limit = (ini_get('max_execution_time') / 2);
+			$start_time = time();
+
+			$this->extension_manager->disable('lukewcs/extmgrplus');
+			while ($this->extension_manager->disable_step('lukewcs/extmgrplus'))
+			{
+				if ((time() - $start_time) >= $safe_time_limit)
+				{
+					meta_refresh(0);
+				}
+			}
+		}
+
+		if ($this->config_text_get('extmgrplus_todo_list', 'purge_cache'))
+		{
+			$this->config_text_set('extmgrplus_todo_list', 'purge_cache', false);
+			$this->cache->purge();
+		}
+
+		if ($this->config_text_get('extmgrplus_todo_list', 'add_log'))
+		{
+			$last_job = $this->config_text_get('extmgrplus_todo_list', 'add_log');
+			$this->config_text_set('extmgrplus_todo_list', 'add_log', false);
+
+			if ($last_job !== null)
+			{
+				$this->log->add(
+					'admin',
+					$last_job['user_id'],
+					$last_job['user_ip'],
+					$last_job['log_lang_var'],
+					$last_job['timestamp'],
+					[
+						$last_job['ext_count_success'],
+						$last_job['ext_count_total'],
+					]
+				);
+			}
+
+		}
+		$this->config_text_set('extmgrplus_todo_list', null, null);
 	}
 
 	public function ext_manager($event)
 	{
+		if ($event['action'] != 'list' || $this->extension_manager->is_disabled('lukewcs/extmgrplus'))
+		{
+			return;
+		}
+
 		$this->u_action = $event['u_action'];
 		$this->language->add_lang('acp_ext_mgr_plus', 'lukewcs/extmgrplus');
 		$this->md_manager = $this->extension_manager->create_extension_metadata_manager('lukewcs/extmgrplus');
@@ -84,7 +143,7 @@ class ext_mgr_plus
 		{
 			$order_and_ignore_list = $this->request->variable('ext_order_and_ignore', ['' => '']);
 			$order_and_ignore_list = array_filter($order_and_ignore_list, function($value) {
-				return preg_match('/[0-9-]/', $value);
+				return preg_match('/^[0-9]{1,2}$|^-$/', $value);
 			});
 			$this->config_text_set('extmgrplus_order_and_ignore_list', 'tech_names', $order_and_ignore_list);
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED') . adm_back_link($this->u_action));
@@ -145,57 +204,23 @@ class ext_mgr_plus
 		]);
 	}
 
-	public function todo()
+	public function ext_manager_tpl($event)
 	{
-		if ($this->config_text_get('extmgrplus_todo_list', 'self_disable'))
+		if ($event['action'] != 'list' || $this->extension_manager->is_disabled('lukewcs/extmgrplus'))
 		{
-			$this->config_text_set('extmgrplus_todo_list', 'self_disable', false);
-
-			$safe_time_limit = (ini_get('max_execution_time') / 2);
-			$start_time = time();
-
-			$this->extension_manager->disable('lukewcs/extmgrplus');
-			while ($this->extension_manager->disable_step('lukewcs/extmgrplus'))
-			{
-				if ((time() - $start_time) >= $safe_time_limit)
-				{
-					meta_refresh(0);
-				}
-			}
+			return;
 		}
 
-		if ($this->config_text_get('extmgrplus_todo_list', 'purge_cache'))
-		{
-			$this->config_text_set('extmgrplus_todo_list', 'purge_cache', false);
-			$this->cache->purge();
-		}
-
-		if ($this->config_text_get('extmgrplus_todo_list', 'add_log'))
-		{
-			$last_job = $this->config_text_get('extmgrplus_todo_list', 'add_log');
-			$this->config_text_set('extmgrplus_todo_list', 'add_log', false);
-
-			if ($last_job !== null)
-			{
-				$this->log->add(
-					'admin',
-					$last_job['user_id'],
-					$last_job['user_ip'],
-					$last_job['log_lang_var'],
-					$last_job['timestamp'],
-					[
-						$last_job['ext_count_success'],
-						$last_job['ext_count_total'],
-					]
-				);
-			}
-
-		}
-		$this->config_text_set('extmgrplus_todo_list', null, null);
+		$event['tpl_name'] = '@lukewcs_extmgrplus/acp_ext_mgr_plus_acp_ext_list';
 	}
 
 	public function catch_errorbox()
 	{
+		if ($this->extension_manager->is_disabled('lukewcs/extmgrplus'))
+		{
+			return;
+		}
+
 		$ext_name = $this->template->retrieve_var('EXTMGRPLUS_LAST_EXT_NAME');
 		$ext_display_name = $this->template->retrieve_var('EXTMGRPLUS_LAST_EXT_DISPLAY_NAME');
 		$message_text = $this->template->retrieve_var('MESSAGE_TEXT');

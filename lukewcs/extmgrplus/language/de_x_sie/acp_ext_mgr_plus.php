@@ -57,7 +57,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'			=> 'Wenn Sie diese Option aktivieren, dann kann sich „Extension Manager Plus“ bei der Aktion „Ausgewählte deaktivieren“ auch selbst deaktivieren, da diese Erweiterung dann wie jede andere ausgewählt werden kann.',
 
 	// settings expert
-	'EXTMGRPLUS_EXPERT_SETTINGS_TITLE'			=> 'Einstellungen (Plus) - Experten-Einstellungen',
+	'EXTMGRPLUS_EXPERT_SETTINGS_TITLE'			=> 'Experten-Einstellungen',
 	'EXTMGRPLUS_MIGRATIONS'						=> 'Erlaube Migrationen',
 	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'				=> 'Wenn Sie diese Option aktivieren, dann können bei der Aktion „Ausgewählte aktivieren“ auch diejenigen Erweiterungen aktiviert werden, bei denen neue Migrationsdateien vorliegen. Das trifft auf aktualisierte Erweiterungen zu, die einen Ordner „migrations“ enthalten. Ohne diese Option müssen solche Erweiterungen manuell aktiviert werden, was empfohlen wird.',
 
@@ -77,6 +77,10 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE'			=> 'Alle ausgewählten Erweiterungen deaktivieren.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'			=> 'Alle ausgewählten Erweiterungen aktivieren.',
 	'EXTMGRPLUS_TOOLTIP_ORDER_AND_IGNORE'		=> 'Reihenfolge-Gruppe im Bereich 0-99 oder ein Bindestrich „-“ um die Erweiterung zu ignorieren.',
+
+	'EXTMGRPLUS_COL_MIGRATION_FILES'			=> 'Neue Migrationsdateien',
+	'EXTMGRPLUS_COL_SELECT'						=> 'Auswählen',
+	'EXTMGRPLUS_COL_ORDER_AND_IGNORE'			=> 'Reihenfolge/Ignorieren',
 
 	// misc
 	'EXTMGRPLUS_EXTENSION_PLURAL'				=> [
