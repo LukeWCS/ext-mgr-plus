@@ -27,7 +27,7 @@
 		</tr>
 	</table>
 	
-	<form id="version_check_settings" method="post" action="{{ U_ACTION }}">
+	<form class="extmgrplus_settings" id="version_check_settings" method="post" action="{{ U_ACTION }}">
 		<fieldset>
 			<legend>{{ lang('EXTENSIONS_VERSION_CHECK_SETTINGS') }}</legend>
 
@@ -48,7 +48,7 @@
 		</fieldset>
 	</form>
 
-	<form id="extmgrplus_settings" method="post" action="{{ U_ACTION }}">
+	<form class="extmgrplus_settings" method="post" action="{{ U_ACTION }}">
 		<fieldset>
 			<legend>{{ lang('EXTMGRPLUS_SETTINGS_TITLE') }}</legend>
 
@@ -121,7 +121,7 @@
 	</form>
 	
 	<form id="extmgrplus_list" method="post" action="{{ U_ACTION }}">
-		<fieldset id="extmgrplus_order_and_ignore_settings">
+		<fieldset class="extmgrplus_settings">
 			<legend>{{ lang('EXTMGRPLUS_SETTINGS_TITLE') }}</legend>
 			
 			<dl>
@@ -157,7 +157,7 @@
 					<th>
 						<span class="icon fa-check"></span><span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_SELECT') }}</span>
 					</th>
-					<th class="extmgrplus_order_and_ignore">
+					<th style="display: none">
 						<span class="icon fa-sort"></span><span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_ORDER_AND_IGNORE') }}</span>
 					</th>
 				</tr>
@@ -181,7 +181,7 @@
 								EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 							) }}
 						</td>
-						<td class="row3 extmgrplus_order_and_ignore">
+						<td class="row3" style="display: none">
 						</td>
 					</tr>
 					{% for enabled in loops.enabled %}
@@ -209,7 +209,7 @@
 							<td>
 								{% for actions in enabled.actions %}
 									<a href="{{ actions.U_ACTION }}"{% if actions.L_ACTION_EXPLAIN %} title="{{ actions.L_ACTION_EXPLAIN }}"{% endif %}>{{ actions.L_ACTION }}</a>
-									{{ !actions.S_LAST_ROW ? '<span class="extmgrplus_separator">&nbsp;|&nbsp;</span>' }}
+									{{ !actions.S_LAST_ROW ? '<span>&nbsp;|&nbsp;</span>' }}
 								{% endfor %}
 							</td>
 							<td>
@@ -220,7 +220,7 @@
 									EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 								) }}
 							</td>
-							<td class="extmgrplus_order_and_ignore">
+							<td style="display: none">
 								{% if enabled.NAME != 'lukewcs/extmgrplus' %}
 									{{ _self.extmgrplus_inputbox(enabled.NAME, EXTMGRPLUS_ORDER_AND_IGNORE[enabled.NAME]) }}
 								{% endif %}
@@ -248,7 +248,7 @@
 									EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 								) }}
 							</td>
-							<td class="row3 extmgrplus_order_and_ignore">
+							<td class="row3" style="display: none">
 							</td>
 						</tr>
 					{% endif %}
@@ -263,7 +263,7 @@
 								</td>
 								<td class="row3">
 								</td>
-								<td class="row3 extmgrplus_order_and_ignore">
+								<td class="row3" style="display: none">
 								</td>
 							</tr>
 						{% endif %}
@@ -292,7 +292,7 @@
 							<td>
 								{% for actions in disabled.actions %}
 									<a href="{{ actions.U_ACTION }}"{% if actions.L_ACTION_EXPLAIN %} title="{{ actions.L_ACTION_EXPLAIN }}"{% endif %}>{{ actions.L_ACTION }}</a>
-									{{ !actions.S_LAST_ROW ? '<span class="extmgrplus_separator">&nbsp;|&nbsp;</span>' }}
+									{{ !actions.S_LAST_ROW ? '<span>&nbsp;|&nbsp;</span>' }}
 								{% endfor %}
 							</td>
 							<td>
@@ -305,7 +305,7 @@
 									) }}
 								{% endif %}
 							</td>
-							<td class="extmgrplus_order_and_ignore">
+							<td style="display: none">
 								{{ _self.extmgrplus_inputbox(disabled.NAME, EXTMGRPLUS_ORDER_AND_IGNORE[disabled.NAME]) }}
 							</td>
 						</tr>

@@ -14,12 +14,12 @@ legend {
 	top: 0;
 }
 
-input[type="submit"]:disabled {
+#extmgrplus_list input[type="submit"]:disabled {
 	opacity: .4;
 	cursor: not-allowed;
 }
 
-input[type="checkbox"]:disabled {
+#extmgrplus_list input[type="checkbox"]:disabled {
 	cursor: not-allowed;
 }
 
@@ -30,9 +30,7 @@ input[type="checkbox"]:disabled {
 	color: #115098;
 }
 
-#version_check_settings,
-#extmgrplus_settings,
-#extmgrplus_order_and_ignore_settings {
+.extmgrplus_settings {
 	display: none;
 }
 
@@ -43,11 +41,6 @@ input[type="checkbox"]:disabled {
 	border: 0;
 	border-collapse: collapse;
 	margin: 12px 0 5px 0;
-}
-
-.extmgrplus_responsive,
-.extmgrplus_order_and_ignore {
-	display: none;
 }
 
 #extmgrplus_button_order_and_ignore {
@@ -99,7 +92,7 @@ input[type="checkbox"]:disabled {
 }
 
 #extmgrplus_list td:nth-child(7) { /* order and ignore */
-	padding: 0;
+	padding: 0 4px;
 }
 
 #extmgrplus_button_enable,
@@ -111,7 +104,7 @@ input[type="checkbox"]:disabled {
 	cursor: help;
 }
 
-input[type="text"] {
+#extmgrplus_list input[type="text"] {
 	text-align: right;
 	padding: 0 2px;
 	margin: 0 2px;
@@ -131,6 +124,10 @@ input[type="text"] {
 }
 
 /* RESPONSIVE */
+
+.extmgrplus_responsive {
+	display: none;
+}
 
 @media (max-width: 700px){
 	legend {
