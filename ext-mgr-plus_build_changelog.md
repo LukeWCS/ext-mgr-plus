@@ -1,5 +1,13 @@
 ### 1.0.0
 
+#### 1.0.0-b10
+* ExtMgr Template:
+  * Bei der Option "Erlaube Migrationen" erfolgt jetzt eine Rückfrage per JS Popup die mit OK bestätigt werden muss. Ansonsten wird die Option wieder auf "Nein" zurückgestellt. [Vorschlag von Scanialady, chris1278]
+  * Die neue Migrations-Rückfrage mit der Methode von LFWWH realisiert.
+* Sprachdateien:
+  * Neue Sprachvariablen für die Migrations-Rückfrage.
+  * Den bestehenden Text bezüglich Erklärung für die Option "Erlaube Migrationen" so umformuliert, das der Text deutlich als Warnung wahrgenommen wird.
+
 #### 1.0.0-b9
 * Fix: In der Responsive-Ansicht wurde das Textfeld für Reihenfolge/Ignorieren auch dann angezeigt, wenn die Einstellungen nicht geöffnet waren. Um weitere Kopfschmerzen wegen dem phpBB Responsive CSS zu vermeiden, wird die Spalte jetzt wieder per Inline-CSS ausgeblendet, da das wenigstens unkompliziert funktioniert.
 * Fix: In der Responsive-Ansicht wurde die Zeile mit dem Textfeld für Reihenfolge/Ignorieren nicht korrekt dargestellt, wenn die Einstellungen geöffnet waren.

@@ -59,11 +59,12 @@ $lang = array_merge($lang, [
 	// settings expert
 	'EXTMGRPLUS_EXPERT_SETTINGS_TITLE'			=> 'Experten-Einstellungen',
 	'EXTMGRPLUS_MIGRATIONS'						=> 'Erlaube Migrationen',
-	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'				=> 'Wenn Sie diese Option aktivieren, dann können bei der Aktion „Ausgewählte aktivieren“ auch diejenigen Erweiterungen aktiviert werden, bei denen neue Migrationsdateien vorliegen. Das trifft auf aktualisierte Erweiterungen zu, die einen Ordner „migrations“ enthalten. Ohne diese Option müssen solche Erweiterungen manuell aktiviert werden, was empfohlen wird.',
+	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'				=> 'Diese Option ist nicht ohne Risiko! Wenn Sie diese Option aktivieren, dann können bei der Aktion „Ausgewählte aktivieren“ auch diejenigen Erweiterungen aktiviert werden, bei denen neue Migrationsdateien vorliegen. Das trifft auf aktualisierte Erweiterungen zu, die einen Ordner „migrations“ enthalten. Aktualisierte Erweiterungen die eine ungültige Migration enthalten, können jedoch einen schweren Ausnahmefehler verursachen, der nicht abgefangen werden kann. Dadurch ist es nicht möglich, eine kontrollierte Fehlermeldung anzeigen zu können. Es wird empfohlen, diese Option deaktiviert zu lassen.',
 
 	// order and ignore
 	'EXTMGRPLUS_ORDER_AND_IGNORE'				=> 'Reihenfolge und Ignorieren',
-	'EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN'		=> 'In der rechten Spalte der Erweiterungen-Liste können Sie Reihenfolge-Gruppen im Bereich 0 bis 99 für die Aktivierung definieren. Damit können Erweiterungen, von denen andere Erweiterungen abhängig sind, vor diesen aktiviert werden, um Fehlermeldungen zu vermeiden. Erweiterungen die zu einer solchen Gruppe gehören, werden zuerst aktiviert und zwar beginnend bei Gruppe 0, dann Gruppe 1 und so weiter. Die gleiche Gruppe kann bei beliebig vielen Erweiterungen definiert sein.<br><br>Zusätzlich gibt es die Möglichkeit eine Erweiterung sowohl bei Deaktivierung als auch Aktivierung zu ignorieren, indem statt einer Zahl der Bindestrich „-“ definiert wird. In diesem Fall wird das zugehörige Kontrollkästchen deaktiviert.',
+	'EXTMGRPLUS_ORDER_EXPLAIN'					=> 'In der rechten Spalte der Erweiterungen-Liste können Sie Reihenfolge-Gruppen im Bereich 0 bis 99 für die Aktivierung definieren. Damit können Erweiterungen, von denen andere Erweiterungen abhängig sind, vor diesen aktiviert werden, um Fehlermeldungen zu vermeiden. Erweiterungen die zu einer solchen Gruppe gehören, werden zuerst aktiviert und zwar beginnend bei Gruppe 0, dann Gruppe 1 und so weiter. Die gleiche Gruppe kann bei beliebig vielen Erweiterungen definiert sein.',
+	'EXTMGRPLUS_IGNORE_EXPLAIN'					=> 'Zusätzlich gibt es die Möglichkeit eine Erweiterung sowohl bei Deaktivierung als auch Aktivierung zu ignorieren, indem statt einer Zahl der Bindestrich „-“ definiert wird. In diesem Fall wird das zugehörige Kontrollkästchen deaktiviert.',
 	'EXTMGRPLUS_ORDER_AND_IGNORE_SAVE'			=> 'Spalte speichern',
 
 	// ext manager
@@ -92,6 +93,7 @@ $lang = array_merge($lang, [
 	// messages
 	'EXTMGRPLUS_MSG_CONFIRM_DISABLE'			=> 'Sind Sie sich sicher, dass Sie %s deaktivieren möchten?',
 	'EXTMGRPLUS_MSG_CONFIRM_ENABLE'				=> 'Sind Sie sich sicher, dass Sie %s aktivieren möchten?',
+	'EXTMGRPLUS_MSG_CONFIRM_MIGRATIONS'			=> 'Sind Sie sich sicher, dass Sie Migrationen erlauben möchten?',
 	'EXTMGRPLUS_MSG_SETTINGS_SAVED'				=> 'ExtMgrPlus: Einstellungen erfolgreich gespeichert.',
 	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'		=> 'ExtMgrPlus: Spalte für Reihenfolge und Ignorieren erfolgreich gespeichert.',
 	'EXTMGRPLUS_MSG_ACTIVATION_ABORTED'			=> 'ExtMgrPlus: Der Vorgang „Ausgewählte aktivieren“ wurde von folgender Erweiterung unterbrochen',

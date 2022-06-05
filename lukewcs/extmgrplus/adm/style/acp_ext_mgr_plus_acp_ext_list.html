@@ -105,8 +105,8 @@
 					<span>{{ lang('EXTMGRPLUS_MIGRATIONS_EXPLAIN') }}</span>
 				</dt>
 				<dd>
-					<label><input type="radio" class="radio" name="extmgrplus_enable_migrations" value="1"{{ EXTMGRPLUS_ENABLE_MIGRATIONS == 1 ? ' checked' }}> {{ lang('YES') }}</label>
-					<label><input type="radio" class="radio" name="extmgrplus_enable_migrations" value="0"{{ EXTMGRPLUS_ENABLE_MIGRATIONS == 0 ? ' checked' }}> {{ lang('NO') }}</label>
+					<label><input type="radio" class="radio" id="extmgrplus_migrations_yes" name="extmgrplus_enable_migrations" value="1"{{ EXTMGRPLUS_ENABLE_MIGRATIONS == 1 ? ' checked' }} onchange="ExtMgrPlus.ConfirmMigrations()"> {{ lang('YES') }}</label>
+					<label><input type="radio" class="radio" id="extmgrplus_migrations_no"  name="extmgrplus_enable_migrations" value="0"{{ EXTMGRPLUS_ENABLE_MIGRATIONS == 0 ? ' checked' }}> {{ lang('NO') }}</label>
 				</dd>
 			</dl>
 		
@@ -127,7 +127,9 @@
 			<dl>
 				<dt>
 					<label>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE') ~ lang('COLON') }}</label><br>
-					<span>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN') }}</span>
+					<span>{{ lang('EXTMGRPLUS_ORDER_EXPLAIN') }}</span>
+					<br><br>
+					<span>{{ lang('EXTMGRPLUS_IGNORE_EXPLAIN') }}</span>
 				</dt>
 				<dd>
 					<input class="button1" type="submit" id="extmgrplus_button_order_and_ignore" name="extmgrplus_order_and_ignore" value="{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE_SAVE') }}">
@@ -342,6 +344,14 @@
 		{{ EXTMGRPLUS_EXT_NAME }} ({{ EXTMGRPLUS_EXT_VER }}) &copy; LukeWCS<br>
 		{{ lang('EXTMGRPLUS_LANG_DESC')|e('html') }} ({{ lang('EXTMGRPLUS_LANG_EXT_VER')|e('html') }}) &bull; {{ lang('EXTMGRPLUS_LANG_AUTHOR')|e('html') }}
 	</p>
+
+<script>
+	var ExtMgrPlus = {
+		lang: {
+			MsgConfirmMigrations: "{{ EXTMGRPLUS_EXT_NAME|e('js') }}" + " ({{ EXTMGRPLUS_EXT_VER|e('js') }})\n\n" + "{{ lang('EXTMGRPLUS_MSG_CONFIRM_MIGRATIONS')|e('js') }}"
+		}
+	};
+</script>
 
 {% INCLUDE 'overall_footer.html' %}
 
