@@ -59,12 +59,12 @@ $lang = array_merge($lang, [
 	// settings expert
 	'EXTMGRPLUS_EXPERT_SETTINGS_TITLE'			=> 'Expert settings',
 	'EXTMGRPLUS_MIGRATIONS'						=> 'Allow migrations',
-	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'				=> 'This option is not without risk! If you activate this option, the "Enable selected" action can also activate those extensions that have new migration files. This applies to upgraded extensions that contain a "migrations" folder. However, updated extensions that contain an invalid migration may throw a fatal exception error that cannot be caught. As a result, it is not possible to display a controlled error message. It is recommended to leave this option disabled.',
+	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'				=> 'This option is not without problems! If you activate this option, the "Enable selected" action can also activate those extensions that have new migration files. This applies to upgraded extensions that contain a "migrations" folder. However, updated extensions that contain an invalid migration can throw a fatal exception error that cannot be caught by EMP. As a result, it is not possible to display a controlled error message. It is recommended to leave this option disabled.',
 
 	// order and ignore
 	'EXTMGRPLUS_ORDER_AND_IGNORE'				=> 'Order and Ignore',
 	'EXTMGRPLUS_ORDER_EXPLAIN'					=> 'In the right column of the extensions list you can define order groups in the range 0 to 99 for activation. This allows extensions that other extensions depend on to be activated before them to avoid error messages. Extensions belonging to such a group are activated first, starting with group 0, then group 1 and so on. The same group can be defined for any number of extensions.',
-	'EXTMGRPLUS_IGNORE_EXPLAIN'					=> 'In addition, there is the option of ignoring an extension for both deactivation and activation by defining the hyphen "-" instead of a number. In this case, the associated check box is disabled.',
+	'EXTMGRPLUS_IGNORE_EXPLAIN'					=> 'In addition, there is the option of being able to ignore an extension for both deactivation and activation by defining the hyphen "-" instead of a number. In this case, the associated check box is disabled.',
 	'EXTMGRPLUS_ORDER_AND_IGNORE_SAVE'			=> 'Save column',
 
 	// ext manager

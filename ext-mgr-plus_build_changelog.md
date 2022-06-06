@@ -1,5 +1,18 @@
 ### 1.0.0
 
+#### 1.0.0-b11
+* CSS:
+  * In der Responsive-Ansicht wird bei geöffneten Einstellungen der Button "Spalte speichern" zentriert, damit dieser optisch zu den anderen Buttons passt. [Vorschlag von Kirk]
+  * In der Responsive-Ansicht wird bei geöffneten Einstellungen zwischen Erklärungen und Bedienelementen (Buttons, Radio Buttons) ein Abstand eingefügt.
+  * Optimierungen.
+  * Datei umstrukturiert.
+* Sprachdateien:
+  * Kleinere Änderungen.
+* Core:
+  * Code Optimierungen.
+* JS:
+  * Code Optimierungen.
+
 #### 1.0.0-b10
 * ExtMgr Template:
   * Bei der Option "Erlaube Migrationen" erfolgt jetzt eine Rückfrage per JS Popup die mit OK bestätigt werden muss. Ansonsten wird die Option wieder auf "Nein" zurückgestellt. [Vorschlag von Scanialady, chris1278]
@@ -11,7 +24,8 @@
 #### 1.0.0-b9
 * Fix: In der Responsive-Ansicht wurde das Textfeld für Reihenfolge/Ignorieren auch dann angezeigt, wenn die Einstellungen nicht geöffnet waren. Um weitere Kopfschmerzen wegen dem phpBB Responsive CSS zu vermeiden, wird die Spalte jetzt wieder per Inline-CSS ausgeblendet, da das wenigstens unkompliziert funktioniert.
 * Fix: In der Responsive-Ansicht wurde die Zeile mit dem Textfeld für Reihenfolge/Ignorieren nicht korrekt dargestellt, wenn die Einstellungen geöffnet waren.
-* JS Funktion zum Anzeigen/Ausblenden der Einstellungen komplett geändert.
+* JS:
+  * Funktion zum Anzeigen/Ausblenden der Einstellungen komplett geändert.
 
 #### 1.0.0-b8
 * Fix: In der Spalte für Reihenfolge/Ignorieren konnten keine 2-stelligen Werte eingetragen werden. Im HTML wurde schlicht das RegEx für die Eingabeprüfung falsch definiert. [Meldung von Kirk]
@@ -21,7 +35,8 @@
   * Sämtliches Inline-CSS entfernt. Damit enthält das HTML keinerlei Style-Definitionen mehr.
   * Weiteres XHTML entdeckt und entfernt.
   * Twig: Unnötige `{% if ... %}...{% endif %}` Konstrukte durch Ternarys ersetzt.
-* Code Optimierungen.
+* Core:
+  * Code Optimierungen.
 * Sprachdateien:
   * Neue Sprachvariablen für die Responsive-Ansicht.
   * Kleinere Änderungen

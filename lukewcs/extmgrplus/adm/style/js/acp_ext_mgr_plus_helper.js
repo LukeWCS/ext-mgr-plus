@@ -30,31 +30,25 @@ ExtMgrPlus.ShowSettings = function () {
 	var SettingsState = $('#version_check_settings').css('display');
 
 	if (SettingsState == 'none') {
-		$('.extmgrplus_settings')						.show();
+		$('.extmgrplus_settings')								.show();
+		$('#extmgrplus_list .table1 th:nth-of-type(7)')			.show();
+		$('#extmgrplus_list .table1 td.row3:nth-of-type(4)')	.show();
+		$('#extmgrplus_list .table1 td:nth-of-type(7)')			.show();
 
-		$('#extmgrplus_list th:nth-child(7)')			.show();
-		$('#extmgrplus_list td.row3:nth-child(4)')		.show();
-		$('#extmgrplus_list td:nth-child(7)')			.show();
-
-		$('#extmgrplus_button_disable')					.hide();
-		$('#extmgrplus_button_enable')					.hide();
-		$('#extmgrplus_list input[type="checkbox"]')	.hide();
-
-		$('#extmgrplus_list a')							.hide();
-		$('#extmgrplus_list td.row2 span')				.hide();
+		$('#extmgrplus_list .table1 input[type="submit"]')		.hide();
+		$('#extmgrplus_list .table1 input[type="checkbox"]')	.hide();
+		$('#extmgrplus_list .table1 a')							.hide();
+		$('#extmgrplus_list .table1 td.row2 span')				.hide();
 	} else {
-		$('.extmgrplus_settings')						.hide();
+		$('.extmgrplus_settings')								.hide();
+		$('#extmgrplus_list .table1 th:nth-of-type(7)')			.hide();
+		$('#extmgrplus_list .table1 td.row3:nth-of-type(4)')	.hide();
+		$('#extmgrplus_list .table1 td:nth-of-type(7)')			.hide();
 
-		$('#extmgrplus_list th:nth-child(7)')			.hide();
-		$('#extmgrplus_list td.row3:nth-child(4)')		.hide();
-		$('#extmgrplus_list td:nth-child(7)')			.hide();
-
-		$('#extmgrplus_button_disable')					.show();
-		$('#extmgrplus_button_enable')					.show();
-		$('#extmgrplus_list input[type="checkbox"]')	.show();
-
-		$('#extmgrplus_list a')							.show();
-		$('#extmgrplus_list td.row2 span')				.show();
+		$('#extmgrplus_list .table1 input[type="submit"]')		.show();
+		$('#extmgrplus_list .table1 input[type="checkbox"]')	.show();
+		$('#extmgrplus_list .table1 a')							.show();
+		$('#extmgrplus_list .table1 td.row2 span')				.show();
 	}
 };
 

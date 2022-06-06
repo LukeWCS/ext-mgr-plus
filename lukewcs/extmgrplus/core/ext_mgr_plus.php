@@ -145,13 +145,21 @@ class ext_mgr_plus
 			$order_and_ignore_list = array_filter($order_and_ignore_list, function($value) {
 				return preg_match('/^[0-9]{1,2}$|^-$/', $value);
 			});
-			$this->config_text_set('extmgrplus_order_and_ignore_list', 'tech_names', $order_and_ignore_list);
+			if (count($order_and_ignore_list) == 0)
+			{
+				$this->config_text_set('extmgrplus_order_and_ignore_list', null, null);
+			}
+			else
+			{
+				$this->config_text_set('extmgrplus_order_and_ignore_list', 'tech_names', $order_and_ignore_list);
+			}
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED') . adm_back_link($this->u_action));
 		}
 
 		$ext_list_disabled = $this->extension_manager->all_disabled();
 		$ext_list_migrations = $this->get_exts_with_new_migration($ext_list_disabled);
 		$ext_list_order_and_ignore = $this->config_text_get('extmgrplus_order_and_ignore_list', 'tech_names');
+
 		if (!is_array($ext_list_order_and_ignore))
 		{
 			$ext_list_order_and_ignore = [];
@@ -168,7 +176,6 @@ class ext_mgr_plus
 		$ext_count_migrations		= count($ext_list_migrations);
 		$ext_count_enabled			= count($this->extension_manager->all_enabled());
 		$ext_count_enabled_clean	= $ext_count_enabled - (!$this->config['extmgrplus_enable_self_disable'] ? 1 : 0) - count($ext_list_enabled_and_ignored);
-
 		$ext_count_disabled			= count($ext_list_disabled);
 		$ext_count_disabled_clean	= $ext_count_disabled - (!$this->config['extmgrplus_enable_migrations'] ? $ext_count_migrations : 0) - count($ext_list_disabled_and_ignored);
 
@@ -336,7 +343,7 @@ class ext_mgr_plus
 							}
 						}
 					}
-					else
+					else if ($this->config['extmgrplus_enable_self_disable'])
 					{
 						$this->config_text_set('extmgrplus_todo_list', 'self_disable', true);
 						$ext_count_success++;
