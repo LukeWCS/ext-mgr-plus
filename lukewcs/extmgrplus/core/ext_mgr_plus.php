@@ -4,7 +4,7 @@
 * Extension Manager Plus. An extension for the phpBB Forum Software package.
 *
 * @copyright (c) 2022, LukeWCS, https://www.wcsaga.org/
-* @license GNU General Public License, version 2 (GPL-2.0)
+* @license GNU General Public License, version 2 (GPL-2.0-only)
 *
 */
 
@@ -126,7 +126,7 @@ class ext_mgr_plus
 			$this->enable_disable_confirm();
 			return;
 		}
-		else if ($this->request->is_set_post('submit') && $this->request->variable('extmgrplus_save_settings', '') == '1')
+		else if ($this->request->is_set_post('extmgrplus_save_settings'))
 		{
 			if (!check_form_key('lukewcs_extmgrplus'))
 			{
@@ -139,7 +139,7 @@ class ext_mgr_plus
 			$this->config->set('extmgrplus_enable_migrations', $this->request->variable('extmgrplus_enable_migrations', 0));
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_SETTINGS_SAVED') . adm_back_link($this->u_action));
 		}
-		else if ($this->request->is_set_post('extmgrplus_order_and_ignore'))
+		else if ($this->request->is_set_post('extmgrplus_save_order_and_ignore'))
 		{
 			$order_and_ignore_list = $this->request->variable('ext_order_and_ignore', ['' => '']);
 			$order_and_ignore_list = array_filter($order_and_ignore_list, function($value) {
@@ -377,8 +377,8 @@ class ext_mgr_plus
 			{
 				$ext_list_order_and_ignore = [];
 			}
-			$ext_list_order_and_ignore = array_filter($ext_list_order_and_ignore, function($value, $key) {
-				return preg_match('/[0-9]/', $value) && $this->extension_manager->is_disabled($key);
+			$ext_list_order_and_ignore = array_filter($ext_list_order_and_ignore, function ($value, $key) use ($ext_list_disabled) {
+				return preg_match('/[0-9]/', $value) && isset($ext_list_disabled[$key]);
 			}, ARRAY_FILTER_USE_BOTH);
 			asort($ext_list_order_and_ignore, SORT_NUMERIC);
 			$ext_list_disabled = array_merge($ext_list_order_and_ignore, $ext_list_disabled);

@@ -4,7 +4,7 @@
 * Extension Manager Plus. An extension for the phpBB Forum Software package.
 *
 * @copyright (c) 2022, LukeWCS, https://www.wcsaga.org/
-* @license GNU General Public License, version 2 (GPL-2.0)
+* @license GNU General Public License, version 2 (GPL-2.0-only)
 *
 */
 
@@ -63,8 +63,8 @@ $lang = array_merge($lang, [
 
 	// order and ignore
 	'EXTMGRPLUS_ORDER_AND_IGNORE'				=> 'Reihenfolge und Ignorieren',
-	'EXTMGRPLUS_ORDER_EXPLAIN'					=> 'In der rechten Spalte der Erweiterungen-Liste kannst du Reihenfolge-Gruppen im Bereich 0 bis 99 für die Aktivierung definieren. Damit können Erweiterungen, von denen andere Erweiterungen abhängig sind, vor diesen aktiviert werden, um Fehlermeldungen zu vermeiden. Erweiterungen die zu einer solchen Gruppe gehören, werden zuerst aktiviert und zwar beginnend bei Gruppe 0, dann Gruppe 1 und so weiter. Die gleiche Gruppe kann bei beliebig vielen Erweiterungen definiert sein.',
-	'EXTMGRPLUS_IGNORE_EXPLAIN'					=> 'Zusätzlich gibt es die Möglichkeit eine Erweiterung sowohl bei Deaktivierung als auch Aktivierung ignorieren zu können, indem statt einer Zahl der Bindestrich „-“ definiert wird. In diesem Fall wird das zugehörige Kontrollkästchen deaktiviert.',
+	'EXTMGRPLUS_ORDER_EXPLAIN'					=> 'Reihenfolge: In der rechten Spalte der Erweiterungen-Liste kannst du Reihenfolge-Gruppen im Bereich 0 bis 99 für die Aktivierung definieren. Damit können Erweiterungen, von denen andere Erweiterungen abhängig sind, vor diesen aktiviert werden, um Fehlermeldungen zu vermeiden. Erweiterungen die zu einer solchen Gruppe gehören, werden zuerst aktiviert und zwar beginnend bei Gruppe 0, dann Gruppe 1 und so weiter. Die gleiche Gruppe kann bei beliebig vielen Erweiterungen definiert sein.',
+	'EXTMGRPLUS_IGNORE_EXPLAIN'					=> 'Ignorieren: Zusätzlich gibt es die Möglichkeit eine Erweiterung sowohl bei Deaktivierung als auch Aktivierung ignorieren zu können, indem statt einer Zahl der Bindestrich „-“ definiert wird. In diesem Fall wird das zugehörige Kontrollkästchen deaktiviert.',
 	'EXTMGRPLUS_ORDER_AND_IGNORE_SAVE'			=> 'Spalte speichern',
 
 	// ext manager
@@ -78,6 +78,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE'			=> 'Alle ausgewählten Erweiterungen deaktivieren.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'			=> 'Alle ausgewählten Erweiterungen aktivieren.',
 	'EXTMGRPLUS_TOOLTIP_ORDER_AND_IGNORE'		=> 'Reihenfolge-Gruppe im Bereich 0-99 oder ein Bindestrich „-“ um die Erweiterung zu ignorieren.',
+	'EXTMGRPLUS_TOOLTIP_SELECT_ALL'				=> 'Alle Erweiterungen auswählen oder abwählen.',
 
 	'EXTMGRPLUS_COL_MIGRATION_FILES'			=> 'Neue Migrationsdateien',
 	'EXTMGRPLUS_COL_SELECT'						=> 'Auswählen',

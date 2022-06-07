@@ -1,5 +1,21 @@
 ### 1.0.0
 
+#### 1.0.0-b12
+* Fix: Beim Aktivieren wurden auch diejenigen Exts mit aktiviert, bei denen eine Reihenfolge-Gruppe definiert war, obwohl diese gar nicht ausgewählt wurden.
+* Core:
+  * Code Optimierungen.
+* ExtMgr Template:
+  * Tooltip für die Alle-Checkboxen hinzugefügt.
+  * HTML optimiert. Unter anderem unnötige IDs bei Elementen entfernt, die auch per eindeutigen Namen angesprochen werden können.
+  * Bis auf die Überschriften wird jetzt der Tabelleninhalt komplett von Twig Makros generiert. Reduziert redundanten Code und so hat man alles zentral.
+* JS:
+  * An die entfernten IDs angepasst.
+* CSS:
+  * An die entfernten IDs angepasst.
+* Sprachdateien:
+  * Sprachvariable für den Checkbox Tooltip hinzugefügt.
+  * Kleinere Änderungen.
+  
 #### 1.0.0-b11
 * CSS:
   * In der Responsive-Ansicht wird bei geöffneten Einstellungen der Button "Spalte speichern" zentriert, damit dieser optisch zu den anderen Buttons passt. [Vorschlag von Kirk]

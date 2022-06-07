@@ -45,19 +45,10 @@ legend {
 	display: none;
 }
 
-#extmgrplus_button_order_and_ignore {
-	padding: 3px 2px;
-}
-
 /* LIST */
 
-#extmgrplus_list input[type="submit"]:disabled {
-	opacity: .4;
-	cursor: not-allowed;
-}
-
-#extmgrplus_list input[type="checkbox"]:disabled {
-	cursor: not-allowed;
+#extmgrplus_list input[name="extmgrplus_save_order_and_ignore"] {
+	padding: 3px 2px;
 }
 
 #extmgrplus_list th:nth-of-type(1n + 2), /* ext_ver and other columns to the right of it */
@@ -97,8 +88,8 @@ legend {
 	padding: 0 4px;
 }
 
-#extmgrplus_button_enable,
-#extmgrplus_button_disable {
+#extmgrplus_list input[name="extmgrplus_disable_all"],
+#extmgrplus_list input[name="extmgrplus_enable_all"] {
 	padding: 1px 5px;
 }
 
@@ -111,6 +102,15 @@ legend {
 	padding: 0 2px;
 	margin: 0 2px;
 	background-color: #F9F9F9;
+}
+
+#extmgrplus_list input[type="submit"]:disabled {
+	opacity: .4;
+	cursor: not-allowed;
+}
+
+#extmgrplus_list input[type="checkbox"]:disabled {
+	cursor: not-allowed;
 }
 
 /* FOOTER */

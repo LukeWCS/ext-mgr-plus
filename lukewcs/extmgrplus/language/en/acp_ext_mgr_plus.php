@@ -4,7 +4,7 @@
 * Extension Manager Plus. An extension for the phpBB Forum Software package.
 *
 * @copyright (c) 2022, LukeWCS, https://www.wcsaga.org/
-* @license GNU General Public License, version 2 (GPL-2.0)
+* @license GNU General Public License, version 2 (GPL-2.0-only)
 *
 */
 
@@ -63,8 +63,8 @@ $lang = array_merge($lang, [
 
 	// order and ignore
 	'EXTMGRPLUS_ORDER_AND_IGNORE'				=> 'Order and Ignore',
-	'EXTMGRPLUS_ORDER_EXPLAIN'					=> 'In the right column of the extensions list you can define order groups in the range 0 to 99 for activation. This allows extensions that other extensions depend on to be activated before them to avoid error messages. Extensions belonging to such a group are activated first, starting with group 0, then group 1 and so on. The same group can be defined for any number of extensions.',
-	'EXTMGRPLUS_IGNORE_EXPLAIN'					=> 'In addition, there is the option of being able to ignore an extension for both deactivation and activation by defining the hyphen "-" instead of a number. In this case, the associated check box is disabled.',
+	'EXTMGRPLUS_ORDER_EXPLAIN'					=> 'Order: In the right column of the extensions list you can define order groups in the range 0 to 99 for activation. This allows extensions that other extensions depend on to be activated before them to avoid error messages. Extensions belonging to such a group are activated first, starting with group 0, then group 1 and so on. The same group can be defined for any number of extensions.',
+	'EXTMGRPLUS_IGNORE_EXPLAIN'					=> 'Ignore: In addition, there is the option of being able to ignore an extension for both deactivation and activation by defining the hyphen "-" instead of a number. In this case, the associated check box is disabled.',
 	'EXTMGRPLUS_ORDER_AND_IGNORE_SAVE'			=> 'Save column',
 
 	// ext manager
@@ -78,6 +78,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE'			=> 'Disable all selected extensions.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'			=> 'Enable all selected extensions.',
 	'EXTMGRPLUS_TOOLTIP_ORDER_AND_IGNORE'		=> 'Order group in the range 0-99 or a hyphen "-" to ignore the extension.',
+	'EXTMGRPLUS_TOOLTIP_SELECT_ALL'				=> 'Select or deselect all extensions.',
 
 	'EXTMGRPLUS_COL_MIGRATION_FILES'			=> 'New migration files',
 	'EXTMGRPLUS_COL_SELECT'						=> 'Select',
