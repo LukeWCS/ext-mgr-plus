@@ -164,6 +164,7 @@ class ext_mgr_plus
 		{
 			$ext_list_order_and_ignore = [];
 		}
+
 		$ext_list_enabled_and_ignored = array_filter($ext_list_order_and_ignore, function($value, $key) {
 			return preg_match('/[-]/', $value) && $this->extension_manager->is_enabled($key);
 		}, ARRAY_FILTER_USE_BOTH);
@@ -171,13 +172,22 @@ class ext_mgr_plus
 			return preg_match('/[-]/', $value) && $this->extension_manager->is_disabled($key);
 		}, ARRAY_FILTER_USE_BOTH);
 
+		if (!$this->config['extmgrplus_enable_self_disable'])
+		{
+			$ext_list_enabled_and_ignored['lukewcs/extmgrplus'] = '-';
+		}
+		if (!$this->config['extmgrplus_enable_migrations'])
+		{
+			$ext_list_disabled_and_ignored = array_merge($ext_list_disabled_and_ignored, $ext_list_migrations);
+		}
+
 		$ext_count_available		= count($this->extension_manager->all_available());
 		$ext_count_configured		= count($this->extension_manager->all_configured());
 		$ext_count_migrations		= count($ext_list_migrations);
 		$ext_count_enabled			= count($this->extension_manager->all_enabled());
-		$ext_count_enabled_clean	= $ext_count_enabled - (!$this->config['extmgrplus_enable_self_disable'] ? 1 : 0) - count($ext_list_enabled_and_ignored);
+		$ext_count_enabled_clean	= $ext_count_enabled - count($ext_list_enabled_and_ignored);
 		$ext_count_disabled			= count($ext_list_disabled);
-		$ext_count_disabled_clean	= $ext_count_disabled - (!$this->config['extmgrplus_enable_migrations'] ? $ext_count_migrations : 0) - count($ext_list_disabled_and_ignored);
+		$ext_count_disabled_clean	= $ext_count_disabled - count($ext_list_disabled_and_ignored);
 
 		$ext_display_name	= $this->md_manager->get_metadata('display-name');
 		$ext_ver			= $this->md_manager->get_metadata('version');
