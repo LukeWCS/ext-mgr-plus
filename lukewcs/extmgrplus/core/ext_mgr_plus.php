@@ -134,8 +134,9 @@ class ext_mgr_plus
 			}
 			$this->config->set('extmgrplus_enable_log', $this->request->variable('extmgrplus_enable_log', 0));
 			$this->config->set('extmgrplus_enable_confirmation', $this->request->variable('extmgrplus_enable_confirmation', 0));
-			$this->config->set('extmgrplus_enable_self_disable', $this->request->variable('extmgrplus_enable_self_disable', 0));
 			$this->config->set('extmgrplus_enable_checkboxes_all_set', $this->request->variable('extmgrplus_enable_checkboxes_all_set', 0));
+			$this->config->set('extmgrplus_enable_order_and_ignore', $this->request->variable('extmgrplus_enable_order_and_ignore', 0));
+			$this->config->set('extmgrplus_enable_self_disable', $this->request->variable('extmgrplus_enable_self_disable', 0));
 			$this->config->set('extmgrplus_enable_migrations', $this->request->variable('extmgrplus_enable_migrations', 0));
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_SETTINGS_SAVED') . adm_back_link($this->u_action));
 		}
@@ -156,20 +157,23 @@ class ext_mgr_plus
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED') . adm_back_link($this->u_action));
 		}
 
+		$ext_list_enabled = $this->extension_manager->all_enabled();
 		$ext_list_disabled = $this->extension_manager->all_disabled();
 		$ext_list_migrations = $this->get_exts_with_new_migration($ext_list_disabled);
-		$ext_list_order_and_ignore = $this->config_text_get('extmgrplus_order_and_ignore_list', 'tech_names');
 
-		if (!is_array($ext_list_order_and_ignore))
+		if ($this->config['extmgrplus_enable_order_and_ignore'])
+		{
+			$ext_list_order_and_ignore = $this->config_text_get('extmgrplus_order_and_ignore_list', 'tech_names');
+		}
+		if (!isset($ext_list_order_and_ignore) || !is_array($ext_list_order_and_ignore))
 		{
 			$ext_list_order_and_ignore = [];
 		}
-
-		$ext_list_enabled_and_ignored = array_filter($ext_list_order_and_ignore, function($value, $key) {
-			return preg_match('/[-]/', $value) && $this->extension_manager->is_enabled($key);
+		$ext_list_enabled_and_ignored = array_filter($ext_list_order_and_ignore, function($value, $key) use ($ext_list_enabled) {
+			return preg_match('/^-$/', $value) && isset($ext_list_enabled[$key]);
 		}, ARRAY_FILTER_USE_BOTH);
-		$ext_list_disabled_and_ignored = array_filter($ext_list_order_and_ignore, function($value, $key) {
-			return preg_match('/[-]/', $value) && $this->extension_manager->is_disabled($key);
+		$ext_list_disabled_and_ignored = array_filter($ext_list_order_and_ignore, function($value, $key) use ($ext_list_disabled) {
+			return preg_match('/^-$/', $value) && isset($ext_list_disabled[$key]);
 		}, ARRAY_FILTER_USE_BOTH);
 
 		if (!$this->config['extmgrplus_enable_self_disable'])
@@ -184,7 +188,7 @@ class ext_mgr_plus
 		$ext_count_available		= count($this->extension_manager->all_available());
 		$ext_count_configured		= count($this->extension_manager->all_configured());
 		$ext_count_migrations		= count($ext_list_migrations);
-		$ext_count_enabled			= count($this->extension_manager->all_enabled());
+		$ext_count_enabled			= count($ext_list_enabled);
 		$ext_count_enabled_clean	= $ext_count_enabled - count($ext_list_enabled_and_ignored);
 		$ext_count_disabled			= count($ext_list_disabled);
 		$ext_count_disabled_clean	= $ext_count_disabled - count($ext_list_disabled_and_ignored);
@@ -215,8 +219,9 @@ class ext_mgr_plus
 
 			'EXTMGRPLUS_ENABLE_LOG'					=> $this->config['extmgrplus_enable_log'],
 			'EXTMGRPLUS_ENABLE_CONFIRMATION'		=> $this->config['extmgrplus_enable_confirmation'],
-			'EXTMGRPLUS_ENABLE_SELF_DISABLE'		=> $this->config['extmgrplus_enable_self_disable'],
 			'EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET'	=> $this->config['extmgrplus_enable_checkboxes_all_set'],
+			'EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE'	=> $this->config['extmgrplus_enable_order_and_ignore'],
+			'EXTMGRPLUS_ENABLE_SELF_DISABLE'		=> $this->config['extmgrplus_enable_self_disable'],
 			'EXTMGRPLUS_ENABLE_MIGRATIONS'			=> $this->config['extmgrplus_enable_migrations'],
 		]);
 	}
@@ -382,17 +387,20 @@ class ext_mgr_plus
 			$ext_list_marked = $this->request->variable('ext_disabled_mark', ['']);
 			$ext_list_disabled = array_flip($ext_list_marked);
 
-			$ext_list_order_and_ignore = $this->config_text_get('extmgrplus_order_and_ignore_list', 'tech_names');
-			if (!is_array($ext_list_order_and_ignore))
+			if ($this->config['extmgrplus_enable_order_and_ignore'])
 			{
-				$ext_list_order_and_ignore = [];
+				$ext_list_order = $this->config_text_get('extmgrplus_order_and_ignore_list', 'tech_names');
 			}
-			$ext_list_order_and_ignore = array_filter($ext_list_order_and_ignore, function ($value, $key) use ($ext_list_disabled) {
-				return preg_match('/[0-9]/', $value) && isset($ext_list_disabled[$key]);
+			if (!isset($ext_list_order) || !is_array($ext_list_order))
+			{
+				$ext_list_order = [];
+			}
+			$ext_list_order = array_filter($ext_list_order, function ($value, $key) use ($ext_list_disabled) {
+				return preg_match('/^[0-9]{1,2}$/', $value) && isset($ext_list_disabled[$key]);
 			}, ARRAY_FILTER_USE_BOTH);
-			asort($ext_list_order_and_ignore, SORT_NUMERIC);
-			$ext_list_disabled = array_merge($ext_list_order_and_ignore, $ext_list_disabled);
+			asort($ext_list_order, SORT_NUMERIC);
 
+			$ext_list_disabled = array_merge($ext_list_order, $ext_list_disabled);
 			$ext_count_disabled = count($ext_list_disabled);
 			$ext_count_success = 0;
 

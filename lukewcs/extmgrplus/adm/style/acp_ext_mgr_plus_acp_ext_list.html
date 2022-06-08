@@ -19,9 +19,12 @@
 			</td>
 			<td id="extmgrplus_link_bar">
 				<span class="small">
-					<a href="https://www.phpbb.com/go/customise/extensions/{{ CDB_EXT_VER }}" target="_blank">{{ lang('BROWSE_EXTENSIONS_DATABASE') }}</a> &bull; 
-					<a href="{{ U_VERSIONCHECK_FORCE }}">{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</a> &bull; 
-					<a href="javascript:ExtMgrPlus.ShowSettings();">{{ lang('SETTINGS') }}</a>
+					<a href="https://www.phpbb.com/go/customise/extensions/{{ CDB_EXT_VER }}" target="_blank">{{ lang('BROWSE_EXTENSIONS_DATABASE') }}</a>
+					&bull; <a href="{{ U_VERSIONCHECK_FORCE }}">{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</a>
+					&bull; <a href="javascript:ExtMgrPlus.ShowHideSettings();">{{ lang('SETTINGS') }}</a>
+					<span{{ !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE ? ' class="inactive"' }}>
+						&bull; <a href="javascript:ExtMgrPlus.ShowHideOrderIgnore();">{{ lang('EXTMGRPLUS_COL_ORDER_AND_IGNORE') }}</a>
+					</span>
 				</span>
 			</td>
 		</tr>
@@ -87,6 +90,17 @@
 		
 			<dl>
 				<dt>
+					<label>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE') ~ lang('COLON') }}</label><br>
+					<span>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN') }}</span>
+				</dt>
+				<dd>
+					<label><input type="radio" class="radio" name="extmgrplus_enable_order_and_ignore" value="1"{{ EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE == 1 ? ' checked' }}> {{ lang('YES') }}</label>
+					<label><input type="radio" class="radio" name="extmgrplus_enable_order_and_ignore" value="0"{{ EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE == 0 ? ' checked' }}> {{ lang('NO') }}</label>
+				</dd>
+			</dl>
+		
+			<dl>
+				<dt>
 					<label>{{ lang('EXTMGRPLUS_SELF_DISABLE') ~ lang('COLON') }}</label><br>
 					<span>{{ lang('EXTMGRPLUS_SELF_DISABLE_EXPLAIN') }}</span>
 				</dt>
@@ -119,7 +133,7 @@
 	</form>
 	
 	<form id="extmgrplus_list" method="post" action="{{ U_ACTION }}">
-		<fieldset class="extmgrplus_settings">
+		<fieldset id="extmgrplus_order_and_ignore">
 			<legend>{{ lang('EXTMGRPLUS_SETTINGS_TITLE') }}</legend>
 			
 			<dl>

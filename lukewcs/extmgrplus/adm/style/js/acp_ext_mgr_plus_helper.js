@@ -24,31 +24,63 @@ ExtMgrPlus.SetButtonState = function (CheckBoxes, Button) {
 	$('#extmgrplus_list input[name="extmgrplus_' + Button + '_all').prop('disabled', CheckBoxesChecked == 0);
 };
 
-ExtMgrPlus.ShowSettings = function () {
+ExtMgrPlus.ShowHideSettings = function () {
 	'use strict';
 
-	var SettingsState = $('#version_check_settings').css('display');
+	var show = ($('#version_check_settings').css('display') == 'none');
 
-	if (SettingsState == 'none') {
+	if (show) {
 		$('.extmgrplus_settings')							.show();
-		$('#extmgrplus_list th:nth-of-type(7)')				.show();
-		$('#extmgrplus_list td.row3:nth-of-type(4)')		.show();
-		$('#extmgrplus_list td:nth-of-type(7)')				.show();
-
-		$('#extmgrplus_list .table1 input[type="submit"]')	.hide();
-		$('#extmgrplus_list input[type="checkbox"]')		.hide();
-		$('#extmgrplus_list a')								.hide();
-		$('#extmgrplus_list td.row2 span')					.hide();
 	} else {
 		$('.extmgrplus_settings')							.hide();
-		$('#extmgrplus_list th:nth-of-type(7)')				.hide();
-		$('#extmgrplus_list td.row3:nth-of-type(4)')		.hide();
-		$('#extmgrplus_list td:nth-of-type(7)')				.hide();
+	}
+	$('#extmgrplus_order_and_ignore')						.hide();
+	ExtMgrPlus.ShowOrderColumn(false);
+	ExtMgrPlus.ShowActionElements(!show);
+};
 
+ExtMgrPlus.ShowHideOrderIgnore = function () {
+	'use strict';
+
+	var show = ($('#extmgrplus_order_and_ignore').css('display') == 'none');
+
+	if (show) {
+		$('#extmgrplus_order_and_ignore')					.show();
+	} else {
+		$('#extmgrplus_order_and_ignore')					.hide();
+	}
+	$('.extmgrplus_settings')								.hide();
+	ExtMgrPlus.ShowOrderColumn(show);
+	ExtMgrPlus.ShowActionElements(!show);
+};
+
+ExtMgrPlus.ShowActionElements = function (show) {
+	'use strict';
+
+	if (show) {
 		$('#extmgrplus_list .table1 input[type="submit"]')	.show();
 		$('#extmgrplus_list input[type="checkbox"]')		.show();
 		$('#extmgrplus_list a')								.show();
 		$('#extmgrplus_list td.row2 span')					.show();
+	} else {
+		$('#extmgrplus_list .table1 input[type="submit"]')	.hide();
+		$('#extmgrplus_list input[type="checkbox"]')		.hide();
+		$('#extmgrplus_list a')								.hide();
+		$('#extmgrplus_list td.row2 span')					.hide();
+	}
+};
+
+ExtMgrPlus.ShowOrderColumn = function (show) {
+	'use strict';
+
+	if (show) {
+		$('#extmgrplus_list th:nth-of-type(7)')				.show();
+		$('#extmgrplus_list td.row3:nth-of-type(4)')		.show();
+		$('#extmgrplus_list td:nth-of-type(7)')				.show();
+	} else {
+		$('#extmgrplus_list th:nth-of-type(7)')				.hide();
+		$('#extmgrplus_list td.row3:nth-of-type(4)')		.hide();
+		$('#extmgrplus_list td:nth-of-type(7)')				.hide();
 	}
 };
 
@@ -65,5 +97,3 @@ $('#extmgrplus_list').keypress(function(event) {
 		event.preventDefault();
 	}
 });
-
-// ExtMgrPlus.ShowSettings();

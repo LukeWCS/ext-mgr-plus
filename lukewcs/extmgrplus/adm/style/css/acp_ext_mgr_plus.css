@@ -41,7 +41,8 @@ legend {
 	color: #115098;
 }
 
-.extmgrplus_settings {
+.extmgrplus_settings,
+#extmgrplus_order_and_ignore {
 	display: none;
 }
 
@@ -104,8 +105,12 @@ legend {
 	background-color: #F9F9F9;
 }
 
+.inactive {
+	opacity: .5;
+}
+
 #extmgrplus_list input[type="submit"]:disabled {
-	opacity: .4;
+	opacity: .5;
 	cursor: not-allowed;
 }
 

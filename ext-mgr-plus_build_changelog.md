@@ -1,5 +1,19 @@
 ### 1.0.0
 
+#### 1.0.0-b14
+* Die Funktion Reihenfolge/Ignorieren ist nicht mehr Teil der Einstellungen, sondern ein separater Menüpunkt. Ist in der Handhabung angenehmer, da man dann nicht mehr so weit nach unten blättern muss und diese Funktion gehört technisch gesehen ohnehin nicht zu den Einstellungen. Es kann auch zwischen Einstellungen und Reihenfolge/Ignorieren gewechselt werden.
+* ExtMgr Template:
+  * Neue Option für Reihenfolge/Ignorieren hinzugefügt. Ist diese Option deaktiviert, wird der Menüpunkt "Reihenfolge/Ignorieren" abgeblendet.
+* Core:
+  * Code Optimierungen.
+* JS:
+  * An die Trennung von Einstellungen und Reihenfolge/Ignorieren angepasst.
+* CSS:
+  * An die Trennung von Einstellungen und Reihenfolge/Ignorieren angepasst.
+* Sprachdateien:
+  * Kleinere Änderungen.
+  * Sprachvariablen für die neue Option Reihenfolge/Ignorieren hinzugefügt.
+
 #### 1.0.0-b13
 * Fix: Wenn Migrationen deaktiviert sind und bei Exts mit neuen Migrationsdateien zusätzlich noch das Ignorieren-Merkmal gesetzt wird, dann konnte es vorkommen, das die Alle-Deaktivieren Checkbox deaktiviert wird, obwohl es noch schaltbare Exts gab. Der Grund lag in der falschen Berechnung der schaltbaren Exts. [Meldung von Kirk]
 
