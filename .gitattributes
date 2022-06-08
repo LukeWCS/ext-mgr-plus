@@ -2,5 +2,10 @@
 * text=auto
 * text eol=lf
 .github/ export-ignore
+docs/ export-ignore
 .editorconfig export-ignore
 .gitattributes export-ignore
+ext-mgr-plus_build_changelog.md export-ignore
+ext-mgr-plus_changelog_de.md export-ignore
+LICENSE export-ignore
+README.md export-ignore
