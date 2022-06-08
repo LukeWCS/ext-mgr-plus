@@ -157,6 +157,7 @@ class ext_mgr_plus
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED') . adm_back_link($this->u_action));
 		}
 
+		$notes = '';
 		$ext_list_enabled = $this->extension_manager->all_enabled();
 		$ext_list_disabled = $this->extension_manager->all_disabled();
 		$ext_list_migrations = $this->get_exts_with_new_migration($ext_list_disabled);
@@ -204,7 +205,7 @@ class ext_mgr_plus
 		$ext_lang_min_ver	= $this->md_manager->get_metadata()['extra']['lang-min-ver'];
 		$ext_lang_ver 		= $this->get_lang_ver('EXTMGRPLUS_LANG_EXT_VER');
 		$lang_outdated_msg	= $this->check_lang_ver($ext_display_name, $ext_lang_ver, $ext_lang_min_ver, 'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED');
-		$notes				= ($lang_outdated_msg) ? $this->add_note($notes, $lang_outdated_msg) : '';
+		$notes				= $this->add_note($notes, $lang_outdated_msg);
 
 		$this->template->assign_vars([
 			'EXTMGRPLUS_ALLOW_MIGRATIONS'			=> $this->config['extmgrplus_enable_migrations'],
@@ -546,8 +547,12 @@ class ext_mgr_plus
 	}
 
 	// Add text to submitted messages
-	private function add_note(string $messages, string $text): string
+	private function add_note(string $messages, string $text = ''): string
 	{
+		if ($text == '')
+		{
+			return $messages;
+		}
 		return $messages . (($messages != '') ? "\n" : '') . sprintf('<p>%s</p>', $text);
 	}
 

@@ -1,5 +1,8 @@
 ### 1.0.0
 
+#### 1.0.0
+* Release
+
 #### 1.0.0-b15
 * Fix: War die Option Reihenfolge/Ignorieren ausgeschaltet, dann wurde die zugehörige Spalte nicht mehr mit den gespeicherten Werten befüllt. Hat man dann die leere Spalte gespeichert, wurde diese ausserdem gelöscht.
 
