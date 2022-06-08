@@ -161,20 +161,25 @@ class ext_mgr_plus
 		$ext_list_disabled = $this->extension_manager->all_disabled();
 		$ext_list_migrations = $this->get_exts_with_new_migration($ext_list_disabled);
 
-		if ($this->config['extmgrplus_enable_order_and_ignore'])
-		{
-			$ext_list_order_and_ignore = $this->config_text_get('extmgrplus_order_and_ignore_list', 'tech_names');
-		}
-		if (!isset($ext_list_order_and_ignore) || !is_array($ext_list_order_and_ignore))
+		$ext_list_order_and_ignore = $this->config_text_get('extmgrplus_order_and_ignore_list', 'tech_names');
+		if (!is_array($ext_list_order_and_ignore))
 		{
 			$ext_list_order_and_ignore = [];
 		}
-		$ext_list_enabled_and_ignored = array_filter($ext_list_order_and_ignore, function($value, $key) use ($ext_list_enabled) {
-			return preg_match('/^-$/', $value) && isset($ext_list_enabled[$key]);
-		}, ARRAY_FILTER_USE_BOTH);
-		$ext_list_disabled_and_ignored = array_filter($ext_list_order_and_ignore, function($value, $key) use ($ext_list_disabled) {
-			return preg_match('/^-$/', $value) && isset($ext_list_disabled[$key]);
-		}, ARRAY_FILTER_USE_BOTH);
+		if ($this->config['extmgrplus_enable_order_and_ignore'])
+		{
+			$ext_list_enabled_and_ignored = array_filter($ext_list_order_and_ignore, function($value, $key) use ($ext_list_enabled) {
+				return preg_match('/^-$/', $value) && isset($ext_list_enabled[$key]);
+			}, ARRAY_FILTER_USE_BOTH);
+			$ext_list_disabled_and_ignored = array_filter($ext_list_order_and_ignore, function($value, $key) use ($ext_list_disabled) {
+				return preg_match('/^-$/', $value) && isset($ext_list_disabled[$key]);
+			}, ARRAY_FILTER_USE_BOTH);
+		}
+		else
+		{
+			$ext_list_enabled_and_ignored = [];
+			$ext_list_disabled_and_ignored = [];
+		}
 
 		if (!$this->config['extmgrplus_enable_self_disable'])
 		{

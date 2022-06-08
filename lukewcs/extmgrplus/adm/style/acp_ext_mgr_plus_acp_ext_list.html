@@ -218,7 +218,7 @@
 								{{ _self.extmgrplus_checkbox(
 									'enabled', 
 									enabled, 
-									(enabled.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_ENABLE_SELF_DISABLE) && EXTMGRPLUS_ORDER_AND_IGNORE[enabled.NAME] != '-', 
+									(enabled.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_ENABLE_SELF_DISABLE) && (EXTMGRPLUS_ORDER_AND_IGNORE[enabled.NAME] != '-' || !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE), 
 									EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 								) }}
 							</td>
@@ -290,7 +290,7 @@
 									{{ _self.extmgrplus_checkbox(
 										'disabled', 
 										disabled, 
-										(EXTMGRPLUS_MIGRATION_EXTS[disabled.NAME] is not defined || EXTMGRPLUS_ALLOW_MIGRATIONS) && EXTMGRPLUS_ORDER_AND_IGNORE[disabled.NAME] != '-',
+										(EXTMGRPLUS_MIGRATION_EXTS[disabled.NAME] is not defined || EXTMGRPLUS_ALLOW_MIGRATIONS) && (EXTMGRPLUS_ORDER_AND_IGNORE[disabled.NAME] != '-' || !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE),
 										EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 									) }}
 								{% endif %}

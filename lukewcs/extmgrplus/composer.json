@@ -3,8 +3,8 @@
 	"type": "phpbb-extension",
 	"description": "Extends the Extension Manager with the ability to disable and re-enable all installed extensions at once. An individual selection can also be made using checkboxes. Furthermore, sequence groups can be defined or extensions can be ignored. Additional information is also displayed in the Extension Manager.",
 	"homepage": "",
-	"version": "1.0.0-b14",
-	"time": "2022-05-28",
+	"version": "1.0.0-b15",
+	"time": "2022-06-08",
 	"license": "GPL-2.0-only",
 	"authors": [
 		{
