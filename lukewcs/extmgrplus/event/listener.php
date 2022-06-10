@@ -27,7 +27,7 @@ class listener implements EventSubscriberInterface
 			'core.common'							=> 'todo',
 			'core.acp_extensions_run_action_before'	=> 'ext_manager',
 			'core.acp_extensions_run_action_after'	=> 'ext_manager_tpl',
-			'core.adm_page_footer'					=> 'catch_errorbox',
+			'core.adm_page_footer'					=> 'catch_message',
 		];
 	}
 
@@ -46,8 +46,8 @@ class listener implements EventSubscriberInterface
 		$this->extmgrplus->ext_manager_tpl($event);
 	}
 
-	public function catch_errorbox()
+	public function catch_message()
 	{
-		$this->extmgrplus->catch_errorbox();
+		$this->extmgrplus->catch_message();
 	}
 }

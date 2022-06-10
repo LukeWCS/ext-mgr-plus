@@ -39,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, [
 	// language pack author
 	'EXTMGRPLUS_LANG_DESC'							=> 'English',
-	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.0.0',
+	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.0.1',
 	'EXTMGRPLUS_LANG_AUTHOR'	 					=> 'LukeWCS',
 
 	// heading
@@ -61,12 +61,12 @@ $lang = array_merge($lang, [
 	// settings expert
 	'EXTMGRPLUS_EXPERT_SETTINGS_TITLE'				=> 'Expert settings',
 	'EXTMGRPLUS_MIGRATIONS'							=> 'Allow migrations',
-	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'					=> 'This option is not without problems! If you enable this option, the "Enable selected" action can also activate those extensions that have new migration files. This applies to upgraded extensions that contain a "migrations" folder. However, updated extensions that contain an invalid migration can throw a fatal exception error that cannot be caught by EMP. As a result, it is not possible to display a controlled error message. It is recommended to leave this option disabled.',
+	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'					=> 'If you enable this option, the "Enable selected" action can also activate those extensions that have new migration files. This applies to upgraded extensions that contain a "migrations" folder. It is recommended to leave this option disabled.',
 
 	// order and ignore
 	'EXTMGRPLUS_ORDER_EXPLAIN'						=> 'Order: In the right column of the extensions list you can define order groups in the range 0 to 99 for activation. This allows extensions that other extensions depend on to be activated before them to avoid error messages. Extensions belonging to such a group are activated first, starting with group 0, then group 1 and so on. The same group can be defined for any number of extensions.',
 	'EXTMGRPLUS_IGNORE_EXPLAIN'						=> 'Ignore: In addition, there is the option of being able to ignore an extension for both deactivation and activation by defining the hyphen "-" instead of a number. In this case, the associated check box is disabled.',
-	'EXTMGRPLUS_ORDER_AND_IGNORE_SAVE'				=> 'Save column',
+	'EXTMGRPLUS_ORDER_AND_IGNORE_SAVE'				=> 'Save',
 
 	// ext manager
 	'EXTMGRPLUS_ALL_DISABLE'						=> 'Disable selected',
@@ -86,11 +86,11 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_COL_ORDER_AND_IGNORE'				=> 'Order/Ignore',
 
 	// misc
-	'EXTMGRPLUS_EXTENSION_PLURAL'					=> [
-														0 => "0 extensions",
-														1 => "%u extension",
-														2 => "%u extensions",
-													],
+	'EXTMGRPLUS_EXTENSION_PLURAL' => [
+													0 => "0 extensions",
+													1 => "%u extension",
+													2 => "%u extensions",
+	],
 
 	// messages
 	'EXTMGRPLUS_MSG_CONFIRM_DISABLE'				=> 'Are you sure that you wish to disable %s?',
@@ -98,7 +98,8 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_CONFIRM_MIGRATIONS'				=> 'Are you sure you want to allow migrations?',
 	'EXTMGRPLUS_MSG_SETTINGS_SAVED'					=> 'ExtMgrPlus: Settings saved successfully.',
 	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'			=> 'ExtMgrPlus: Column for order/ignore saved successfully.',
-	'EXTMGRPLUS_MSG_ACTIVATION_ABORTED'				=> 'ExtMgrPlus: The "Enable selected" operation was interrupted by the following extension',
+	'EXTMGRPLUS_MSG_PROCESS_ABORTED'				=> 'ExtMgrPlus: The "%s" operation was interrupted by the following extension:',
+	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'				=> 'The following extensions could not be activated:',
 	'EXTMGRPLUS_MSG_DEACTIVATION_SUCCESFULL'		=> 'ExtMgrPlus: %1$u of %2$u enabled extensions have been disabled.',
 	'EXTMGRPLUS_MSG_ACTIVATION_SUCCESFULL'			=> 'ExtMgrPlus: %1$u of %2$u disabled extensions have been enabled.',
 	'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED'			=> 'Note: The language pack for the extension <strong>%1$s</strong> is no longer up-to-date. (installed: %2$s / needed: %3$s)',

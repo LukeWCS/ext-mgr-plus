@@ -39,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, [
 	// language pack author
 	'EXTMGRPLUS_LANG_DESC'							=> 'Deutsch (Du)',
-	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.0.0',
+	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.0.1',
 	'EXTMGRPLUS_LANG_AUTHOR' 						=> 'LukeWCS',
 
 	// heading
@@ -61,12 +61,12 @@ $lang = array_merge($lang, [
 	// settings expert
 	'EXTMGRPLUS_EXPERT_SETTINGS_TITLE'				=> 'Experten-Einstellungen',
 	'EXTMGRPLUS_MIGRATIONS'							=> 'Erlaube Migrationen',
-	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'					=> 'Diese Option ist nicht unproblematisch! Wenn du diese Option aktivierst, dann können bei der Aktion „Ausgewählte aktivieren“ auch diejenigen Erweiterungen aktiviert werden, bei denen neue Migrationsdateien vorliegen. Das trifft auf aktualisierte Erweiterungen zu, die einen Ordner „migrations“ enthalten. Aktualisierte Erweiterungen die eine ungültige Migration enthalten, können jedoch einen schweren Ausnahmefehler verursachen, der von EMP nicht abgefangen werden kann. Dadurch ist es nicht möglich, eine kontrollierte Fehlermeldung anzeigen zu können. Es wird empfohlen, diese Option deaktiviert zu lassen.',
+	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'					=> 'Wenn du diese Option aktivierst, dann können bei der Aktion „Ausgewählte aktivieren“ auch diejenigen Erweiterungen aktiviert werden, bei denen neue Migrationsdateien vorliegen. Das trifft auf aktualisierte Erweiterungen zu, die einen Ordner „migrations“ enthalten. Es wird empfohlen, diese Option deaktiviert zu lassen.',
 
 	// order and ignore
 	'EXTMGRPLUS_ORDER_EXPLAIN'						=> 'Reihenfolge: In der rechten Spalte der Erweiterungen-Liste kannst du Reihenfolge-Gruppen im Bereich 0 bis 99 für die Aktivierung definieren. Damit können Erweiterungen, von denen andere Erweiterungen abhängig sind, vor diesen aktiviert werden, um Fehlermeldungen zu vermeiden. Erweiterungen die zu einer solchen Gruppe gehören, werden zuerst aktiviert und zwar beginnend bei Gruppe 0, dann Gruppe 1 und so weiter. Die gleiche Gruppe kann bei beliebig vielen Erweiterungen definiert sein.',
 	'EXTMGRPLUS_IGNORE_EXPLAIN'						=> 'Ignorieren: Zusätzlich gibt es die Möglichkeit eine Erweiterung sowohl bei Deaktivierung als auch Aktivierung ignorieren zu können, indem statt einer Zahl der Bindestrich „-“ definiert wird. In diesem Fall wird das zugehörige Kontrollkästchen deaktiviert.',
-	'EXTMGRPLUS_ORDER_AND_IGNORE_SAVE'				=> 'Spalte speichern',
+	'EXTMGRPLUS_ORDER_AND_IGNORE_SAVE'				=> 'Speichern',
 
 	// ext manager
 	'EXTMGRPLUS_ALL_DISABLE'						=> 'Ausgewählte deaktivieren',
@@ -86,11 +86,11 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_COL_ORDER_AND_IGNORE'				=> 'Reihenfolge/Ignorieren',
 
 	// misc
-	'EXTMGRPLUS_EXTENSION_PLURAL'					=> [
-														0 => "0 Erweiterungen",
-														1 => "%u Erweiterung",
-														2 => "%u Erweiterungen",
-													],
+	'EXTMGRPLUS_EXTENSION_PLURAL' => [
+													0 => "0 Erweiterungen",
+													1 => "%u Erweiterung",
+													2 => "%u Erweiterungen",
+	],
 
 	// messages
 	'EXTMGRPLUS_MSG_CONFIRM_DISABLE'				=> 'Bist du dir sicher, dass du %s deaktivieren möchtest?',
@@ -98,7 +98,8 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_CONFIRM_MIGRATIONS'				=> 'Bist du dir sicher, dass du Migrationen erlauben möchtest?',
 	'EXTMGRPLUS_MSG_SETTINGS_SAVED'					=> 'ExtMgrPlus: Einstellungen erfolgreich gespeichert.',
 	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'			=> 'ExtMgrPlus: Spalte für Reihenfolge/Ignorieren erfolgreich gespeichert.',
-	'EXTMGRPLUS_MSG_ACTIVATION_ABORTED'				=> 'ExtMgrPlus: Der Vorgang „Ausgewählte aktivieren“ wurde von folgender Erweiterung unterbrochen',
+	'EXTMGRPLUS_MSG_PROCESS_ABORTED'				=> 'ExtMgrPlus: Der Vorgang „%s“ wurde von folgender Erweiterung unterbrochen:',
+	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'				=> 'Die folgenden Erweiterungen konnten nicht aktiviert werden:',
 	'EXTMGRPLUS_MSG_DEACTIVATION_SUCCESFULL'		=> 'ExtMgrPlus: %1$u von %2$u aktivierten Erweiterungen wurden deaktiviert.',
 	'EXTMGRPLUS_MSG_ACTIVATION_SUCCESFULL'			=> 'ExtMgrPlus: %1$u von %2$u deaktivierten Erweiterungen wurden aktiviert.',
 	'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED'			=> 'Hinweis: Das Sprachpaket der Erweiterung <strong>%1$s</strong> ist nicht mehr aktuell. (vorhanden: %2$s / benötigt: %3$s)',

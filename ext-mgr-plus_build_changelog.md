@@ -1,7 +1,30 @@
+### 1.0.1
+
+#### 1.0.1-b1
+* Fehlerbehandlung allgemein:
+  * Sollten bei den Aktionen Aktivieren/Deaktivieren Fehler bei einzelnen Erweiterungen auftreten, wird jetzt in der Bestätigungsmeldung von EMP explizit auf solche Fehler hingewiesen, unter Angabe von Anzeigename, technischer Name und der jeweiligen Fehlermeldung. So erfährt man präzise welche Erweiterungen Probleme verursacht haben und den jeweiligen Grund dafür.
+  * Die Bestätigungsmeldung von EMP wird nur noch dann als positiv eingestuft (grüne `successbox`), wenn ausnahmslos alle Erweiterungen geschaltet werden konnten. Bisher genügte dazu eine einzige, erfolgreich geschaltete Erweiterung. Wenn nur eine einzige Erweiterung nicht geschaltet werden konnte, wird das negativ eingestuft (rote `errorbox`).
+  * Bei Meldungen von EMP ist jetzt immer erkennbar, welche Texte von EMP und welche von phpBB oder von einer Erweiterung stammen. Diejenigen Texte die nicht von EMP stammen, werden immer kursiv dargestellt.
+* Neue Fehlerbehandlung bei fehlgeschlagenen Migrationen:
+  * Ist die Option "Migrationen erlauben" aktiviert und es kommt während der Aktivierung einer Erweiterung mit neuen Migrationsdateien zu einem Fehler, dann führt das nicht länger zu einem "Fatal error" (quasi ein Absturz von phpBB). Stattdessen wird ein solcher Fehler abgefangen und nach Beendigung der Aktivierung eine kontrollierte Fehlermeldung dafür ausgegeben, mit der original Fehlermeldung von phpBB. Dadurch kann EMP problemlos mit der nächsten Erweiterung fortfahren und wird durch solche Migrationsfehler nicht länger beeinträchtigt.
+* Fehlerbehandlung verbessert bei nicht-erfüllten Voraussetzungen:
+  * Wenn bei einer Erweiterung per `ext.php` auf gültige Voraussetzungen geprüft wird, z.B. die phpBB oder PHP Version, dann wird bei negativem Ergebnis in der nachfolgenden Bestätigungsmeldung (nach Aktivierung) von EMP explizit darauf hingewiesen, dass die Voraussetzungen nicht erfüllt wurden. Dazu wird die original phpBB Fehlermeldung bezüglich nicht-erfüllter Voraussetzungen ausgegeben. Bisher konnte man in der Bestätigungsmeldung an der Angabe "x von y deaktivierten Erweiterungen wurden aktiviert." lediglich erkennen, ob Erweiterungen nicht aktiviert werden konnten. Es war jedoch nicht ersichtlich, welche Erweiterungen das betraf und auch nicht den jeweiligen Grund.
+* Fehlerbehandlung verbessert bei Abbruch durch Erweiterungen mit eigenen Fehlermeldungen in `ext.php` (`trigger_error`):
+  * Diese Funktion greift jetzt auch beim Deaktivieren, bisher war das nur beim Aktivieren der Fall.
+  * Der partielle Log-Eintrag ist nun auch beim Deaktivieren möglich.
+  * Es wird jetzt auch eine Bestätigungsmeldung (`successbox`) einer Erweiterung abgefangen. Auch eine positive Meldung bedeutet für EMP einen Abbruch.
+  * Bei Abbruch einer Aktion durch eine Bestätigungsmeldung (`successbox`) seitens einer Erweiterung, wird diese Meldung in eine Fehlermeldung (`errorbox`) umgewandelt, da EMP durch diese Meldung ja unterbrochen wurde.
+  * In der abgefangenen Fehlermeldung wird nun am Ende immer zusätzlich ein Zurück-Link hinzugefügt, mit der gleichen URL und Beschriftung ("Zurück zur Liste der Erweiterungen") wie sie phpBB bei den Bestätigungsmeldungen von "Aktivieren" und "Deaktivieren" verwendet. Der Grund dafür ist die Beobachtung, dass bei manchen Erweiterungen die Autoren vergessen haben, bei Fehlermeldungen einen Zurück-Link zu generieren.
+* Sprachdateien:
+  * Erklärung bei "Migrationen erlauben" entschärft, da Migration-Exceptions nun abgefangen werden können. Der mögliche "Fatal error" war der primäre Grund für die bisherige Formulierung der Erklärung.
+  * Neue Sprachvariable für die Auflistung aller Erweiterungen die nicht geschaltet werden konnten in einer Bestätigungsmeldung.
+  * Kleinere Änderungen.
+
 ### 1.0.0
 
 #### 1.0.0
 * Release
+* Benachrichtigungssystem so geändert, dass es nicht nur für ein veraltetes Sprachpaket genutzt werden kann. So war es eigentlich auch gedacht.
 
 #### 1.0.0-b15
 * Fix: War die Option Reihenfolge/Ignorieren ausgeschaltet, dann wurde die zugehörige Spalte nicht mehr mit den gespeicherten Werten befüllt. Hat man dann die leere Spalte gespeichert, wurde diese ausserdem gelöscht.
