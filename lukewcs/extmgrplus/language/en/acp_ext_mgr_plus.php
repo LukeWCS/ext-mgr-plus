@@ -61,7 +61,7 @@ $lang = array_merge($lang, [
 	// settings expert
 	'EXTMGRPLUS_EXPERT_SETTINGS_TITLE'				=> 'Expert settings',
 	'EXTMGRPLUS_MIGRATIONS'							=> 'Allow migrations',
-	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'					=> 'If you enable this option, the "Enable selected" action can also activate those extensions that have new migration files. This applies to upgraded extensions that contain a "migrations" folder. It is recommended to leave this option disabled.',
+	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'					=> 'If you enable this option, the "Enable selected" action can also activate those extensions that have new migration files. This applies to updated extensions that contain a "migrations" folder. Without this option, such extensions must be activated manually, which is recommended.',
 
 	// order and ignore
 	'EXTMGRPLUS_ORDER_EXPLAIN'						=> 'Order: In the right column of the extensions list you can define order groups in the range 0 to 99 for activation. This allows extensions that other extensions depend on to be activated before them to avoid error messages. Extensions belonging to such a group are activated first, starting with group 0, then group 1 and so on. The same group can be defined for any number of extensions.',

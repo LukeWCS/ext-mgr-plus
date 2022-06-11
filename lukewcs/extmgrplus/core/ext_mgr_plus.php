@@ -405,11 +405,19 @@ class ext_mgr_plus
 		}
 		else if ($action == "enable")
 		{
-			$ext_list_failed_activation = [];
-			$msg_failed = '';
-
 			$ext_list_marked = $this->request->variable('ext_disabled_mark', ['']);
 			$ext_list_disabled = array_flip($ext_list_marked);
+
+			$ext_list_failed_activation = [];
+			$msg_failed = '';
+			$ext_failed_msg = function ($display_name, $ext_name, $message)
+			{
+				return sprintf('<br><br><strong>%1$s (%2$s)</strong><br><br><em>%3$s</em>',
+					/* 1 */	$display_name,
+					/* 2 */	$ext_name,
+					/* 3 */	$message
+				);
+			};
 
 			if ($this->config['extmgrplus_enable_order_and_ignore'])
 			{
@@ -449,10 +457,8 @@ class ext_mgr_plus
 					}
 					catch (\phpbb\db\migration\exception $e)
 					{
-						$ext_list_failed_activation[$ext_name] = [
-							'display_name'	=> $ext_display_name,
-							'message'		=> $e->getLocalisedMessage($this->user),
-						];
+						$msg_failed = $ext_failed_msg($ext_display_name, $ext_name, $e->getLocalisedMessage($this->user));
+						trigger_error($this->language->lang('EXTMGRPLUS_MSG_PROCESS_ABORTED', $this->language->lang('EXTMGRPLUS_ALL_ENABLE')) . $msg_failed . $this->extmgr_back_link(), E_USER_WARNING);
 					}
 				}
 
@@ -460,11 +466,11 @@ class ext_mgr_plus
 				{
 					$ext_count_success++;
 				}
-				else if (!isset($ext_list_failed_activation[$ext_name]))
+				else
 				{
 					$ext_list_failed_activation[$ext_name] = [
 						'display_name'	=> $ext_display_name,
-						'message'		=> (!$this->extension_manager->get_extension($ext_name)->is_enableable() ? $this->language->lang('EXTENSION_NOT_ENABLEABLE') : '-'),
+						'message'		=> $this->language->lang('EXTENSION_NOT_ENABLEABLE'),
 					];
 				}
 
@@ -483,11 +489,7 @@ class ext_mgr_plus
 				$msg_failed = sprintf('<br><br>%s', $this->language->lang('EXTMGRPLUS_MSG_ACTIVATION_FAILED'));
 				foreach ($ext_list_failed_activation as $name => $vars)
 				{
-					$msg_failed .= sprintf('<br><br><strong>%1$s (%2$s)</strong><br><br><em>%3$s</em>',
-						/* 1 */	$vars['display_name'],
-						/* 2 */	$name,
-						/* 3 */	$vars['message']
-					);
+					$msg_failed .= $ext_failed_msg($vars['display_name'], $name, $vars['message']);
 				}
 			}
 

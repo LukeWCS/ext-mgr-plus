@@ -1,5 +1,10 @@
 ### 1.0.1
 
+#### 1.0.1-b2
+* Die Fehlerbehandlung bei fehlgeschlagener Migration musste angepasst werden. Sobald ein Migrationsfehler ausgelöst und abgefangen wurde, war es nicht mehr möglich, eine `trigger_error` Meldung abzufangen. Darum wird jetzt bei einem Migrationsfehler sofort der Vorgang abgebrochen und direkt eine Fehlermeldung ausgegeben. Nur so ist gewährleistet, dass in jedem Fehler-Szenario vollständige Informationen ausgegeben werden können.
+* Sprachdateien:
+  * Die Erklärung der Option "Erlaube Migrationen" auf den Stand von 1.0.0-b9 zurückgesetzt.
+
 #### 1.0.1-b1
 * Fehlerbehandlung allgemein:
   * Sollten bei den Aktionen Aktivieren/Deaktivieren Fehler bei einzelnen Erweiterungen auftreten, wird jetzt in der Bestätigungsmeldung von EMP explizit auf solche Fehler hingewiesen, unter Angabe von Anzeigename, technischer Name und der jeweiligen Fehlermeldung. So erfährt man präzise welche Erweiterungen Probleme verursacht haben und den jeweiligen Grund dafür.
@@ -16,7 +21,7 @@
   * Bei Abbruch einer Aktion durch eine Bestätigungsmeldung (`successbox`) seitens einer Erweiterung, wird diese Meldung in eine Fehlermeldung (`errorbox`) umgewandelt, da EMP durch diese Meldung ja unterbrochen wurde.
   * In der abgefangenen Fehlermeldung wird nun am Ende immer zusätzlich ein Zurück-Link hinzugefügt, mit der gleichen URL und Beschriftung ("Zurück zur Liste der Erweiterungen") wie sie phpBB bei den Bestätigungsmeldungen von "Aktivieren" und "Deaktivieren" verwendet. Der Grund dafür ist die Beobachtung, dass bei manchen Erweiterungen die Autoren vergessen haben, bei Fehlermeldungen einen Zurück-Link zu generieren.
 * Sprachdateien:
-  * Erklärung bei "Migrationen erlauben" entschärft, da Migration-Exceptions nun abgefangen werden können. Der mögliche "Fatal error" war der primäre Grund für die bisherige Formulierung der Erklärung.
+  * Erklärung bei "Erlaube Migrationen" entschärft, da Migration-Exceptions nun abgefangen werden können. Der mögliche "Fatal error" war einer der Gründe für die bisherige Formulierung der Erklärung.
   * Neue Sprachvariable für die Auflistung aller Erweiterungen die nicht geschaltet werden konnten in einer Bestätigungsmeldung.
   * Kleinere Änderungen.
 

@@ -61,7 +61,7 @@ $lang = array_merge($lang, [
 	// settings expert
 	'EXTMGRPLUS_EXPERT_SETTINGS_TITLE'				=> 'Experten-Einstellungen',
 	'EXTMGRPLUS_MIGRATIONS'							=> 'Erlaube Migrationen',
-	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'					=> 'Wenn Sie diese Option aktivieren, dann können bei der Aktion „Ausgewählte aktivieren“ auch diejenigen Erweiterungen aktiviert werden, bei denen neue Migrationsdateien vorliegen. Das trifft auf aktualisierte Erweiterungen zu, die einen Ordner „migrations“ enthalten. Es wird empfohlen, diese Option deaktiviert zu lassen.',
+	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'					=> 'Wenn Sie diese Option aktivieren, dann können bei der Aktion „Ausgewählte aktivieren“ auch diejenigen Erweiterungen aktiviert werden, bei denen neue Migrationsdateien vorliegen. Das trifft auf aktualisierte Erweiterungen zu, die einen Ordner „migrations“ enthalten. Ohne diese Option müssen solche Erweiterungen manuell aktiviert werden, was empfohlen wird.',
 
 	// order and ignore
 	'EXTMGRPLUS_ORDER_EXPLAIN'						=> 'Reihenfolge: In der rechten Spalte der Erweiterungen-Liste können Sie Reihenfolge-Gruppen im Bereich 0 bis 99 für die Aktivierung definieren. Damit können Erweiterungen, von denen andere Erweiterungen abhängig sind, vor diesen aktiviert werden, um Fehlermeldungen zu vermeiden. Erweiterungen die zu einer solchen Gruppe gehören, werden zuerst aktiviert und zwar beginnend bei Gruppe 0, dann Gruppe 1 und so weiter. Die gleiche Gruppe kann bei beliebig vielen Erweiterungen definiert sein.',
