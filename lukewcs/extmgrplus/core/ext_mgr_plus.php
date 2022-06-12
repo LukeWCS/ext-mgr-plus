@@ -138,7 +138,7 @@ class ext_mgr_plus
 			$this->config->set('extmgrplus_enable_order_and_ignore', $this->request->variable('extmgrplus_enable_order_and_ignore', 0));
 			$this->config->set('extmgrplus_enable_self_disable', $this->request->variable('extmgrplus_enable_self_disable', 0));
 			$this->config->set('extmgrplus_enable_migrations', $this->request->variable('extmgrplus_enable_migrations', 0));
-			trigger_error($this->language->lang('EXTMGRPLUS_MSG_SETTINGS_SAVED') . adm_back_link($this->u_action));
+			trigger_error($this->language->lang('EXTMGRPLUS_MSG_SETTINGS_SAVED') . adm_back_link($this->u_action), E_USER_NOTICE);
 		}
 		else if ($this->request->is_set_post('extmgrplus_save_order_and_ignore'))
 		{
@@ -154,7 +154,7 @@ class ext_mgr_plus
 			{
 				$this->config_text_set('extmgrplus_order_and_ignore_list', 'tech_names', $order_and_ignore_list);
 			}
-			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED') . adm_back_link($this->u_action));
+			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED') . adm_back_link($this->u_action), E_USER_NOTICE);
 		}
 
 		$notes = '';
@@ -401,7 +401,9 @@ class ext_mgr_plus
 
 			$this->set_last_ext_template_vars('', '', '');
 
-			trigger_error($this->language->lang('EXTMGRPLUS_MSG_DEACTIVATION_SUCCESFULL', $ext_count_success, $ext_count_enabled) . $this->extmgr_back_link(), (($ext_count_success != $ext_count_enabled) ? E_USER_WARNING : E_USER_NOTICE));
+			trigger_error($this->language->lang('EXTMGRPLUS_MSG_DEACTIVATION_SUCCESFULL', $ext_count_success, $ext_count_enabled) . $this->extmgr_back_link(),
+				(($ext_count_success != $ext_count_enabled) ? E_USER_WARNING : E_USER_NOTICE)
+			);
 		}
 		else if ($action == "enable")
 		{
@@ -458,7 +460,9 @@ class ext_mgr_plus
 					catch (\phpbb\db\migration\exception $e)
 					{
 						$msg_failed = $ext_failed_msg($ext_display_name, $ext_name, $e->getLocalisedMessage($this->user));
-						trigger_error($this->language->lang('EXTMGRPLUS_MSG_PROCESS_ABORTED', $this->language->lang('EXTMGRPLUS_ALL_ENABLE')) . $msg_failed . $this->extmgr_back_link(), E_USER_WARNING);
+						trigger_error($this->language->lang('EXTMGRPLUS_MSG_PROCESS_ABORTED', $this->language->lang('EXTMGRPLUS_ALL_ENABLE')) . $msg_failed . $this->extmgr_back_link(),
+							E_USER_WARNING
+						);
 					}
 				}
 
@@ -495,7 +499,9 @@ class ext_mgr_plus
 
 			$this->set_last_ext_template_vars('', '', '');
 
-			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ACTIVATION_SUCCESFULL', $ext_count_success, $ext_count_disabled) . $msg_failed . $this->extmgr_back_link(), (($ext_count_success != $ext_count_disabled) ? E_USER_WARNING : E_USER_NOTICE));
+			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ACTIVATION_SUCCESFULL', $ext_count_success, $ext_count_disabled) . $msg_failed . $this->extmgr_back_link(),
+				(($ext_count_success != $ext_count_disabled) ? E_USER_WARNING : E_USER_NOTICE)
+			);
 		}
 	}
 

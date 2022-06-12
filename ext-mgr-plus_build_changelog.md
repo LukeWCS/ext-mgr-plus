@@ -1,5 +1,8 @@
 ### 1.0.1
 
+#### 1.0.1
+* Release
+
 #### 1.0.1-b2
 * Die Fehlerbehandlung bei fehlgeschlagener Migration musste angepasst werden. Sobald ein Migrationsfehler ausgelöst und abgefangen wurde, war es nicht mehr möglich, eine `trigger_error` Meldung abzufangen. Darum wird jetzt bei einem Migrationsfehler sofort der Vorgang abgebrochen und direkt eine Fehlermeldung ausgegeben. Nur so ist gewährleistet, dass in jedem Fehler-Szenario vollständige Informationen ausgegeben werden können.
 * Sprachdateien:
