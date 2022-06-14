@@ -157,7 +157,6 @@ class ext_mgr_plus
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED') . adm_back_link($this->u_action), E_USER_NOTICE);
 		}
 
-		$notes = '';
 		$ext_list_enabled = $this->extension_manager->all_enabled();
 		$ext_list_disabled = $this->extension_manager->all_disabled();
 		$ext_list_migrations = $this->get_exts_with_new_migration($ext_list_disabled);
@@ -445,7 +444,8 @@ class ext_mgr_plus
 				$ext_display_name = $this->extension_manager->create_extension_metadata_manager($ext_name)->get_metadata('display-name');
 				$this->set_last_ext_template_vars('EXTMGRPLUS_ALL_ENABLE', $ext_name, $ext_display_name);
 
-				if ($this->extension_manager->is_disabled($ext_name))
+				$is_enableable = $this->extension_manager->get_extension($ext_name)->is_enableable();
+				if ($this->extension_manager->is_disabled($ext_name) && $is_enableable === true)
 				{
 					try
 					{
@@ -472,9 +472,10 @@ class ext_mgr_plus
 				}
 				else
 				{
+					$ext_response = (empty($is_enableable) ? $this->language->lang('EXTENSION_NOT_ENABLEABLE') : $is_enableable);
 					$ext_list_failed_activation[$ext_name] = [
 						'display_name'	=> $ext_display_name,
-						'message'		=> $this->language->lang('EXTENSION_NOT_ENABLEABLE'),
+						'message'		=> $ext_response,
 					];
 				}
 
@@ -493,6 +494,10 @@ class ext_mgr_plus
 				$msg_failed = sprintf('<br><br>%s', $this->language->lang('EXTMGRPLUS_MSG_ACTIVATION_FAILED'));
 				foreach ($ext_list_failed_activation as $name => $vars)
 				{
+					if (is_array($vars['message']))
+					{
+						$vars['message'] = implode('<br>', $vars['message']);
+					}
 					$msg_failed .= $ext_failed_msg($vars['display_name'], $name, $vars['message']);
 				}
 			}

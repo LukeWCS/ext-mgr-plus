@@ -1,3 +1,8 @@
+### 1.0.2
+
+#### 1.0.2-b1
+* Bei der Prüfung ob eine Ext aktiviert werden kann mittels `is_enableable()` (`ext.php`), wird jetzt auch ein String und ein Array als möglicher Rückgabewert akzeptiert und entsprechend aufbereitet. Diese Methode der Fehlerbehandlung wurde erst in phpBB 3.3.0 eingeführt und kann `trigger_error` ersetzen. [Hinweis von IMC]
+
 ### 1.0.1
 
 #### 1.0.1
