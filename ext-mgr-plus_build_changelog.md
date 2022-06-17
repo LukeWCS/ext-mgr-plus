@@ -1,5 +1,17 @@
 ### 1.0.2
 
+#### 1.0.2
+* Release
+* ExtMgr Template:
+  * Tooltips für die Icons der Spaltenüberschriften und Checkboxen hinzugefügt.
+  * Mehrere Änderungen in HTML und JS damit bestimmte Elemente flexibler angesprochen werden können.
+* Core:
+  * An die HTML Änderungen angepasst.
+  * Code Optimierungen.
+  * Formular Reihenfolge/Ignorieren wird jetzt ebenfalls auf Security Token geprüft.
+* Sprachdateien:
+  * Neue Sprachvariable für den Checkbox Tooltip.
+
 #### 1.0.2-b1
 * Bei der Prüfung ob eine Ext aktiviert werden kann mittels `is_enableable()` (`ext.php`), wird jetzt auch ein String und ein Array als möglicher Rückgabewert akzeptiert und entsprechend aufbereitet. Diese Methode der Fehlerbehandlung wurde erst in phpBB 3.3.0 eingeführt und kann `trigger_error` ersetzen. [Hinweis von IMC]
 

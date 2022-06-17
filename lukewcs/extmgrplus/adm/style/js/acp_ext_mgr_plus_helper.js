@@ -10,16 +10,17 @@
 ExtMgrPlus.CheckUncheckAll = function (CheckBoxes, Button) {
 	'use strict';
 
-	var ChkBoxAllState = $('#ext_' + CheckBoxes + '_mark_all').prop('checked');
+	var ChkBoxAllState = $('#extmgrplus_list input[name="ext_mark_all_' + CheckBoxes).prop('checked');
 
-	$('#extmgrplus_list input[name="ext_' + CheckBoxes + '_mark[]"').prop('checked', ChkBoxAllState)
+	$('#extmgrplus_list input[name="ext_mark_' + CheckBoxes + '[]"').filter(':enabled').prop('checked', ChkBoxAllState)
+
 	ExtMgrPlus.SetButtonState(CheckBoxes, Button);
 };
 
 ExtMgrPlus.SetButtonState = function (CheckBoxes, Button) {
 	'use strict';
 
-	var CheckBoxesChecked = $('#extmgrplus_list input[name="ext_' + CheckBoxes + '_mark[]"').filter(':checked').length;
+	var CheckBoxesChecked = $('#extmgrplus_list input[name="ext_mark_' + CheckBoxes + '[]"').filter(':checked').length;
 
 	$('#extmgrplus_list input[name="extmgrplus_' + Button + '_all').prop('disabled', CheckBoxesChecked == 0);
 };
@@ -35,7 +36,8 @@ ExtMgrPlus.ShowHideSettings = function () {
 		$('.extmgrplus_settings')							.hide();
 	}
 	$('#extmgrplus_order_and_ignore')						.hide();
-	ExtMgrPlus.ShowOrderColumn(false);
+
+	ExtMgrPlus.ShowOrderIgnoreColumn(false);
 	ExtMgrPlus.ShowActionElements(!show);
 };
 
@@ -50,7 +52,8 @@ ExtMgrPlus.ShowHideOrderIgnore = function () {
 		$('#extmgrplus_order_and_ignore')					.hide();
 	}
 	$('.extmgrplus_settings')								.hide();
-	ExtMgrPlus.ShowOrderColumn(show);
+
+	ExtMgrPlus.ShowOrderIgnoreColumn(show);
 	ExtMgrPlus.ShowActionElements(!show);
 };
 
@@ -59,18 +62,18 @@ ExtMgrPlus.ShowActionElements = function (show) {
 
 	if (show) {
 		$('#extmgrplus_list .table1 input[type="submit"]')	.show();
-		$('#extmgrplus_list input[type="checkbox"]')		.show();
+		$('#extmgrplus_list input[name*="ext_mark_"]')		.show();
 		$('#extmgrplus_list a')								.show();
 		$('#extmgrplus_list td.row2 span')					.show();
 	} else {
 		$('#extmgrplus_list .table1 input[type="submit"]')	.hide();
-		$('#extmgrplus_list input[type="checkbox"]')		.hide();
+		$('#extmgrplus_list input[name*="ext_mark_"]')		.hide();
 		$('#extmgrplus_list a')								.hide();
 		$('#extmgrplus_list td.row2 span')					.hide();
 	}
 };
 
-ExtMgrPlus.ShowOrderColumn = function (show) {
+ExtMgrPlus.ShowOrderIgnoreColumn = function (show) {
 	'use strict';
 
 	if (show) {
@@ -93,6 +96,8 @@ ExtMgrPlus.ConfirmMigrations = function () {
 };
 
 $('#extmgrplus_list').keypress(function(event) {
+	'use strict';
+
 	if (event.which == '13') {
 		event.preventDefault();
 	}

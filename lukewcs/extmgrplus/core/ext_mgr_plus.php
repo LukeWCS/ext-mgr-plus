@@ -63,7 +63,6 @@ class ext_mgr_plus
 			$safe_time_limit = (ini_get('max_execution_time') / 2);
 			$start_time = time();
 
-			$this->extension_manager->disable('lukewcs/extmgrplus');
 			while ($this->extension_manager->disable_step('lukewcs/extmgrplus'))
 			{
 				if ((time() - $start_time) >= $safe_time_limit)
@@ -112,7 +111,7 @@ class ext_mgr_plus
 
 		$this->u_action = $event['u_action'];
 		$this->language->add_lang('acp_ext_mgr_plus', 'lukewcs/extmgrplus');
-		$this->md_manager = $this->extension_manager->create_extension_metadata_manager('lukewcs/extmgrplus');
+		$md_manager = $this->extension_manager->create_extension_metadata_manager('lukewcs/extmgrplus');
 		$notes = '';
 
 		add_form_key('lukewcs_extmgrplus');
@@ -142,6 +141,10 @@ class ext_mgr_plus
 		}
 		else if ($this->request->is_set_post('extmgrplus_save_order_and_ignore'))
 		{
+			if (!check_form_key('lukewcs_extmgrplus'))
+			{
+				trigger_error($this->language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
+			}
 			$order_and_ignore_list = $this->request->variable('ext_order_and_ignore', ['' => '']);
 			$order_and_ignore_list = array_filter($order_and_ignore_list, function($value) {
 				return preg_match('/^[0-9]{1,2}$|^-$/', $value);
@@ -161,12 +164,11 @@ class ext_mgr_plus
 		$ext_list_disabled = $this->extension_manager->all_disabled();
 		$ext_list_migrations = $this->get_exts_with_new_migration($ext_list_disabled);
 
-		$ext_list_order_and_ignore = $this->config_text_get('extmgrplus_order_and_ignore_list', 'tech_names');
-		if (!is_array($ext_list_order_and_ignore))
-		{
-			$ext_list_order_and_ignore = [];
-		}
 		if ($this->config['extmgrplus_enable_order_and_ignore'])
+		{
+			$ext_list_order_and_ignore = $this->config_text_get('extmgrplus_order_and_ignore_list', 'tech_names');
+		}
+		if (isset($ext_list_order_and_ignore) && is_array($ext_list_order_and_ignore))
 		{
 			$ext_list_enabled_and_ignored = array_filter($ext_list_order_and_ignore, function($value, $key) use ($ext_list_enabled) {
 				return preg_match('/^-$/', $value) && isset($ext_list_enabled[$key]);
@@ -177,6 +179,7 @@ class ext_mgr_plus
 		}
 		else
 		{
+			$ext_list_order_and_ignore = [];
 			$ext_list_enabled_and_ignored = [];
 			$ext_list_disabled_and_ignored = [];
 		}
@@ -198,10 +201,10 @@ class ext_mgr_plus
 		$ext_count_disabled			= count($ext_list_disabled);
 		$ext_count_disabled_clean	= $ext_count_disabled - count($ext_list_disabled_and_ignored);
 
-		$ext_display_name	= $this->md_manager->get_metadata('display-name');
-		$ext_ver			= $this->md_manager->get_metadata('version');
+		$ext_display_name	= $md_manager->get_metadata('display-name');
+		$ext_ver			= $md_manager->get_metadata('version');
+		$ext_lang_min_ver	= $md_manager->get_metadata()['extra']['lang-min-ver'];
 
-		$ext_lang_min_ver	= $this->md_manager->get_metadata()['extra']['lang-min-ver'];
 		$ext_lang_ver 		= $this->get_lang_ver('EXTMGRPLUS_LANG_EXT_VER');
 		$lang_outdated_msg	= $this->check_lang_ver($ext_display_name, $ext_lang_ver, $ext_lang_min_ver, 'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED');
 		$notes				= $this->add_note($notes, $lang_outdated_msg);
@@ -281,7 +284,7 @@ class ext_mgr_plus
 	{
 		if ($this->request->is_set_post('extmgrplus_disable_all'))
 		{
-			$ext_list_marked = $this->request->variable('ext_enabled_mark', ['']);
+			$ext_list_marked = $this->request->variable('ext_mark_enabled', ['']);
 			$ext_count_enabled = count($ext_list_marked);
 
 			if ($this->config['extmgrplus_enable_confirmation'])
@@ -298,7 +301,7 @@ class ext_mgr_plus
 						build_hidden_fields([
 							'extmgrplus_disable_all'	=> true,
 							'extmgrplus_confirm_box'	=> true,
-							'ext_enabled_mark'			=> $ext_list_marked,
+							'ext_mark_enabled'			=> $ext_list_marked,
 							'u_action'					=> $this->u_action
 						]),
 						'@lukewcs_extmgrplus/acp_ext_mgr_plus_confirm_body.html'
@@ -312,7 +315,7 @@ class ext_mgr_plus
 		}
 		else if ($this->request->is_set_post('extmgrplus_enable_all'))
 		{
-			$ext_list_marked = $this->request->variable('ext_disabled_mark', ['']);
+			$ext_list_marked = $this->request->variable('ext_mark_disabled', ['']);
 			$ext_count_disabled = count($ext_list_marked);
 
 			if ($this->config['extmgrplus_enable_confirmation'])
@@ -329,7 +332,7 @@ class ext_mgr_plus
 						build_hidden_fields([
 							'extmgrplus_enable_all'		=> true,
 							'extmgrplus_confirm_box'	=> true,
-							'ext_disabled_mark'			=> $ext_list_marked,
+							'ext_mark_disabled'			=> $ext_list_marked,
 							'u_action'					=> $this->u_action
 						]),
 						'@lukewcs_extmgrplus/acp_ext_mgr_plus_confirm_body.html'
@@ -352,7 +355,7 @@ class ext_mgr_plus
 
 		if ($action == "disable")
 		{
-			$ext_list_marked = $this->request->variable('ext_enabled_mark', ['']);
+			$ext_list_marked = $this->request->variable('ext_mark_enabled', ['']);
 			$ext_list_enabled = array_flip($ext_list_marked);
 			$ext_count_enabled = count($ext_list_enabled);
 			$ext_count_success = 0;
@@ -400,18 +403,18 @@ class ext_mgr_plus
 
 			$this->set_last_ext_template_vars('', '', '');
 
-			trigger_error($this->language->lang('EXTMGRPLUS_MSG_DEACTIVATION_SUCCESFULL', $ext_count_success, $ext_count_enabled) . $this->extmgr_back_link(),
+			trigger_error($this->language->lang('EXTMGRPLUS_MSG_DEACTIVATION', $ext_count_success, $ext_count_enabled) . $this->extmgr_back_link(),
 				(($ext_count_success != $ext_count_enabled) ? E_USER_WARNING : E_USER_NOTICE)
 			);
 		}
 		else if ($action == "enable")
 		{
-			$ext_list_marked = $this->request->variable('ext_disabled_mark', ['']);
+			$ext_list_marked = $this->request->variable('ext_mark_disabled', ['']);
 			$ext_list_disabled = array_flip($ext_list_marked);
 
 			$ext_list_failed_activation = [];
 			$msg_failed = '';
-			$ext_failed_msg = function ($display_name, $ext_name, $message)
+			$get_failed_msg = function ($display_name, $ext_name, $message)
 			{
 				return sprintf('<br><br><strong>%1$s (%2$s)</strong><br><br><em>%3$s</em>',
 					/* 1 */	$display_name,
@@ -424,16 +427,19 @@ class ext_mgr_plus
 			{
 				$ext_list_order = $this->config_text_get('extmgrplus_order_and_ignore_list', 'tech_names');
 			}
-			if (!isset($ext_list_order) || !is_array($ext_list_order))
+			if (isset($ext_list_order) && is_array($ext_list_order))
+			{
+				$ext_list_order = array_filter($ext_list_order, function ($value, $key) use ($ext_list_disabled) {
+					return preg_match('/^[0-9]{1,2}$/', $value) && isset($ext_list_disabled[$key]);
+				}, ARRAY_FILTER_USE_BOTH);
+				asort($ext_list_order, SORT_NUMERIC);
+			}
+			else
 			{
 				$ext_list_order = [];
 			}
-			$ext_list_order = array_filter($ext_list_order, function ($value, $key) use ($ext_list_disabled) {
-				return preg_match('/^[0-9]{1,2}$/', $value) && isset($ext_list_disabled[$key]);
-			}, ARRAY_FILTER_USE_BOTH);
-			asort($ext_list_order, SORT_NUMERIC);
-
 			$ext_list_disabled = array_merge($ext_list_order, $ext_list_disabled);
+
 			$ext_count_disabled = count($ext_list_disabled);
 			$ext_count_success = 0;
 
@@ -459,7 +465,7 @@ class ext_mgr_plus
 					}
 					catch (\phpbb\db\migration\exception $e)
 					{
-						$msg_failed = $ext_failed_msg($ext_display_name, $ext_name, $e->getLocalisedMessage($this->user));
+						$msg_failed = $get_failed_msg($ext_display_name, $ext_name, $e->getLocalisedMessage($this->user));
 						trigger_error($this->language->lang('EXTMGRPLUS_MSG_PROCESS_ABORTED', $this->language->lang('EXTMGRPLUS_ALL_ENABLE')) . $msg_failed . $this->extmgr_back_link(),
 							E_USER_WARNING
 						);
@@ -472,10 +478,9 @@ class ext_mgr_plus
 				}
 				else
 				{
-					$ext_response = (empty($is_enableable) ? $this->language->lang('EXTENSION_NOT_ENABLEABLE') : $is_enableable);
 					$ext_list_failed_activation[$ext_name] = [
 						'display_name'	=> $ext_display_name,
-						'message'		=> $ext_response,
+						'message'		=> (empty($is_enableable) ? $this->language->lang('EXTENSION_NOT_ENABLEABLE') : $is_enableable),
 					];
 				}
 
@@ -498,13 +503,13 @@ class ext_mgr_plus
 					{
 						$vars['message'] = implode('<br>', $vars['message']);
 					}
-					$msg_failed .= $ext_failed_msg($vars['display_name'], $name, $vars['message']);
+					$msg_failed .= $get_failed_msg($vars['display_name'], $name, $vars['message']);
 				}
 			}
 
 			$this->set_last_ext_template_vars('', '', '');
 
-			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ACTIVATION_SUCCESFULL', $ext_count_success, $ext_count_disabled) . $msg_failed . $this->extmgr_back_link(),
+			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ACTIVATION', $ext_count_success, $ext_count_disabled) . $msg_failed . $this->extmgr_back_link(),
 				(($ext_count_success != $ext_count_disabled) ? E_USER_WARNING : E_USER_NOTICE)
 			);
 		}
@@ -585,7 +590,7 @@ class ext_mgr_plus
 	// Determine the version of the language pack with fallback to 0.0.0
 	private function get_lang_ver(string $lang_ext_ver): string
 	{
-		return $this->language->is_set($lang_ext_ver) ? preg_replace('/[^0-9.]/', '', $this->language->lang($lang_ext_ver)) : '0.0.0';
+		return ($this->language->is_set($lang_ext_ver) ? preg_replace('/[^0-9.]/', '', $this->language->lang($lang_ext_ver)) : '0.0.0');
 	}
 
 	// Check the language pack version for the minimum version and generate notice if outdated
@@ -658,7 +663,7 @@ class ext_mgr_plus
 			return null;
 		}
 		$vars = json_decode($this->config_text->get($container), true);
-		return ($vars !== null && isset($vars[$name])) ? $vars[$name] : null;
+		return (($vars !== null && isset($vars[$name])) ? $vars[$name] : null);
 	}
 
 	// Generates a back link to the extension manager page

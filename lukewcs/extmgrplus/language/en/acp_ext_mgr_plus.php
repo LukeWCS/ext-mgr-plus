@@ -39,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, [
 	// language pack author
 	'EXTMGRPLUS_LANG_DESC'							=> 'English',
-	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.0.1',
+	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.0.2',
 	'EXTMGRPLUS_LANG_AUTHOR'	 					=> 'LukeWCS',
 
 	// heading
@@ -80,6 +80,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'				=> 'Enable all selected extensions.',
 	'EXTMGRPLUS_TOOLTIP_ORDER_AND_IGNORE'			=> 'Order group in the range 0-99 or a hyphen "-" to ignore the extension.',
 	'EXTMGRPLUS_TOOLTIP_SELECT_ALL'					=> 'Select or deselect all extensions.',
+	'EXTMGRPLUS_TOOLTIP_SELECT'						=> 'Select or deselect extension.',
 
 	'EXTMGRPLUS_COL_MIGRATION_FILES'				=> 'New migration files',
 	'EXTMGRPLUS_COL_SELECT'							=> 'Select',
@@ -100,7 +101,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'			=> 'ExtMgrPlus: Column for order/ignore saved successfully.',
 	'EXTMGRPLUS_MSG_PROCESS_ABORTED'				=> 'ExtMgrPlus: The "%s" operation was interrupted by the following extension:',
 	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'				=> 'The following extensions could not be activated:',
-	'EXTMGRPLUS_MSG_DEACTIVATION_SUCCESFULL'		=> 'ExtMgrPlus: %1$u of %2$u enabled extensions have been disabled.',
-	'EXTMGRPLUS_MSG_ACTIVATION_SUCCESFULL'			=> 'ExtMgrPlus: %1$u of %2$u disabled extensions have been enabled.',
+	'EXTMGRPLUS_MSG_DEACTIVATION'					=> 'ExtMgrPlus: %1$u of %2$u enabled extensions have been disabled.',
+	'EXTMGRPLUS_MSG_ACTIVATION'						=> 'ExtMgrPlus: %1$u of %2$u disabled extensions have been enabled.',
 	'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED'			=> 'Note: The language pack for the extension <strong>%1$s</strong> is no longer up-to-date. (installed: %2$s / needed: %3$s)',
 ]);

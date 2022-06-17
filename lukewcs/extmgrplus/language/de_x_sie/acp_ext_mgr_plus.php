@@ -39,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, [
 	// language pack author
 	'EXTMGRPLUS_LANG_DESC'							=> 'Deutsch (Sie)',
-	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.0.1',
+	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.0.2',
 	'EXTMGRPLUS_LANG_AUTHOR'	 					=> 'LukeWCS',
 
 	// heading
@@ -80,6 +80,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'				=> 'Alle ausgewählten Erweiterungen aktivieren.',
 	'EXTMGRPLUS_TOOLTIP_ORDER_AND_IGNORE'			=> 'Reihenfolge-Gruppe im Bereich 0-99 oder ein Bindestrich „-“ um die Erweiterung zu ignorieren.',
 	'EXTMGRPLUS_TOOLTIP_SELECT_ALL'					=> 'Alle Erweiterungen auswählen oder abwählen.',
+	'EXTMGRPLUS_TOOLTIP_SELECT'						=> 'Erweiterung auswählen oder abwählen.',
 
 	'EXTMGRPLUS_COL_MIGRATION_FILES'				=> 'Neue Migrationsdateien',
 	'EXTMGRPLUS_COL_SELECT'							=> 'Auswählen',
@@ -100,7 +101,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'			=> 'ExtMgrPlus: Spalte für Reihenfolge/Ignorieren erfolgreich gespeichert.',
 	'EXTMGRPLUS_MSG_PROCESS_ABORTED'				=> 'ExtMgrPlus: Der Vorgang „%s“ wurde von folgender Erweiterung unterbrochen:',
 	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'				=> 'Die folgenden Erweiterungen konnten nicht aktiviert werden:',
-	'EXTMGRPLUS_MSG_DEACTIVATION_SUCCESFULL'		=> 'ExtMgrPlus: %1$u von %2$u aktivierten Erweiterungen wurden deaktiviert.',
-	'EXTMGRPLUS_MSG_ACTIVATION_SUCCESFULL'			=> 'ExtMgrPlus: %1$u von %2$u deaktivierten Erweiterungen wurden aktiviert.',
+	'EXTMGRPLUS_MSG_DEACTIVATION'					=> 'ExtMgrPlus: %1$u von %2$u aktivierten Erweiterungen wurden deaktiviert.',
+	'EXTMGRPLUS_MSG_ACTIVATION'						=> 'ExtMgrPlus: %1$u von %2$u deaktivierten Erweiterungen wurden aktiviert.',
 	'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED'			=> 'Hinweis: Das Sprachpaket der Erweiterung <strong>%1$s</strong> ist nicht mehr aktuell. (vorhanden: %2$s / benötigt: %3$s)',
 ]);
