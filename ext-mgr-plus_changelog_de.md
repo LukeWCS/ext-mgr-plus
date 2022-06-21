@@ -1,3 +1,12 @@
+### 1.0.3
+GH (2022--)
+
+* Fix: War die Funktion Reihenfolge/Ignorieren deaktiviert, wurden auch deren gespeicherten Daten nicht mehr geladen und konnten somit nicht mehr geändert werden. Hat man dann die leere Spalte gespeichert, wurden die Daten effektiv gelöscht. Ist die Funktion deaktiviert, bleibt die Beschriftung des Links zwar weiterhin abgeblendet sichtbar, der Link wird jedoch entfernt.
+* Reihenfolge/Ignorieren:
+  * Für die Reihenfolge-Gruppe und das Ignorieren-Merkmal gibt es jetzt separate Spalten. Durch diese Trennung wird die Handhabung der ignorierten Erweiterungen komfortabler und ermöglicht so auch einen einfacheren kurzfristigen Ausschluss ohne dazu eine vorhandene Reihenfolge-Gruppe entfernen zu müssen.
+  * Bereits vorhandene Daten für Reihenfolge/Ignorieren werden automatisch konvertiert.
+  * In den Einstellungen haben die Erklärungen für Reihenfolge/Ignorieren jetzt das entsprechende Spalten-Icon als Präfix.
+
 ### 1.0.2
 GH (2022-06-17)
 

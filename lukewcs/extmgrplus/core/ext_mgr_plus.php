@@ -122,6 +122,7 @@ class ext_mgr_plus
 			{
 				trigger_error($this->language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
 			}
+
 			$this->enable_disable_confirm();
 			return;
 		}
@@ -131,6 +132,7 @@ class ext_mgr_plus
 			{
 				trigger_error($this->language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
 			}
+
 			$this->config->set('extmgrplus_enable_log', $this->request->variable('extmgrplus_enable_log', 0));
 			$this->config->set('extmgrplus_enable_confirmation', $this->request->variable('extmgrplus_enable_confirmation', 0));
 			$this->config->set('extmgrplus_enable_checkboxes_all_set', $this->request->variable('extmgrplus_enable_checkboxes_all_set', 0));
@@ -139,24 +141,23 @@ class ext_mgr_plus
 			$this->config->set('extmgrplus_enable_migrations', $this->request->variable('extmgrplus_enable_migrations', 0));
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_SETTINGS_SAVED') . adm_back_link($this->u_action), E_USER_NOTICE);
 		}
-		else if ($this->request->is_set_post('extmgrplus_save_order_and_ignore'))
+		else if ($this->request->is_set_post('extmgrplus_save_order_and_ignore') && $this->config['extmgrplus_enable_order_and_ignore'])
 		{
 			if (!check_form_key('lukewcs_extmgrplus'))
 			{
 				trigger_error($this->language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
 			}
-			$order_and_ignore_list = $this->request->variable('ext_order_and_ignore', ['' => '']);
-			$order_and_ignore_list = array_filter($order_and_ignore_list, function($value) {
-				return preg_match('/^[0-9]{1,2}$|^-$/', $value);
+
+			$order_list = $this->request->variable('ext_order', ['' => '']);
+			$ignore_list = $this->request->variable('ext_ignore', ['']);
+
+			$order_list = array_filter($order_list, function($value) {
+				return preg_match('/^[0-9]{1,2}$/', $value);
 			});
-			if (count($order_and_ignore_list) == 0)
-			{
-				$this->config_text_set('extmgrplus_order_and_ignore_list', null, null);
-			}
-			else
-			{
-				$this->config_text_set('extmgrplus_order_and_ignore_list', 'tech_names', $order_and_ignore_list);
-			}
+
+			$this->config_text_set('extmgrplus_order_and_ignore_list', 'order', count($order_list) ? $order_list : null);
+			$this->config_text_set('extmgrplus_order_and_ignore_list', 'ignore', count($ignore_list) ? $ignore_list : null);
+
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED') . adm_back_link($this->u_action), E_USER_NOTICE);
 		}
 
@@ -166,20 +167,26 @@ class ext_mgr_plus
 
 		if ($this->config['extmgrplus_enable_order_and_ignore'])
 		{
-			$ext_list_order_and_ignore = $this->config_text_get('extmgrplus_order_and_ignore_list', 'tech_names');
+			$ext_list_ignore = $this->config_text_get('extmgrplus_order_and_ignore_list', 'ignore');
+			$ext_list_order = $this->config_text_get('extmgrplus_order_and_ignore_list', 'order');
 		}
-		if (isset($ext_list_order_and_ignore) && is_array($ext_list_order_and_ignore))
+		if (!isset($ext_list_order) || !is_array($ext_list_order))
 		{
-			$ext_list_enabled_and_ignored = array_filter($ext_list_order_and_ignore, function($value, $key) use ($ext_list_enabled) {
-				return preg_match('/^-$/', $value) && isset($ext_list_enabled[$key]);
+			$ext_list_order = [];
+		}
+		if (isset($ext_list_ignore) && is_array($ext_list_ignore))
+		{
+			$ext_list_ignore = array_flip($ext_list_ignore);
+			$ext_list_enabled_and_ignored = array_filter($ext_list_ignore, function($value, $key) use ($ext_list_enabled) {
+				return isset($ext_list_enabled[$key]);
 			}, ARRAY_FILTER_USE_BOTH);
-			$ext_list_disabled_and_ignored = array_filter($ext_list_order_and_ignore, function($value, $key) use ($ext_list_disabled) {
-				return preg_match('/^-$/', $value) && isset($ext_list_disabled[$key]);
+			$ext_list_disabled_and_ignored = array_filter($ext_list_ignore, function($value, $key) use ($ext_list_disabled) {
+				return isset($ext_list_disabled[$key]);
 			}, ARRAY_FILTER_USE_BOTH);
 		}
 		else
 		{
-			$ext_list_order_and_ignore = [];
+			$ext_list_ignore = [];
 			$ext_list_enabled_and_ignored = [];
 			$ext_list_disabled_and_ignored = [];
 		}
@@ -211,7 +218,8 @@ class ext_mgr_plus
 
 		$this->template->assign_vars([
 			'EXTMGRPLUS_ALLOW_MIGRATIONS'			=> $this->config['extmgrplus_enable_migrations'],
-			'EXTMGRPLUS_ORDER_AND_IGNORE'			=> $ext_list_order_and_ignore,
+			'EXTMGRPLUS_ORDER'						=> $ext_list_order,
+			'EXTMGRPLUS_IGNORE'						=> $ext_list_ignore,
 			'EXTMGRPLUS_COUNT_AVAILABLE'			=> $ext_count_available,
 			'EXTMGRPLUS_COUNT_ENABLED'				=> $ext_count_enabled,
 			'EXTMGRPLUS_COUNT_ENABLED_CLEAN'		=> $ext_count_enabled_clean,
@@ -425,12 +433,12 @@ class ext_mgr_plus
 
 			if ($this->config['extmgrplus_enable_order_and_ignore'])
 			{
-				$ext_list_order = $this->config_text_get('extmgrplus_order_and_ignore_list', 'tech_names');
+				$ext_list_order = $this->config_text_get('extmgrplus_order_and_ignore_list', 'order');
 			}
 			if (isset($ext_list_order) && is_array($ext_list_order))
 			{
 				$ext_list_order = array_filter($ext_list_order, function ($value, $key) use ($ext_list_disabled) {
-					return preg_match('/^[0-9]{1,2}$/', $value) && isset($ext_list_disabled[$key]);
+					return isset($ext_list_disabled[$key]);
 				}, ARRAY_FILTER_USE_BOTH);
 				asort($ext_list_order, SORT_NUMERIC);
 			}

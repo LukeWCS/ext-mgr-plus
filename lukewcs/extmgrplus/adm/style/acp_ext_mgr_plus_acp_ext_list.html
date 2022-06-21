@@ -22,9 +22,11 @@
 					<a href="https://www.phpbb.com/go/customise/extensions/{{ CDB_EXT_VER }}" target="_blank">{{ lang('BROWSE_EXTENSIONS_DATABASE') }}</a>
 					&bull; <a href="{{ U_VERSIONCHECK_FORCE }}">{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</a>
 					&bull; <a href="javascript:ExtMgrPlus.ShowHideSettings();">{{ lang('SETTINGS') }}</a>
-					<span{{ !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE ? ' class="inactive"' }}>
-						&bull; <a href="javascript:ExtMgrPlus.ShowHideOrderIgnore();">{{ lang('EXTMGRPLUS_COL_ORDER_AND_IGNORE') }}</a>
-					</span>
+					{% if EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE  %}
+						&bull; <a href="javascript:ExtMgrPlus.ShowHideOrderIgnore();">{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</a>
+					{% else %}
+						<span class="inactive">&bull; {{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</span>
+					{% endif %}
 				</span>
 			</td>
 		</tr>
@@ -139,9 +141,9 @@
 			<dl>
 				<dt>
 					<label>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE') ~ lang('COLON') }}</label><br>
-					<span>{{ lang('EXTMGRPLUS_ORDER_EXPLAIN') }}</span>
+					<span class="icon fa-sort"></span><span>{{ lang('EXTMGRPLUS_ORDER_EXPLAIN') }}</span>
 					<br><br>
-					<span>{{ lang('EXTMGRPLUS_IGNORE_EXPLAIN') }}</span>
+					<span class="icon fa-ban"></span><span>{{ lang('EXTMGRPLUS_IGNORE_EXPLAIN') }}</span>
 				</dt>
 				<dd>
 					<input class="button1" type="submit" name="extmgrplus_save_order_and_ignore" value="{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE_SAVE') }}">
@@ -150,7 +152,7 @@
 		</fieldset>
 
 		<table class="table1">
-			<col class="row1"><col class="row1"><col class="row1"><col class="row1"><col class="row2"><col class="row2"><col class="row2">
+			<col class="row1"><col class="row1"><col class="row1"><col class="row1"><col class="row2"><col class="row2"><col class="row2"><col class="row2">
 			<thead>
 				<tr>
 					<th>
@@ -171,8 +173,11 @@
 					<th title="{{ lang('EXTMGRPLUS_COL_SELECT') }}">
 						<span class="icon fa-check"></span><span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_SELECT') }}</span>
 					</th>
-					<th style="display: none" title="{{ lang('EXTMGRPLUS_COL_ORDER_AND_IGNORE') }}">
-						<span class="icon fa-sort"></span><span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_ORDER_AND_IGNORE') }}</span>
+					<th style="display: none" title="{{ lang('EXTMGRPLUS_COL_ORDER') }}">
+						<span class="icon fa-sort"></span><span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_ORDER') }}</span>
+					</th>
+					<th style="display: none" title="{{ lang('EXTMGRPLUS_COL_IGNORE') }}">
+						<span class="icon fa-ban"></span><span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_IGNORE') }}</span>
 					</th>
 				</tr>
 			</thead>
@@ -197,6 +202,8 @@
 						</td>
 						<td class="row3" style="display: none">
 						</td>
+						<td class="row3" style="display: none">
+						</td>
 					</tr>
 					{% for enabled in loops.enabled %}
 						<tr class="ext_enabled row-highlight">
@@ -215,16 +222,27 @@
 								{{ _self.extmgrplus_actions(enabled) }}
 							</td>
 							<td>
-								{{ _self.extmgrplus_checkbox(
+								{{ _self.extmgrplus_checkbox_select(
 									'enabled', 
 									enabled, 
-									(enabled.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_ENABLE_SELF_DISABLE) && (EXTMGRPLUS_ORDER_AND_IGNORE[enabled.NAME] != '-' || !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE), 
+									(enabled.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_ENABLE_SELF_DISABLE) && (EXTMGRPLUS_IGNORE[enabled.NAME] is not defined || !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE), 
 									EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 								) }}
 							</td>
 							<td style="display: none">
 								{% if enabled.NAME != 'lukewcs/extmgrplus' %}
-									{{ _self.extmgrplus_inputbox(enabled, EXTMGRPLUS_ORDER_AND_IGNORE) }}
+									{{ _self.extmgrplus_inputbox(
+										enabled, 
+										EXTMGRPLUS_ORDER
+									) }}
+								{% endif %}
+							</td>
+							<td style="display: none">
+								{% if enabled.NAME != 'lukewcs/extmgrplus' %}
+									{{ _self.extmgrplus_checkbox_ignore(
+										enabled, 
+										EXTMGRPLUS_IGNORE[enabled.NAME] is defined
+									) }}
 								{% endif %}
 							</td>
 						</tr>
@@ -252,6 +270,8 @@
 							</td>
 							<td class="row3" style="display: none">
 							</td>
+							<td class="row3" style="display: none">
+							</td>
 						</tr>
 					{% endif %}
 					{% for disabled in loops.disabled %}
@@ -264,6 +284,8 @@
 								<td class="row3">
 								</td>
 								<td class="row3">
+								</td>
+								<td class="row3" style="display: none">
 								</td>
 								<td class="row3" style="display: none">
 								</td>
@@ -287,16 +309,25 @@
 							</td>
 							<td>
 								{% if disabled.actions|length == 2 %}
-									{{ _self.extmgrplus_checkbox(
+									{{ _self.extmgrplus_checkbox_select(
 										'disabled', 
 										disabled, 
-										(EXTMGRPLUS_MIGRATION_EXTS[disabled.NAME] is not defined || EXTMGRPLUS_ALLOW_MIGRATIONS) && (EXTMGRPLUS_ORDER_AND_IGNORE[disabled.NAME] != '-' || !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE),
+										(EXTMGRPLUS_MIGRATION_EXTS[disabled.NAME] is not defined || EXTMGRPLUS_ALLOW_MIGRATIONS) && (EXTMGRPLUS_IGNORE[disabled.NAME] is not defined || !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE),
 										EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 									) }}
 								{% endif %}
 							</td>
 							<td style="display: none">
-								{{ _self.extmgrplus_inputbox(disabled, EXTMGRPLUS_ORDER_AND_IGNORE) }}
+								{{ _self.extmgrplus_inputbox(
+									disabled, 
+									EXTMGRPLUS_ORDER
+								) }}
+							</td>
+							<td style="display: none">
+								{{ _self.extmgrplus_checkbox_ignore(
+									disabled, 
+									EXTMGRPLUS_IGNORE[disabled.NAME] is defined
+								) }}
 							</td>
 						</tr>
 					{% endfor %}
@@ -410,7 +441,7 @@
 {% endspaceless %}
 {% endmacro %}
 
-{% macro extmgrplus_checkbox(section, ext_obj, enabled = true, checked = false) %}
+{% macro extmgrplus_checkbox_select(section, ext_obj, enabled = true, checked = false) %}
 {% spaceless %}
 	{% if section == 'enabled' %}
 		<input type="checkbox" class="radio"{{ enabled ? ' onchange="ExtMgrPlus.SetButtonState(\'enabled\', \'disable\')"' }} name="ext_mark_enabled[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT') }}"{{ enabled ? ' value="' ~ ext_obj.NAME ~ '"' }}{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
@@ -420,8 +451,14 @@
 {% endspaceless %}
 {% endmacro %}
 
-{% macro extmgrplus_inputbox(ext_obj, order_ignore_list) %}
+{% macro extmgrplus_checkbox_ignore(ext_obj, checked = false) %}
 {% spaceless %}
-	<input type="text" size="1" maxlength="2" name="ext_order_and_ignore[{{ ext_obj.NAME }}]" title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER_AND_IGNORE')|e('html') }}" value="{{ order_ignore_list[ext_obj.NAME] }}" pattern="^[0-9]{1,2}$|^-$">
+	<input type="checkbox" class="radio" name="ext_ignore[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_IGNORE')|e('html') }}" value="{{ ext_obj.NAME }}"{{ checked ? ' checked' }}>
+{% endspaceless %}
+{% endmacro %}
+
+{% macro extmgrplus_inputbox(ext_obj, order_list) %}
+{% spaceless %}
+	<input type="text" size="1" maxlength="2" name="ext_order[{{ ext_obj.NAME }}]" title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER')|e('html') }}" value="{{ order_list[ext_obj.NAME] }}" pattern="^[0-9]{1,2}$">
 {% endspaceless %}
 {% endmacro %}

@@ -37,7 +37,7 @@ ExtMgrPlus.ShowHideSettings = function () {
 	}
 	$('#extmgrplus_order_and_ignore')						.hide();
 
-	ExtMgrPlus.ShowOrderIgnoreColumn(false);
+	ExtMgrPlus.ShowOrderIgnoreColumns(false);
 	ExtMgrPlus.ShowActionElements(!show);
 };
 
@@ -53,7 +53,7 @@ ExtMgrPlus.ShowHideOrderIgnore = function () {
 	}
 	$('.extmgrplus_settings')								.hide();
 
-	ExtMgrPlus.ShowOrderIgnoreColumn(show);
+	ExtMgrPlus.ShowOrderIgnoreColumns(show);
 	ExtMgrPlus.ShowActionElements(!show);
 };
 
@@ -73,17 +73,23 @@ ExtMgrPlus.ShowActionElements = function (show) {
 	}
 };
 
-ExtMgrPlus.ShowOrderIgnoreColumn = function (show) {
+ExtMgrPlus.ShowOrderIgnoreColumns = function (show) {
 	'use strict';
 
 	if (show) {
 		$('#extmgrplus_list th:nth-of-type(7)')				.show();
 		$('#extmgrplus_list td.row3:nth-of-type(4)')		.show();
 		$('#extmgrplus_list td:nth-of-type(7)')				.show();
+		$('#extmgrplus_list th:nth-of-type(8)')				.show();
+		$('#extmgrplus_list td.row3:nth-of-type(5)')		.show();
+		$('#extmgrplus_list td:nth-of-type(8)')				.show();
 	} else {
 		$('#extmgrplus_list th:nth-of-type(7)')				.hide();
 		$('#extmgrplus_list td.row3:nth-of-type(4)')		.hide();
 		$('#extmgrplus_list td:nth-of-type(7)')				.hide();
+		$('#extmgrplus_list th:nth-of-type(8)')				.hide();
+		$('#extmgrplus_list td.row3:nth-of-type(5)')		.hide();
+		$('#extmgrplus_list td:nth-of-type(8)')				.hide();
 	}
 };
 
@@ -102,3 +108,5 @@ $('#extmgrplus_list').keypress(function(event) {
 		event.preventDefault();
 	}
 });
+
+// ExtMgrPlus.ShowHideOrderIgnore();
