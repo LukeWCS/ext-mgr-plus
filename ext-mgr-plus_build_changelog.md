@@ -1,17 +1,24 @@
 ### 1.0.3
 
+#### 1.0.3-b2
+* ExtMgr Template:
+  * Wird bei Ignorieren eine Checkbox gesetzt, wird das zugehörige Textfeld für Reihenfolge-Gruppe abgeblendet dargestellt.
+  * Javascript dafür erweitert. Kleinere Fehler behoben.
+* Core:
+  * Code Optimierungen.
+
 #### 1.0.3-b1
-* Fix: War die Funktion Reihenfolge/Ignorieren deaktiviert, wurden auch deren gespeicherten Daten nicht mehr geladen und konnten somit nicht mehr geändert werden. Hat man dann die leere Spalte gespeichert, wurden die Daten effektiv gelöscht. Ist die Funktion deaktiviert, bleibt die Beschriftung des Links zwar abgeblendet weiterhin sichtbar, der Link wird jedoch entfernt.
+* Fix: War die Funktion Reihenfolge/Ignorieren deaktiviert, wurden auch deren gespeicherten Daten nicht mehr geladen und konnten somit nicht mehr geändert werden. Hat man dann die leere Spalte gespeichert, wurden die Daten effektiv gelöscht. Um das zu verhindern, bleibt die Beschriftung des Links zu Reihenfolge/Ignorieren zwar weiterhin abgeblendet sichtbar, wenn die Funktion deaktiviert ist, der Link wird jedoch entfernt und als Cursor erscheint das Gesperrt-Symbol.
 * Reihenfolge/Ignorieren:
-  * Reihenfolge-Gruppe und Ignorieren-Merkmal werden jetzt in separaten Spalten definiert und verwaltet.
+  * Reihenfolge-Gruppe und Ignorieren-Merkmal werden jetzt in separaten Spalten verwaltet.
   * Vorhandene Daten werden per Migration automatisch in das neue Array Format konvertiert.
-  * CSS angepasst.
 * ExtMgr Template:
   * HTML und Javascript für die getrennte Verwaltung von Reihenfolge/Ignorieren erweitert.
   * In den Einstellungen haben die Erklärungen für Reihenfolge/Ignorieren jetzt das entsprechende Spalten-Icon als Präfix.
+  * CSS angepasst.
 * Sprachdateien:
   * Neue Sprachvariablen für die getrennte Verwaltung von Reihenfolge/Ignorieren.
-  * Mehrere kleinere Änderungen.
+  * Mehrere kleine Änderungen.
   
 ### 1.0.2
 

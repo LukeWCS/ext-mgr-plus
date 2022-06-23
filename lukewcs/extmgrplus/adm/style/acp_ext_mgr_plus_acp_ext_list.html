@@ -25,7 +25,7 @@
 					{% if EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE  %}
 						&bull; <a href="javascript:ExtMgrPlus.ShowHideOrderIgnore();">{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</a>
 					{% else %}
-						<span class="inactive">&bull; {{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</span>
+						<span class="disabled">&bull; {{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</span>
 					{% endif %}
 				</span>
 			</td>
@@ -233,7 +233,8 @@
 								{% if enabled.NAME != 'lukewcs/extmgrplus' %}
 									{{ _self.extmgrplus_inputbox(
 										enabled, 
-										EXTMGRPLUS_ORDER
+										EXTMGRPLUS_ORDER,
+										EXTMGRPLUS_IGNORE[enabled.NAME] is defined
 									) }}
 								{% endif %}
 							</td>
@@ -320,7 +321,8 @@
 							<td style="display: none">
 								{{ _self.extmgrplus_inputbox(
 									disabled, 
-									EXTMGRPLUS_ORDER
+									EXTMGRPLUS_ORDER,
+									EXTMGRPLUS_IGNORE[disabled.NAME] is defined
 								) }}
 							</td>
 							<td style="display: none">
@@ -453,12 +455,12 @@
 
 {% macro extmgrplus_checkbox_ignore(ext_obj, checked = false) %}
 {% spaceless %}
-	<input type="checkbox" class="radio" name="ext_ignore[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_IGNORE')|e('html') }}" value="{{ ext_obj.NAME }}"{{ checked ? ' checked' }}>
+	<input type="checkbox" class="radio" onchange="ExtMgrPlus.SetInputBoxState('{{ ext_obj.NAME }}')" name="ext_ignore[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_IGNORE')|e('html') }}" value="{{ ext_obj.NAME }}"{{ checked ? ' checked' }}>
 {% endspaceless %}
 {% endmacro %}
 
-{% macro extmgrplus_inputbox(ext_obj, order_list) %}
+{% macro extmgrplus_inputbox(ext_obj, order_list, inactive = false) %}
 {% spaceless %}
-	<input type="text" size="1" maxlength="2" name="ext_order[{{ ext_obj.NAME }}]" title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER')|e('html') }}" value="{{ order_list[ext_obj.NAME] }}" pattern="^[0-9]{1,2}$">
+	<input type="text" size="1" maxlength="2"{{ inactive ? ' class="inactive"' }} name="ext_order[{{ ext_obj.NAME }}]" title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER')|e('html') }}" value="{{ order_list[ext_obj.NAME] }}" pattern="^[0-9]{1,2}$">
 {% endspaceless %}
 {% endmacro %}

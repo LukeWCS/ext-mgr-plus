@@ -105,7 +105,11 @@ legend {
 	background-color: #F9F9F9;
 }
 
-.inactive,
+.inactive {
+	opacity: .5;
+}
+
+.disabled,
 #extmgrplus_list input[type="submit"]:disabled {
 	opacity: .5;
 	cursor: not-allowed;

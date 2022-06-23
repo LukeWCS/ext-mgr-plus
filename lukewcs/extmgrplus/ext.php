@@ -3,7 +3,7 @@
 *
 * Extension Manager Plus. An extension for the phpBB Forum Software package.
 *
-* @copyright (c) 2022, LukeWCS, https://www.wcsaga.org/
+* @copyright (c) 2022, LukeWCS, https://www.wcsaga.org
 * @license GNU General Public License, version 2 (GPL-2.0-only)
 *
 */

@@ -2,7 +2,7 @@
 *
 * Extension Manager Plus. An extension for the phpBB Forum Software package.
 *
-* @copyright (c) 2022, LukeWCS, https://www.wcsaga.org/
+* @copyright (c) 2022, LukeWCS, https://www.wcsaga.org
 * @license GNU General Public License, version 2 (GPL-2.0-only)
 *
 */
@@ -10,9 +10,9 @@
 ExtMgrPlus.CheckUncheckAll = function (CheckBoxes, Button) {
 	'use strict';
 
-	var ChkBoxAllState = $('#extmgrplus_list input[name="ext_mark_all_' + CheckBoxes).prop('checked');
+	var ChkBoxAllState = $('#extmgrplus_list input[name="ext_mark_all_' + CheckBoxes + '"]').prop('checked');
 
-	$('#extmgrplus_list input[name="ext_mark_' + CheckBoxes + '[]"').filter(':enabled').prop('checked', ChkBoxAllState)
+	$('#extmgrplus_list input[name="ext_mark_' + CheckBoxes + '[]"]').filter(':enabled').prop('checked', ChkBoxAllState)
 
 	ExtMgrPlus.SetButtonState(CheckBoxes, Button);
 };
@@ -20,9 +20,17 @@ ExtMgrPlus.CheckUncheckAll = function (CheckBoxes, Button) {
 ExtMgrPlus.SetButtonState = function (CheckBoxes, Button) {
 	'use strict';
 
-	var CheckBoxesChecked = $('#extmgrplus_list input[name="ext_mark_' + CheckBoxes + '[]"').filter(':checked').length;
+	var CheckBoxesChecked = $('#extmgrplus_list input[name="ext_mark_' + CheckBoxes + '[]"]').filter(':checked').length;
 
 	$('#extmgrplus_list input[name="extmgrplus_' + Button + '_all').prop('disabled', CheckBoxesChecked == 0);
+};
+
+ExtMgrPlus.SetInputBoxState = function (tech_name) {
+	'use strict';
+
+	var CheckBoxChecked = $('#extmgrplus_list input[name="ext_ignore[]"][value="' + tech_name + '"]').prop('checked');
+
+	$('#extmgrplus_list input[name="ext_order[' + tech_name + ']"]').css('opacity', (CheckBoxChecked ? '.5' : '1'));
 };
 
 ExtMgrPlus.ShowHideSettings = function () {
@@ -108,5 +116,3 @@ $('#extmgrplus_list').keypress(function(event) {
 		event.preventDefault();
 	}
 });
-
-// ExtMgrPlus.ShowHideOrderIgnore();

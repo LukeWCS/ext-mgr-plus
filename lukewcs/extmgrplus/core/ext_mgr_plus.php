@@ -3,7 +3,7 @@
 *
 * Extension Manager Plus. An extension for the phpBB Forum Software package.
 *
-* @copyright (c) 2022, LukeWCS, https://www.wcsaga.org/
+* @copyright (c) 2022, LukeWCS, https://www.wcsaga.org
 * @license GNU General Public License, version 2 (GPL-2.0-only)
 *
 */
@@ -177,12 +177,8 @@ class ext_mgr_plus
 		if (isset($ext_list_ignore) && is_array($ext_list_ignore))
 		{
 			$ext_list_ignore = array_flip($ext_list_ignore);
-			$ext_list_enabled_and_ignored = array_filter($ext_list_ignore, function($value, $key) use ($ext_list_enabled) {
-				return isset($ext_list_enabled[$key]);
-			}, ARRAY_FILTER_USE_BOTH);
-			$ext_list_disabled_and_ignored = array_filter($ext_list_ignore, function($value, $key) use ($ext_list_disabled) {
-				return isset($ext_list_disabled[$key]);
-			}, ARRAY_FILTER_USE_BOTH);
+			$ext_list_enabled_and_ignored = array_intersect_key($ext_list_ignore, $ext_list_enabled);
+			$ext_list_disabled_and_ignored = array_intersect_key($ext_list_ignore, $ext_list_disabled);
 		}
 		else
 		{
@@ -437,9 +433,7 @@ class ext_mgr_plus
 			}
 			if (isset($ext_list_order) && is_array($ext_list_order))
 			{
-				$ext_list_order = array_filter($ext_list_order, function ($value, $key) use ($ext_list_disabled) {
-					return isset($ext_list_disabled[$key]);
-				}, ARRAY_FILTER_USE_BOTH);
+				$ext_list_order = array_intersect_key($ext_list_order, $ext_list_disabled);
 				asort($ext_list_order, SORT_NUMERIC);
 			}
 			else
