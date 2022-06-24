@@ -1,5 +1,10 @@
 ### 1.0.3
 
+#### 1.0.3
+* Release
+* Core:
+  * Code Optimierungen.
+
 #### 1.0.3-b2
 * ExtMgr Template:
   * Wird bei Ignorieren eine Checkbox gesetzt, wird das zugehörige Textfeld für Reihenfolge-Gruppe abgeblendet dargestellt.

@@ -58,7 +58,7 @@ class ext_mgr_plus
 
 		if ($this->config_text_get('extmgrplus_todo_list', 'self_disable'))
 		{
-			$this->config_text_set('extmgrplus_todo_list', 'self_disable', false);
+			$this->config_text_set('extmgrplus_todo_list', 'self_disable', null);
 
 			$safe_time_limit = (ini_get('max_execution_time') / 2);
 			$start_time = time();
@@ -74,14 +74,14 @@ class ext_mgr_plus
 
 		if ($this->config_text_get('extmgrplus_todo_list', 'purge_cache'))
 		{
-			$this->config_text_set('extmgrplus_todo_list', 'purge_cache', false);
+			$this->config_text_set('extmgrplus_todo_list', 'purge_cache', null);
 			$this->cache->purge();
 		}
 
 		if ($this->config_text_get('extmgrplus_todo_list', 'add_log'))
 		{
 			$last_job = $this->config_text_get('extmgrplus_todo_list', 'add_log');
-			$this->config_text_set('extmgrplus_todo_list', 'add_log', false);
+			$this->config_text_set('extmgrplus_todo_list', 'add_log', null);
 
 			if ($last_job !== null)
 			{
@@ -97,9 +97,7 @@ class ext_mgr_plus
 					]
 				);
 			}
-
 		}
-		$this->config_text_set('extmgrplus_todo_list', null, null);
 	}
 
 	public function ext_manager($event)
@@ -124,7 +122,6 @@ class ext_mgr_plus
 			}
 
 			$this->enable_disable_confirm();
-			return;
 		}
 		else if ($this->request->is_set_post('extmgrplus_save_settings'))
 		{
@@ -139,6 +136,7 @@ class ext_mgr_plus
 			$this->config->set('extmgrplus_enable_order_and_ignore', $this->request->variable('extmgrplus_enable_order_and_ignore', 0));
 			$this->config->set('extmgrplus_enable_self_disable', $this->request->variable('extmgrplus_enable_self_disable', 0));
 			$this->config->set('extmgrplus_enable_migrations', $this->request->variable('extmgrplus_enable_migrations', 0));
+
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_SETTINGS_SAVED') . adm_back_link($this->u_action), E_USER_NOTICE);
 		}
 		else if ($this->request->is_set_post('extmgrplus_save_order_and_ignore') && $this->config['extmgrplus_enable_order_and_ignore'])
@@ -304,7 +302,6 @@ class ext_mgr_plus
 						$this->language->lang('EXTMGRPLUS_MSG_CONFIRM_DISABLE', $this->language->lang('EXTMGRPLUS_EXTENSION_PLURAL', $ext_count_enabled)),
 						build_hidden_fields([
 							'extmgrplus_disable_all'	=> true,
-							'extmgrplus_confirm_box'	=> true,
 							'ext_mark_enabled'			=> $ext_list_marked,
 							'u_action'					=> $this->u_action
 						]),
@@ -335,7 +332,6 @@ class ext_mgr_plus
 						$this->language->lang('EXTMGRPLUS_MSG_CONFIRM_ENABLE', $this->language->lang('EXTMGRPLUS_EXTENSION_PLURAL', $ext_count_disabled)),
 						build_hidden_fields([
 							'extmgrplus_enable_all'		=> true,
-							'extmgrplus_confirm_box'	=> true,
 							'ext_mark_disabled'			=> $ext_list_marked,
 							'u_action'					=> $this->u_action
 						]),
@@ -498,7 +494,7 @@ class ext_mgr_plus
 
 			if (count($ext_list_failed_activation))
 			{
-				$msg_failed = sprintf('<br><br>%s', $this->language->lang('EXTMGRPLUS_MSG_ACTIVATION_FAILED'));
+				$msg_failed = '<br><br>' . $this->language->lang('EXTMGRPLUS_MSG_ACTIVATION_FAILED');
 				foreach ($ext_list_failed_activation as $name => $vars)
 				{
 					if (is_array($vars['message']))
@@ -623,7 +619,7 @@ class ext_mgr_plus
 		{
 			return $messages;
 		}
-		return $messages . (($messages != '') ? "\n" : '') . sprintf('<p>%s</p>', $text);
+		return $messages . (($messages != '') ? "\n" : '') . "<p>${text}</p>";
 	}
 
 	// Set a variable/array in a config_text variable container or delete one or all variables/arrays
@@ -649,7 +645,7 @@ class ext_mgr_plus
 		else if ($name !== null && $value === null)
 		{
 			unset($vars[$name]);
-			$this->config_text->set($container, json_encode($vars));
+			$this->config_text->set($container, (is_array($vars) && count($vars) ? json_encode($vars) : ''));
 		}
 		else if ($name === null && $value === null)
 		{

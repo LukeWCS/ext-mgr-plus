@@ -37,6 +37,7 @@ class v_1_0_3 extends \phpbb\db\migration\container_aware_migration
 			$list_ignore = array_filter($list_db['tech_names'], function($value) {
 				return preg_match('/^-$/', $value);
 			});
+			$list = [];
 			if (count($list_order))
 			{
 				$list['order'] = $list_order;
@@ -49,6 +50,3 @@ class v_1_0_3 extends \phpbb\db\migration\container_aware_migration
 		}
 	}
 }
-
-
-
