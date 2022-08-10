@@ -1,6 +1,9 @@
 ### 1.0.4
 
-### 1.0.4-b1
+#### 1.0.4
+* Release
+
+#### 1.0.4-b1
 * Fix für "Berechtigungen des Benutzers testen".
 
 ### 1.0.3
