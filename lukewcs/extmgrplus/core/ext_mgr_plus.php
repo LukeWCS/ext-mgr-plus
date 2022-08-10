@@ -13,20 +13,20 @@ namespace lukewcs\extmgrplus\core;
 class ext_mgr_plus
 {
 	protected $extension_manager;
+	protected $cache;
 	protected $request;
-	protected $language;
-	protected $config;
-	protected $config_text;
-	protected $template;
 	protected $log;
 	protected $user;
-	protected $cache;
+	protected $config;
+	protected $config_text;
+	protected $language;
+	protected $template;
+	protected $phpbb_container;
+
 	protected $u_action;
-	protected $migrator;
 
 	public function __construct(
 		\phpbb\extension\manager $ext_manager,
-		\phpbb\db\migrator $migrator,
 		\phpbb\cache\driver\driver_interface $cache,
 		\phpbb\request\request $request,
 		\phpbb\log\log $log,
@@ -34,11 +34,11 @@ class ext_mgr_plus
 		\phpbb\config\config $config,
 		\phpbb\config\db_text $config_text,
 		\phpbb\language\language $language,
-		\phpbb\template\template $template
+		\phpbb\template\template $template,
+		$phpbb_container
 	)
 	{
 		$this->extension_manager	= $ext_manager;
-		$this->migrator				= $migrator;
 		$this->cache				= $cache;
 		$this->request				= $request;
 		$this->log					= $log;
@@ -47,6 +47,7 @@ class ext_mgr_plus
 		$this->config_text			= $config_text;
 		$this->language				= $language;
 		$this->template				= $template;
+		$this->phpbb_container		= $phpbb_container;
 	}
 
 	public function todo()
@@ -565,6 +566,7 @@ class ext_mgr_plus
 		$migrations = $this->extension_manager->get_finder()->extension_directory('/migrations')->find_from_extension($ext_name, $ext_path, false);
 		$migrations_classes = $this->extension_manager->get_finder()->get_classes_from_files($migrations);
 
+		$this->migrator = $this->phpbb_container->get('migrator');
 		$this->migrator->set_migrations($migrations_classes);
 		$migrations = $this->migrator->get_installable_migrations();
 		$this->migrator->set_migrations([]);

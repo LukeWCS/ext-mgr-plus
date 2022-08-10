@@ -1,3 +1,8 @@
+### 1.0.4
+GH (2022-08-)
+
+* Fix: Die Funktion "Berechtigungen des Benutzers testen" führte zu einem Fatal: `Fatal error: Cannot declare class auth_admin, because the name is already in use in`. [Meldung von chris1278]
+
 ### 1.0.3
 GH (2022-06-24)
 
