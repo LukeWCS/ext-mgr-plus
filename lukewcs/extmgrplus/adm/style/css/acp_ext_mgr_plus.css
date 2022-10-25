@@ -26,7 +26,7 @@ fieldset {
 
 legend {
 	background: inherit;
-	margin: 2px 0px 0px -11px;
+	margin: 2px 0 0 -11px;
 	border-top: inherit;
 	border-left: inherit;
 	border-radius: 5px 5px 0 0;
@@ -141,7 +141,7 @@ legend {
 
 @media (max-width: 700px){
 	legend {
-		margin: 2px 0px 0px -6px;
+		margin: 2px 0 0 -6px;
 		padding: 2px 5px;
 	}
 

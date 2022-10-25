@@ -2,16 +2,27 @@
 
 <a id="maincontent"></a>
 
-	<h1>{{ lang('EXTMGRPLUS_TITLE') }}</h1>
+	<h1>{{ lang('EXTENSIONS_ADMIN') }}</h1>
 
 	<p>{{ lang('EXTENSIONS_EXPLAIN') }}</p>
 
-	{% if EXTMGRPLUS_NOTES %}
+	{% if EXTMGRPLUS_NOTES|length %}
 		<div class="errorbox notice">
-			{{ EXTMGRPLUS_NOTES }}
+			{% for note in EXTMGRPLUS_NOTES %}
+				<p>{{ note }}</p>
+			{% endfor %}
 		</div>
 	{% endif %}
-
+	{% if EXTMGRPLUS_EXT_VERSIONCHECK|length %}
+		<div class="errorbox notice">
+			<p>{{ lang('EXTMGRPLUS_MSG_NEW_UPDATES', EXTMGRPLUS_EXT_VERSIONCHECK.data.date) }}</p>
+			<br>
+			{% for ext, data in EXTMGRPLUS_EXT_VERSIONCHECK if ext != 'data' %}
+				<p>{{ data.displayname }} <strong>{{ data.current }}</strong> (<a href="{{ data.detailsurl }}">{{ lang('DETAILS') }}</a>)</p>
+			{% endfor %}
+		</div>
+	{% endif %}
+	
 	<table class="extmgrplus_hidden_table">
 		<tr>
 			<td id="extmgrplus_available_extensions">
@@ -109,6 +120,17 @@
 				<dd>
 					<label><input type="radio" class="radio" name="extmgrplus_enable_self_disable" value="1"{{ EXTMGRPLUS_ENABLE_SELF_DISABLE == 1 ? ' checked' }}> {{ lang('YES') }}</label>
 					<label><input type="radio" class="radio" name="extmgrplus_enable_self_disable" value="0"{{ EXTMGRPLUS_ENABLE_SELF_DISABLE == 0 ? ' checked' }}> {{ lang('NO') }}</label>
+				</dd>
+			</dl>
+		
+			<dl>
+				<dt>
+					<label>{{ lang('EXTMGRPLUS_VERSION_NOTIFICATION') ~ lang('COLON') }}</label><br>
+					<span>{{ lang('EXTMGRPLUS_VERSION_NOTIFICATION_EXPLAIN') }}</span>
+				</dt>
+				<dd>
+					<label><input type="radio" class="radio" name="extmgrplus_enable_version_notification" value="1"{{ EXTMGRPLUS_ENABLE_VERSION_NOTIFICATION == 1 ? ' checked' }}> {{ lang('YES') }}</label>
+					<label><input type="radio" class="radio" name="extmgrplus_enable_version_notification" value="0"{{ EXTMGRPLUS_ENABLE_VERSION_NOTIFICATION == 0 ? ' checked' }}> {{ lang('NO') }}</label>
 				</dd>
 			</dl>
 		

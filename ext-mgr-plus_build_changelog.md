@@ -1,3 +1,19 @@
+### 1.0.5
+
+#### 1.0.5-b1
+* Neue Funktion für die dauerhafte Update Benachrichtigung nach einer Versionsprüfung hinzugefügt.
+* Die Benachrichtigung Funktion (veraltetes Sprachpaket) erzeugt kein HTML mehr, das erledigt jetzt das Template.
+  * Entsprechende Funktion `add_note()` entfernt.
+* ExtMgr Template:
+  * Als Seitentitel wird jetzt wieder der Standard Titel verwendet, der Zusatz "(Plus)" ist hinfällig.
+  * Twig Funktion eingebaut um das Array der Update Notification darstellen zu können.
+  * Neue Einstellungsgruppe für Update Notification hinzugefügt.
+* Neue Migration für 2 neue Config Variablen.
+* Sprachdateien:
+  * Neue Sprachvariablen für Update Notification.
+  * Texte präzisiert.
+  * Variable für Seitentitel entfernt.
+
 ### 1.0.4
 
 #### 1.0.4

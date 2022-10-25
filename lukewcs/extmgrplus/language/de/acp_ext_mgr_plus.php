@@ -39,11 +39,8 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, [
 	// language pack author
 	'EXTMGRPLUS_LANG_DESC'							=> 'Deutsch (Du)',
-	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.0.3',
+	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.0.5',
 	'EXTMGRPLUS_LANG_AUTHOR' 						=> 'LukeWCS',
-
-	// heading
-	'EXTMGRPLUS_TITLE'								=> 'Erweiterungen verwalten (Plus)',
 
 	// settings
 	'EXTMGRPLUS_SETTINGS_TITLE'						=> 'Einstellungen (Plus)',
@@ -57,6 +54,8 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN'			=> 'Wenn du diese Option aktivierst, wird bei der Aktion „Ausgewählte aktivieren“ die Reihenfolge-Gruppe berücksichtigt und bei „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ das Ignorieren-Merkmal.',
 	'EXTMGRPLUS_SELF_DISABLE'						=> 'Erlaube Eigendeaktivierung',
 	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'				=> 'Wenn du diese Option aktivierst, dann kann sich „Extension Manager Plus“ bei der Aktion „Ausgewählte deaktivieren“ auch selbst deaktivieren, da diese Erweiterung dann wie jede andere ausgewählt werden kann.',
+	'EXTMGRPLUS_VERSION_NOTIFICATION'				=> 'Update Meldungen',
+	'EXTMGRPLUS_VERSION_NOTIFICATION_EXPLAIN'		=> 'Wenn du diese Option aktivierst, werden bei der Funktion „Alle Versionen erneut prüfen“ die Daten der ermittelten Updates gespeichert und auf dieser Seite als Meldungen angezeigt. Eine Meldung wird automatisch entfernt, sobald die jeweilige Erweiterung aktualisiert wurde. Wenn diese Option deaktiviert wird, dann werden alle gespeicherten Meldungen gelöscht.',
 
 	// settings expert
 	'EXTMGRPLUS_EXPERT_SETTINGS_TITLE'				=> 'Experten-Einstellungen',
@@ -64,8 +63,8 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'					=> 'Wenn du diese Option aktivierst, dann können bei der Aktion „Ausgewählte aktivieren“ auch diejenigen Erweiterungen aktiviert werden, bei denen neue Migrationsdateien vorliegen. Das trifft auf aktualisierte Erweiterungen zu, die einen Ordner „migrations“ enthalten. Ohne diese Option müssen solche Erweiterungen manuell aktiviert werden, was empfohlen wird.',
 
 	// order and ignore
-	'EXTMGRPLUS_ORDER_EXPLAIN'						=> 'Reihenfolge: In dieser Spalte kannst du Reihenfolge-Gruppen im Bereich 0 bis 99 für die Aktivierung definieren. Damit können Erweiterungen, von denen andere Erweiterungen abhängig sind, vor diesen aktiviert werden, um Fehlermeldungen zu vermeiden. Erweiterungen die zu einer solchen Gruppe gehören, werden zuerst aktiviert und zwar beginnend bei Gruppe 0, dann Gruppe 1 und so weiter. Erweiterungen ohne Gruppe werden als letztes aktiviert.',
-	'EXTMGRPLUS_IGNORE_EXPLAIN'						=> 'Ignorieren: In dieser Spalte kannst du festlegen, welche Erweiterungen sowohl bei Deaktivierung als auch Aktivierung ignoriert werden sollen. Ignorierte Erweiterungen können in der Erweiterungen-Liste nicht mehr ausgewählt werden. Wenn bei einer ignorierten Erweiterung eine Reihenfolge-Gruppe definiert wurde, dann bleibt diese erhalten, sie hat jedoch keine Bedeutung mehr.',
+	'EXTMGRPLUS_ORDER_EXPLAIN'						=> 'Reihenfolge: In dieser Spalte kannst du Reihenfolge-Gruppen im Bereich 0 bis 99 für die Aktion „Ausgewählte aktivieren“ definieren. Damit können Erweiterungen, von denen andere Erweiterungen abhängig sind, vor diesen aktiviert werden, um Fehlermeldungen zu vermeiden. Erweiterungen die zu einer solchen Gruppe gehören, werden zuerst aktiviert und zwar beginnend bei Gruppe 0, dann Gruppe 1 und so weiter. Erweiterungen ohne Gruppe werden als letztes aktiviert.',
+	'EXTMGRPLUS_IGNORE_EXPLAIN'						=> 'Ignorieren: In dieser Spalte kannst du festlegen, welche Erweiterungen sowohl bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ ignoriert werden sollen. Ignorierte Erweiterungen können in der Erweiterungen-Liste nicht mehr ausgewählt werden. Wenn bei einer ignorierten Erweiterung eine Reihenfolge-Gruppe definiert wurde, dann bleibt diese erhalten, sie hat jedoch keine Bedeutung mehr.',
 	'EXTMGRPLUS_ORDER_AND_IGNORE_SAVE'				=> 'Speichern',
 
 	// ext manager
@@ -109,4 +108,5 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_DEACTIVATION'					=> 'ExtMgrPlus: %1$u von %2$u aktivierten Erweiterungen wurden deaktiviert.',
 	'EXTMGRPLUS_MSG_ACTIVATION'						=> 'ExtMgrPlus: %1$u von %2$u deaktivierten Erweiterungen wurden aktiviert.',
 	'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED'			=> 'Hinweis: Das Sprachpaket der Erweiterung <strong>%1$s</strong> ist nicht mehr aktuell. (vorhanden: %2$s / benötigt: %3$s)',
+	'EXTMGRPLUS_MSG_NEW_UPDATES'					=> 'Bei der letzten Versionsprüfung (%s) wurden folgende Updates ermittelt:',
 ]);
