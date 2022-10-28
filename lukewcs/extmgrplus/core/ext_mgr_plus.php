@@ -110,7 +110,7 @@ class ext_mgr_plus
 
 		$this->u_action = $event['u_action'];
 		$this->language->add_lang('acp_ext_mgr_plus', 'lukewcs/extmgrplus');
-		$md_manager = $this->extension_manager->create_extension_metadata_manager('lukewcs/extmgrplus');
+		$this_meta = $this->extension_manager->create_extension_metadata_manager('lukewcs/extmgrplus')->get_metadata('all');
 		$notes = [];
 
 		add_form_key('lukewcs_extmgrplus');
@@ -165,7 +165,6 @@ class ext_mgr_plus
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED') . adm_back_link($this->u_action), E_USER_NOTICE);
 		}
 
-		$ext_list_all_available = $this->extension_manager->all_available();
 		$ext_list_enabled = $this->extension_manager->all_enabled();
 		$ext_list_disabled = $this->extension_manager->all_disabled();
 		$ext_list_migrations = $this->get_exts_with_new_migration($ext_list_disabled);
@@ -201,7 +200,7 @@ class ext_mgr_plus
 			$ext_list_disabled_and_ignored = array_merge($ext_list_disabled_and_ignored, $ext_list_migrations);
 		}
 
-		$ext_count_available		= count($ext_list_all_available);
+		$ext_count_available		= count($this->extension_manager->all_available());
 		$ext_count_configured		= count($this->extension_manager->all_configured());
 		$ext_count_migrations		= count($ext_list_migrations);
 		$ext_count_enabled			= count($ext_list_enabled);
@@ -209,9 +208,9 @@ class ext_mgr_plus
 		$ext_count_disabled			= count($ext_list_disabled);
 		$ext_count_disabled_clean	= $ext_count_disabled - count($ext_list_disabled_and_ignored);
 
-		$ext_display_name	= $md_manager->get_metadata('display-name');
-		$ext_ver			= $md_manager->get_metadata('version');
-		$ext_lang_min_ver	= $md_manager->get_metadata()['extra']['lang-min-ver'];
+		$ext_display_name	= $this_meta['extra']['display-name'];
+		$ext_ver			= $this_meta['version'];
+		$ext_lang_min_ver	= $this_meta['extra']['lang-min-ver'];
 
 		$ext_lang_ver 		= $this->get_lang_ver('EXTMGRPLUS_LANG_EXT_VER');
 		$lang_outdated_msg	= $this->check_lang_ver($ext_display_name, $ext_lang_ver, $ext_lang_min_ver, 'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED');
@@ -220,17 +219,16 @@ class ext_mgr_plus
 			$notes[]		= $lang_outdated_msg;
 		}
 
-		// var_dump($this->config['extmgrplus_enable_version_notification']);
-		$ext_list_versioncheck = '';
+		$ext_list_versioncheck = [];
 		if ($this->config['extmgrplus_enable_version_notification'])
 		{
 			if ($this->request->variable('versioncheck_force', false))
 			{
-				$this->update_versioncheck();
+				$this->versioncheck_save();
 			}
 			if ($this->config_text->get('extmgrplus_version_check') != '')
 			{
-				$ext_list_versioncheck = $this->list_versioncheck();
+				$ext_list_versioncheck = $this->versioncheck_list();
 			}
 		}
 
@@ -549,30 +547,12 @@ class ext_mgr_plus
 		]);
 	}
 
-	// Remove from the passed list of extensions all that have new migrations
-	private function remove_exts_with_new_migrations(array $ext_list): array
-	{
-		if (!$this->config['extmgrplus_enable_migrations'])
-		{
-			foreach ($ext_list as $ext_name => $value)
-			{
-				$ext_path = $this->extension_manager->get_extension_path($ext_name, true);
-				if ($this->get_migration_files_count($ext_name, $ext_path))
-				{
-					unset($ext_list[$ext_name]);
-				}
-			}
-		}
-
-		return $ext_list;
-	}
-
 	// Determine all extensions that have new migrations from the passed list of extensions
 	private function get_exts_with_new_migration(array $ext_list): array
 	{
 		$ext_with_migrations_list = [];
 
-		foreach ($ext_list as $ext_name => &$ext_value)
+		foreach ($ext_list as $ext_name => $ext_value)
 		{
 			$ext_path = $this->extension_manager->get_extension_path($ext_name, true);
 			$migration_files_count = $this->get_migration_files_count($ext_name, $ext_path);
@@ -690,30 +670,28 @@ class ext_mgr_plus
 		);
 	}
 
-	private function update_versioncheck()
+	// Writes the cached version check data to the database.
+	private function versioncheck_save()
 	{
-		$ext_list = [
+		$ext_list_db = [
 			'data' => [
 				'date' => time(),
 			]
 		];
 		foreach ($this->extension_manager->all_available() as $ext_name => $path)
 		{
-			$ext_md_manager = $this->extension_manager->create_extension_metadata_manager($ext_name);
+			$md_manager = $this->extension_manager->create_extension_metadata_manager($ext_name);
 
 			try
 			{
-				$meta = $ext_md_manager->get_metadata('all');
+				$meta = $md_manager->get_metadata('all');
 
 				if (isset($meta['extra']['version-check']))
 				{
-					// $update_data = $this->extension_manager->version_check($ext_md_manager, false, true);
-					$update_data = $this->extension_manager->version_check($ext_md_manager, false);
+					$update_data = $this->extension_manager->version_check($md_manager, false);
 					if (!empty($update_data))
 					{
-						// var_dump($ext_name);
-						// var_dump($update_data);
-						$ext_list[$ext_name] = [
+						$ext_list_db[$ext_name] = [
 							'current' => $update_data['current'],
 						];
 					}
@@ -726,11 +704,11 @@ class ext_mgr_plus
 			{
 			}
 		}
-		// var_dump($ext_list);
-		$this->config_text_set('extmgrplus_version_check', 'updates', (count($ext_list) ? $ext_list : null));
+		$this->config_text_set('extmgrplus_version_check', 'updates', (count($ext_list_db) ? $ext_list_db : null));
 	}
 
-	private function list_versioncheck(): array
+	// Reads the version check data from the database and removes obsolete entries and generates a list for the template
+	private function versioncheck_list(): array
 	{
 		$ext_list_db = $this->config_text_get('extmgrplus_version_check', 'updates');
 		$ext_list_tpl = [];
@@ -744,8 +722,7 @@ class ext_mgr_plus
 			}
 			if ($this->extension_manager->is_available($ext_name))
 			{
-				$ext_md_manager = $this->extension_manager->create_extension_metadata_manager($ext_name);
-				$meta = $ext_md_manager->get_metadata('all');
+				$meta = $this->extension_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
 
 				if (phpbb_version_compare($meta['version'], $ext_data['current'], '<'))
 				{
@@ -780,7 +757,6 @@ class ext_mgr_plus
 			$ext_list_tpl['data'] = [
 				'date' => $this->user->format_date($ext_list_db['data']['date']),
 			];
-			// var_dump($ext_list_tpl);
 		}
 		return $ext_list_tpl;
 	}

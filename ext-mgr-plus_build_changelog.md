@@ -1,12 +1,20 @@
 ### 1.0.5
 
+#### 1.0.5-b2
+* Code Optimierungen:
+  * Kleinere Änderungen für 1.0.5.
+  * Unnötige Funktionsaufrufe bezüglich `get_metadata()` behoben.
+  * Unnötige Funktion `remove_exts_with_new_migrations()` entfernt. Diese hatte ich für ExtOnOff 2.0 geschrieben und wird bei EMP nicht benötigt.
+* Debugs entfernt.
+
 #### 1.0.5-b1
 * Neue Funktion für die dauerhafte Update Benachrichtigung nach einer Versionsprüfung hinzugefügt.
-* Die Benachrichtigung Funktion (veraltetes Sprachpaket) erzeugt kein HTML mehr, das erledigt jetzt das Template.
+* Die Benachrichtigung-Funktion (Notes) erzeugt kein HTML mehr, das erledigt jetzt das Template durch Übergabe eines Arrays.
   * Entsprechende Funktion `add_note()` entfernt.
 * ExtMgr Template:
   * Als Seitentitel wird jetzt wieder der Standard Titel verwendet, der Zusatz "(Plus)" ist hinfällig.
   * Twig Funktion eingebaut um das Array der Update Notification darstellen zu können.
+  * Twig Funktion für Notes geändert um das Array darstellen zu können.
   * Neue Einstellungsgruppe für Update Notification hinzugefügt.
 * Neue Migration für 2 neue Config Variablen.
 * Sprachdateien:
