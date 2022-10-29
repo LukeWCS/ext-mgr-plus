@@ -55,14 +55,14 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_SELF_DISABLE'						=> 'Allow self-deactivation',
 	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'				=> 'If you enable this option, then "Extension Manager Plus" can also deactivate itself in the "Disable selected" action, since this extension can then be selected like any other.',
 	'EXTMGRPLUS_VERSION_NOTIFICATION'				=> 'Update notifications',
-	'EXTMGRPLUS_VERSION_NOTIFICATION_EXPLAIN'		=> 'If you activate this option, the data of the determined updates will be saved with the "Re-Check all versions" function and displayed on this page as messages. A message will be automatically removed once the respective extension has been updated. If this option is deactivated, then all saved messages will be deleted.',
+	'EXTMGRPLUS_VERSION_NOTIFICATION_EXPLAIN'		=> 'If you activate this option, the information of the detected updates is saved with the "Re-Check all versions" function and displayed on this page as messages. A message will be removed once the respective extension has been updated. If this option is deactivated, then all saved messages will be deleted.',
 
 	// settings expert
 	'EXTMGRPLUS_EXPERT_SETTINGS_TITLE'				=> 'Expert settings',
 	'EXTMGRPLUS_MIGRATIONS'							=> 'Allow migrations',
 	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'					=> 'If you enable this option, the "Enable selected" action can also activate those extensions that have new migration files. This applies to updated extensions that contain a "migrations" folder. Without this option, such extensions must be activated manually, which is recommended.',
 
-	// order and ignore
+	// settings order and ignore
 	'EXTMGRPLUS_ORDER_EXPLAIN'						=> 'Order: This column allows you to define order groups in the range 0 to 99 for the "Enable selected" action. This allows extensions that other extensions depend on to be activated before them to avoid error messages. Extensions belonging to such a group are activated first, starting with group 0, then group 1 and so on. Extensions without a group are activated last.',
 	'EXTMGRPLUS_IGNORE_EXPLAIN'						=> 'Ignore: This column allows you to specify which extensions to ignore for both the "Enable selected" and "Disable selected" actions. Ignored extensions can no longer be selected in the extensions list. If an order group was defined for an ignored extension, then this is retained, but it no longer has any meaning.',
 	'EXTMGRPLUS_ORDER_AND_IGNORE_SAVE'				=> 'Save',

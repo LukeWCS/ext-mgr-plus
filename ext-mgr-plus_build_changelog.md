@@ -1,5 +1,10 @@
 ### 1.0.5
 
+#### 1.0.5
+* Release
+* Sprachdateien:
+  * Kleine Textänderungen.
+
 #### 1.0.5-b2
 * Code Optimierungen:
   * Kleinere Änderungen für 1.0.5.
