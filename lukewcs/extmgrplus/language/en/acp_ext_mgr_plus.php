@@ -54,8 +54,6 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN'			=> 'If you enable this option, the "Enable selected" action respects the Order group and the "Enable selected" and "Disable selected" actions respect the Ignore property.',
 	'EXTMGRPLUS_SELF_DISABLE'						=> 'Allow self-deactivation',
 	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'				=> 'If you enable this option, then "Extension Manager Plus" can also deactivate itself in the "Disable selected" action, since this extension can then be selected like any other.',
-	'EXTMGRPLUS_VERSION_NOTIFICATION'				=> 'Update notifications',
-	'EXTMGRPLUS_VERSION_NOTIFICATION_EXPLAIN'		=> 'If you activate this option, the information of the detected updates is saved with the "Re-Check all versions" function and displayed on this page as messages. A message will be removed once the respective extension has been updated. If this option is deactivated, then all saved messages will be deleted.',
 
 	// settings expert
 	'EXTMGRPLUS_EXPERT_SETTINGS_TITLE'				=> 'Expert settings',
@@ -71,7 +69,8 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_ALL_DISABLE'						=> 'Disable selected',
 	'EXTMGRPLUS_ALL_ENABLE'							=> 'Enable selected',
 	'EXTMGRPLUS_HAS_MIGRATION'						=> 'new migrations',
-	'EXTMGRPLUS_AVAILABLE_EXTENSIONS'				=> 'Available extensions',
+	'EXTMGRPLUS_AVAILABLE_EXTENSIONS'				=> 'Total extensions',
+	'EXTMGRPLUS_LAST_VERSIONCHECK'					=> 'Last version check',
 	'EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED'			=> 'Not installed extensions',
 
 	// tooltips
@@ -93,8 +92,13 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'				=> 'Order/Ignore',
 	'EXTMGRPLUS_EXTENSION_PLURAL' => [
 													0 => "0 extensions",
-													1 => "%u extension",
+													1 => "1 extension",
 													2 => "%u extensions",
+	],
+	'EXTMGRPLUS_UPDATES_PLURAL' => [
+													0 => "",
+													1 => "(1 update available)",
+													2 => "(%u updates available)",
 	],
 
 	// messages
@@ -108,5 +112,4 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_DEACTIVATION'					=> 'ExtMgrPlus: %1$u of %2$u enabled extensions have been disabled.',
 	'EXTMGRPLUS_MSG_ACTIVATION'						=> 'ExtMgrPlus: %1$u of %2$u disabled extensions have been enabled.',
 	'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED'			=> 'Note: The language pack for the extension <strong>%1$s</strong> is no longer up-to-date. (installed: %2$s / needed: %3$s)',
-	'EXTMGRPLUS_MSG_NEW_UPDATES'					=> 'The following updates were identified during the last version check (%s):',
 ]);

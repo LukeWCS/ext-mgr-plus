@@ -1,3 +1,21 @@
+### 1.0.6
+
+#### 1.0.6-b1
+* Bei der Update Notification werden jetzt keine extra Meldungen mehr generiert, sondern direkt die schon vorhandenen Update Indikatoren der Liste genutzt und erweitert.
+* Core:
+  * Etlicher Code entfernt.
+  * Code Optimierung.
+* ExtMgr Template:
+  * Twig für die Update Meldungen entfernt.
+  * Dauerhafte Anzeige der letzten Versionsprüfung inklusive Anzahl verfügbarer Updates.
+* CSS:
+  * Anpassungen für die Anzeige der letzten Versionsprüfung.
+* Sprachdateien:
+  * Sprachvariablen entfernt.
+  * Neue Sprachvariablen.
+  * Kleinere Änderungen.
+* Neue Migration.
+
 ### 1.0.5
 
 #### 1.0.5

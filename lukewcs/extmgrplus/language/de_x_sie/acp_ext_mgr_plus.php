@@ -54,8 +54,6 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN'			=> 'Wenn Sie diese Option aktivieren, wird bei der Aktion „Ausgewählte aktivieren“ die Reihenfolge-Gruppe berücksichtigt und bei „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ das Ignorieren-Merkmal.',
 	'EXTMGRPLUS_SELF_DISABLE'						=> 'Erlaube Eigendeaktivierung',
 	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'				=> 'Wenn Sie diese Option aktivieren, dann kann sich „Extension Manager Plus“ bei der Aktion „Ausgewählte deaktivieren“ auch selbst deaktivieren, da diese Erweiterung dann wie jede andere ausgewählt werden kann.',
-	'EXTMGRPLUS_VERSION_NOTIFICATION'				=> 'Update Meldungen',
-	'EXTMGRPLUS_VERSION_NOTIFICATION_EXPLAIN'		=> 'Wenn Sie diese Option aktivieren, werden bei der Funktion „Alle Versionen erneut prüfen“ die Informationen der ermittelten Updates gespeichert und auf dieser Seite als Meldungen angezeigt. Eine Meldung wird entfernt, sobald die jeweilige Erweiterung aktualisiert wurde. Wenn diese Option deaktiviert wird, dann werden alle gespeicherten Meldungen gelöscht.',
 
 	// settings expert
 	'EXTMGRPLUS_EXPERT_SETTINGS_TITLE'				=> 'Experten-Einstellungen',
@@ -71,7 +69,8 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_ALL_DISABLE'						=> 'Ausgewählte deaktivieren',
 	'EXTMGRPLUS_ALL_ENABLE'							=> 'Ausgewählte aktivieren',
 	'EXTMGRPLUS_HAS_MIGRATION'						=> 'neue Migrationen',
-	'EXTMGRPLUS_AVAILABLE_EXTENSIONS'				=> 'Verfügbare Erweiterungen',
+	'EXTMGRPLUS_AVAILABLE_EXTENSIONS'				=> 'Erweiterungen gesamt',
+	'EXTMGRPLUS_LAST_VERSIONCHECK'					=> 'Letzte Versionsprüfung',
 	'EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED'			=> 'Nicht installierte Erweiterungen',
 
 	// tooltips
@@ -93,8 +92,13 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'				=> 'Reihenfolge/Ignorieren',
 	'EXTMGRPLUS_EXTENSION_PLURAL' => [
 													0 => "0 Erweiterungen",
-													1 => "%u Erweiterung",
+													1 => "1 Erweiterung",
 													2 => "%u Erweiterungen",
+	],
+	'EXTMGRPLUS_UPDATES_PLURAL' => [
+													0 => "",
+													1 => "(1 Update verfügbar)",
+													2 => "(%u Updates verfügbar)",
 	],
 
 	// messages
@@ -108,5 +112,4 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_DEACTIVATION'					=> 'ExtMgrPlus: %1$u von %2$u aktivierten Erweiterungen wurden deaktiviert.',
 	'EXTMGRPLUS_MSG_ACTIVATION'						=> 'ExtMgrPlus: %1$u von %2$u deaktivierten Erweiterungen wurden aktiviert.',
 	'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED'			=> 'Hinweis: Das Sprachpaket der Erweiterung <strong>%1$s</strong> ist nicht mehr aktuell. (vorhanden: %2$s / benötigt: %3$s)',
-	'EXTMGRPLUS_MSG_NEW_UPDATES'					=> 'Bei der letzten Versionsprüfung (%s) wurden folgende Updates ermittelt:',
 ]);
