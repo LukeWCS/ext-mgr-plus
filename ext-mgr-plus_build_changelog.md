@@ -1,5 +1,10 @@
 ### 1.0.6
 
+#### 1.0.6-b2
+* Im HTML und CSS war noch deaktivierter Code enthalten.
+* Version der Sprachpakete korrigiert.
+* `composer.json` auf die richtige Sprachversion geändert.
+
 #### 1.0.6-b1
 * Bei der Update Notification werden jetzt keine extra Meldungen mehr generiert, sondern direkt die schon vorhandenen Update Indikatoren der Liste genutzt und erweitert.
 * Core:
@@ -7,6 +12,8 @@
   * Code Optimierung.
 * ExtMgr Template:
   * Twig für die Update Meldungen entfernt.
+  * HTML für die Einstellung "Update Meldungen" entfernt.
+  * Die original Update Indikator Funktion erweitert.
   * Dauerhafte Anzeige der letzten Versionsprüfung inklusive Anzahl verfügbarer Updates.
 * CSS:
   * Anpassungen für die Anzeige der letzten Versionsprüfung.

@@ -3,7 +3,7 @@ GH (2022--)
 
 * Für das Ergebnis der letzten Versionsprüfung der Erweiterungen werden keine gesonderten Meldungen mehr generiert, sondern die schon vorhandenen Update-Indikatoren der Erweiterungen-Liste genutzt und erweitert. Das macht es insbesondere nach der ersten Aktualisierung wesentlich einfacher, gezielt die noch übrigen Erweiterungen zu deaktivieren und zu aktualisieren, wenn es mehr als ein Update gibt.
   * Statt der Meldungen wird jetzt dauerhaft das Datum der letzten Versionsprüfung angezeigt. Zusätzlich wird die Anzahl verfügbarer Updates angezeigt.
-  * Bereits vorhandene Meldungen von 1.0.5 sind kompatibel mit dieser Version und werden übernommen.
+  * Bereits vorhandene Daten der Versionsprüfung von 1.0.5 sind kompatibel mit dieser Version und werden übernommen.
 * Code Optimierungen.
 
 ### 1.0.5
