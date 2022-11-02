@@ -1,8 +1,11 @@
 ### 1.0.6
-GH (2022--)
+GH (2022-11-)
 
-* Für das Ergebnis der letzten Versionsprüfung der Erweiterungen werden keine gesonderten Meldungen mehr generiert, sondern die schon vorhandenen Update-Indikatoren der Erweiterungen-Liste genutzt und erweitert. Das macht es insbesondere nach der ersten Aktualisierung wesentlich einfacher, gezielt die noch übrigen Erweiterungen zu deaktivieren und zu aktualisieren, wenn es mehr als ein Update gibt.
-  * Statt der Meldungen wird jetzt dauerhaft das Datum der letzten Versionsprüfung angezeigt. Zusätzlich wird die Anzahl verfügbarer Updates angezeigt.
+* Fix: Bei geleertem Cache wurde die Versionsprüfung zweimal ausgeführt, zuerst von EMP und anschliessend nochmal von phpBB: Falsche Event Reihenfolge und falscher Funktionsparameter.
+* Fix: Wurde zwischen zwei Versionsprüfungen der Cache nicht geleert, erkannte EMP neue Updates nicht: Falsche Event Reihenfolge.
+* Für das Ergebnis der letzten Versionsprüfung der Erweiterungen werden keine gesonderten Meldungen mehr generiert, sondern die schon vorhandenen Update-Indikatoren der Erweiterungen-Liste genutzt und erweitert. Das macht es insbesondere nach der ersten Erweiterung-Aktualisierung einfacher, gezielt die noch übrigen Erweiterungen zu deaktivieren und zu aktualisieren, wenn es mehr als ein Update gibt.
+  * Die Update-Indikatoren werden automatisch entfernt, wenn die entsprechenden Erweiterungen aktualisiert wurden.
+  * Statt der Meldungen wird jetzt dauerhaft das Datum der letzten Versionsprüfung angezeigt. Zusätzlich wird die Anzahl verfügbarer Updates angezeigt. Die Anzahl wird automatisch angepasst, wenn Erweiterungen aktualisiert wurden.
   * Bereits vorhandene Daten der Versionsprüfung von 1.0.5 sind kompatibel mit dieser Version und werden übernommen.
 * Code Optimierungen.
 

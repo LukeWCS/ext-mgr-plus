@@ -101,7 +101,7 @@ class ext_mgr_plus
 		}
 	}
 
-	public function ext_manager($event)
+	public function ext_manager_before($event)
 	{
 		if ($event['action'] != 'list' || $this->extension_manager->is_disabled('lukewcs/extmgrplus'))
 		{
@@ -110,8 +110,6 @@ class ext_mgr_plus
 
 		$this->u_action = $event['u_action'];
 		$this->language->add_lang('acp_ext_mgr_plus', 'lukewcs/extmgrplus');
-		$this_meta = $this->extension_manager->create_extension_metadata_manager('lukewcs/extmgrplus')->get_metadata('all');
-		$notes = [];
 
 		add_form_key('lukewcs_extmgrplus');
 
@@ -159,10 +157,33 @@ class ext_mgr_plus
 
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED') . adm_back_link($this->u_action), E_USER_NOTICE);
 		}
+	}
+
+	public function ext_manager_after($event)
+	{
+		if ($event['action'] != 'list' || $this->extension_manager->is_disabled('lukewcs/extmgrplus'))
+		{
+			return;
+		}
+
+		$event['tpl_name'] = '@lukewcs_extmgrplus/acp_ext_mgr_plus_acp_ext_list';
+
+		$this_meta = $this->extension_manager->create_extension_metadata_manager('lukewcs/extmgrplus')->get_metadata('all');
+		$notes = [];
 
 		$ext_list_enabled = $this->extension_manager->all_enabled();
 		$ext_list_disabled = $this->extension_manager->all_disabled();
 		$ext_list_migrations = $this->get_exts_with_new_migration($ext_list_disabled);
+
+		$ext_list_versioncheck = [];
+		if ($this->request->variable('versioncheck_force', false))
+		{
+			$this->versioncheck_save();
+		}
+		if ($this->config_text->get('extmgrplus_version_check') != '')
+		{
+			$ext_list_versioncheck = $this->versioncheck_list();
+		}
 
 		if ($this->config['extmgrplus_enable_order_and_ignore'])
 		{
@@ -211,17 +232,7 @@ class ext_mgr_plus
 		$lang_outdated_msg	= $this->check_lang_ver($ext_display_name, $ext_lang_ver, $ext_lang_min_ver, 'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED');
 		if ($lang_outdated_msg)
 		{
-			$notes[]		= $lang_outdated_msg;
-		}
-
-		$ext_list_versioncheck = [];
-		if ($this->request->variable('versioncheck_force', false))
-		{
-			$this->versioncheck_save();
-		}
-		if ($this->config_text->get('extmgrplus_version_check') != '')
-		{
-			$ext_list_versioncheck = $this->versioncheck_list();
+			$notes[] = $lang_outdated_msg;
 		}
 
 		$this->template->assign_vars([
@@ -249,16 +260,6 @@ class ext_mgr_plus
 			'EXTMGRPLUS_ENABLE_SELF_DISABLE'			=> $this->config['extmgrplus_enable_self_disable'],
 			'EXTMGRPLUS_ENABLE_MIGRATIONS'				=> $this->config['extmgrplus_enable_migrations'],
 		]);
-	}
-
-	public function ext_manager_template($event)
-	{
-		if ($event['action'] != 'list' || $this->extension_manager->is_disabled('lukewcs/extmgrplus'))
-		{
-			return;
-		}
-
-		$event['tpl_name'] = '@lukewcs_extmgrplus/acp_ext_mgr_plus_acp_ext_list';
 	}
 
 	public function catch_message()
@@ -664,10 +665,8 @@ class ext_mgr_plus
 	// Writes the cached version check data to the database.
 	private function versioncheck_save()
 	{
-		$ext_list_db = [
-			'data' => [
-				'date' => time(),
-			]
+		$ext_list_db['data'] = [
+			'date' => time(),
 		];
 		foreach ($this->extension_manager->all_available() as $ext_name => $path)
 		{
@@ -679,7 +678,7 @@ class ext_mgr_plus
 
 				if (isset($meta['extra']['version-check']))
 				{
-					$update_data = $this->extension_manager->version_check($md_manager, false);
+					$update_data = $this->extension_manager->version_check($md_manager, false, true);
 					if (!empty($update_data))
 					{
 						$ext_list_db[$ext_name] = [
@@ -702,7 +701,9 @@ class ext_mgr_plus
 	private function versioncheck_list(): array
 	{
 		$ext_list_db = $this->config_text_get('extmgrplus_version_check', 'updates');
-		$ext_list_tpl = [];
+		$ext_list_tpl['DATA'] = [
+			'LOCAL_DATE' => $this->user->format_date($ext_list_db['data']['date']),
+		];
 
 		$ext_list_db_count = count($ext_list_db);
 		foreach ($ext_list_db as $ext_name => $ext_data)
@@ -718,7 +719,7 @@ class ext_mgr_plus
 				if (phpbb_version_compare($meta['version'], $ext_data['current'], '<'))
 				{
 					$ext_list_tpl[$ext_name]  = [
-						'current'		=> $ext_data['current'],
+						'CURRENT' => $ext_data['current'],
 					];
 				}
 			}
@@ -731,9 +732,7 @@ class ext_mgr_plus
 		{
 			$this->config_text_set('extmgrplus_version_check', 'updates', $ext_list_db);
 		}
-		$ext_list_tpl['data'] = [
-			'date' => $this->user->format_date($ext_list_db['data']['date']),
-		];
+
 		return $ext_list_tpl;
 	}
 }

@@ -29,23 +29,26 @@
 			</td>
 			<td>
 				{% if EXTMGRPLUS_EXT_VERSIONCHECK|length %}
-					{{ EXTMGRPLUS_EXT_VERSIONCHECK.data.date }} {{ lang('EXTMGRPLUS_UPDATES_PLURAL', EXTMGRPLUS_EXT_VERSIONCHECK|length - 1) }}
+					{{ EXTMGRPLUS_EXT_VERSIONCHECK.DATA.LOCAL_DATE }} {{ lang('EXTMGRPLUS_UPDATES_PLURAL', EXTMGRPLUS_EXT_VERSIONCHECK|length - 1) }}
 				{% else %}
 					-
 				{% endif %}
 			</td>
 		</tr>
 	</table>
-	<div id="extmgrplus_link_bar">
-		<a href="https://www.phpbb.com/go/customise/extensions/{{ CDB_EXT_VER }}" target="_blank">{{ lang('BROWSE_EXTENSIONS_DATABASE') }}</a>
-		&bull; <a href="{{ U_VERSIONCHECK_FORCE }}">{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</a>
-		&bull; <a href="javascript:ExtMgrPlus.ShowHideSettings();">{{ lang('SETTINGS') }}</a>
-		{% if EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE  %}
-			&bull; <a href="javascript:ExtMgrPlus.ShowHideOrderIgnore();">{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</a>
-		{% else %}
-			<span class="disabled">&bull; {{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</span>
-		{% endif %}
-	</div>
+
+	<fieldset class="quick">
+		<span class="small">
+			<a href="https://www.phpbb.com/go/customise/extensions/{{ CDB_EXT_VER }}" target="_blank">{{ lang('BROWSE_EXTENSIONS_DATABASE') }}</a>
+			&bull; <a href="{{ U_VERSIONCHECK_FORCE }}">{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</a>
+			&bull; <a href="javascript:ExtMgrPlus.ShowHideSettings();">{{ lang('SETTINGS') }}</a>
+			{% if EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE  %}
+				&bull; <a href="javascript:ExtMgrPlus.ShowHideOrderIgnore();">{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</a>
+			{% else %}
+				<span class="disabled">&bull; {{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</span>
+			{% endif %}
+		</span>
+	</fieldset>
 	
 	<form class="extmgrplus_settings" id="version_check_settings" method="post" action="{{ U_ACTION }}">
 		<fieldset>
@@ -407,8 +410,8 @@
 		{% if not ext_obj.S_UP_TO_DATE %}
 			&nbsp;<i class="fa fa-exclamation-circle outdated-ext" aria-hidden="true"></i>
 		{% endif %}
-		{% if vc_obj.current %}
-			&nbsp;<strong class="current-ext">({{ vc_obj.current }})</strong>
+		{% if vc_obj.CURRENT %}
+			&nbsp;<strong class="current-ext">({{ vc_obj.CURRENT }})</strong>
 		{% endif %}
 	{% else %}
 		{{ ext_obj.META_VERSION }}

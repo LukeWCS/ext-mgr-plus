@@ -1,5 +1,14 @@
 ### 1.0.6
 
+#### 1.0.6-b3
+* Fix: Bei geleertem Cache wurde die Versionsprüfung zweimal ausgeführt, von EMP und von phpBB.
+* Fix: Wurde zwischen zwei Versionsprüfungen der Cache nicht geleert, erkannte EMP neue Updates nicht.
+* Code Optimierung.
+* ExtMgr Template:
+  * Die Link-Leiste oberhalb der Erweiterungen-Liste wieder auf das Original Styling zurückgesetzt.
+* CSS:
+  * Nicht mehr benötigten Code entfernt.
+
 #### 1.0.6-b2
 * Im HTML und CSS war noch deaktivierter Code enthalten.
 * Version der Sprachpakete korrigiert.
