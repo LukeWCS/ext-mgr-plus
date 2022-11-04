@@ -1,5 +1,13 @@
 ### 1.0.6
 
+#### 1.0.6-b4
+* EC Fehler (VA) behoben.
+* ExtMgr Template:
+  * Twig Funktion für FA Icons.
+  * Kleinere Änderungen.
+* CSS:
+  * Kleinere Änderungen.
+
 #### 1.0.6-b3
 * Fix: Bei geleertem Cache wurde die Versionsprüfung zweimal ausgeführt, von EMP und von phpBB.
 * Fix: Wurde zwischen zwei Versionsprüfungen der Cache nicht geleert, erkannte EMP neue Updates nicht.

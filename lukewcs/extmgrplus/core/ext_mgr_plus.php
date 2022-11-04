@@ -665,8 +665,10 @@ class ext_mgr_plus
 	// Writes the cached version check data to the database.
 	private function versioncheck_save()
 	{
-		$ext_list_db['data'] = [
-			'date' => time(),
+		$ext_list_db = [
+			'data' => [
+				'date' => time(),
+			],
 		];
 		foreach ($this->extension_manager->all_available() as $ext_name => $path)
 		{
@@ -701,8 +703,10 @@ class ext_mgr_plus
 	private function versioncheck_list(): array
 	{
 		$ext_list_db = $this->config_text_get('extmgrplus_version_check', 'updates');
-		$ext_list_tpl['DATA'] = [
-			'LOCAL_DATE' => $this->user->format_date($ext_list_db['data']['date']),
+		$ext_list_tpl = [
+			'data' => [
+				'LOCAL_DATE' => $this->user->format_date($ext_list_db['data']['date']),
+			],
 		];
 
 		$ext_list_db_count = count($ext_list_db);

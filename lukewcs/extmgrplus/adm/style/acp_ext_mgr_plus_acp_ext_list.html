@@ -14,7 +14,7 @@
 		</div>
 	{% endif %}
 
-	<table id="extmgrplus_info_table">
+	<table class="extmgrplus_info_table">
 		<tr>
 			<td>
 				{{ lang('EXTMGRPLUS_AVAILABLE_EXTENSIONS') ~ lang('COLON') }}
@@ -29,7 +29,7 @@
 			</td>
 			<td>
 				{% if EXTMGRPLUS_EXT_VERSIONCHECK|length %}
-					{{ EXTMGRPLUS_EXT_VERSIONCHECK.DATA.LOCAL_DATE }} {{ lang('EXTMGRPLUS_UPDATES_PLURAL', EXTMGRPLUS_EXT_VERSIONCHECK|length - 1) }}
+					{{ EXTMGRPLUS_EXT_VERSIONCHECK.data.LOCAL_DATE }} {{ lang('EXTMGRPLUS_UPDATES_PLURAL', EXTMGRPLUS_EXT_VERSIONCHECK|length - 1) }}
 				{% else %}
 					-
 				{% endif %}
@@ -50,7 +50,7 @@
 		</span>
 	</fieldset>
 	
-	<form class="extmgrplus_settings" id="version_check_settings" method="post" action="{{ U_ACTION }}">
+	<form class="extmgrplus_settings" id="version_check_settings" method="post" action="{{ U_ACTION }}" style="display: none;">
 		<fieldset>
 			<legend>{{ lang('EXTENSIONS_VERSION_CHECK_SETTINGS') }}</legend>
 
@@ -71,7 +71,7 @@
 		</fieldset>
 	</form>
 
-	<form class="extmgrplus_settings" method="post" action="{{ U_ACTION }}">
+	<form class="extmgrplus_settings" method="post" action="{{ U_ACTION }}" style="display: none;">
 		<fieldset>
 			<legend>{{ lang('EXTMGRPLUS_SETTINGS_TITLE') }}</legend>
 
@@ -153,15 +153,15 @@
 	</form>
 	
 	<form id="extmgrplus_list" method="post" action="{{ U_ACTION }}">
-		<fieldset id="extmgrplus_order_and_ignore">
+		<fieldset id="extmgrplus_order_and_ignore" style="display: none;">
 			<legend>{{ lang('EXTMGRPLUS_SETTINGS_TITLE') }}</legend>
 			
 			<dl>
 				<dt>
 					<label>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE') ~ lang('COLON') }}</label><br>
-					<span class="icon fa-sort"></span><span>{{ lang('EXTMGRPLUS_ORDER_EXPLAIN') }}</span>
+					{{ _self.icon('fa-sort') }}<span>{{ lang('EXTMGRPLUS_ORDER_EXPLAIN') }}</span>
 					<br><br>
-					<span class="icon fa-ban"></span><span>{{ lang('EXTMGRPLUS_IGNORE_EXPLAIN') }}</span>
+					{{ _self.icon('fa-ban') }}<span>{{ lang('EXTMGRPLUS_IGNORE_EXPLAIN') }}</span>
 				</dt>
 				<dd>
 					<input class="button1" type="submit" name="extmgrplus_save_order_and_ignore" value="{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE_SAVE') }}">
@@ -180,7 +180,7 @@
 						{{ lang('CURRENT_VERSION') }}
 					</th>
 					<th title="{{ lang('EXTMGRPLUS_COL_MIGRATION_FILES') }}">
-						<span class="icon fa-arrow-up"></span><span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_MIGRATION_FILES') }}</span>
+						{{ _self.icon('fa-arrow-up') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_MIGRATION_FILES') }}</span>
 					</th>
 					<th>
 						{{ lang('EXTENSION_OPTIONS') }}
@@ -189,13 +189,13 @@
 						{{ lang('EXTENSION_ACTIONS') }}
 					</th>
 					<th title="{{ lang('EXTMGRPLUS_COL_SELECT') }}">
-						<span class="icon fa-check"></span><span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_SELECT') }}</span>
+						{{ _self.icon('fa-check') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_SELECT') }}</span>
 					</th>
-					<th style="display: none" title="{{ lang('EXTMGRPLUS_COL_ORDER') }}">
-						<span class="icon fa-sort"></span><span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_ORDER') }}</span>
+					<th style="display: none;" title="{{ lang('EXTMGRPLUS_COL_ORDER') }}">
+						{{ _self.icon('fa-sort') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_ORDER') }}</span>
 					</th>
-					<th style="display: none" title="{{ lang('EXTMGRPLUS_COL_IGNORE') }}">
-						<span class="icon fa-ban"></span><span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_IGNORE') }}</span>
+					<th style="display: none;" title="{{ lang('EXTMGRPLUS_COL_IGNORE') }}">
+						{{ _self.icon('fa-ban') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_IGNORE') }}</span>
 					</th>
 				</tr>
 			</thead>
@@ -218,9 +218,9 @@
 								EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 							) }}
 						</td>
-						<td class="row3" style="display: none">
+						<td class="row3" style="display: none;">
 						</td>
-						<td class="row3" style="display: none">
+						<td class="row3" style="display: none;">
 						</td>
 					</tr>
 					{% for enabled in loops.enabled %}
@@ -247,7 +247,7 @@
 									EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 								) }}
 							</td>
-							<td style="display: none">
+							<td style="display: none;">
 								{% if enabled.NAME != 'lukewcs/extmgrplus' %}
 									{{ _self.extmgrplus_inputbox(
 										enabled, 
@@ -256,7 +256,7 @@
 									) }}
 								{% endif %}
 							</td>
-							<td style="display: none">
+							<td style="display: none;">
 								{% if enabled.NAME != 'lukewcs/extmgrplus' %}
 									{{ _self.extmgrplus_checkbox_ignore(
 										enabled, 
@@ -287,9 +287,9 @@
 									EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 								) }}
 							</td>
-							<td class="row3" style="display: none">
+							<td class="row3" style="display: none;">
 							</td>
-							<td class="row3" style="display: none">
+							<td class="row3" style="display: none;">
 							</td>
 						</tr>
 					{% endif %}
@@ -304,9 +304,9 @@
 								</td>
 								<td class="row3">
 								</td>
-								<td class="row3" style="display: none">
+								<td class="row3" style="display: none;">
 								</td>
-								<td class="row3" style="display: none">
+								<td class="row3" style="display: none;">
 								</td>
 							</tr>
 						{% endif %}
@@ -336,14 +336,14 @@
 									) }}
 								{% endif %}
 							</td>
-							<td style="display: none">
+							<td style="display: none;">
 								{{ _self.extmgrplus_inputbox(
 									disabled, 
 									EXTMGRPLUS_ORDER,
 									EXTMGRPLUS_IGNORE[disabled.NAME] is defined
 								) }}
 							</td>
-							<td style="display: none">
+							<td style="display: none;">
 								{{ _self.extmgrplus_checkbox_ignore(
 									disabled, 
 									EXTMGRPLUS_IGNORE[disabled.NAME] is defined
@@ -408,7 +408,7 @@
 	{% if ext_obj.S_VERSIONCHECK || vc_obj %}
 		<strong class="{{ ext_obj.S_UP_TO_DATE ? 'current-ext' : 'outdated-ext' }}">{{ ext_obj.META_VERSION }}</strong>
 		{% if not ext_obj.S_UP_TO_DATE %}
-			&nbsp;<i class="fa fa-exclamation-circle outdated-ext" aria-hidden="true"></i>
+			&nbsp;{{ _self.icon('fa-exclamation-circle outdated-ext') }}
 		{% endif %}
 		{% if vc_obj.CURRENT %}
 			&nbsp;<strong class="current-ext">({{ vc_obj.CURRENT }})</strong>
@@ -485,3 +485,10 @@
 	<input type="text" size="1" maxlength="2"{{ inactive ? ' class="inactive"' }} name="ext_order[{{ ext_obj.NAME }}]" title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER')|e('html') }}" value="{{ order_list[ext_obj.NAME] }}" pattern="^[0-9]{1,2}$">
 {% endspaceless %}
 {% endmacro %}
+
+{% macro icon(classes) %}
+{% spaceless %}
+	<span class="icon {{ classes }}" aria-hidden="true"></span>
+{% endspaceless %}
+{% endmacro %}
+
