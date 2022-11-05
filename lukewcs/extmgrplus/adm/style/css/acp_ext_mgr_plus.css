@@ -49,16 +49,16 @@ legend {
 	padding: 3px 2px;
 }
 
-#extmgrplus_list th:nth-of-type(1n + 2), /* ext_ver and other columns to the right of it */
+#extmgrplus_list th:nth-of-type(1n + 2), /* version+ */
 #extmgrplus_list td:nth-of-type(1n + 2) {
 	text-align: center;
 }
 
-#extmgrplus_list th:nth-of-type(2) { /* ext_ver */
+#extmgrplus_list th:nth-of-type(2) { /* version */
 	width: 16%;
 }
 
-#extmgrplus_list th:nth-of-type(3) { /* migrations files */
+#extmgrplus_list th:nth-of-type(3) { /* migration files */
 	width: 2%;
 }
 
@@ -70,19 +70,11 @@ legend {
 	width: 25%;
 }
 
-#extmgrplus_list th:nth-of-type(6) { /* checkboxes */
+#extmgrplus_list th:nth-of-type(1n + 6) { /* checkboxes(select)+  */
 	width: 1%;
 }
 
-#extmgrplus_list th:nth-of-type(7) { /* order and ignore */
-	width: 1%;
-}
-
-#extmgrplus_list td:nth-of-type(6) { /* checkboxes */
-	padding: 0 4px;
-}
-
-#extmgrplus_list td:nth-of-type(7) { /* order and ignore */
+#extmgrplus_list td:nth-of-type(1n + 6) { /* checkboxes(select)+  */
 	padding: 0 4px;
 }
 

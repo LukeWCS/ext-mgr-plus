@@ -1,5 +1,10 @@
 ### 1.0.6
 
+#### 1.0.6
+* Release
+* CSS:
+  * Fix: Code für die 8te Spalte hat gefehlt.
+
 #### 1.0.6-b4
 * EC Fehler (VA) behoben.
 * ExtMgr Template:
