@@ -1,3 +1,15 @@
+### 1.0.7
+
+#### 1.0.7-b1
+* Bei den Aktionen "Ausgewählte deaktivierten" und "Ausgewählte aktivierten" wird jetzt die maximale PHP Ausführungszeit berücksichtigt. Wird während der Ausführung festgestellt, dass die Hälfte der maximalen Zeit überschritten wurde, wird die Aktion abgebrochen und eine kontrollierte Meldung angezeigt. Dadurch wird verhindert, dass es während der Ausführung eventuell zu einem WSOD (White Screen Of Death) kommt, wodurch es so aussehen würde, als wäre phpBB/EMP eingefroren. Das ist allerdings ein Härtefall der vermutlich nur bei extrem vielen Exts mit aufwendigen Aktionen in `ext.php` auftreten dürfte.
+* Im Style Ordner die Unterordner für CSS und JS entfernt. Für die paar wenigen Dateien sind Unterordner unnötig.
+* ExtMgr Template:
+  * Unnötigen Twig Code entfernt.
+  * Kleine Änderungen.
+* Sprachdateien:
+  * Neue Sprachvariablen für die Zeitüberschreitung-Meldung.
+  * Kleinere Änderungen.
+
 ### 1.0.6
 
 #### 1.0.6
@@ -12,7 +24,6 @@
   * Kleinere Änderungen.
 * CSS:
   * Kleinere Änderungen.
-
 #### 1.0.6-b3
 * Fix: Bei geleertem Cache wurde die Versionsprüfung zweimal ausgeführt, von EMP und von phpBB.
 * Fix: Wurde zwischen zwei Versionsprüfungen der Cache nicht geleert, erkannte EMP neue Updates nicht.
@@ -21,12 +32,10 @@
   * Die Link-Leiste oberhalb der Erweiterungen-Liste wieder auf das Original Styling zurückgesetzt.
 * CSS:
   * Nicht mehr benötigten Code entfernt.
-
 #### 1.0.6-b2
 * Im HTML und CSS war noch deaktivierter Code enthalten.
 * Version der Sprachpakete korrigiert.
 * `composer.json` auf die richtige Sprachversion geändert.
-
 #### 1.0.6-b1
 * Bei der Update Notification werden jetzt keine extra Meldungen mehr generiert, sondern direkt die schon vorhandenen Update Indikatoren der Liste genutzt und erweitert.
 * Core:
@@ -51,14 +60,12 @@
 * Release
 * Sprachdateien:
   * Kleine Textänderungen.
-
 #### 1.0.5-b2
 * Code Optimierungen:
   * Kleinere Änderungen für 1.0.5.
   * Unnötige Funktionsaufrufe bezüglich `get_metadata()` behoben.
   * Unnötige Funktion `remove_exts_with_new_migrations()` entfernt. Diese hatte ich für ExtOnOff 2.0 geschrieben und wird bei EMP nicht benötigt.
 * Debugs entfernt.
-
 #### 1.0.5-b1
 * Neue Funktion für die dauerhafte Update Benachrichtigung nach einer Versionsprüfung hinzugefügt.
 * Die Benachrichtigung-Funktion (Notes) erzeugt kein HTML mehr, das erledigt jetzt das Template durch Übergabe eines Arrays.
@@ -78,7 +85,6 @@
 
 #### 1.0.4
 * Release
-
 #### 1.0.4-b1
 * Fix für "Berechtigungen des Benutzers testen".
 
@@ -88,14 +94,12 @@
 * Release
 * Core:
   * Code Optimierungen.
-
 #### 1.0.3-b2
 * ExtMgr Template:
   * Wird bei Ignorieren eine Checkbox gesetzt, wird das zugehörige Textfeld für Reihenfolge-Gruppe abgeblendet dargestellt.
   * Javascript dafür erweitert. Kleinere Fehler behoben.
 * Core:
   * Code Optimierungen.
-
 #### 1.0.3-b1
 * Fix: War die Funktion Reihenfolge/Ignorieren deaktiviert, wurden auch deren gespeicherten Daten nicht mehr geladen und konnten somit nicht mehr geändert werden. Hat man dann die leere Spalte gespeichert, wurden die Daten effektiv gelöscht. Um das zu verhindern, bleibt die Beschriftung des Links zu Reihenfolge/Ignorieren zwar weiterhin abgeblendet sichtbar, wenn die Funktion deaktiviert ist, der Link wird jedoch entfernt und als Cursor erscheint das Gesperrt-Symbol.
 * Reihenfolge/Ignorieren:
@@ -122,7 +126,6 @@
   * Formular Reihenfolge/Ignorieren wird jetzt ebenfalls auf Security Token geprüft.
 * Sprachdateien:
   * Neue Sprachvariable für den Checkbox Tooltip.
-
 #### 1.0.2-b1
 * Bei der Prüfung ob eine Ext aktiviert werden kann mittels `is_enableable()` (`ext.php`), wird jetzt auch ein String und ein Array als möglicher Rückgabewert akzeptiert und entsprechend aufbereitet. Diese Methode der Fehlerbehandlung wurde erst in phpBB 3.3.0 eingeführt und kann `trigger_error` ersetzen. [Hinweis von IMC]
 
@@ -135,7 +138,6 @@
 * Die Fehlerbehandlung bei fehlgeschlagener Migration musste angepasst werden. Sobald ein Migrationsfehler ausgelöst und abgefangen wurde, war es nicht mehr möglich, eine `trigger_error` Meldung abzufangen. Darum wird jetzt bei einem Migrationsfehler sofort der Vorgang abgebrochen und direkt eine Fehlermeldung ausgegeben. Nur so ist gewährleistet, dass in jedem Fehler-Szenario vollständige Informationen ausgegeben werden können.
 * Sprachdateien:
   * Die Erklärung der Option "Erlaube Migrationen" auf den Stand von 1.0.0-b9 zurückgesetzt.
-
 #### 1.0.1-b1
 * Fehlerbehandlung allgemein:
   * Sollten bei den Aktionen Aktivieren/Deaktivieren Fehler bei einzelnen Erweiterungen auftreten, wird jetzt in der Bestätigungsmeldung von EMP explizit auf solche Fehler hingewiesen, unter Angabe von Anzeigename, technischer Name und der jeweiligen Fehlermeldung. So erfährt man präzise welche Erweiterungen Probleme verursacht haben und den jeweiligen Grund dafür.
@@ -164,7 +166,6 @@
 
 #### 1.0.0-b15
 * Fix: War die Option Reihenfolge/Ignorieren ausgeschaltet, dann wurde die zugehörige Spalte nicht mehr mit den gespeicherten Werten befüllt. Hat man dann die leere Spalte gespeichert, wurde diese ausserdem gelöscht.
-
 #### 1.0.0-b14
 * Die Funktion Reihenfolge/Ignorieren ist nicht mehr Teil der Einstellungen, sondern ein separater Menüpunkt. Ist in der Handhabung angenehmer, da man dann nicht mehr so weit nach unten blättern muss und diese Funktion gehört technisch gesehen ohnehin nicht zu den Einstellungen. Es kann auch zwischen Einstellungen und Reihenfolge/Ignorieren gewechselt werden.
 * ExtMgr Template:
@@ -178,10 +179,8 @@
 * Sprachdateien:
   * Kleinere Änderungen.
   * Sprachvariablen für die neue Option Reihenfolge/Ignorieren hinzugefügt.
-
 #### 1.0.0-b13
 * Fix: Wenn Migrationen deaktiviert sind und bei Exts mit neuen Migrationsdateien zusätzlich noch das Ignorieren-Merkmal gesetzt wird, dann konnte es vorkommen, das die Alle-Deaktivieren Checkbox deaktiviert wird, obwohl es noch schaltbare Exts gab. Der Grund lag in der falschen Berechnung der schaltbaren Exts. [Meldung von Kirk]
-
 #### 1.0.0-b12
 * Fix: Beim Aktivieren wurden auch diejenigen Exts mit aktiviert, bei denen eine Reihenfolge-Gruppe definiert war, obwohl diese gar nicht ausgewählt wurden.
 * Core:
@@ -197,7 +196,6 @@
 * Sprachdateien:
   * Sprachvariable für den Checkbox Tooltip hinzugefügt.
   * Kleinere Änderungen.
-  
 #### 1.0.0-b11
 * CSS:
   * In der Responsive-Ansicht wird bei geöffneten Einstellungen der Button "Spalte speichern" zentriert, damit dieser optisch zu den anderen Buttons passt. [Vorschlag von Kirk]
@@ -210,7 +208,6 @@
   * Code Optimierungen.
 * JS:
   * Code Optimierungen.
-
 #### 1.0.0-b10
 * ExtMgr Template:
   * Bei der Option "Erlaube Migrationen" erfolgt jetzt eine Rückfrage per JS Popup die mit OK bestätigt werden muss. Ansonsten wird die Option wieder auf "Nein" zurückgestellt. [Vorschlag von Scanialady, chris1278]
@@ -218,13 +215,11 @@
 * Sprachdateien:
   * Neue Sprachvariablen für die Migrations-Rückfrage.
   * Den bestehenden Text bezüglich Erklärung für die Option "Erlaube Migrationen" so umformuliert, das der Text deutlich als Warnung wahrgenommen wird.
-
 #### 1.0.0-b9
 * Fix: In der Responsive-Ansicht wurde das Textfeld für Reihenfolge/Ignorieren auch dann angezeigt, wenn die Einstellungen nicht geöffnet waren. Um weitere Kopfschmerzen wegen dem phpBB Responsive CSS zu vermeiden, wird die Spalte jetzt wieder per Inline-CSS ausgeblendet, da das wenigstens unkompliziert funktioniert.
 * Fix: In der Responsive-Ansicht wurde die Zeile mit dem Textfeld für Reihenfolge/Ignorieren nicht korrekt dargestellt, wenn die Einstellungen geöffnet waren.
 * JS:
   * Funktion zum Anzeigen/Ausblenden der Einstellungen komplett geändert.
-
 #### 1.0.0-b8
 * Fix: In der Spalte für Reihenfolge/Ignorieren konnten keine 2-stelligen Werte eingetragen werden. Im HTML wurde schlicht das RegEx für die Eingabeprüfung falsch definiert. [Meldung von Kirk]
 * In der Responsive-Ansicht werden nun auch bei den neuen EMP Spalten (neue Migrationsdateien, Auswählen, Reihenfolge/Ignorieren) einleitende Spaltenüberschriften angezeigt, wie das phpBB auch bei den Standard-Spalten macht. Bislang wurden gar keine Texte angezeigt, da die Spalten in der normalen Ansicht nur FA Icons enthalten.
@@ -242,7 +237,6 @@
   * CSS für die Responsive-Ansicht hinzugefügt.
   * Bisheriges Inline-CSS zur CSS Datei hinzugefügt.
   * Optimierungen.
-
 #### 1.0.0-b7
 * Erweiterungen können jetzt in einer definierten Reihenfolge aktiviert werden, indem diesen eine numerische Gruppe im Bereich 0-99 zugewiesen wird. Erweiterungen mit einer Reihenfolge-Gruppe werden immer vor Erweiterungen aktiviert, die keine Gruppe haben.
 * Erweiterungen können jetzt auch komplett ignoriert werden, indem statt der numerischen Gruppe einfach ein `-` zugewiesen wird.
@@ -257,7 +251,6 @@
   * Neue Sprachvariablen für die Reihenfolge und Ignorieren Funktionen.
 * CSS:
   * CSS für die Reihenfolge und Ignorieren Funktionen hinzugefügt.
-
 #### 1.0.0-b6
 * ExtMgr Template:
   * Es gibt jetzt einen neuen Schalter mit dem man festlegen kann, ob die Checkboxen standardmässig alle gesetzt sind oder nicht. [Vorschlag von Kirk]
@@ -266,7 +259,6 @@
   * JS Hilfsfunktion dafür eingebaut, mit der mehrere Elemente gleichzeitig ein/ausgeblendet werden können.
 * Sprachdateien:
   * Neue Sprachvariablen für die Checkbox Option.
-
 #### 1.0.0-b5
 * Fix: Bei der Umbenennung der JS Datei für die Checkboxen hat das Suffix gefehlt. Dadurch wurde in den Entwicklertools von FF eine Warnung bezüglich "ungültiger MIME Typ" ausgegeben.
 * ExtMgr Template:
@@ -278,10 +270,8 @@
   * `cursor: not-allowed` auch bei deaktivierten Checkboxen hinzugefügt.
   * CSS für die Blind-Tabelle hinzugefügt.
 * Code Optimierung.
-  
 #### 1.0.0-b4
 * Fix: Die neue Methode für die ToDo Variablen hatte noch 2 kleinere Fehler, weshalb es je nach Aktion zu Array Index Fehlern kam.
-
 #### 1.0.0-b3
 * ErrorBox Handhabung bei Abbruch der Aktivierung:
   * Methode komplett geändert. Um auf das HTML Event verzichten zu können, eine eigene Funktion eingebaut, mit der eine ErrorBox Meldung abgefangen und manipuliert werden kann. Damit ist die Handhabung des Aktivierungsabbruchs kein Workaround mehr, sondern eine ordentliche Lösung.
@@ -301,7 +291,6 @@
   * Kleinere Änderungen
 * Code Optimierung.
 * Debugs aus PHP und JS entfernt.
-
 #### 1.0.0-b2
 * ExtMgr Template:
   * Die Anzahl der neuen Migrationsdateien wird jetzt nicht mehr in der Spalte der Ext Namen angezeigt, sondern in einer neuen Spalte.
@@ -312,7 +301,6 @@
   * Bereinigt und überflüssiges entfernt.
 * Kleinere Änderungen in den Sprachdateien
 * Alle Fehler vom EC Bericht behoben.
-
 #### 1.0.0-b1
 * Initial Release.
 * Erste interne Testversion.

@@ -394,13 +394,11 @@
 
 {% INCLUDE 'overall_footer.html' %}
 
-{% INCLUDECSS '@lukewcs_extmgrplus/css/acp_ext_mgr_plus.css' %}
-{% INCLUDEJS '@lukewcs_extmgrplus/js/acp_ext_mgr_plus_helper.js' %}
+{% INCLUDEJS '@lukewcs_extmgrplus/acp_ext_mgr_plus_helper.js' %}
+{% INCLUDECSS '@lukewcs_extmgrplus/acp_ext_mgr_plus.css' %}
 
 {% macro extmgrplus_name(ext_obj) %}
-{% spaceless %}
-	<strong title="{{ ext_obj.NAME }}">{{ ext_obj.META_DISPLAY_NAME }}</strong>
-{% endspaceless %}
+<strong title="{{ ext_obj.NAME }}">{{ ext_obj.META_DISPLAY_NAME }}</strong>
 {% endmacro %}
 
 {% macro extmgrplus_version(ext_obj, vc_obj) %}
@@ -475,20 +473,13 @@
 {% endmacro %}
 
 {% macro extmgrplus_checkbox_ignore(ext_obj, checked = false) %}
-{% spaceless %}
-	<input type="checkbox" class="radio" onchange="ExtMgrPlus.SetInputBoxState('{{ ext_obj.NAME }}')" name="ext_ignore[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_IGNORE')|e('html') }}" value="{{ ext_obj.NAME }}"{{ checked ? ' checked' }}>
-{% endspaceless %}
+<input type="checkbox" class="radio" onchange="ExtMgrPlus.SetInputBoxState('{{ ext_obj.NAME }}')" name="ext_ignore[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_IGNORE')|e('html') }}" value="{{ ext_obj.NAME }}"{{ checked ? ' checked' }}>
 {% endmacro %}
 
 {% macro extmgrplus_inputbox(ext_obj, order_list, inactive = false) %}
-{% spaceless %}
-	<input type="text" size="1" maxlength="2"{{ inactive ? ' class="inactive"' }} name="ext_order[{{ ext_obj.NAME }}]" title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER')|e('html') }}" value="{{ order_list[ext_obj.NAME] }}" pattern="^[0-9]{1,2}$">
-{% endspaceless %}
+<input type="text" size="1" maxlength="2"{{ inactive ? ' class="inactive"' }} name="ext_order[{{ ext_obj.NAME }}]" title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER')|e('html') }}" value="{{ order_list[ext_obj.NAME] }}" pattern="^[0-9]{1,2}$">
 {% endmacro %}
 
-{% macro icon(classes) %}
-{% spaceless %}
-	<span class="icon {{ classes }}" aria-hidden="true"></span>
-{% endspaceless %}
+{% macro icon(classes, decorative = true) %}
+<span class="icon {{ classes }}"{{ decorative ? ' aria-hidden="true"' : '' }}></span>
 {% endmacro %}
-

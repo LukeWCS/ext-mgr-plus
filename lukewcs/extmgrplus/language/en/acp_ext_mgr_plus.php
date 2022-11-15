@@ -39,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, [
 	// language pack author
 	'EXTMGRPLUS_LANG_DESC'							=> 'English',
-	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.0.6',
+	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.0.7',
 	'EXTMGRPLUS_LANG_AUTHOR'	 					=> 'LukeWCS',
 
 	// settings
@@ -62,7 +62,7 @@ $lang = array_merge($lang, [
 
 	// settings order and ignore
 	'EXTMGRPLUS_ORDER_EXPLAIN'						=> 'Order: This column allows you to define order groups in the range 0 to 99 for the "Enable selected" action. This allows extensions that other extensions depend on to be activated before them to avoid error messages. Extensions belonging to such a group are activated first, starting with group 0, then group 1 and so on. Extensions without a group are activated last.',
-	'EXTMGRPLUS_IGNORE_EXPLAIN'						=> 'Ignore: This column allows you to specify which extensions to ignore for both the "Enable selected" and "Disable selected" actions. Ignored extensions can no longer be selected in the extensions list. If an order group was defined for an ignored extension, then this is retained, but it no longer has any meaning.',
+	'EXTMGRPLUS_IGNORE_EXPLAIN'						=> 'Ignore: This column allows you to specify which extensions should be ignored during the "Enable selected" and "Disable selected" actions. Ignored extensions can no longer be selected in the extensions list. If an order group was defined for an ignored extension, then this is retained, but it no longer has any meaning.',
 	'EXTMGRPLUS_ORDER_AND_IGNORE_SAVE'				=> 'Save',
 
 	// ext manager
@@ -112,4 +112,5 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_DEACTIVATION'					=> 'ExtMgrPlus: %1$u of %2$u enabled extensions have been disabled.',
 	'EXTMGRPLUS_MSG_ACTIVATION'						=> 'ExtMgrPlus: %1$u of %2$u disabled extensions have been enabled.',
 	'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED'			=> 'Note: The language pack for the extension <strong>%1$s</strong> is no longer up-to-date. (installed: %2$s / needed: %3$s)',
+	'EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED'				=> 'The tolerance range (%u seconds) of the maximum PHP execution time (%u seconds) has been exceeded.',
 ]);
