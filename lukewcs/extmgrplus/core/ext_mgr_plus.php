@@ -559,9 +559,10 @@ class ext_mgr_plus
 			}
 			else
 			{
-				trigger_error(sprintf('%1$s<br><br>%2$s',
+				trigger_error(sprintf('%1$s%2$s<br><br>%3$s',
 						/* 1 */	$this->language->lang('EXTMGRPLUS_MSG_ACTIVATION', $ext_count_success, $ext_count_disabled),
-						/* 2 */	$this->extmgr_back_link()
+						/* 2 */ $msg_failed,
+						/* 3 */	$this->extmgr_back_link()
 					)
 					, (($ext_count_success != $ext_count_disabled) ? E_USER_WARNING : E_USER_NOTICE)
 				);

@@ -1,11 +1,13 @@
 ### 1.0.7
 
+#### 1.0.7-b2
+* Fix: Bei 1.0.7-b1 hat sich durch Copy&Paste ein Fehler eingeschlichen, durch den die erweiterte Fehlerbehandlung für `ext.php` nicht mehr angezeigt wurde, die bei 1.0.2 eingebaut wurde.
 #### 1.0.7-b1
-* Bei den Aktionen "Ausgewählte deaktivierten" und "Ausgewählte aktivierten" wird jetzt die maximale PHP Ausführungszeit berücksichtigt. Wird während der Ausführung festgestellt, dass die Hälfte der maximalen Zeit überschritten wurde, wird die Aktion abgebrochen und eine kontrollierte Meldung angezeigt. Dadurch wird verhindert, dass es während der Ausführung eventuell zu einem WSOD (White Screen Of Death) kommt, wodurch es so aussehen würde, als wäre phpBB/EMP eingefroren. Das ist allerdings ein Härtefall der vermutlich nur bei extrem vielen Exts mit aufwendigen Aktionen in `ext.php` auftreten dürfte.
+* Bei den Aktionen "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" wird jetzt die maximale PHP Ausführungszeit berücksichtigt. Wird während der Ausführung festgestellt, dass die Hälfte der maximalen Zeit überschritten wurde, wird die Aktion abgebrochen und eine kontrollierte Meldung angezeigt. Dadurch wird verhindert, dass es während der Ausführung eventuell zu einem WSOD (White Screen Of Death) kommt, wodurch es so aussehen würde, als wäre phpBB/EMP eingefroren. Tatsächlich wird in so einem Fall die Ausführung des Skripts direkt vom Server abgebrochen. Das ist allerdings ein Extremfall der vermutlich nur bei sehr vielen Exts mit zeitintensiven Aktionen in `ext.php` auftreten dürfte.
 * Im Style Ordner die Unterordner für CSS und JS entfernt. Für die paar wenigen Dateien sind Unterordner unnötig.
 * ExtMgr Template:
   * Unnötigen Twig Code entfernt.
-  * Kleine Änderungen.
+  * Kleinere Änderungen.
 * Sprachdateien:
   * Neue Sprachvariablen für die Zeitüberschreitung-Meldung.
   * Kleinere Änderungen.
