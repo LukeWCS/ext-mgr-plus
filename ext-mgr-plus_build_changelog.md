@@ -1,5 +1,10 @@
 ### 1.0.7
 
+#### 1.0.7-b3
+* ACP-Template:
+  * Toggle Funktion in angepasster Form von "Style Changer" übernommen. (Danke an Kirk)
+  * JS für Toggles angepasst.
+  * CSS für Toggles angepasst.
 #### 1.0.7-b2
 * Fix: Bei 1.0.7-b1 hat sich durch Copy&Paste ein Fehler eingeschlichen, durch den die erweiterte Fehlerbehandlung für `ext.php` nicht mehr angezeigt wurde, die bei 1.0.2 eingebaut wurde.
 #### 1.0.7-b1

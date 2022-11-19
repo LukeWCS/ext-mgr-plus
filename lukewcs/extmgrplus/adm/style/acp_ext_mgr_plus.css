@@ -43,10 +43,52 @@ legend {
 	color: #115098;
 }
 
+.toggle {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	width: 35px;
+	height: 17px;
+	position: relative;
+	border-radius: 50px;
+	border: none;
+	cursor: pointer;
+	background-color: #AA0000;
+	vertical-align: middle;
+    margin-bottom: 4px;
+}
+
+.toggle:before {
+	content: "";
+	position: absolute;
+	width: 12px;
+	height: 11px;
+	background: #fff;
+	left: 20px;
+	top: 3px;
+	border-radius: 50%;
+}
+
+.toggle:hover,
+.toggle:focus {
+	background-color: #AA0000;
+	border: none;
+}
+
+.toggle:checked {
+	background-color: #3FA651;
+}
+
+.toggle:checked:before {
+	left: 3px;
+}
+
 /* LIST */
 
-#extmgrplus_list input[name="extmgrplus_save_order_and_ignore"] {
-	padding: 3px 2px;
+#extmgrplus_list input[name="extmgrplus_save_order_and_ignore"],
+.submit-buttons input[type=submit],
+.submit-buttons input[type=reset] {
+	padding: 3px 4px;
 }
 
 #extmgrplus_list th:nth-of-type(1n + 2), /* version+ */

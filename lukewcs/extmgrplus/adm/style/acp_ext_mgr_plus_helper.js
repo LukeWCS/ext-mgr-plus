@@ -104,8 +104,9 @@ ExtMgrPlus.ShowOrderIgnoreColumns = function (show) {
 ExtMgrPlus.ConfirmMigrations = function () {
 	'use strict';
 
-	if (!confirm(ExtMgrPlus.lang.MsgConfirmMigrations))	{
-		$('.extmgrplus_settings input[name="extmgrplus_enable_migrations"][value="0"]').prop('checked', true);
+	if ($('input[name="extmgrplus_enable_migrations"]').prop('checked') && !confirm(ExtMgrPlus.lang.MsgConfirmMigrations))	{
+		// $('input[name="extmgrplus_enable_migrations"][value="0"]').prop('checked', true);
+		$('input[name="extmgrplus_enable_migrations"]').prop('checked', false);
 	}
 };
 
@@ -116,3 +117,11 @@ $('#extmgrplus_list').keypress(function(event) {
 		event.preventDefault();
 	}
 });
+
+$(window).ready(function() {
+	'use strict';
+
+	$('input[name="extmgrplus_enable_migrations"]').on('change', ExtMgrPlus.ConfirmMigrations);
+	// ExtMgrPlus.ShowHideSettings();
+});
+
