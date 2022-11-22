@@ -61,18 +61,20 @@
 				</dd>
 			</dl>
 
+			<legend class="legend_subgroup">{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
+
 			<p class="submit-buttons">
 				<input class="button1" type="submit" name="update" value="{{ lang('SUBMIT') }}">&nbsp;
 				<input class="button2" type="reset" name="reset" value="{{ lang('RESET') }}">
 				<input type="hidden" name="action" value="set_config_version_check_force_unstable">
-				{{ S_FORM_TOKEN }}
 			</p>
 		</fieldset>
+		{{ S_FORM_TOKEN }}
 	</form>
 
 	<form class="extmgrplus_settings" method="post" action="{{ U_ACTION }}" style="display: none;">
 		<fieldset>
-			<legend>{{ lang('EXTMGRPLUS_SETTINGS_TITLE') }}</legend>
+			<legend>{{ lang('EXTMGRPLUS_SECTION_SETTINGS') }}</legend>
 
 			<dl>
 				<dt>
@@ -124,8 +126,7 @@
 				</dd>
 			</dl>
 		
-			<hr>
-			<p class="extmgrplus_legend">{{ lang('EXTMGRPLUS_EXPERT_SETTINGS_TITLE') }}</p>
+			<legend class="legend_subgroup">{{ lang('EXTMGRPLUS_SECTION_EXPERT_SETTINGS') }}</legend>
 			
 			<dl>
 				<dt>
@@ -137,17 +138,31 @@
 				</dd>
 			</dl>
 		
+			<legend class="legend_subgroup">{{ lang('EXTMGRPLUS_SECTION_RESET') }}</legend>			
+
+			<dl>
+				<dt>
+					<label>{{ lang('EXTMGRPLUS_DEFAULTS') ~ lang('COLON') }}</label><br>
+					<span>{{ lang('EXTMGRPLUS_DEFAULTS_EXP') }}</span>
+				</dt>
+				<dd>
+					<input class="button2" type="button" name="extmgrplus_defaults" value="{{ lang('EXTMGRPLUS_BUTTON_DEFAULTS') }}">
+				</dd>
+			</dl>
+
+			<legend class="legend_subgroup">{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
+		
 			<p class="submit-buttons">
 				<input class="button1" type="submit" name="extmgrplus_save_settings" value="{{ lang('SUBMIT') }}">&nbsp;
 				<input class="button2" type="reset" name="reset" value="{{ lang('RESET') }}">
-				{{ S_FORM_TOKEN }}
 			</p>
 		</fieldset>
+		{{ S_FORM_TOKEN }}
 	</form>
 	
 	<form id="extmgrplus_list" method="post" action="{{ U_ACTION }}">
 		<fieldset id="extmgrplus_order_and_ignore" style="display: none;">
-			<legend>{{ lang('EXTMGRPLUS_SETTINGS_TITLE') }}</legend>
+			<legend>{{ lang('EXTMGRPLUS_SECTION_SETTINGS') }}</legend>
 			
 			<dl>
 				<dt>
@@ -157,9 +172,14 @@
 					{{ _self.icon('fa-ban') }}<span>{{ lang('EXTMGRPLUS_IGNORE_EXPLAIN') }}</span>
 				</dt>
 				<dd>
-					<input class="button1" type="submit" name="extmgrplus_save_order_and_ignore" value="{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE_SAVE') }}">
 				</dd>
 			</dl>
+
+			<legend class="legend_subgroup">{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
+
+			<p class="submit-buttons">
+				<input class="button1" type="submit" name="extmgrplus_save_order_and_ignore" value="{{ lang('SUBMIT') }}">&nbsp;
+			</p>
 		</fieldset>
 
 		<table class="table1">
@@ -347,7 +367,7 @@
 				{% endif %}
 			</tbody>
 		</table>
-	{{ S_FORM_TOKEN }}
+		{{ S_FORM_TOKEN }}
 	</form>
 
 	<table class="table1">
@@ -446,27 +466,15 @@
 {% endmacro %}
 
 {% macro checkbox_all(section, enabled = true, checked = false) %}
-{% spaceless %}
-	{% if section == 'enabled' %}
-		<input type="checkbox" class="radio"{{ enabled ? ' onchange="ExtMgrPlus.CheckUncheckAll(\'enabled\', \'disable\')"' }} name="ext_mark_all_enabled" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT_ALL') }}"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
-	{% elseif section == 'disabled' %}
-		<input type="checkbox" class="radio"{{ enabled ? ' onchange="ExtMgrPlus.CheckUncheckAll(\'disabled\', \'enable\')"' }} name="ext_mark_all_disabled" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT_ALL') }}"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
-	{% endif %}
-{% endspaceless %}
+<input type="checkbox" class="radio" name="ext_mark_all_{{ section }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT_ALL') }}"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
 {% endmacro %}
 
 {% macro checkbox_select(section, ext_obj, enabled = true, checked = false) %}
-{% spaceless %}
-	{% if section == 'enabled' %}
-		<input type="checkbox" class="radio"{{ enabled ? ' onchange="ExtMgrPlus.SetButtonState(\'enabled\', \'disable\')"' }} name="ext_mark_enabled[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT') }}"{{ enabled ? ' value="' ~ ext_obj.NAME ~ '"' }}{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
-	{% elseif section == 'disabled' %}
-		<input type="checkbox" class="radio"{{ enabled ? ' onchange="ExtMgrPlus.SetButtonState(\'disabled\', \'enable\')"' }} name="ext_mark_disabled[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT') }}"{{ enabled ? ' value="' ~ ext_obj.NAME ~ '"' }}{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
-	{% endif %}
-{% endspaceless %}
+<input type="checkbox" class="radio" name="ext_mark_{{ section }}[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT') }}"{{ enabled ? ' value="' ~ ext_obj.NAME ~ '"' }}{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
 {% endmacro %}
 
 {% macro checkbox_ignore(ext_obj, checked = false) %}
-<input type="checkbox" class="radio" onchange="ExtMgrPlus.SetInputBoxState('{{ ext_obj.NAME }}')" name="ext_ignore[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_IGNORE')|e('html') }}" value="{{ ext_obj.NAME }}"{{ checked ? ' checked' }}>
+<input type="checkbox" class="radio" name="ext_ignore[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_IGNORE')|e('html') }}" value="{{ ext_obj.NAME }}"{{ checked ? ' checked' }}>
 {% endmacro %}
 
 {% macro inputbox(ext_obj, order_list, inactive = false) %}
@@ -478,12 +486,9 @@
 {% endmacro %}
 
 {% macro switch(name, checked = false) %}
-	<!-- <span class="switch"> -->
-		<!-- <label><input type="radio" class="radio" name="{{ name }}" value="1"{{ checked ? ' checked' }}> {{ lang('YES') }}</label> -->
-		<!-- <label><input type="radio" class="radio" name="{{ name }}" value="0"{{ !checked ? ' checked' }}> {{ lang('NO') }}</label> -->
-	<!-- </span> -->
 	<label>
-		{{ lang('YES') }} <input type="checkbox" class="toggle" name="{{ name }}" value="1"{{ checked ? ' checked' : '' }}>	{{ lang('NO') }}
+		<input type="checkbox" class="toggle" name="{{ name }}" value="1"{{ checked ? ' checked' : '' }}>
 	</label>
 {% endmacro %}
+
 

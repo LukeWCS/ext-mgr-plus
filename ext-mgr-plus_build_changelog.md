@@ -1,14 +1,39 @@
 ### 1.0.7
 
+#### 1.0.7-b4
+* ACP-Template:
+  * Wie andere Erweiterungen von mir, bietet jetzt auch EMP die Möglichkeit die Einstellungen auf Installation-Standard zurücksetzen zu können.
+    * JS Funktion für zurücksetzen auf Standard hinzugefügt.
+  * Innerhalb eines `legend` Containers kann jetzt eine Untergruppe dargestellt werden. Bisher wurde eine solche Untergruppe nur per simplen `hr` dargestellt, dessen gestrichelte Linie nicht sonderlich schön aussah und auch mehr Platz benötigte, da die Linie in einer eigenen Zeile war.
+    * CSS entsprechend angepasst.  
+  * "Absenden" und "Zurücksetzen" sind jetzt in einer eigenen Untergruppe, die auf dieselbe Weise dargestellt wird, wie bei ACP Seiten von phpBB.
+  * Reihenfolge/Ignorieren:
+    * Den bisherigen Speichern-Button entfernt und stattdessen die übliche Buttonleiste zum Speichern eingefügt.
+  * Toggles.
+    * Slider verwenden jetzt wie bei Kirks Variante unterschiedliche FA Icons für die Zustände direkt im Slider. Dadurch werden die Labels "Ja" und "Nein" nicht länger benötigt und wurden entfernt. (Vorschlag von Scanialady)
+	* CSS optimiert und den Slider minimal vergrössert, damit das FA Icon genug Platz hat und weniger CSS Anpassungen nötig sind.
+  * `onchange` Event für die Bestätigung des Migration-Schalters entfernt.
+  * `onchange` Events für Alle-Auswählen-Checkboxen entfernt.
+  * `onchange` Events für Einzeln-Auswählen-Checkboxen entfernt.
+  * `onchange` Events für Ignorieren-Checkboxen entfernt.
+  * JS:
+    * `onchange` und `onclick` Events werden jetzt direkt in jQuery registriert. Damit befinden sich im Template keine `on...` Events mehr, die zu EMP gehören.
+	* Optimierung.
+  * Twig optimiert.
+* Sprachdateien:
+  * Sprachvariablen umbenannt.
+  * Neue Sprachvariablen hinzugefügt.
+  * Kleinere Änderungen.
 #### 1.0.7-b3
 * ACP-Template:
+  * Neues Twig Makro für Ja/Nein Schalter 
   * Toggle Funktion in angepasster Form von "Style Changer" übernommen. (Danke an Kirk)
   * JS für Toggles angepasst.
   * CSS für Toggles angepasst.
 #### 1.0.7-b2
 * Fix: Bei 1.0.7-b1 hat sich durch Copy&Paste ein Fehler eingeschlichen, durch den die erweiterte Fehlerbehandlung für `ext.php` nicht mehr angezeigt wurde, die bei 1.0.2 eingebaut wurde.
 #### 1.0.7-b1
-* Bei den Aktionen "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" wird jetzt die maximale PHP Ausführungszeit berücksichtigt. Wird während der Ausführung festgestellt, dass die Hälfte der maximalen Zeit überschritten wurde, wird die Aktion abgebrochen und eine kontrollierte Meldung angezeigt. Dadurch wird verhindert, dass es während der Ausführung eventuell zu einem WSOD (White Screen Of Death) kommt, wodurch es so aussehen würde, als wäre phpBB/EMP eingefroren. Tatsächlich wird in so einem Fall die Ausführung des Skripts direkt vom Server abgebrochen. Das ist allerdings ein Extremfall der vermutlich nur bei sehr vielen Exts mit zeitintensiven Aktionen in `ext.php` auftreten dürfte.
+* Bei den Aktionen "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" wird jetzt die maximale PHP Ausführungszeit berücksichtigt. Wird während der Ausführung festgestellt, dass die Hälfte der maximalen Zeit überschritten wurde, wird die Aktion abgebrochen und eine kontrollierte Meldung angezeigt. Das ist allerdings ein Extremfall, der vermutlich nur bei sehr vielen Exts mit zeitintensiven Aktionen in `ext.php` auftreten dürfte. Durch diese Änderung wird verhindert, dass es während der Ausführung eventuell zu einem WSOD (White Screen Of Death) kommt, wodurch es so aussehen würde, als wäre phpBB/EMP eingefroren. Tatsächlich wird in so einem Fall die Ausführung des Skripts einfach vom Server abgebrochen und der Browser erhält keine Daten mehr.
 * Im Style Ordner die Unterordner für CSS und JS entfernt. Für die paar wenigen Dateien sind Unterordner unnötig.
 * ExtMgr Template:
   * Unnötigen Twig Code entfernt.

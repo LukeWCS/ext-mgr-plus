@@ -36,18 +36,26 @@ legend {
 	top: 0;
 }
 
-.extmgrplus_legend {
-	font-family: Tahoma,arial,Verdana,Sans-serif;
-	font-size: .9em;
-	font-weight: bold;
-	color: #115098;
+legend.legend_subgroup {
+	border: 0;
+	margin: 1em 0;
+	padding: 0;
+	display: flex;
+	white-space: nowrap;
+}
+
+legend.legend_subgroup:after {
+    content: "";
+	border-bottom: 1px solid #cccccc;
+    width: 100%;
+    margin: 0 0 .5em 1em;
 }
 
 .toggle {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
-	width: 35px;
+	width: 38px;
 	height: 17px;
 	position: relative;
 	border-radius: 50px;
@@ -55,24 +63,29 @@ legend {
 	cursor: pointer;
 	background-color: #AA0000;
 	vertical-align: middle;
-    margin-bottom: 4px;
+	margin: 2px 2px 5px 2px;
+	font-family: FontAwesome;
 }
 
 .toggle:before {
-	content: "";
 	position: absolute;
-	width: 12px;
-	height: 11px;
+	width: 14px;
+	height: 13px;
 	background: #fff;
-	left: 20px;
-	top: 3px;
+	top: 2px;
 	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	left: 22px;
+	content: "\f00d";
 }
 
 .toggle:hover,
 .toggle:focus {
 	background-color: #AA0000;
 	border: none;
+	color: #000000;
 }
 
 .toggle:checked {
@@ -80,15 +93,22 @@ legend {
 }
 
 .toggle:checked:before {
-	left: 3px;
+	left: 2px;
+	content: "\f00c";
 }
 
 /* LIST */
 
-#extmgrplus_list input[name="extmgrplus_save_order_and_ignore"],
+input[name="extmgrplus_save_order_and_ignore"],
+input[name="extmgrplus_defaults"],
 .submit-buttons input[type=submit],
 .submit-buttons input[type=reset] {
 	padding: 3px 4px;
+}
+
+#extmgrplus_list input[name="extmgrplus_disable_all"],
+#extmgrplus_list input[name="extmgrplus_enable_all"] {
+	padding: 1px 5px;
 }
 
 #extmgrplus_list th:nth-of-type(1n + 2), /* version+ */
@@ -118,11 +138,6 @@ legend {
 
 #extmgrplus_list td:nth-of-type(1n + 6) { /* checkboxes(select)+  */
 	padding: 0 4px;
-}
-
-#extmgrplus_list input[name="extmgrplus_disable_all"],
-#extmgrplus_list input[name="extmgrplus_enable_all"] {
-	padding: 1px 5px;
 }
 
 .extmgrplus_migration_files {

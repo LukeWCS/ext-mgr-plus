@@ -43,7 +43,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_LANG_AUTHOR'	 					=> 'LukeWCS',
 
 	// settings
-	'EXTMGRPLUS_SETTINGS_TITLE'						=> 'Einstellungen (Plus)',
+	'EXTMGRPLUS_SECTION_SETTINGS'					=> 'Einstellungen (Extension Manager Plus)',
 	'EXTMGRPLUS_LOG'								=> 'Log-Eintrag',
 	'EXTMGRPLUS_LOG_EXPLAIN'						=> 'Hier können Sie festlegen, ob bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ ein Eintrag im Administrator-Log hinzugefügt werden soll.',
 	'EXTMGRPLUS_CONFIRMATION'						=> 'Rückfrage',
@@ -56,9 +56,15 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'				=> 'Wenn Sie diese Option aktivieren, dann kann sich „Extension Manager Plus“ bei der Aktion „Ausgewählte deaktivieren“ auch selbst deaktivieren, da diese Erweiterung dann wie jede andere ausgewählt werden kann.',
 
 	// settings expert
-	'EXTMGRPLUS_EXPERT_SETTINGS_TITLE'				=> 'Experten-Einstellungen',
+	'EXTMGRPLUS_SECTION_EXPERT_SETTINGS'			=> 'Experten-Einstellungen',
 	'EXTMGRPLUS_MIGRATIONS'							=> 'Erlaube Migrationen',
 	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'					=> 'Wenn Sie diese Option aktivieren, dann können bei der Aktion „Ausgewählte aktivieren“ auch diejenigen Erweiterungen aktiviert werden, bei denen neue Migrationsdateien vorliegen. Das trifft auf aktualisierte Erweiterungen zu, die einen Ordner „migrations“ enthalten. Ohne diese Option müssen solche Erweiterungen manuell aktiviert werden, was empfohlen wird.',
+
+	// settings reset
+	'EXTMGRPLUS_SECTION_RESET'						=> 'Zurücksetzen',
+	'EXTMGRPLUS_DEFAULTS'							=> 'Einstellungen zurücksetzen',
+	'EXTMGRPLUS_DEFAULTS_EXP'						=> 'Setzt alle Einstellungen auf den Installationsstandard zurück. (Hat keine Auswirkung auf die Spalten „Reihenfolge“ und „Ignorieren“.)',
+	'EXTMGRPLUS_BUTTON_DEFAULTS'					=> 'Standard',
 
 	// settings order and ignore
 	'EXTMGRPLUS_ORDER_EXPLAIN'						=> 'Reihenfolge: In dieser Spalte können Sie Reihenfolge-Gruppen im Bereich 0 bis 99 für die Aktion „Ausgewählte aktivieren“ definieren. Damit können Erweiterungen, von denen andere Erweiterungen abhängig sind, vor diesen aktiviert werden, um Fehlermeldungen zu vermeiden. Erweiterungen die zu einer solchen Gruppe gehören, werden zuerst aktiviert und zwar beginnend bei Gruppe 0, dann Gruppe 1 und so weiter. Erweiterungen ohne Gruppe werden als letztes aktiviert.',
@@ -91,14 +97,14 @@ $lang = array_merge($lang, [
 	// misc
 	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'				=> 'Reihenfolge/Ignorieren',
 	'EXTMGRPLUS_EXTENSION_PLURAL' => [
-													0 => "0 Erweiterungen",
-													1 => "1 Erweiterung",
-													2 => "%u Erweiterungen",
+													0 => '0 Erweiterungen',
+													1 => '1 Erweiterung',
+													2 => '%u Erweiterungen',
 	],
 	'EXTMGRPLUS_UPDATES_PLURAL' => [
-													0 => "",
-													1 => "(1 Update verfügbar)",
-													2 => "(%u Updates verfügbar)",
+													0 => '',
+													1 => '(1 Update verfügbar)',
+													2 => '(%u Updates verfügbar)',
 	],
 
 	// messages

@@ -7,30 +7,29 @@
 *
 */
 
-ExtMgrPlus.CheckUncheckAll = function (CheckBoxes, Button) {
+ExtMgrPlus.CheckUncheckAll = function (e) {
 	'use strict';
 
-	var ChkBoxAllState = $('#extmgrplus_list input[name="ext_mark_all_' + CheckBoxes + '"]').prop('checked');
-
-	$('#extmgrplus_list input[name="ext_mark_' + CheckBoxes + '[]"]').filter(':enabled').prop('checked', ChkBoxAllState)
-
-	ExtMgrPlus.SetButtonState(CheckBoxes, Button);
+	$('#extmgrplus_list input[name="ext_mark_' + e.data.CheckBoxType + '[]"]').filter(':enabled').prop('checked', e.currentTarget.checked)
+	ExtMgrPlus.SetButtonState({data: {CheckBoxType: e.data.CheckBoxType}});
 };
 
-ExtMgrPlus.SetButtonState = function (CheckBoxes, Button) {
+ExtMgrPlus.SetButtonState = function (e) {
 	'use strict';
 
-	var CheckBoxesChecked = $('#extmgrplus_list input[name="ext_mark_' + CheckBoxes + '[]"]').filter(':checked').length;
+	var CheckedCount = $('#extmgrplus_list input[name="ext_mark_' + e.data.CheckBoxType + '[]"]').filter(':checked').length;
+	var Button = {
+		'disabled': 'enable',
+		'enabled': 'disable',
+	};
 
-	$('#extmgrplus_list input[name="extmgrplus_' + Button + '_all').prop('disabled', CheckBoxesChecked == 0);
+	$('#extmgrplus_list input[name="extmgrplus_' + Button[e.data.CheckBoxType] + '_all').prop('disabled', CheckedCount == 0);
 };
 
-ExtMgrPlus.SetInputBoxState = function (tech_name) {
+ExtMgrPlus.SetInputBoxState = function (e) {
 	'use strict';
 
-	var CheckBoxChecked = $('#extmgrplus_list input[name="ext_ignore[]"][value="' + tech_name + '"]').prop('checked');
-
-	$('#extmgrplus_list input[name="ext_order[' + tech_name + ']"]').css('opacity', (CheckBoxChecked ? '.5' : '1'));
+	$('#extmgrplus_list input[name="ext_order[' + e.currentTarget.value + ']"]').css('opacity', (e.currentTarget.checked ? '.5' : '1'));
 };
 
 ExtMgrPlus.ShowHideSettings = function () {
@@ -105,23 +104,38 @@ ExtMgrPlus.ConfirmMigrations = function () {
 	'use strict';
 
 	if ($('input[name="extmgrplus_enable_migrations"]').prop('checked') && !confirm(ExtMgrPlus.lang.MsgConfirmMigrations))	{
-		// $('input[name="extmgrplus_enable_migrations"][value="0"]').prop('checked', true);
 		$('input[name="extmgrplus_enable_migrations"]').prop('checked', false);
 	}
 };
 
-$('#extmgrplus_list').keypress(function(event) {
+ExtMgrPlus.SetDefaults = function () {
 	'use strict';
 
-	if (event.which == '13') {
-		event.preventDefault();
+	$('input[name="extmgrplus_enable_log"]'					).prop('checked'	, true);
+	$('input[name="extmgrplus_enable_confirmation"]'		).prop('checked'	, true);
+	$('input[name="extmgrplus_enable_checkboxes_all_set"]'	).prop('checked'	, true);
+	$('input[name="extmgrplus_enable_order_and_ignore"]'	).prop('checked'	, true);
+	$('input[name="extmgrplus_enable_self_disable"]'		).prop('checked'	, false);
+	$('input[name="extmgrplus_enable_migrations"]'			).prop('checked'	, false);
+};
+
+$('#extmgrplus_list').keypress(function(e) {
+	'use strict';
+
+	if (e.which == '13') {
+		e.preventDefault();
 	}
 });
 
 $(window).ready(function() {
 	'use strict';
 
-	$('input[name="extmgrplus_enable_migrations"]').on('change', ExtMgrPlus.ConfirmMigrations);
-	// ExtMgrPlus.ShowHideSettings();
+	$('input[name="extmgrplus_enable_migrations"]'	).on('change'	, ExtMgrPlus.ConfirmMigrations);
+	$('input[name="extmgrplus_defaults"]'			).on('click'	, ExtMgrPlus.SetDefaults);
+	$('input[name="ext_mark_all_enabled"]:enabled'	).on('change'	, {CheckBoxType: 'enabled'}, ExtMgrPlus.CheckUncheckAll);
+	$('input[name="ext_mark_all_disabled"]:enabled'	).on('change'	, {CheckBoxType: 'disabled'}, ExtMgrPlus.CheckUncheckAll);
+	$('input[name="ext_mark_enabled[]"]:enabled'	).on('change'	, {CheckBoxType: 'enabled'}, ExtMgrPlus.SetButtonState);
+	$('input[name="ext_mark_disabled[]"]:enabled'	).on('change'	, {CheckBoxType: 'disabled'}, ExtMgrPlus.SetButtonState);
+	$('input[name="ext_ignore[]"]'					).on('change'	, ExtMgrPlus.SetInputBoxState);
 });
 

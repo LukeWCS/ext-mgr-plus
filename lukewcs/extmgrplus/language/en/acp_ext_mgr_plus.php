@@ -43,26 +43,32 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_LANG_AUTHOR'	 					=> 'LukeWCS',
 
 	// settings
-	'EXTMGRPLUS_SETTINGS_TITLE'						=> 'Settings (Plus)',
+	'EXTMGRPLUS_SECTION_SETTINGS'					=> 'Settings (Extension Manager Plus)',
 	'EXTMGRPLUS_LOG'								=> 'Log entry',
-	'EXTMGRPLUS_LOG_EXPLAIN'						=> 'Here you can specify whether an entry should be added to the administrator log for the actions "Enable selected" and "Disable selected".',
+	'EXTMGRPLUS_LOG_EXPLAIN'						=> 'Here you can specify whether an entry should be added to the administrator log for the actions “Enable selected” and “Disable selected”.',
 	'EXTMGRPLUS_CONFIRMATION'						=> 'Confirmation',
-	'EXTMGRPLUS_CONFIRMATION_EXPLAIN'				=> 'Here you can specify whether the actions "Enable selected" and "Disable selected" should be prompted and must be confirmed.',
+	'EXTMGRPLUS_CONFIRMATION_EXPLAIN'				=> 'Here you can specify whether the actions “Enable selected” and “Disable selected” should be prompted and must be confirmed.',
 	'EXTMGRPLUS_CHECKBOXES_ALL_SET'					=> 'Set ceck boxes',
 	'EXTMGRPLUS_CHECKBOXES_ALL_SET_EXPLAIN'			=> 'If you enable this option, all checkboxes will be checked automatically.',
 	'EXTMGRPLUS_ORDER_AND_IGNORE'					=> 'Order and Ignore',
-	'EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN'			=> 'If you enable this option, the "Enable selected" action respects the Order group and the "Enable selected" and "Disable selected" actions respect the Ignore property.',
+	'EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN'			=> 'If you enable this option, the “Enable selected” action respects the Order group and the “Enable selected” and “Disable selected” actions respect the Ignore property.',
 	'EXTMGRPLUS_SELF_DISABLE'						=> 'Allow self-deactivation',
-	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'				=> 'If you enable this option, then "Extension Manager Plus" can also deactivate itself in the "Disable selected" action, since this extension can then be selected like any other.',
+	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'				=> 'If you enable this option, then “Extension Manager Plus” can also deactivate itself in the “Disable selected” action, since this extension can then be selected like any other.',
 
 	// settings expert
-	'EXTMGRPLUS_EXPERT_SETTINGS_TITLE'				=> 'Expert settings',
+	'EXTMGRPLUS_SECTION_EXPERT_SETTINGS'			=> 'Expert settings',
 	'EXTMGRPLUS_MIGRATIONS'							=> 'Allow migrations',
-	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'					=> 'If you enable this option, the "Enable selected" action can also activate those extensions that have new migration files. This applies to updated extensions that contain a "migrations" folder. Without this option, such extensions must be activated manually, which is recommended.',
+	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'					=> 'If you enable this option, the “Enable selected” action can also activate those extensions that have new migration files. This applies to updated extensions that contain a “migrations” folder. Without this option, such extensions must be activated manually, which is recommended.',
+
+	// settings reset
+	'EXTMGRPLUS_SECTION_RESET'						=> 'Reset',
+	'EXTMGRPLUS_DEFAULTS'							=> 'Reset settings',
+	'EXTMGRPLUS_DEFAULTS_EXP'						=> 'Resets all settings to the installation standard. (Does not affect the “Order” and “Ignore columns”.)',
+	'EXTMGRPLUS_BUTTON_DEFAULTS'					=> 'Defaults',
 
 	// settings order and ignore
-	'EXTMGRPLUS_ORDER_EXPLAIN'						=> 'Order: This column allows you to define order groups in the range 0 to 99 for the "Enable selected" action. This allows extensions that other extensions depend on to be activated before them to avoid error messages. Extensions belonging to such a group are activated first, starting with group 0, then group 1 and so on. Extensions without a group are activated last.',
-	'EXTMGRPLUS_IGNORE_EXPLAIN'						=> 'Ignore: This column allows you to specify which extensions should be ignored during the "Enable selected" and "Disable selected" actions. Ignored extensions can no longer be selected in the extensions list. If an order group was defined for an ignored extension, then this is retained, but it no longer has any meaning.',
+	'EXTMGRPLUS_ORDER_EXPLAIN'						=> 'Order: This column allows you to define order groups in the range 0 to 99 for the “Enable selected” action. This allows extensions that other extensions depend on to be activated before them to avoid error messages. Extensions belonging to such a group are activated first, starting with group 0, then group 1 and so on. Extensions without a group are activated last.',
+	'EXTMGRPLUS_IGNORE_EXPLAIN'						=> 'Ignore: This column allows you to specify which extensions should be ignored during the “Enable selected” and “Disable selected” actions. Ignored extensions can no longer be selected in the extensions list. If an order group was defined for an ignored extension, then this is retained, but it no longer has any meaning.',
 	'EXTMGRPLUS_ORDER_AND_IGNORE_SAVE'				=> 'Save',
 
 	// ext manager
@@ -91,14 +97,14 @@ $lang = array_merge($lang, [
 	// misc
 	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'				=> 'Order/Ignore',
 	'EXTMGRPLUS_EXTENSION_PLURAL' => [
-													0 => "0 extensions",
-													1 => "1 extension",
-													2 => "%u extensions",
+													0 => '0 extensions',
+													1 => '1 extension',
+													2 => '%u extensions',
 	],
 	'EXTMGRPLUS_UPDATES_PLURAL' => [
-													0 => "",
-													1 => "(1 update available)",
-													2 => "(%u updates available)",
+													0 => '',
+													1 => '(1 update available)',
+													2 => '(%u updates available)',
 	],
 
 	// messages
@@ -107,7 +113,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_CONFIRM_MIGRATIONS'				=> 'Are you sure you want to allow migrations?',
 	'EXTMGRPLUS_MSG_SETTINGS_SAVED'					=> 'ExtMgrPlus: Settings saved successfully.',
 	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'			=> 'ExtMgrPlus: Order/Ignore columns saved successfully.',
-	'EXTMGRPLUS_MSG_PROCESS_ABORTED'				=> 'ExtMgrPlus: The "%s" operation was interrupted by the following extension:',
+	'EXTMGRPLUS_MSG_PROCESS_ABORTED'				=> 'ExtMgrPlus: The “%s” operation was interrupted by the following extension:',
 	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'				=> 'The following extensions could not be activated:',
 	'EXTMGRPLUS_MSG_DEACTIVATION'					=> 'ExtMgrPlus: %1$u of %2$u enabled extensions have been disabled.',
 	'EXTMGRPLUS_MSG_ACTIVATION'						=> 'ExtMgrPlus: %1$u of %2$u disabled extensions have been enabled.',
