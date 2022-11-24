@@ -61,7 +61,7 @@
 				</dd>
 			</dl>
 
-			<legend class="legend_subgroup">{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
+			<legend class="legend_sub">{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
 
 			<p class="submit-buttons">
 				<input class="button1" type="submit" name="update" value="{{ lang('SUBMIT') }}">&nbsp;
@@ -126,7 +126,7 @@
 				</dd>
 			</dl>
 		
-			<legend class="legend_subgroup">{{ lang('EXTMGRPLUS_SECTION_EXPERT_SETTINGS') }}</legend>
+			<legend class="legend_sub">{{ lang('EXTMGRPLUS_SECTION_EXPERT_SETTINGS') }}</legend>
 			
 			<dl>
 				<dt>
@@ -138,7 +138,7 @@
 				</dd>
 			</dl>
 		
-			<legend class="legend_subgroup">{{ lang('EXTMGRPLUS_SECTION_RESET') }}</legend>			
+			<legend class="legend_sub">{{ lang('EXTMGRPLUS_SECTION_RESET') }}</legend>			
 
 			<dl>
 				<dt>
@@ -150,7 +150,7 @@
 				</dd>
 			</dl>
 
-			<legend class="legend_subgroup">{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
+			<legend class="legend_sub">{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
 		
 			<p class="submit-buttons">
 				<input class="button1" type="submit" name="extmgrplus_save_settings" value="{{ lang('SUBMIT') }}">&nbsp;
@@ -175,7 +175,7 @@
 				</dd>
 			</dl>
 
-			<legend class="legend_subgroup">{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
+			<legend class="legend_sub">{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
 
 			<p class="submit-buttons">
 				<input class="button1" type="submit" name="extmgrplus_save_order_and_ignore" value="{{ lang('SUBMIT') }}">&nbsp;
@@ -409,6 +409,7 @@
 
 {% INCLUDEJS '@lukewcs_extmgrplus/acp_ext_mgr_plus_helper.js' %}
 {% INCLUDECSS '@lukewcs_extmgrplus/acp_ext_mgr_plus.css' %}
+{% INCLUDECSS '@lukewcs_extmgrplus/acp_toggle.css' %}
 
 {% macro name(ext_obj) %}
 <strong title="{{ ext_obj.NAME }}">{{ ext_obj.META_DISPLAY_NAME }}</strong>
@@ -490,5 +491,3 @@
 		<input type="checkbox" class="toggle" name="{{ name }}" value="1"{{ checked ? ' checked' : '' }}>
 	</label>
 {% endmacro %}
-
-

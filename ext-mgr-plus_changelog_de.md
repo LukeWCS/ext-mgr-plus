@@ -4,11 +4,11 @@ GH (2022--)
 * Fix: Bei den Aktionen "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" wäre es bei Überschreitung eines bestimmten Zeitlimits zu einem FATAL gekommen, da bei einem Funktionsaufruf unvollständige Parameter verwendet wurden. Funktionsaufruf komplett entfernt.
 * Der Fix führte zu folgender Änderung: Bei den entsprechenden Aktionen wird jetzt die maximale PHP Ausführungszeit berücksichtigt. Wird während der Ausführung festgestellt, dass die Hälfte der maximalen Zeit überschritten wurde, wird die Aktion abgebrochen und eine kontrollierte Meldung angezeigt. Das ist allerdings ein Extremfall der vermutlich nur bei sehr vielen Exts mit zeitintensiven Aktionen in `ext.php` auftreten dürfte.
 * Einstellungen:
-  * Bei den Einstellungen werden für Ja/Nein Optionen jetzt Toggles verwendet. Sehen schöner aus und sind Code-technisch einfacher/eleganter zu handhaben. Die Toggles wurden so gestaltet, dass die Positionen für die Zustände wie bei phpBB gewohnt beibehalten wurden, also Ja links und Nein rechts. Des Weiteren wurde für Menschen mit Rot/Grün Schwäche ein zusätzliches Merkmal verwendet, damit auch ohne Farben sofort erkennbar ist, in welchem Zustand sich ein Toggle befindet. Toggle Funktion in angepasster Form von "Style Changer" übernommen. (Danke an Kirk)
+  * Bei den Einstellungen werden für Ja/Nein-Optionen jetzt Toggles verwendet. Dabei wurden für Menschen mit Farbseh-Schwäche (Rot/Grün Problematik und Farbblindheit) zwei Merkmale berücksichtigt: 1) Beibehaltung der gewohnten Positionen für Ja und Nein. 2) Eindeutige Symbole für die Zustände Ja und Nein. Toggle Funktionalität in angepasster Form von "Style Changer" übernommen. (Danke an Kirk)
   * Wie andere Erweiterungen von mir, bietet jetzt auch EMP die Möglichkeit die Einstellungen auf den Installation-Standard zurücksetzen zu können.
   * Die Buttons "Absenden" und "Zurücksetzen" befinden sich jetzt in einer eigenen Untergruppe die auf dieselbe Weise dargestellt wird, wie bei den ACP Seiten von phpBB.
-  * Die Einstellungsgruppe "Reihenfolge/Ignorieren" hat jetzt die gleiche Button-Leiste wie die anderen Einstellungen, mit Ausnahme von "Zurücksetzen".
-  * Etliche kleinere Änderungen am ACP Template.
+  * Die Einstellungsgruppe "Reihenfolge/Ignorieren" hat jetzt die gleiche Button-Leiste wie die anderen Einstellungsgruppen, mit Ausnahme von "Zurücksetzen".
+  * Etliche kleinere Änderungen am ACP Template der Einstellungen.
 * Code Optimierung.
 
 ### 1.0.6
