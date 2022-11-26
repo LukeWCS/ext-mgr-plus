@@ -1,5 +1,12 @@
 ### 1.0.7
 
+#### 1.0.7-b6
+* Twig:
+  * Bei 2 Makros unnötiges HTML und unnötigen ELSE Code eines Ternarys entfernt.
+  * Optimiert, um im Output unnötige Whitespaces zu eliminieren. Speziell bei EMP dient das dazu, ein unschönes optisches Detail zu eliminieren, das durch unnötige Whitespaces entstanden ist.
+* CSS:
+  * Beim Toggle CSS einen kompakten Header eingefügt mit grundlegenden Infos und um Dan Klammer zu benennen, von dessen Webseite wir den CSS Code ursprünglich haben.
+  
 #### 1.0.7-b5
 * EC Fehler (PSSE) behoben.
 * ACP-Template:

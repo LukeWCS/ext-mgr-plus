@@ -66,6 +66,7 @@
 			<p class="submit-buttons">
 				<input class="button1" type="submit" name="update" value="{{ lang('SUBMIT') }}">&nbsp;
 				<input class="button2" type="reset" name="reset" value="{{ lang('RESET') }}">
+				
 				<input type="hidden" name="action" value="set_config_version_check_force_unstable">
 			</p>
 		</fieldset>
@@ -412,7 +413,9 @@
 {% INCLUDECSS '@lukewcs_extmgrplus/acp_toggle.css' %}
 
 {% macro name(ext_obj) %}
-<strong title="{{ ext_obj.NAME }}">{{ ext_obj.META_DISPLAY_NAME }}</strong>
+{% spaceless %}
+	<strong title="{{ ext_obj.NAME }}">{{ ext_obj.META_DISPLAY_NAME }}</strong>
+{% endspaceless %}
 {% endmacro %}
 
 {% macro version(ext_obj, vc_obj) %}
@@ -420,10 +423,10 @@
 	{% if ext_obj.S_VERSIONCHECK || vc_obj %}
 		<strong class="{{ ext_obj.S_UP_TO_DATE ? 'current-ext' : 'outdated-ext' }}">{{ ext_obj.META_VERSION }}</strong>
 		{% if not ext_obj.S_UP_TO_DATE %}
-			&nbsp;{{ _self.icon('fa-exclamation-circle outdated-ext') }}
+			<span>&nbsp;</span>{{ _self.icon('fa-exclamation-circle outdated-ext') }}
 		{% endif %}
 		{% if vc_obj.CURRENT %}
-			&nbsp;<strong class="current-ext">({{ vc_obj.CURRENT }})</strong>
+			<span>&nbsp;</span><strong class="current-ext">({{ vc_obj.CURRENT }})</strong>
 		{% endif %}
 	{% else %}
 		{{ ext_obj.META_VERSION }}
@@ -467,27 +470,37 @@
 {% endmacro %}
 
 {% macro checkbox_all(section, enabled = true, checked = false) %}
-<input type="checkbox" class="radio" name="ext_mark_all_{{ section }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT_ALL') }}"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
+{% spaceless %}
+	<input type="checkbox" class="radio" name="ext_mark_all_{{ section }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT_ALL') }}"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
+{% endspaceless %}
 {% endmacro %}
 
 {% macro checkbox_select(section, ext_obj, enabled = true, checked = false) %}
-<input type="checkbox" class="radio" name="ext_mark_{{ section }}[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT') }}"{{ enabled ? ' value="' ~ ext_obj.NAME ~ '"' }}{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
+{% spaceless %}
+	<input type="checkbox" class="radio" name="ext_mark_{{ section }}[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT') }}"{{ enabled ? ' value="' ~ ext_obj.NAME ~ '"' }}{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
+{% endspaceless %}
 {% endmacro %}
 
 {% macro checkbox_ignore(ext_obj, checked = false) %}
-<input type="checkbox" class="radio" name="ext_ignore[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_IGNORE')|e('html') }}" value="{{ ext_obj.NAME }}"{{ checked ? ' checked' }}>
+{% spaceless %}
+	<input type="checkbox" class="radio" name="ext_ignore[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_IGNORE')|e('html') }}" value="{{ ext_obj.NAME }}"{{ checked ? ' checked' }}>
+{% endspaceless %}
 {% endmacro %}
 
 {% macro inputbox(ext_obj, order_list, inactive = false) %}
-<input type="text" size="1" maxlength="2"{{ inactive ? ' class="inactive"' }} name="ext_order[{{ ext_obj.NAME }}]" title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER')|e('html') }}" value="{{ order_list[ext_obj.NAME] }}" pattern="^[0-9]{1,2}$">
+{% spaceless %}
+	<input type="text" size="1" maxlength="2"{{ inactive ? ' class="inactive"' }} name="ext_order[{{ ext_obj.NAME }}]" title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER')|e('html') }}" value="{{ order_list[ext_obj.NAME] }}" pattern="^[0-9]{1,2}$">
+{% endspaceless %}
 {% endmacro %}
 
 {% macro icon(classes, decorative = true) %}
-<span class="icon {{ classes }}"{{ decorative ? ' aria-hidden="true"' : '' }}></span>
+{% spaceless %}
+	<span class="icon {{ classes }}"{{ decorative ? ' aria-hidden="true"' }}></span>
+{% endspaceless %}
 {% endmacro %}
 
 {% macro switch(name, checked = false) %}
-	<label>
-		<input type="checkbox" class="toggle" name="{{ name }}" value="1"{{ checked ? ' checked' : '' }}>
-	</label>
+{% spaceless %}
+	<input type="checkbox" class="toggle" name="{{ name }}" value="1"{{ checked ? ' checked' }}>
+{% endspaceless %}
 {% endmacro %}
