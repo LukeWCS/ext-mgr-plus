@@ -55,7 +55,9 @@
 			<legend>{{ lang('EXTENSIONS_VERSION_CHECK_SETTINGS') }}</legend>
 
 			<dl>
-				<dt><label for="force_unstable">{{ lang('FORCE_UNSTABLE') ~ lang('COLON') }}</label></dt>
+				<dt>
+					<label>{{ lang('FORCE_UNSTABLE') ~ lang('COLON') }}</label>
+				</dt>
 				<dd>
 					{{ _self.switch('force_unstable', FORCE_UNSTABLE) }}
 				</dd>
@@ -394,8 +396,8 @@
 	</table>
 
 	<p class="extmgrplus_footer">
-		{{ EXTMGRPLUS_EXT_NAME }} ({{ EXTMGRPLUS_EXT_VER }}) &copy; LukeWCS<br>
-		{{ lang('EXTMGRPLUS_LANG_DESC')|e('html') }} ({{ lang('EXTMGRPLUS_LANG_EXT_VER')|e('html') }}) &bull; {{ lang('EXTMGRPLUS_LANG_AUTHOR')|e('html') }}
+		{{ EXTMGRPLUS_EXT_NAME }} v{{ EXTMGRPLUS_EXT_VER }} &copy; LukeWCS<br>
+		{{ lang('EXTMGRPLUS_LANG_DESC')|e('html') }} v{{ lang('EXTMGRPLUS_LANG_EXT_VER')|e('html') }} &bull; {{ lang('EXTMGRPLUS_LANG_AUTHOR')|e('html') }}
 	</p>
 
 <script>

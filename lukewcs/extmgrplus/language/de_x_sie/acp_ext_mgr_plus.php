@@ -119,4 +119,5 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_ACTIVATION'						=> 'ExtMgrPlus: %1$u von %2$u deaktivierten Erweiterungen wurden aktiviert.',
 	'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED'			=> 'Hinweis: Das Sprachpaket der Erweiterung <strong>%1$s</strong> ist nicht mehr aktuell. (vorhanden: %2$s / benötigt: %3$s)',
 	'EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED'				=> 'Der Toleranzbereich (%u Sekunden) der maximalen PHP Ausführungszeit (%u Sekunden) wurde überschritten.',
+	'EXTMGRPLUS_MSG_SELF_DISABLE'					=> 'Hinweis: Die Erweiterung „Extension Manager Plus“ wird ebenfalls deaktiviert.',
 ]);

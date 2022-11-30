@@ -3,13 +3,15 @@ GH (2022--)
 
 * Fix: Bei den Aktionen "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" wäre es bei Überschreitung eines bestimmten Zeitlimits zu einem FATAL gekommen, da bei einem Funktionsaufruf unvollständige Parameter verwendet wurden. Funktionsaufruf komplett entfernt.
 * Der Fix führte zu folgender Änderung: Bei den entsprechenden Aktionen wird jetzt die maximale PHP Ausführungszeit berücksichtigt. Wird während der Ausführung festgestellt, dass die Hälfte der maximalen Zeit überschritten wurde, wird die Aktion abgebrochen und eine kontrollierte Meldung angezeigt. Das ist allerdings ein Extremfall der vermutlich nur bei sehr vielen Exts mit zeitintensiven Aktionen in `ext.php` auftreten dürfte.
+* Ist Eigendeaktivierung aktiviert und beim deaktivieren wurde auch EMP ausgewählt, dann wird in der Rückfrage - sofern aktiviert - gesondert darauf hingewiesen, dass auch EMP deaktiviert wird.
 * Einstellungen:
   * Bei den Einstellungen werden für Ja/Nein-Optionen jetzt Checkboxen mit Toggle-Style verwendet. Dabei wurden für Menschen mit Farbseh-Schwäche (Rot/Grün Problematik und Farbblindheit) zwei Merkmale berücksichtigt: 1) Beibehaltung der gewohnten Positionen für Ja und Nein. 2) Eindeutige Symbole für die Zustände Ja und Nein. Toggle Funktionalität in angepasster Form von "Style Changer" übernommen. (Danke an Kirk)
   * Wie andere Erweiterungen von mir, bietet jetzt auch EMP die Möglichkeit die Einstellungen auf den Installation-Standard zurücksetzen zu können.
   * Die Buttons "Absenden" und "Zurücksetzen" befinden sich jetzt in einer eigenen Untergruppe die auf dieselbe Weise dargestellt wird, wie bei den ACP Seiten von phpBB.
   * Die Einstellungsgruppe "Reihenfolge/Ignorieren" hat jetzt die gleiche Button-Leiste wie die anderen Einstellungsgruppen, mit Ausnahme von "Zurücksetzen".
-  * Etliche kleinere Änderungen am ACP Template der Einstellungen.
-* Code Optimierung.
+  * Etliche kleinere Änderungen am ACP Template.
+* Mein Workaround bezüglich Twig Cache Problematik, den ich in ähnlicher Form schon bei ExtOnOff 2.0.0 eingebaut hatte, wird ab phpBB 3.3.8 nicht mehr benötigt und wird in dem Fall jetzt von EMP übersprungen. Das wird durch eine Änderung im ExtensionManager von phpBB ermöglicht, die bei phpBB 3.3.8 eingebaut wurde. Durch das Überspringen des Workarounds reagiert das Forum nach dem schalten von Erweiterungen (Ausgewählte deaktivieren/aktivieren) nicht mehr bei den nächsten 2 Seitenaufrufen verzögert (wegen Cache Aufbau), sondern nur noch bei 1 Seitenaufruf, was wieder dem normalen Verhalten von phpBB entspricht. Bei phpBB <3.3.8 wird der Workaround weiterhin ausgeführt. (Relevantes phpBB Update: https://github.com/phpbb/phpbb/pull/6359)
+* Code Optimierung bei Javascript, Twig und HTML.
 
 ### 1.0.6
 GH (2022-11-05)

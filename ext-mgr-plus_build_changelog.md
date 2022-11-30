@@ -1,5 +1,12 @@
 ### 1.0.7
 
+#### 1.0.7-b7
+* Die Prüfung auf Überschreitung der maximalen Ausführungszeit findet nur noch statt, nachdem eine Ext geschaltet wurde. Bisher wurde auch innerhalb `enable_step()` geprüft.
+* Die Prüfung auf Überschreitung der maximalen Ausführungszeit findet nicht mehr vor dem Log Eintrag statt, sondern danach. So kann der Log Eintrag vor Abbruch noch aktualisiert werden.
+* Ist Eigendeaktivierung aktiviert und beim deaktivieren wurde auch EMP ausgewählt, wird in der Rückfrage darauf hingewiesen, dass auch EMP deaktiviert wird.
+  * Sprachvariable für den Hinweis hinzugefügt.
+* Mein Workaround bezüglich Twig Cache Problematik der schon bei ExtOnOff 2.0.0 in ähnlicher Form eingebaut wurde, wird ab phpBB 3.3.8 nicht mehr benötigt. Details im regulären Changelog.
+
 #### 1.0.7-b6
 * Twig:
   * Bei 2 Makros unnötiges HTML und unnötigen ELSE Code eines Ternarys entfernt.

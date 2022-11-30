@@ -119,4 +119,5 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_ACTIVATION'						=> 'ExtMgrPlus: %1$u of %2$u disabled extensions have been enabled.',
 	'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED'			=> 'Note: The language pack for the extension <strong>%1$s</strong> is no longer up-to-date. (installed: %2$s / needed: %3$s)',
 	'EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED'				=> 'The tolerance range (%u seconds) of the maximum PHP execution time (%u seconds) has been exceeded.',
+	'EXTMGRPLUS_MSG_SELF_DISABLE'					=> 'Note: The “Extension Manager Plus” extension will also be disabled.',
 ]);

@@ -66,6 +66,7 @@ class ext_mgr_plus
 			}
 		}
 
+		// Not needed with phpBB >=3.3.8: https://github.com/phpbb/phpbb/pull/6359
 		if ($this->config_text_get('extmgrplus_todo_list', 'purge_cache'))
 		{
 			$this->config_text_set('extmgrplus_todo_list', 'purge_cache', null);
@@ -308,7 +309,8 @@ class ext_mgr_plus
 				{
 					confirm_box(
 						false,
-						$this->language->lang('EXTMGRPLUS_MSG_CONFIRM_DISABLE', $this->language->lang('EXTMGRPLUS_EXTENSION_PLURAL', $ext_count_enabled)),
+						$this->language->lang('EXTMGRPLUS_MSG_CONFIRM_DISABLE', $this->language->lang('EXTMGRPLUS_EXTENSION_PLURAL', $ext_count_enabled)) .
+							(array_search('lukewcs/extmgrplus', $ext_list_marked) !== false ? '<br><br>' . $this->language->lang('EXTMGRPLUS_MSG_SELF_DISABLE') : ''),
 						build_hidden_fields([
 							'extmgrplus_disable_all'	=> true,
 							'ext_mark_enabled'			=> $ext_list_marked,
@@ -357,7 +359,7 @@ class ext_mgr_plus
 		redirect($this->request->variable('u_action', ''));
 	}
 
-	private function enable_disable($action)
+	private function enable_disable(string $action)
 	{
 		$safe_time_limit = round(ini_get('max_execution_time') / 2);
 		$start_time = time();
@@ -370,7 +372,10 @@ class ext_mgr_plus
 			$ext_count_enabled = count($ext_list_enabled);
 			$ext_count_success = 0;
 
-			$this->config_text_set('extmgrplus_todo_list', 'purge_cache', true);
+			if (phpbb_version_compare(PHPBB_VERSION, '3.3.8', '<'))
+			{
+				$this->config_text_set('extmgrplus_todo_list', 'purge_cache', true);
+			}
 
 			foreach ($ext_list_enabled as $ext_name => $value)
 			{
@@ -383,11 +388,6 @@ class ext_mgr_plus
 					{
 						while ($this->extension_manager->disable_step($ext_name))
 						{
-							if ((time() - $start_time) >= $safe_time_limit)
-							{
-								$safe_time_exceeded = true;
-								break 2;
-							}
 						}
 					}
 					else if ($this->config['extmgrplus_enable_self_disable'])
@@ -402,12 +402,6 @@ class ext_mgr_plus
 					$ext_count_success++;
 				}
 
-				if ((time() - $start_time) >= $safe_time_limit)
-				{
-					$safe_time_exceeded = true;
-					break;
-				}
-
 				if ($this->config['extmgrplus_enable_log'])
 				{
 					$this->config_text_set('extmgrplus_todo_list', 'add_log', $this->get_log_data(
@@ -415,6 +409,12 @@ class ext_mgr_plus
 						$ext_count_success,
 						$ext_count_enabled
 					));
+				}
+
+				if ((time() - $start_time) >= $safe_time_limit)
+				{
+					$safe_time_exceeded = true;
+					break;
 				}
 			}
 
@@ -474,7 +474,10 @@ class ext_mgr_plus
 			$ext_count_disabled = count($ext_list_disabled);
 			$ext_count_success = 0;
 
-			$this->config_text_set('extmgrplus_todo_list', 'purge_cache', true);
+			if (phpbb_version_compare(PHPBB_VERSION, '3.3.8', '<'))
+			{
+				$this->config_text_set('extmgrplus_todo_list', 'purge_cache', true);
+			}
 
 			foreach ($ext_list_disabled as $ext_name => $value)
 			{
@@ -488,11 +491,6 @@ class ext_mgr_plus
 					{
 						while ($this->extension_manager->enable_step($ext_name))
 						{
-							if ((time() - $start_time) >= $safe_time_limit)
-							{
-								$safe_time_exceeded = true;
-								break 2;
-							}
 						}
 					}
 					catch (\phpbb\db\migration\exception $e)
@@ -516,12 +514,6 @@ class ext_mgr_plus
 					];
 				}
 
-				if ((time() - $start_time) >= $safe_time_limit)
-				{
-					$safe_time_exceeded = true;
-					break;
-				}
-
 				if ($this->config['extmgrplus_enable_log'])
 				{
 					$this->config_text_set('extmgrplus_todo_list', 'add_log', $this->get_log_data(
@@ -529,6 +521,12 @@ class ext_mgr_plus
 						$ext_count_success,
 						$ext_count_disabled
 					));
+				}
+
+				if ((time() - $start_time) >= $safe_time_limit)
+				{
+					$safe_time_exceeded = true;
+					break;
 				}
 			}
 
@@ -571,7 +569,7 @@ class ext_mgr_plus
 	}
 
 	// Store information about the current process in template variables
-	private function set_last_ext_template_vars($action, $ext_name, $ext_display_name)
+	private function set_last_ext_template_vars(string $action, string $ext_name, string $ext_display_name)
 	{
 		$this->template->assign_vars([
 			'EXTMGRPLUS_LAST_EMP_ACTION'		=> $action,
