@@ -1,5 +1,9 @@
 ### 1.0.7
 
+#### 1.0.7-b8
+* Im Header werden die Infos (Gesamtzahl, Versionsprüfung) nicht mehr in einer Blind-Tabelle dargestellt, sondern in einer phpBB Standard Tabelle.
+  * CSS der Blind-Tabelle entfernt.
+
 #### 1.0.7-b7
 * Die Prüfung auf Überschreitung der maximalen Ausführungszeit findet nur noch statt, nachdem eine Ext geschaltet wurde. Bisher wurde auch innerhalb `enable_step()` geprüft.
 * Die Prüfung auf Überschreitung der maximalen Ausführungszeit findet nicht mehr vor dem Log Eintrag statt, sondern danach. So kann der Log Eintrag vor Abbruch noch aktualisiert werden.

@@ -14,27 +14,34 @@
 		</div>
 	{% endif %}
 
-	<table class="extmgrplus_info_table">
-		<tr>
-			<td>
-				{{ lang('EXTMGRPLUS_AVAILABLE_EXTENSIONS') ~ lang('COLON') }}
-			</td>
-			<td>
-				{{ EXTMGRPLUS_COUNT_AVAILABLE }}
-			</td>
-		</tr>
-		<tr>
-			<td>
-				{{ lang('EXTMGRPLUS_LAST_VERSIONCHECK')  ~ lang('COLON') }}
-			</td>
-			<td>
-				{% if EXTMGRPLUS_EXT_VERSIONCHECK|length %}
-					{{ EXTMGRPLUS_EXT_VERSIONCHECK.data.LOCAL_DATE }} {{ lang('EXTMGRPLUS_UPDATES_PLURAL', EXTMGRPLUS_EXT_VERSIONCHECK|length - 1) }}
-				{% else %}
-					-
-				{% endif %}
-			</td>
-		</tr>
+	<table class="table1">
+		<col class="row1"><col class="row1">
+		<thead>
+			<tr>
+				<th>
+					{{ lang('EXTMGRPLUS_AVAILABLE_EXTENSIONS') }}
+				</th>
+				<th>
+					{{ lang('EXTMGRPLUS_LAST_VERSIONCHECK') }}
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					<strong>{{ EXTMGRPLUS_COUNT_AVAILABLE }}</strong>
+				</td>
+				<td>
+					<strong>{% spaceless %}
+						{% if EXTMGRPLUS_EXT_VERSIONCHECK|length %}
+							{{ EXTMGRPLUS_EXT_VERSIONCHECK.data.LOCAL_DATE }} {{ lang('EXTMGRPLUS_UPDATES_PLURAL', EXTMGRPLUS_EXT_VERSIONCHECK|length - 1) }}
+						{% else %}
+							-
+						{% endif %}
+					{% endspaceless %}</strong>
+				</td>
+			</tr>
+		</tbody>
 	</table>
 
 	<fieldset class="quick">
