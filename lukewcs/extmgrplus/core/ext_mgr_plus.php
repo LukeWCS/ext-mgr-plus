@@ -258,12 +258,11 @@ class ext_mgr_plus
 
 	public function catch_message()
 	{
-		if ($this->extension_manager->is_disabled('lukewcs/extmgrplus'))
+		$last_action = $this->template->retrieve_var('EXTMGRPLUS_LAST_EMP_ACTION');
+		if ($this->extension_manager->is_disabled('lukewcs/extmgrplus') || $last_action == '')
 		{
 			return;
 		}
-
-		$last_action = $this->template->retrieve_var('EXTMGRPLUS_LAST_EMP_ACTION');
 		$ext_name = $this->template->retrieve_var('EXTMGRPLUS_LAST_EXT_NAME');
 		$ext_display_name = $this->template->retrieve_var('EXTMGRPLUS_LAST_EXT_DISPLAY_NAME');
 		$message_text = $this->template->retrieve_var('MESSAGE_TEXT');
@@ -271,8 +270,7 @@ class ext_mgr_plus
 		$s_user_warning = $this->template->retrieve_var('S_USER_WARNING');
 
 		if (
-			$last_action != ''
-			&& $ext_name != ''
+			$ext_name != ''
 			&& $ext_display_name != ''
 			&& $message_text != ''
 			&& ($s_user_notice || $s_user_warning)

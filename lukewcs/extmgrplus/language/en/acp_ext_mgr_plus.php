@@ -43,7 +43,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_LANG_AUTHOR'	 					=> 'LukeWCS',
 
 	// settings
-	'EXTMGRPLUS_SECTION_SETTINGS'					=> 'Settings (Extension Manager Plus)',
+	'EXTMGRPLUS_SECTION_SETTINGS'					=> 'Settings (Plus)',
 	'EXTMGRPLUS_LOG'								=> 'Log entry',
 	'EXTMGRPLUS_LOG_EXPLAIN'						=> 'Here you can specify whether an entry should be added to the administrator log for the actions “Enable selected” and “Disable selected”.',
 	'EXTMGRPLUS_CONFIRMATION'						=> 'Confirmation',

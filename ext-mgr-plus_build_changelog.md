@@ -1,5 +1,10 @@
 ### 1.0.7
 
+#### 1.0.7
+* Release
+* Code Optimierung:
+  * Die Funktion `catch_message()` wird jetzt frühzeitig abgebrochen, wenn sie nicht benötigt wird. Dadurch werden bei allen Seitenaufrufen im ACP 5 Funktionsaufrufe und 4 Bedingungen eingespart.
+
 #### 1.0.7-b8
 * Im Header werden die Infos (Gesamtzahl, Versionsprüfung) nicht mehr in einer Blind-Tabelle dargestellt, sondern in einer phpBB Standard Tabelle.
   * CSS der Blind-Tabelle entfernt.

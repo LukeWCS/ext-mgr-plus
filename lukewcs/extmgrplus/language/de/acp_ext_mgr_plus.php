@@ -43,7 +43,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_LANG_AUTHOR' 						=> 'LukeWCS',
 
 	// settings
-	'EXTMGRPLUS_SECTION_SETTINGS'					=> 'Einstellungen (Extension Manager Plus)',
+	'EXTMGRPLUS_SECTION_SETTINGS'					=> 'Einstellungen (Plus)',
 	'EXTMGRPLUS_LOG'								=> 'Log-Eintrag',
 	'EXTMGRPLUS_LOG_EXPLAIN'						=> 'Hier kannst du festlegen, ob bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ ein Eintrag im Administrator-Log hinzugefügt werden soll.',
 	'EXTMGRPLUS_CONFIRMATION'						=> 'Rückfrage',
