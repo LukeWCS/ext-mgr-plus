@@ -39,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, [
 	// language pack author
 	'EXTMGRPLUS_LANG_DESC'							=> 'Deutsch (Du)',
-	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.0.7',
+	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.0.8',
 	'EXTMGRPLUS_LANG_AUTHOR' 						=> 'LukeWCS',
 
 	// settings
@@ -71,12 +71,15 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_IGNORE_EXPLAIN'						=> 'Ignorieren: In dieser Spalte kannst du festlegen, welche Erweiterungen bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ ignoriert werden sollen. Ignorierte Erweiterungen können in der Erweiterungen-Liste nicht mehr ausgewählt werden. Wenn bei einer ignorierten Erweiterung eine Reihenfolge-Gruppe definiert wurde, dann bleibt diese erhalten, sie hat jedoch keine Bedeutung mehr.',
 	'EXTMGRPLUS_ORDER_AND_IGNORE_SAVE'				=> 'Speichern',
 
+	// info table
+	'EXTMGRPLUS_AVAILABLE_EXTENSIONS'				=> 'Erweiterungen gesamt',
+	'EXTMGRPLUS_LAST_VERSIONCHECK'					=> 'Letzte Versionsprüfung',
+	'EXTMGRPLUS_AVAILABLE_UPDATES'					=> 'Verfügbare Updates',
+
 	// ext manager
 	'EXTMGRPLUS_ALL_DISABLE'						=> 'Ausgewählte deaktivieren',
 	'EXTMGRPLUS_ALL_ENABLE'							=> 'Ausgewählte aktivieren',
 	'EXTMGRPLUS_HAS_MIGRATION'						=> 'neue Migrationen',
-	'EXTMGRPLUS_AVAILABLE_EXTENSIONS'				=> 'Erweiterungen gesamt',
-	'EXTMGRPLUS_LAST_VERSIONCHECK'					=> 'Letzte Versionsprüfung',
 	'EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED'			=> 'Nicht installierte Erweiterungen',
 
 	// tooltips
@@ -100,11 +103,6 @@ $lang = array_merge($lang, [
 													0 => '0 Erweiterungen',
 													1 => '1 Erweiterung',
 													2 => '%u Erweiterungen',
-	],
-	'EXTMGRPLUS_UPDATES_PLURAL' => [
-													0 => '',
-													1 => '(1 Update verfügbar)',
-													2 => '(%u Updates verfügbar)',
 	],
 
 	// messages

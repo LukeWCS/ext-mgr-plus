@@ -15,7 +15,7 @@
 	{% endif %}
 
 	<table class="table1">
-		<col class="row2a"><col class="row2a">
+		<col class="row2a"><col class="row2a"><col class="row2a">
 		<thead>
 			<tr>
 				<th>
@@ -23,6 +23,9 @@
 				</th>
 				<th>
 					{{ lang('EXTMGRPLUS_LAST_VERSIONCHECK') }}
+				</th>
+				<th>
+					{{ lang('EXTMGRPLUS_AVAILABLE_UPDATES') }}
 				</th>
 			</tr>
 		</thead>
@@ -32,13 +35,22 @@
 					<strong>{{ EXTMGRPLUS_COUNT_AVAILABLE }}</strong>
 				</td>
 				<td>
-					<strong>{% spaceless %}
-						{% if EXTMGRPLUS_EXT_VERSIONCHECK|length %}
-							{{ EXTMGRPLUS_EXT_VERSIONCHECK.data.LOCAL_DATE }} {{ lang('EXTMGRPLUS_UPDATES_PLURAL', EXTMGRPLUS_EXT_VERSIONCHECK|length - 1) }}
-						{% else %}
+					<strong>
+						{%- if EXTMGRPLUS_EXT_VERSIONCHECK|length -%}
+							{{ EXTMGRPLUS_EXT_VERSIONCHECK.data.LOCAL_DATE }}
+						{%- else -%}
 							-
-						{% endif %}
-					{% endspaceless %}</strong>
+						{%- endif -%}
+					</strong>
+				</td>
+				<td>
+					<strong>
+						{%- if EXTMGRPLUS_EXT_VERSIONCHECK|length > 1 -%}
+							{{ EXTMGRPLUS_EXT_VERSIONCHECK|length - 1 }}
+						{%- else -%}
+							-
+						{%- endif -%}
+					</strong>
 				</td>
 			</tr>
 		</tbody>
@@ -49,11 +61,11 @@
 			<a href="https://www.phpbb.com/go/customise/extensions/{{ CDB_EXT_VER }}" target="_blank">{{ lang('BROWSE_EXTENSIONS_DATABASE') }}</a>
 			&bull; <a href="{{ U_VERSIONCHECK_FORCE }}">{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</a>
 			&bull; <a href="javascript:ExtMgrPlus.ShowHideSettings();">{{ lang('SETTINGS') }}</a>
-			{% if EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE  %}
+			{% if EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE -%}
 				&bull; <a href="javascript:ExtMgrPlus.ShowHideOrderIgnore();">{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</a>
-			{% else %}
+			{%- else -%}
 				<span class="disabled">&bull; {{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</span>
-			{% endif %}
+			{%- endif ~%}
 		</span>
 	</fieldset>
 	
@@ -421,14 +433,12 @@
 {% INCLUDECSS '@lukewcs_extmgrplus/acp_ext_mgr_plus.css' %}
 {% INCLUDECSS '@lukewcs_extmgrplus/acp_toggle.css' %}
 
-{% macro name(ext_obj) %}
-{% spaceless %}
+{% macro name(ext_obj) -%}
 	<strong title="{{ ext_obj.NAME }}">{{ ext_obj.META_DISPLAY_NAME }}</strong>
-{% endspaceless %}
-{% endmacro %}
+{%- endmacro %}
 
 {% macro version(ext_obj, vc_obj) %}
-{% spaceless %}
+{% apply spaceless %}
 	{% if ext_obj.S_VERSIONCHECK || vc_obj %}
 		<strong class="{{ ext_obj.S_UP_TO_DATE ? 'current-ext' : 'outdated-ext' }}">{{ ext_obj.META_VERSION }}</strong>
 		{% if not ext_obj.S_UP_TO_DATE %}
@@ -440,76 +450,64 @@
 	{% else %}
 		{{ ext_obj.META_VERSION }}
 	{% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endmacro %}
 
 {% macro details(ext_obj) %}
-{% spaceless %}
+{% apply spaceless %}
 	{% if ext_obj.U_DETAILS %}
 		<a href="{{ ext_obj.U_DETAILS }}">{{ lang('DETAILS') }}</a>
 	{% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endmacro %}
 
 {% macro actions(ext_obj) %}
-{% spaceless %}
+{% apply spaceless %}
 	{% for actions in ext_obj.actions %}
-		<a href="{{ actions.U_ACTION }}"{% if actions.L_ACTION_EXPLAIN %} title="{{ actions.L_ACTION_EXPLAIN }}"{% endif %}>{{ actions.L_ACTION }}</a>
+		<a href="{{ actions.U_ACTION }}"{{ actions.L_ACTION_EXPLAIN ? ' title="' ~ actions.L_ACTION_EXPLAIN ~ '"' }}>{{ actions.L_ACTION }}</a>
 		{{ !actions.S_LAST_ROW ? '<span>&nbsp;|&nbsp;</span>' }}
 	{% endfor %}
-{% endspaceless %}
+{% endapply %}
 {% endmacro %}
 
 {% macro has_migration(ext_obj, migration_list) %}
-{% spaceless %}
+{% apply spaceless %}
 	{% if migration_list[ext_obj.NAME] is defined %}
 		<span class="extmgrplus_migration_files" title="{{ lang('EXTMGRPLUS_TOOLTIP_HAS_MIGRATION')|e('html') }}">{{ migration_list[ext_obj.NAME] }}</span>
 	{% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endmacro %}
 
 {% macro button(action, enabled = true) %}
-{% spaceless %}
+{% apply spaceless %}
 	{% if action == 'disable' %}
 		<input type="submit" class="button1" name="extmgrplus_disable_all" title="{{ lang('EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE')|e('html') }}" value="{{ lang('EXTMGRPLUS_ALL_DISABLE') }}"{{ !enabled ? ' disabled' }}>
 	{% elseif action == 'enable' %}
 		<input type="submit" class="button1" name="extmgrplus_enable_all" title="{{ lang('EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE')|e('html') }}" value="{{ lang('EXTMGRPLUS_ALL_ENABLE') }}"{{ !enabled ? ' disabled' }}>
 	{% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endmacro %}
 
-{% macro checkbox_all(section, enabled = true, checked = false) %}
-{% spaceless %}
+{% macro checkbox_all(section, enabled = true, checked = false) -%}
 	<input type="checkbox" class="radio" name="ext_mark_all_{{ section }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT_ALL') }}"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
-{% endspaceless %}
-{% endmacro %}
+{%- endmacro %}
 
-{% macro checkbox_select(section, ext_obj, enabled = true, checked = false) %}
-{% spaceless %}
+{% macro checkbox_select(section, ext_obj, enabled = true, checked = false) -%}
 	<input type="checkbox" class="radio" name="ext_mark_{{ section }}[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT') }}"{{ enabled ? ' value="' ~ ext_obj.NAME ~ '"' }}{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
-{% endspaceless %}
-{% endmacro %}
+{%- endmacro %}
 
-{% macro checkbox_ignore(ext_obj, checked = false) %}
-{% spaceless %}
+{% macro checkbox_ignore(ext_obj, checked = false) -%}
 	<input type="checkbox" class="radio" name="ext_ignore[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_IGNORE')|e('html') }}" value="{{ ext_obj.NAME }}"{{ checked ? ' checked' }}>
-{% endspaceless %}
-{% endmacro %}
+{%- endmacro %}
 
-{% macro inputbox(ext_obj, order_list, inactive = false) %}
-{% spaceless %}
+{% macro inputbox(ext_obj, order_list, inactive = false) -%}
 	<input type="text" size="1" maxlength="2"{{ inactive ? ' class="inactive"' }} name="ext_order[{{ ext_obj.NAME }}]" title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER')|e('html') }}" value="{{ order_list[ext_obj.NAME] }}" pattern="^[0-9]{1,2}$">
-{% endspaceless %}
-{% endmacro %}
+{%- endmacro %}
 
-{% macro icon(classes, decorative = true) %}
-{% spaceless %}
+{% macro icon(classes, decorative = true) -%}
 	<span class="icon {{ classes }}"{{ decorative ? ' aria-hidden="true"' }}></span>
-{% endspaceless %}
-{% endmacro %}
+{%- endmacro %}
 
-{% macro switch(name, checked = false) %}
-{% spaceless %}
+{% macro switch(name, checked = false) -%}
 	<input type="checkbox" class="toggle" name="{{ name }}" value="1"{{ checked ? ' checked' }}>
-{% endspaceless %}
-{% endmacro %}
+{%- endmacro %}

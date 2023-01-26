@@ -16,7 +16,7 @@ class listener implements EventSubscriberInterface
 {
 	public function __construct(
 		\lukewcs\extmgrplus\core\ext_mgr_plus $extmgrplus
-)
+	)
 	{
 		$this->extmgrplus = $extmgrplus;
 	}

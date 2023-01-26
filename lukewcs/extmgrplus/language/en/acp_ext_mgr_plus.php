@@ -39,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, [
 	// language pack author
 	'EXTMGRPLUS_LANG_DESC'							=> 'English',
-	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.0.7',
+	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.0.8',
 	'EXTMGRPLUS_LANG_AUTHOR'	 					=> 'LukeWCS',
 
 	// settings
@@ -71,12 +71,15 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_IGNORE_EXPLAIN'						=> 'Ignore: This column allows you to specify which extensions should be ignored during the “Enable selected” and “Disable selected” actions. Ignored extensions can no longer be selected in the extensions list. If an order group was defined for an ignored extension, then this is retained, but it no longer has any meaning.',
 	'EXTMGRPLUS_ORDER_AND_IGNORE_SAVE'				=> 'Save',
 
+	// info table
+	'EXTMGRPLUS_AVAILABLE_EXTENSIONS'				=> 'Total extensions',
+	'EXTMGRPLUS_LAST_VERSIONCHECK'					=> 'Last version check',
+	'EXTMGRPLUS_AVAILABLE_UPDATES'					=> 'Available updates',
+
 	// ext manager
 	'EXTMGRPLUS_ALL_DISABLE'						=> 'Disable selected',
 	'EXTMGRPLUS_ALL_ENABLE'							=> 'Enable selected',
 	'EXTMGRPLUS_HAS_MIGRATION'						=> 'new migrations',
-	'EXTMGRPLUS_AVAILABLE_EXTENSIONS'				=> 'Total extensions',
-	'EXTMGRPLUS_LAST_VERSIONCHECK'					=> 'Last version check',
 	'EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED'			=> 'Not installed extensions',
 
 	// tooltips
@@ -100,11 +103,6 @@ $lang = array_merge($lang, [
 													0 => '0 extensions',
 													1 => '1 extension',
 													2 => '%u extensions',
-	],
-	'EXTMGRPLUS_UPDATES_PLURAL' => [
-													0 => '',
-													1 => '(1 update available)',
-													2 => '(%u updates available)',
 	],
 
 	// messages

@@ -1,3 +1,18 @@
+### 1.0.8
+GH (2023-01-)
+
+* Wird die Funktion "Details" ausgeführt und dabei eine neue Version der Erweiterung ermittelt, dann wird diese Information jetzt ebenfalls genutzt und im Versions-Cache von EMP gespeichert.
+  * Dadurch wird die Info oberhalb der Erweiterungen-Liste aktualisiert, mit der über neue Updates informiert wird. Das Datum ändert sich in diesem Fall nicht und zeigt weiterhin das Datum der letzten regulären Versionsprüfung an.
+  * Ebenso wird der entsprechende Update-Indikator der betreffenden Erweiterung in der Erweiterungen-Liste angezeigt, wie das auch bei der regulären Versionsprüfung der Fall wäre.
+* Die Info-Tabelle oberhalb der Erweiterungen-Liste um eine Spalte erweitert. Die Anzeige der verfügbaren Updates befindet sich jetzt in einer eigenen Spalte.
+* Einstellungen:
+  * Wurde der Sicherheitsschalter "Erlaube Migrationen" aktiviert, dann wurde durch die modale Javscript Rückfrage `confirm()` verhindert, dass der Browser den aktivierten Zustand des Schalters darstellen konnte, da die Aktualisierung der Render Engine noch gar nicht beendet war. Jetzt wird gewartet bis diese Aktualisierung abgeschlossen ist, bevor der modale Dialog angezeigt wird.
+  * Die Toggle Farben von Recent Topics übernommen.
+* Code Optimierung:
+  * PHP: Kleine Verbesserungen hinsichtlich Code Qualität.
+  * Twig: Das `spaceless` Tag, welches seit Twig 2.7 als DEPRECATED eingestuft ist, wurde überall entfernt und durch `spaceless` Filter und Whitespace Modifier ersetzt.
+* PHP Mindestversion auf 7.1 erhöht.
+
 ### 1.0.7
 GH (2022-12-04)
 
@@ -5,7 +20,7 @@ GH (2022-12-04)
 * Der Fix führte zu folgender Änderung: Bei den entsprechenden Aktionen wird jetzt die maximale PHP Ausführungszeit berücksichtigt. Wird während der Ausführung festgestellt, dass die Hälfte der maximalen Zeit überschritten wurde, wird die Aktion abgebrochen und eine kontrollierte Meldung angezeigt. Das ist allerdings ein Extremfall der vermutlich nur bei sehr vielen Exts mit zeitintensiven Aktionen in `ext.php` auftreten dürfte.
 * Ist Eigendeaktivierung aktiviert und beim deaktivieren wurde auch EMP ausgewählt, dann wird in der Rückfrage - sofern aktiviert - gesondert darauf hingewiesen, dass auch EMP deaktiviert wird.
 * Einstellungen:
-  * Bei den Einstellungen werden für Ja/Nein-Optionen jetzt Checkboxen mit Toggle-Style verwendet. Dabei wurden für Menschen mit Farbseh-Schwäche (Rot/Grün Problematik und Farbblindheit) zwei Merkmale berücksichtigt: 1) Beibehaltung der gewohnten Positionen für Ja und Nein. 2) Eindeutige Symbole für die Zustände Ja und Nein. Toggle Funktionalität in angepasster Form von "Style Changer" übernommen. (Danke an Kirk)
+  * Bei den Einstellungen werden für Ja/Nein-Optionen jetzt Checkboxen mit Toggle-Style verwendet. Dabei wurden für Menschen mit Farbseh-Schwäche (Rot/Grün Problematik und Farbblindheit) zwei Merkmale berücksichtigt: 1) Beibehaltung der gewohnten Positionen für Ja und Nein. 2) Eindeutige Symbole für die Zustände Ja und Nein. Toggle Funktionalität in angepasster Form von "Style Changer" übernommen. [Danke an Kirk]
   * Wie andere Erweiterungen von mir, bietet jetzt auch EMP die Möglichkeit die Einstellungen auf den Installation-Standard zurücksetzen zu können.
   * Die Buttons "Absenden" und "Zurücksetzen" befinden sich jetzt in einer eigenen Untergruppe die auf dieselbe Weise dargestellt wird, wie bei den ACP Seiten von phpBB.
   * Die Einstellungsgruppe "Reihenfolge/Ignorieren" hat jetzt die gleiche Button-Leiste wie die anderen Einstellungsgruppen, mit Ausnahme von "Zurücksetzen".

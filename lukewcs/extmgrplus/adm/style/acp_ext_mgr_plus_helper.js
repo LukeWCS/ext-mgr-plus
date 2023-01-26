@@ -103,8 +103,14 @@ ExtMgrPlus.ShowOrderIgnoreColumns = function (show) {
 ExtMgrPlus.ConfirmMigrations = function () {
 	'use strict';
 
-	if ($('input[name="extmgrplus_enable_migrations"]').prop('checked') && !confirm(ExtMgrPlus.lang.MsgConfirmMigrations))	{
-		$('input[name="extmgrplus_enable_migrations"]').prop('checked', false);
+	if ($('input[name="extmgrplus_enable_migrations"]').prop('checked')) {
+		requestAnimationFrame(function() {
+			setTimeout(function() {
+				if (!confirm(ExtMgrPlus.lang.MsgConfirmMigrations)) {
+					$('input[name="extmgrplus_enable_migrations"]').prop('checked', false)
+				}
+			});
+		});
 	}
 };
 

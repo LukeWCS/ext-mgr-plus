@@ -1,3 +1,24 @@
+### 1.0.8
+
+#### 1.0.8-b1
+* Die Funktion "Details" im ExtMgr wird jetzt ebenfalls für den Versions-Cache von EMP genutzt. Das betrifft die Info-Tabelle oberhalb der Erweiterungen-Liste sowie die Update-Indikatoren in der Liste.
+* Die Info-Tabelle oberhalb der Erweiterungen-Liste auf 3 Spalten erweitert. Datum und Anzahl Updates haben jetzt eigene Spalten.
+* ACP-Template:
+  * Das `spaceless` Tag, welches seit Twig 2.7 als DEPRECATED eingestuft ist, wurde entfernt. Stattdessen wird mit `spaceless` Filter und Whitespace Modifier gearbeitet.
+  * Beim Sicherheitsschalter "Erlaube Migrationen" bekommt der Browser jetzt vor der Rückfrage (`confirm()`) genug Zeit um den aktivierten Schalter darstellen zu können.
+* Code:
+  * Funktionen ohne Rückgabewert als `: void` deklariert.
+  * Variablen umbenannt.
+  * Kleine Formfehler behoben.
+* PHP Mindestversion auf 7.1 erhöht:
+  * `composer.json` angepasst.
+  * `ext.php` angepasst.
+* Sprachdateien:
+  * Neue Sprachvariable hinzugefügt für die Info-Tabelle.
+  * Plural-Array für Updates entfernt.
+* CSS:
+  * Toggle Farben von Recent Topics übernommen.
+
 ### 1.0.7
 
 #### 1.0.7

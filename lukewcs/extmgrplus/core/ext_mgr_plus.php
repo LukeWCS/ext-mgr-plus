@@ -12,7 +12,7 @@ namespace lukewcs\extmgrplus\core;
 
 class ext_mgr_plus
 {
-	protected $extension_manager;
+	protected $ext_manager;
 	protected $cache;
 	protected $request;
 	protected $log;
@@ -22,7 +22,7 @@ class ext_mgr_plus
 	protected $language;
 	protected $template;
 	protected $phpbb_container;
-
+	protected $migrator;
 	protected $u_action;
 
 	public function __construct(
@@ -38,19 +38,19 @@ class ext_mgr_plus
 		$phpbb_container
 	)
 	{
-		$this->extension_manager	= $ext_manager;
-		$this->cache				= $cache;
-		$this->request				= $request;
-		$this->log					= $log;
-		$this->user					= $user;
-		$this->config				= $config;
-		$this->config_text			= $config_text;
-		$this->language				= $language;
-		$this->template				= $template;
-		$this->phpbb_container		= $phpbb_container;
+		$this->ext_manager		= $ext_manager;
+		$this->cache			= $cache;
+		$this->request			= $request;
+		$this->log				= $log;
+		$this->user				= $user;
+		$this->config			= $config;
+		$this->config_text		= $config_text;
+		$this->language			= $language;
+		$this->template			= $template;
+		$this->phpbb_container	= $phpbb_container;
 	}
 
-	public function todo()
+	public function todo(): void
 	{
 		if ($this->config_text->get('extmgrplus_todo_list') == '')
 		{
@@ -61,7 +61,7 @@ class ext_mgr_plus
 		{
 			$this->config_text_set('extmgrplus_todo_list', 'self_disable', null);
 
-			while ($this->extension_manager->disable_step('lukewcs/extmgrplus'))
+			while ($this->ext_manager->disable_step('lukewcs/extmgrplus'))
 			{
 			}
 		}
@@ -95,9 +95,9 @@ class ext_mgr_plus
 		}
 	}
 
-	public function ext_manager_before($event)
+	public function ext_manager_before($event): void
 	{
-		if ($event['action'] != 'list' || $this->extension_manager->is_disabled('lukewcs/extmgrplus'))
+		if ($event['action'] != 'list' || $this->ext_manager->is_disabled('lukewcs/extmgrplus'))
 		{
 			return;
 		}
@@ -123,12 +123,12 @@ class ext_mgr_plus
 				trigger_error($this->language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
 			}
 
-			$this->config->set('extmgrplus_enable_log', $this->request->variable('extmgrplus_enable_log', 0));
-			$this->config->set('extmgrplus_enable_confirmation', $this->request->variable('extmgrplus_enable_confirmation', 0));
-			$this->config->set('extmgrplus_enable_checkboxes_all_set', $this->request->variable('extmgrplus_enable_checkboxes_all_set', 0));
-			$this->config->set('extmgrplus_enable_order_and_ignore', $this->request->variable('extmgrplus_enable_order_and_ignore', 0));
-			$this->config->set('extmgrplus_enable_self_disable', $this->request->variable('extmgrplus_enable_self_disable', 0));
-			$this->config->set('extmgrplus_enable_migrations', $this->request->variable('extmgrplus_enable_migrations', 0));
+			$this->config->set('extmgrplus_enable_log'					, $this->request->variable('extmgrplus_enable_log', 0));
+			$this->config->set('extmgrplus_enable_confirmation'			, $this->request->variable('extmgrplus_enable_confirmation', 0));
+			$this->config->set('extmgrplus_enable_checkboxes_all_set'	, $this->request->variable('extmgrplus_enable_checkboxes_all_set', 0));
+			$this->config->set('extmgrplus_enable_order_and_ignore'		, $this->request->variable('extmgrplus_enable_order_and_ignore', 0));
+			$this->config->set('extmgrplus_enable_self_disable'			, $this->request->variable('extmgrplus_enable_self_disable', 0));
+			$this->config->set('extmgrplus_enable_migrations'			, $this->request->variable('extmgrplus_enable_migrations', 0));
 
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_SETTINGS_SAVED') . adm_back_link($this->u_action), E_USER_NOTICE);
 		}
@@ -153,20 +153,25 @@ class ext_mgr_plus
 		}
 	}
 
-	public function ext_manager_after($event)
+	public function ext_manager_after($event): void
 	{
-		if ($event['action'] != 'list' || $this->extension_manager->is_disabled('lukewcs/extmgrplus'))
+		if (($event['action'] != 'list' && $event['action'] != 'details') || $this->ext_manager->is_disabled('lukewcs/extmgrplus'))
 		{
+			return;
+		}
+		if ($event['action'] == 'details')
+		{
+			$this->versioncheck_save($event['ext_name']);
 			return;
 		}
 
 		$event['tpl_name'] = '@lukewcs_extmgrplus/acp_ext_mgr_plus_acp_ext_list';
 
-		$this_meta = $this->extension_manager->create_extension_metadata_manager('lukewcs/extmgrplus')->get_metadata('all');
+		$this_meta = $this->ext_manager->create_extension_metadata_manager('lukewcs/extmgrplus')->get_metadata('all');
 		$notes = [];
 
-		$ext_list_enabled = $this->extension_manager->all_enabled();
-		$ext_list_disabled = $this->extension_manager->all_disabled();
+		$ext_list_enabled = $this->ext_manager->all_enabled();
+		$ext_list_disabled = $this->ext_manager->all_disabled();
 		$ext_list_migrations = $this->get_exts_with_new_migration($ext_list_disabled);
 
 		$ext_list_versioncheck = [];
@@ -210,8 +215,8 @@ class ext_mgr_plus
 			$ext_list_disabled_and_ignored = array_merge($ext_list_disabled_and_ignored, $ext_list_migrations);
 		}
 
-		$ext_count_available		= count($this->extension_manager->all_available());
-		$ext_count_configured		= count($this->extension_manager->all_configured());
+		$ext_count_available		= count($this->ext_manager->all_available());
+		$ext_count_configured		= count($this->ext_manager->all_configured());
 		$ext_count_migrations		= count($ext_list_migrations);
 		$ext_count_enabled			= count($ext_list_enabled);
 		$ext_count_enabled_clean	= $ext_count_enabled - count($ext_list_enabled_and_ignored);
@@ -256,18 +261,18 @@ class ext_mgr_plus
 		]);
 	}
 
-	public function catch_message()
+	public function catch_message(): void
 	{
 		$last_action = $this->template->retrieve_var('EXTMGRPLUS_LAST_EMP_ACTION');
-		if ($this->extension_manager->is_disabled('lukewcs/extmgrplus') || $last_action == '')
+		if ($this->ext_manager->is_disabled('lukewcs/extmgrplus') || $last_action == '')
 		{
 			return;
 		}
-		$ext_name = $this->template->retrieve_var('EXTMGRPLUS_LAST_EXT_NAME');
-		$ext_display_name = $this->template->retrieve_var('EXTMGRPLUS_LAST_EXT_DISPLAY_NAME');
-		$message_text = $this->template->retrieve_var('MESSAGE_TEXT');
-		$s_user_notice = $this->template->retrieve_var('S_USER_NOTICE');
-		$s_user_warning = $this->template->retrieve_var('S_USER_WARNING');
+		$ext_name			= $this->template->retrieve_var('EXTMGRPLUS_LAST_EXT_NAME');
+		$ext_display_name	= $this->template->retrieve_var('EXTMGRPLUS_LAST_EXT_DISPLAY_NAME');
+		$message_text		= $this->template->retrieve_var('MESSAGE_TEXT');
+		$s_user_notice		= $this->template->retrieve_var('S_USER_NOTICE');
+		$s_user_warning		= $this->template->retrieve_var('S_USER_WARNING');
 
 		if (
 			$ext_name != ''
@@ -290,7 +295,7 @@ class ext_mgr_plus
 		}
 	}
 
-	private function enable_disable_confirm()
+	private function enable_disable_confirm(): void
 	{
 		if ($this->request->is_set_post('extmgrplus_disable_all'))
 		{
@@ -357,7 +362,7 @@ class ext_mgr_plus
 		redirect($this->request->variable('u_action', ''));
 	}
 
-	private function enable_disable(string $action)
+	private function enable_disable(string $action): void
 	{
 		$safe_time_limit = round(ini_get('max_execution_time') / 2);
 		$start_time = time();
@@ -377,14 +382,14 @@ class ext_mgr_plus
 
 			foreach ($ext_list_enabled as $ext_name => $value)
 			{
-				$ext_display_name = $this->extension_manager->create_extension_metadata_manager($ext_name)->get_metadata('display-name');
+				$ext_display_name = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('display-name');
 				$this->set_last_ext_template_vars('EXTMGRPLUS_ALL_DISABLE', $ext_name, $ext_display_name);
 
-				if ($this->extension_manager->is_enabled($ext_name))
+				if ($this->ext_manager->is_enabled($ext_name))
 				{
 					if ($ext_name != 'lukewcs/extmgrplus')
 					{
-						while ($this->extension_manager->disable_step($ext_name))
+						while ($this->ext_manager->disable_step($ext_name))
 						{
 						}
 					}
@@ -395,7 +400,7 @@ class ext_mgr_plus
 					}
 				}
 
-				if ($this->extension_manager->is_disabled($ext_name))
+				if ($this->ext_manager->is_disabled($ext_name))
 				{
 					$ext_count_success++;
 				}
@@ -479,15 +484,15 @@ class ext_mgr_plus
 
 			foreach ($ext_list_disabled as $ext_name => $value)
 			{
-				$ext_display_name = $this->extension_manager->create_extension_metadata_manager($ext_name)->get_metadata('display-name');
+				$ext_display_name = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('display-name');
 				$this->set_last_ext_template_vars('EXTMGRPLUS_ALL_ENABLE', $ext_name, $ext_display_name);
 
-				$is_enableable = $this->extension_manager->get_extension($ext_name)->is_enableable();
-				if ($this->extension_manager->is_disabled($ext_name) && $is_enableable === true)
+				$is_enableable = $this->ext_manager->get_extension($ext_name)->is_enableable();
+				if ($this->ext_manager->is_disabled($ext_name) && $is_enableable === true)
 				{
 					try
 					{
-						while ($this->extension_manager->enable_step($ext_name))
+						while ($this->ext_manager->enable_step($ext_name))
 						{
 						}
 					}
@@ -500,7 +505,7 @@ class ext_mgr_plus
 					}
 				}
 
-				if ($this->extension_manager->is_enabled($ext_name))
+				if ($this->ext_manager->is_enabled($ext_name))
 				{
 					$ext_count_success++;
 				}
@@ -567,7 +572,7 @@ class ext_mgr_plus
 	}
 
 	// Store information about the current process in template variables
-	private function set_last_ext_template_vars(string $action, string $ext_name, string $ext_display_name)
+	private function set_last_ext_template_vars(string $action, string $ext_name, string $ext_display_name): void
 	{
 		$this->template->assign_vars([
 			'EXTMGRPLUS_LAST_EMP_ACTION'		=> $action,
@@ -583,7 +588,7 @@ class ext_mgr_plus
 
 		foreach ($ext_list as $ext_name => $ext_value)
 		{
-			$ext_path = $this->extension_manager->get_extension_path($ext_name, true);
+			$ext_path = $this->ext_manager->get_extension_path($ext_name, true);
 			$migration_files_count = $this->get_migration_files_count($ext_name, $ext_path);
 			if ($migration_files_count)
 			{
@@ -597,9 +602,11 @@ class ext_mgr_plus
 	// Get the number of new migration files of the specified extension
 	private function get_migration_files_count(string $ext_name, string $ext_path): int
 	{
-		$migrations = $this->extension_manager->get_finder()->extension_directory('/migrations')->find_from_extension($ext_name, $ext_path, false);
-		$migrations_classes = $this->extension_manager->get_finder()->get_classes_from_files($migrations);
+		$migrations = $this->ext_manager->get_finder()->extension_directory('/migrations')->find_from_extension($ext_name, $ext_path, false);
+		$migrations_classes = $this->ext_manager->get_finder()->get_classes_from_files($migrations);
 
+		// The "migrator" class must be integrated using the container function,
+		// otherwise "Test out user's permissions" will not work if EMP is active.
 		$this->migrator = $this->phpbb_container->get('migrator');
 		$this->migrator->set_migrations($migrations_classes);
 		$migrations = $this->migrator->get_installable_migrations();
@@ -649,7 +656,7 @@ class ext_mgr_plus
 	}
 
 	// Set a variable/array in a config_text variable container or delete one or all variables/arrays
-	private function config_text_set($container, $name, $value)
+	private function config_text_set($container, $name, $value): void
 	{
 		if ($this->config_text->get($container) === null)
 		{
@@ -700,16 +707,36 @@ class ext_mgr_plus
 	}
 
 	// Writes the cached version check data to the database.
-	private function versioncheck_save()
+	private function versioncheck_save($param_ext_name = ''): void
 	{
-		$ext_list_db = [
-			'data' => [
-				'date' => time(),
-			],
-		];
-		foreach ($this->extension_manager->all_available() as $ext_name => $path)
+		if ($param_ext_name != '' && $this->config_text->get('extmgrplus_version_check') != '')
 		{
-			$md_manager = $this->extension_manager->create_extension_metadata_manager($ext_name);
+			$ext_list_db = $this->config_text_get('extmgrplus_version_check', 'updates');
+		}
+		else
+		{
+			$ext_list_db = [
+				'data' => [
+					'date' => (($param_ext_name != '') ? 0 : time()),
+				],
+			];
+		}
+		if ($param_ext_name != '')
+		{
+			$ext_list = [
+				$param_ext_name => $this->ext_manager->get_extension_path($param_ext_name, true)
+			];
+			$ext_list_db_update = false;
+		}
+		else
+		{
+			$ext_list = $this->ext_manager->all_available();
+			$ext_list_db_update = true;
+		}
+
+		foreach ($ext_list as $ext_name => $path)
+		{
+			$md_manager = $this->ext_manager->create_extension_metadata_manager($ext_name);
 
 			try
 			{
@@ -717,12 +744,17 @@ class ext_mgr_plus
 
 				if (isset($meta['extra']['version-check']))
 				{
-					$update_data = $this->extension_manager->version_check($md_manager, false, true);
-					if (!empty($update_data))
+					$vc_data = $this->ext_manager->version_check($md_manager, false, true);
+					if (!empty($vc_data))
 					{
-						$ext_list_db[$ext_name] = [
-							'current' => $update_data['current'],
-						];
+						$db_ver = $ext_list_db[$ext_name]['current'] ?? '0.0.0';
+						if (phpbb_version_compare($db_ver, $vc_data['current'], '<'))
+						{
+							$ext_list_db[$ext_name] = [
+								'current' => $vc_data['current'],
+							];
+							$ext_list_db_update = true;
+						}
 					}
 				}
 			}
@@ -733,7 +765,10 @@ class ext_mgr_plus
 			{
 			}
 		}
-		$this->config_text_set('extmgrplus_version_check', 'updates', $ext_list_db);
+		if ($ext_list_db_update)
+		{
+			$this->config_text_set('extmgrplus_version_check', 'updates', $ext_list_db);
+		}
 	}
 
 	// Reads the version check data from the database and removes obsolete entries and generates a list for the template
@@ -742,7 +777,7 @@ class ext_mgr_plus
 		$ext_list_db = $this->config_text_get('extmgrplus_version_check', 'updates');
 		$ext_list_tpl = [
 			'data' => [
-				'LOCAL_DATE' => $this->user->format_date($ext_list_db['data']['date']),
+				'LOCAL_DATE' => ($ext_list_db['data']['date'] != 0 ? $this->user->format_date($ext_list_db['data']['date']) : '-'),
 			],
 		];
 
@@ -753,9 +788,9 @@ class ext_mgr_plus
 			{
 				continue;
 			}
-			if ($this->extension_manager->is_available($ext_name))
+			if ($this->ext_manager->is_available($ext_name))
 			{
-				$meta = $this->extension_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
+				$meta = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
 
 				if (phpbb_version_compare($meta['version'], $ext_data['current'], '<'))
 				{
