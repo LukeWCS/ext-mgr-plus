@@ -707,7 +707,7 @@ class ext_mgr_plus
 	}
 
 	// Writes the cached version check data to the database.
-	private function versioncheck_save($param_ext_name = ''): void
+	private function versioncheck_save(string $param_ext_name = ''): void
 	{
 		if ($param_ext_name != '' && $this->config_text->get('extmgrplus_version_check') != '')
 		{
@@ -717,7 +717,7 @@ class ext_mgr_plus
 		{
 			$ext_list_db = [
 				'data' => [
-					'date' => (($param_ext_name != '') ? 0 : time()),
+					'date' => (($param_ext_name == '') ? time() : null),
 				],
 			];
 		}
@@ -775,13 +775,9 @@ class ext_mgr_plus
 	private function versioncheck_list(): array
 	{
 		$ext_list_db = $this->config_text_get('extmgrplus_version_check', 'updates');
-		$ext_list_tpl = [
-			'data' => [
-				'LOCAL_DATE' => ($ext_list_db['data']['date'] != 0 ? $this->user->format_date($ext_list_db['data']['date']) : '-'),
-			],
-		];
+		$ext_list_db_update = false;
+		$ext_list_tpl = [];
 
-		$ext_list_db_count = count($ext_list_db);
 		foreach ($ext_list_db as $ext_name => $ext_data)
 		{
 			if ($ext_name == 'data')
@@ -802,12 +798,18 @@ class ext_mgr_plus
 			if (!isset($ext_list_tpl[$ext_name]))
 			{
 				unset($ext_list_db[$ext_name]);
+				$ext_list_db_update = true;
 			}
 		}
-		if (count($ext_list_db) < $ext_list_db_count)
+		if ($ext_list_db_update)
 		{
 			$this->config_text_set('extmgrplus_version_check', 'updates', $ext_list_db);
 		}
+
+		$ext_list_tpl['data'] = [
+			'LOCAL_DATE'	=> ($ext_list_db['data']['date'] != null ? $this->user->format_date($ext_list_db['data']['date']) : null),
+			'COUNT'			=> count($ext_list_db) - 1,
+		];
 
 		return $ext_list_tpl;
 	}

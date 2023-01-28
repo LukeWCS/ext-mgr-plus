@@ -2,7 +2,7 @@
 GH (2023-01-)
 
 * Wird die Funktion "Details" ausgeführt und dabei eine neue Version der Erweiterung ermittelt, dann wird diese Information jetzt ebenfalls genutzt und im Versions-Cache von EMP gespeichert.
-  * Dadurch wird die Info oberhalb der Erweiterungen-Liste aktualisiert, mit der über neue Updates informiert wird. Das Datum ändert sich in diesem Fall nicht und zeigt weiterhin das Datum der letzten regulären Versionsprüfung an.
+  * Dabei wird auch die Anzeige der Anzahl verfügbarer Updates oberhalb der Erweiterungen-Liste aktualisiert. Das Datum ändert sich in diesem Fall nicht und zeigt weiterhin das Datum der letzten regulären Versionsprüfung an.
   * Ebenso wird der entsprechende Update-Indikator der betreffenden Erweiterung in der Erweiterungen-Liste angezeigt, wie das auch bei der regulären Versionsprüfung der Fall wäre.
 * Die Info-Tabelle oberhalb der Erweiterungen-Liste um eine Spalte erweitert. Die Anzeige der verfügbaren Updates befindet sich jetzt in einer eigenen Spalte.
 * Einstellungen:

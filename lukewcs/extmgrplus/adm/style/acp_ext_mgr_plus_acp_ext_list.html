@@ -35,22 +35,10 @@
 					<strong>{{ EXTMGRPLUS_COUNT_AVAILABLE }}</strong>
 				</td>
 				<td>
-					<strong>
-						{%- if EXTMGRPLUS_EXT_VERSIONCHECK|length -%}
-							{{ EXTMGRPLUS_EXT_VERSIONCHECK.data.LOCAL_DATE }}
-						{%- else -%}
-							-
-						{%- endif -%}
-					</strong>
+					<strong>{{ EXTMGRPLUS_EXT_VERSIONCHECK.data.LOCAL_DATE ?? '-' }}</strong>
 				</td>
 				<td>
-					<strong>
-						{%- if EXTMGRPLUS_EXT_VERSIONCHECK|length > 1 -%}
-							{{ EXTMGRPLUS_EXT_VERSIONCHECK|length - 1 }}
-						{%- else -%}
-							-
-						{%- endif -%}
-					</strong>
+					<strong>{{ EXTMGRPLUS_EXT_VERSIONCHECK.data.COUNT ?? '0' }}</strong>
 				</td>
 			</tr>
 		</tbody>

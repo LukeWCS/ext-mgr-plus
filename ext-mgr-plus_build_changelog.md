@@ -1,5 +1,10 @@
 ### 1.0.8
 
+#### 1.0.8-b2
+* Wenn keine Updates vorhanden sind, wird in der Info-Tabelle oberhalb der Erweiterungen-Liste jetzt explizit "0" angezeigt statt "-".
+* Code Optimierung:
+  * PHP und Twig.
+
 #### 1.0.8-b1
 * Die Funktion "Details" im ExtMgr wird jetzt ebenfalls für den Versions-Cache von EMP genutzt. Das betrifft die Info-Tabelle oberhalb der Erweiterungen-Liste sowie die Update-Indikatoren in der Liste.
 * Die Info-Tabelle oberhalb der Erweiterungen-Liste auf 3 Spalten erweitert. Datum und Anzahl Updates haben jetzt eigene Spalten.
