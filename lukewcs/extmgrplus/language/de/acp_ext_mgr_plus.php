@@ -57,7 +57,7 @@ $lang = array_merge($lang, [
 
 	// settings expert
 	'EXTMGRPLUS_SECTION_EXPERT_SETTINGS'			=> 'Experten-Einstellungen',
-	'EXTMGRPLUS_MIGRATIONS'							=> 'Erlaube Migrationen',
+	'EXTMGRPLUS_MIGRATIONS'							=> 'Erlaube Erweiterungen mit neuen Migrationen',
 	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'					=> 'Wenn du diese Option aktivierst, dann können bei der Aktion „Ausgewählte aktivieren“ auch diejenigen Erweiterungen aktiviert werden, bei denen neue Migrationsdateien vorliegen. Das trifft auf aktualisierte Erweiterungen zu, die einen Ordner „migrations“ enthalten. Ohne diese Option müssen solche Erweiterungen manuell aktiviert werden, was empfohlen wird.',
 
 	// settings reset
@@ -108,7 +108,7 @@ $lang = array_merge($lang, [
 	// messages
 	'EXTMGRPLUS_MSG_CONFIRM_DISABLE'				=> 'Bist du dir sicher, dass du %s deaktivieren möchtest?',
 	'EXTMGRPLUS_MSG_CONFIRM_ENABLE'					=> 'Bist du dir sicher, dass du %s aktivieren möchtest?',
-	'EXTMGRPLUS_MSG_CONFIRM_MIGRATIONS'				=> 'Bist du dir sicher, dass du Migrationen erlauben möchtest?',
+	'EXTMGRPLUS_MSG_CONFIRM_MIGRATIONS'				=> 'Bist du dir sicher, dass du die Aktivierung von Erweiterungen mit neuen Migrationen erlauben möchtest?',
 	'EXTMGRPLUS_MSG_SETTINGS_SAVED'					=> 'ExtMgrPlus: Einstellungen erfolgreich gespeichert.',
 	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'			=> 'ExtMgrPlus: Spalten für Reihenfolge/Ignorieren erfolgreich gespeichert.',
 	'EXTMGRPLUS_MSG_PROCESS_ABORTED'				=> 'ExtMgrPlus: Der Vorgang „%s“ wurde von folgender Erweiterung unterbrochen:',

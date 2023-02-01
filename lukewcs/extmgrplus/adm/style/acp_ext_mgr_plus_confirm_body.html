@@ -4,6 +4,8 @@
 
 <p>{{ lang('EXTENSIONS_EXPLAIN') }}</p>
 
+<p>{{ EXTMGRPLUS_ACTION_EXPLAIN }}</p>
+
 <form id="confirm" method="post" action="{{ S_CONFIRM_ACTION }}">
 	<fieldset>
 		<h2>{MESSAGE_TITLE}</h1>
@@ -12,11 +14,11 @@
 		{S_HIDDEN_FIELDS}
 
 		<fieldset class="submit-buttons">
-			<input type="submit" name="confirm" value="{{ lang('YES') }}" class="button1">&nbsp; 
+			<input type="submit" name="confirm" value="{{ lang('YES') }}" class="button1">&nbsp;
 			<input type="submit" name="cancel" value="{{ lang('NO') }}" class="button2">
-			{{ S_FORM_TOKEN }}
 		</fieldset>
 	</fieldset>
+	{{ S_FORM_TOKEN }}
 </form>
 
 {% INCLUDE 'overall_footer.html' %}

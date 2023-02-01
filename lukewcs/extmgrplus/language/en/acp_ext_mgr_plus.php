@@ -57,7 +57,7 @@ $lang = array_merge($lang, [
 
 	// settings expert
 	'EXTMGRPLUS_SECTION_EXPERT_SETTINGS'			=> 'Expert settings',
-	'EXTMGRPLUS_MIGRATIONS'							=> 'Allow migrations',
+	'EXTMGRPLUS_MIGRATIONS'							=> 'Allow extensions with new migrations',
 	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'					=> 'If you enable this option, the “Enable selected” action can also activate those extensions that have new migration files. This applies to updated extensions that contain a “migrations” folder. Without this option, such extensions must be activated manually, which is recommended.',
 
 	// settings reset
@@ -108,7 +108,7 @@ $lang = array_merge($lang, [
 	// messages
 	'EXTMGRPLUS_MSG_CONFIRM_DISABLE'				=> 'Are you sure that you wish to disable %s?',
 	'EXTMGRPLUS_MSG_CONFIRM_ENABLE'					=> 'Are you sure that you wish to enable %s?',
-	'EXTMGRPLUS_MSG_CONFIRM_MIGRATIONS'				=> 'Are you sure you want to allow migrations?',
+	'EXTMGRPLUS_MSG_CONFIRM_MIGRATIONS'				=> 'Are you sure you want to allow activation of extensions with new migrations?',
 	'EXTMGRPLUS_MSG_SETTINGS_SAVED'					=> 'ExtMgrPlus: Settings saved successfully.',
 	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'			=> 'ExtMgrPlus: Order/Ignore columns saved successfully.',
 	'EXTMGRPLUS_MSG_PROCESS_ABORTED'				=> 'ExtMgrPlus: The “%s” operation was interrupted by the following extension:',

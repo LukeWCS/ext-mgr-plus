@@ -56,7 +56,7 @@
 			{%- endif ~%}
 		</span>
 	</fieldset>
-	
+
 	<form class="extmgrplus_settings" id="version_check_settings" method="post" action="{{ U_ACTION }}" style="display: none;">
 		<fieldset>
 			<legend>{{ lang('EXTENSIONS_VERSION_CHECK_SETTINGS') }}</legend>
@@ -75,7 +75,7 @@
 			<p class="submit-buttons">
 				<input class="button1" type="submit" name="update" value="{{ lang('SUBMIT') }}">&nbsp;
 				<input class="button2" type="reset" name="reset" value="{{ lang('RESET') }}">
-				
+
 				<input type="hidden" name="action" value="set_config_version_check_force_unstable">
 			</p>
 		</fieldset>
@@ -95,7 +95,7 @@
 					{{ _self.switch('extmgrplus_enable_log', EXTMGRPLUS_ENABLE_LOG) }}
 				</dd>
 			</dl>
-		
+
 			<dl>
 				<dt>
 					<label>{{ lang('EXTMGRPLUS_CONFIRMATION') ~ lang('COLON') }}</label><br>
@@ -105,7 +105,7 @@
 					{{ _self.switch('extmgrplus_enable_confirmation', EXTMGRPLUS_ENABLE_CONFIRMATION) }}
 				</dd>
 			</dl>
-			
+
 			<dl>
 				<dt>
 					<label>{{ lang('EXTMGRPLUS_CHECKBOXES_ALL_SET') ~ lang('COLON') }}</label><br>
@@ -115,7 +115,7 @@
 					{{ _self.switch('extmgrplus_enable_checkboxes_all_set', EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET) }}
 				</dd>
 			</dl>
-		
+
 			<dl>
 				<dt>
 					<label>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE') ~ lang('COLON') }}</label><br>
@@ -125,7 +125,7 @@
 					{{ _self.switch('extmgrplus_enable_order_and_ignore', EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE) }}
 				</dd>
 			</dl>
-		
+
 			<dl>
 				<dt>
 					<label>{{ lang('EXTMGRPLUS_SELF_DISABLE') ~ lang('COLON') }}</label><br>
@@ -135,9 +135,9 @@
 					{{ _self.switch('extmgrplus_enable_self_disable', EXTMGRPLUS_ENABLE_SELF_DISABLE) }}
 				</dd>
 			</dl>
-		
+
 			<legend class="legend_sub">{{ lang('EXTMGRPLUS_SECTION_EXPERT_SETTINGS') }}</legend>
-			
+
 			<dl>
 				<dt>
 					<label>{{ lang('EXTMGRPLUS_MIGRATIONS') ~ lang('COLON') }}</label><br>
@@ -147,8 +147,8 @@
 					{{ _self.switch('extmgrplus_enable_migrations', EXTMGRPLUS_ENABLE_MIGRATIONS) }}
 				</dd>
 			</dl>
-		
-			<legend class="legend_sub">{{ lang('EXTMGRPLUS_SECTION_RESET') }}</legend>			
+
+			<legend class="legend_sub">{{ lang('EXTMGRPLUS_SECTION_RESET') }}</legend>
 
 			<dl>
 				<dt>
@@ -161,7 +161,7 @@
 			</dl>
 
 			<legend class="legend_sub">{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
-		
+
 			<p class="submit-buttons">
 				<input class="button1" type="submit" name="extmgrplus_save_settings" value="{{ lang('SUBMIT') }}">&nbsp;
 				<input class="button2" type="reset" name="reset" value="{{ lang('RESET') }}">
@@ -169,11 +169,11 @@
 		</fieldset>
 		{{ S_FORM_TOKEN }}
 	</form>
-	
+
 	<form id="extmgrplus_list" method="post" action="{{ U_ACTION }}">
 		<fieldset id="extmgrplus_order_and_ignore" style="display: none;">
 			<legend>{{ lang('EXTMGRPLUS_SECTION_SETTINGS') }}</legend>
-			
+
 			<dl>
 				<dt>
 					<label>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE') ~ lang('COLON') }}</label><br>
@@ -230,14 +230,14 @@
 						</td>
 						<td class="row3">
 							{{ _self.button(
-								'disable', 
+								'disable',
 								(EXTMGRPLUS_COUNT_ENABLED_CLEAN > 0) && EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 							) }}
 						</td>
 						<td class="row3">
 							{{ _self.checkbox_all(
-								'enabled', 
-								(EXTMGRPLUS_COUNT_ENABLED_CLEAN > 0), 
+								'enabled',
+								(EXTMGRPLUS_COUNT_ENABLED_CLEAN > 0),
 								EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 							) }}
 						</td>
@@ -264,16 +264,16 @@
 							</td>
 							<td>
 								{{ _self.checkbox_select(
-									'enabled', 
-									enabled, 
-									(enabled.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_ENABLE_SELF_DISABLE) && (EXTMGRPLUS_IGNORE[enabled.NAME] is not defined || !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE), 
+									'enabled',
+									enabled,
+									(enabled.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_ENABLE_SELF_DISABLE) && (EXTMGRPLUS_IGNORE[enabled.NAME] is not defined || !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE),
 									EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 								) }}
 							</td>
 							<td style="display: none;">
 								{% if enabled.NAME != 'lukewcs/extmgrplus' %}
 									{{ _self.inputbox(
-										enabled, 
+										enabled,
 										EXTMGRPLUS_ORDER,
 										EXTMGRPLUS_IGNORE[enabled.NAME] is defined
 									) }}
@@ -282,7 +282,7 @@
 							<td style="display: none;">
 								{% if enabled.NAME != 'lukewcs/extmgrplus' %}
 									{{ _self.checkbox_ignore(
-										enabled, 
+										enabled,
 										EXTMGRPLUS_IGNORE[enabled.NAME] is defined
 									) }}
 								{% endif %}
@@ -299,14 +299,14 @@
 							</td>
 							<td class="row3">
 								{{ _self.button(
-									'enable', 
+									'enable',
 									(EXTMGRPLUS_COUNT_DISABLED_CLEAN > 0) && EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 								) }}
 							</td>
 							<td class="row3">
 								{{ _self.checkbox_all(
-									'disabled', 
-									(EXTMGRPLUS_COUNT_DISABLED_CLEAN > 0), 
+									'disabled',
+									(EXTMGRPLUS_COUNT_DISABLED_CLEAN > 0),
 									EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 								) }}
 							</td>
@@ -347,13 +347,13 @@
 								{{ _self.details(disabled) }}
 							</td>
 							<td>
-								{{ _self.actions(disabled) }}								
+								{{ _self.actions(disabled) }}
 							</td>
 							<td>
 								{% if disabled.actions|length == 2 %}
 									{{ _self.checkbox_select(
-										'disabled', 
-										disabled, 
+										'disabled',
+										disabled,
 										(EXTMGRPLUS_MIGRATION_EXTS[disabled.NAME] is not defined || EXTMGRPLUS_ALLOW_MIGRATIONS) && (EXTMGRPLUS_IGNORE[disabled.NAME] is not defined || !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE),
 										EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 									) }}
@@ -361,14 +361,14 @@
 							</td>
 							<td style="display: none;">
 								{{ _self.inputbox(
-									disabled, 
+									disabled,
 									EXTMGRPLUS_ORDER,
 									EXTMGRPLUS_IGNORE[disabled.NAME] is defined
 								) }}
 							</td>
 							<td style="display: none;">
 								{{ _self.checkbox_ignore(
-									disabled, 
+									disabled,
 									EXTMGRPLUS_IGNORE[disabled.NAME] is defined
 								) }}
 							</td>

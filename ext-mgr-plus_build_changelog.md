@@ -1,7 +1,18 @@
 ### 1.0.8
 
+#### 1.0.8
+* Release
+* Bei den Aktionen "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" wird jetzt oberhalb der Rückfrage der gleiche Hinweis angezeigt, den auch phpBB selbst bei der Rückfrage der Aktionen "Deaktivieren" und "Aktivieren" anzeigt.
+* Sprachdateien:
+  * Texte bezüglich "Migrationen erlauben" präzisiert.
+* ACP-Template:
+  * Richtlinienfehler behoben. [Meldung von Kirk]
+* Code:
+  * Funktion zum deaktivieren/aktivieren auf 2 Funktionen aufgeteilt.
+  * Optimierung.
+
 #### 1.0.8-b2
-* Wenn keine Updates vorhanden sind, wird in der Info-Tabelle oberhalb der Erweiterungen-Liste jetzt explizit "0" angezeigt statt "-".
+* Wenn keine Updates ermittelt wurden, wird in der Info-Tabelle oberhalb der Erweiterungen-Liste jetzt "0" angezeigt statt "-".
 * Code Optimierung:
   * PHP und Twig.
 

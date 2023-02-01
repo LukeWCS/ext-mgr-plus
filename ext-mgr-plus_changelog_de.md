@@ -1,17 +1,19 @@
 ### 1.0.8
-GH (2023-01-)
+GH (2023-02-01)
 
 * Wird die Funktion "Details" ausgeführt und dabei eine neue Version der Erweiterung ermittelt, dann wird diese Information jetzt ebenfalls genutzt und im Versions-Cache von EMP gespeichert.
   * Dabei wird auch die Anzeige der Anzahl verfügbarer Updates oberhalb der Erweiterungen-Liste aktualisiert. Das Datum ändert sich in diesem Fall nicht und zeigt weiterhin das Datum der letzten regulären Versionsprüfung an.
   * Ebenso wird der entsprechende Update-Indikator der betreffenden Erweiterung in der Erweiterungen-Liste angezeigt, wie das auch bei der regulären Versionsprüfung der Fall wäre.
-* Die Info-Tabelle oberhalb der Erweiterungen-Liste um eine Spalte erweitert. Die Anzeige der verfügbaren Updates befindet sich jetzt in einer eigenen Spalte.
+* Der Info-Tabelle oberhalb der Erweiterungen-Liste die Spalte "Verfügbare Updates" hinzugefügt, in der jetzt die Anzahl der Updates angezeigt wird. Somit sind Datum der letzten Versionsprüfung und Anzahl Updates in separaten Spalten aufgeführt.
+* Bei den Aktionen "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" wird jetzt oberhalb der Rückfrage der gleiche Hinweis angezeigt, den auch phpBB selbst bei der Rückfrage der Aktionen "Deaktivieren" und "Aktivieren" anzeigt. Somit verhält sich EMP auch in diesem Punkt wie phpBB.
 * Einstellungen:
   * Wurde der Sicherheitsschalter "Erlaube Migrationen" aktiviert, dann wurde durch die modale Javscript Rückfrage `confirm()` verhindert, dass der Browser den aktivierten Zustand des Schalters darstellen konnte, da die Aktualisierung der Render Engine noch gar nicht beendet war. Jetzt wird gewartet bis diese Aktualisierung abgeschlossen ist, bevor der modale Dialog angezeigt wird.
-  * Die Toggle Farben von Recent Topics übernommen.
+  * Die Toggle Farben vom Recent Topics Fork übernommen. Insbesondere für Menschen mit Rot/Grün-Schwäche eine kleine Verbesserung.
+  * Titel von "Migrationen erlauben" und Text der zugehörigen Rückfrage präzisiert, da diese etwas missverständlich waren.
 * Code Optimierung:
   * PHP: Kleine Verbesserungen hinsichtlich Code Qualität.
   * Twig: Das `spaceless` Tag, welches seit Twig 2.7 als DEPRECATED eingestuft ist, wurde überall entfernt und durch `spaceless` Filter und Whitespace Modifier ersetzt.
-* PHP Mindestversion auf 7.1 erhöht.
+* PHP Mindestversion hat sich auf 7.1 erhöht.
 
 ### 1.0.7
 GH (2022-12-04)
@@ -59,7 +61,7 @@ GH (2022-10-29)
 ### 1.0.4
 GH (2022-08-10)
 
-* Fix: Die Funktion "Berechtigungen des Benutzers testen" führte zu einem Fatal: `Fatal error: Cannot declare class auth_admin, because the name is already in use in ...`. [Meldung von chris1278]
+* Fix: Die Funktion "Berechtigungen des Benutzers testen" führte zu einem Fatal: `Fatal error: Cannot declare class auth_admin, because the name is already in use in ...`. Die Ursache dafür ist die Migrator Klasse, die nicht per `services.yml` eingebunden werden darf. [Meldung von chris1278]
 
 ### 1.0.3
 GH (2022-06-24)
