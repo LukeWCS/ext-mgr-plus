@@ -140,6 +140,16 @@
 
 			<dl>
 				<dt>
+					<label>{{ lang('EXTMGRPLUS_MIGRATION_COL') ~ lang('COLON') }}</label><br>
+					<span>{{ lang('EXTMGRPLUS_MIGRATION_COL_EXPLAIN') }}</span>
+				</dt>
+				<dd>
+					{{ _self.switch('extmgrplus_enable_migration_col', EXTMGRPLUS_ENABLE_MIGRATION_COL) }}
+				</dd>
+			</dl>
+
+			<dl>
+				<dt>
 					<label>{{ lang('EXTMGRPLUS_MIGRATIONS') ~ lang('COLON') }}</label><br>
 					<span>{{ lang('EXTMGRPLUS_MIGRATIONS_EXPLAIN') }}</span>
 				</dt>
@@ -202,7 +212,7 @@
 					<th>
 						{{ lang('CURRENT_VERSION') }}
 					</th>
-					<th title="{{ lang('EXTMGRPLUS_COL_MIGRATION_FILES') }}">
+					<th{{ !EXTMGRPLUS_ENABLE_MIGRATION_COL ? ' style="display: none;"' }} title="{{ lang('EXTMGRPLUS_COL_MIGRATION_FILES') }}">
 						{{ _self.icon('fa-arrow-up') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_MIGRATION_FILES') }}</span>
 					</th>
 					<th>
@@ -225,7 +235,7 @@
 			<tbody>
 				{% if loops.enabled|length %}
 					<tr>
-						<td class="row3" colspan="4">
+						<td class="row3" colspan="{{ EXTMGRPLUS_ENABLE_MIGRATION_COL ? '4' : '3' }}">
 							<strong>{{ lang('EXTENSIONS_ENABLED') ~ lang('COLON') ~ ' ' ~ EXTMGRPLUS_COUNT_ENABLED }}</strong>{% EVENT acp_ext_list_enabled_title_after %}
 						</td>
 						<td class="row3">
@@ -254,7 +264,7 @@
 							<td>
 								{{ _self.version(enabled, attribute(EXTMGRPLUS_EXT_VERSIONCHECK, enabled.NAME)) }}
 							</td>
-							<td>
+							<td{{ !EXTMGRPLUS_ENABLE_MIGRATION_COL ? ' style="display: none;"' }}>
 							</td>
 							<td>
 								{{ _self.details(enabled) }}
@@ -294,8 +304,8 @@
 				{% if loops.disabled|length %}
 					{% if EXTMGRPLUS_COUNT_DISABLED %}
 						<tr>
-							<td class="row3" colspan="4">
-								<strong>{{ lang('EXTENSIONS_DISABLED') ~ lang('COLON') ~ ' ' ~ EXTMGRPLUS_COUNT_DISABLED ~ ' (' ~ lang('EXTMGRPLUS_HAS_MIGRATION') ~ lang('COLON') ~ ' ' ~ EXTMGRPLUS_COUNT_HAS_MIGRATION ~ ')' }}</strong>{% EVENT acp_ext_list_disabled_title_after %}
+							<td class="row3" colspan="{{ EXTMGRPLUS_ENABLE_MIGRATION_COL ? '4' : '3' }}">
+								<strong>{{ lang('EXTENSIONS_DISABLED') ~ lang('COLON') ~ ' ' ~ EXTMGRPLUS_COUNT_DISABLED }}</strong>{% EVENT acp_ext_list_disabled_title_after %}
 							</td>
 							<td class="row3">
 								{{ _self.button(
@@ -320,7 +330,7 @@
 						{% if disabled.actions|length == 1 && !section_not_installed %}
 							{% set section_not_installed = true %}
 							<tr>
-								<td class="row3" colspan="4">
+								<td class="row3" colspan="{{ EXTMGRPLUS_ENABLE_MIGRATION_COL ? '4' : '3' }}">
 									<strong>{{ lang('EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED') }}{{ lang('COLON') ~ ' ' ~ EXTMGRPLUS_COUNT_NOT_INSTALLED }}</strong>
 								</td>
 								<td class="row3">
@@ -340,8 +350,8 @@
 							<td>
 								{{ _self.version(disabled, attribute(EXTMGRPLUS_EXT_VERSIONCHECK, disabled.NAME)) }}
 							</td>
-							<td>
-								{{ _self.has_migration(disabled, EXTMGRPLUS_MIGRATION_EXTS) }}
+							<td{{ !EXTMGRPLUS_ENABLE_MIGRATION_COL ? ' style="display: none;"' }}>
+								{{ EXTMGRPLUS_ENABLE_MIGRATION_COL ? _self.has_migration(disabled, EXTMGRPLUS_MIGRATION_EXTS) }}
 							</td>
 							<td>
 								{{ _self.details(disabled) }}

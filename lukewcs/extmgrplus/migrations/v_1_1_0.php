@@ -10,17 +10,17 @@
 
 namespace lukewcs\extmgrplus\migrations;
 
-class v_1_0_6 extends \phpbb\db\migration\migration
+class v_1_1_0 extends \phpbb\db\migration\migration
 {
 	public static function depends_on()
 	{
-		return ['\lukewcs\extmgrplus\migrations\v_1_0_5'];
+		return ['\lukewcs\extmgrplus\migrations\v_1_0_6'];
 	}
 
 	public function update_data()
 	{
 		return [
-			['config.remove', ['extmgrplus_enable_version_notification']],
+			['config.add', ['extmgrplus_enable_migration_col', 0]],
 		];
 	}
 }

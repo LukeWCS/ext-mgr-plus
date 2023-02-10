@@ -122,6 +122,7 @@ ExtMgrPlus.SetDefaults = function () {
 	$('input[name="extmgrplus_enable_checkboxes_all_set"]'	).prop('checked'	, true);
 	$('input[name="extmgrplus_enable_order_and_ignore"]'	).prop('checked'	, true);
 	$('input[name="extmgrplus_enable_self_disable"]'		).prop('checked'	, false);
+	$('input[name="extmgrplus_enable_migration_col"]'		).prop('checked'	, false);
 	$('input[name="extmgrplus_enable_migrations"]'			).prop('checked'	, false);
 };
 

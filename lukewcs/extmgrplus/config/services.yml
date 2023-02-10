@@ -12,6 +12,9 @@ services:
             - '@language'
             - '@template'
             - '@service_container'
+            - '@dbal.conn'
+            - '%core.table_prefix%'
+            - '%core.root_path%'
     lukewcs.extmgrplus.listener:
         class: lukewcs\extmgrplus\event\listener
         arguments:

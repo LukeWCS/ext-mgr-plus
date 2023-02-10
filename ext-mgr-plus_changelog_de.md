@@ -1,3 +1,22 @@
+### 1.1.0
+GH (2023-02-)
+
+* Erweiterungen-Liste:
+  * Es werden jetzt auch bei den nicht-installierten Erweiterungen die Anzahl neuer Migrationsdateien angezeigt.
+  * In der Überschrift "Deaktivierte Erweiterungen" wurde der Zusatz "(neue Migrationen: x)" entfernt.
+* Einstellungen:
+  * Neue Experten-Option "Spalte mit neuen Migrationsdateien anzeigen". Per Standard ist diese Option deaktiviert.
+* In allen Fehlermeldungen die beim Deaktivieren oder Aktivieren auftreten können, wird jetzt auch die Version der betroffenen Erweiterungen angezeigt.
+* Bisher wurde zum Ermitteln neuer Migrationsdateien die Migrator Klasse verwendet, diese hat jedoch 2 Nachteile:
+  * Die reguläre Integration mittels `services.yml` ist nicht möglich, da die Funktion "Berechtigungen des Benutzers testen" dann zu einem Fatal führt.
+  * Die Klassen aller ermittelten Migrationsdateien wurden dauerhaft geladen und zum Programm Kontext hinzugefügt, wodurch unnötig Speicher belegt wurde.
+
+  Statt der Migrator Klasse werden jetzt eigene Funktionen verwendet:
+  * Für den Abgleich der lokalen Migration mit der Datenbank.
+  * Für die Prüfung ob eine Migrationsdatei tatsächlich eine Migration ist.
+* Code Optimierung.
+* PHP Maximal-Version auf 8.2 erhöht.
+
 ### 1.0.8
 GH (2023-02-01)
 
@@ -13,7 +32,7 @@ GH (2023-02-01)
 * Code Optimierung:
   * PHP: Kleine Verbesserungen hinsichtlich Code Qualität.
   * Twig: Das `spaceless` Tag, welches seit Twig 2.7 als DEPRECATED eingestuft ist, wurde überall entfernt und durch `spaceless` Filter und Whitespace Modifier ersetzt.
-* PHP Mindestversion hat sich auf 7.1 erhöht.
+* PHP Mindest-Version hat sich auf 7.1 erhöht.
 
 ### 1.0.7
 GH (2022-12-04)

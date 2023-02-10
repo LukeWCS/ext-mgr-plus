@@ -10,7 +10,7 @@
 
 namespace lukewcs\extmgrplus\migrations;
 
-class v_1_0_5 extends \phpbb\db\migration\container_aware_migration
+class v_1_0_5 extends \phpbb\db\migration\migration
 {
 	public static function depends_on()
 	{

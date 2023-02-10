@@ -39,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, [
 	// language pack author
 	'EXTMGRPLUS_LANG_DESC'							=> 'English',
-	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.0.8',
+	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.1.0',
 	'EXTMGRPLUS_LANG_AUTHOR'	 					=> 'LukeWCS',
 
 	// settings
@@ -57,8 +57,10 @@ $lang = array_merge($lang, [
 
 	// settings expert
 	'EXTMGRPLUS_SECTION_EXPERT_SETTINGS'			=> 'Expert settings',
+	'EXTMGRPLUS_MIGRATION_COL'						=> 'Show column with new migrations',
+	'EXTMGRPLUS_MIGRATION_COL_EXPLAIN'				=> 'If this option is enabled, then an additional column is displayed in which the number of new migrations is listed. The number is displayed for both “Disabled Extensions” and “Not installed extensions”.',
 	'EXTMGRPLUS_MIGRATIONS'							=> 'Allow extensions with new migrations',
-	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'					=> 'If you enable this option, the “Enable selected” action can also activate those extensions that have new migration files. This applies to updated extensions that contain a “migrations” folder. Without this option, such extensions must be activated manually, which is recommended.',
+	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'					=> 'If this option is enabled, you can also activate those extensions for which there are new migrations with the “Enable selected” action. This applies to updated extensions that contain a “migrations” folder. Without this option, such extensions must be activated manually, which is recommended.',
 
 	// settings reset
 	'EXTMGRPLUS_SECTION_RESET'						=> 'Reset',
@@ -79,11 +81,10 @@ $lang = array_merge($lang, [
 	// ext manager
 	'EXTMGRPLUS_ALL_DISABLE'						=> 'Disable selected',
 	'EXTMGRPLUS_ALL_ENABLE'							=> 'Enable selected',
-	'EXTMGRPLUS_HAS_MIGRATION'						=> 'new migrations',
 	'EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED'			=> 'Not installed extensions',
 
 	// tooltips
-	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'				=> 'This extension has new migration files that are applied when activating the extension.',
+	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'				=> 'This extension has new migrations that are applied when activating the extension.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE'				=> 'Disable all selected extensions.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'				=> 'Enable all selected extensions.',
 	'EXTMGRPLUS_TOOLTIP_ORDER'						=> 'Order group in the range 0-99.',
@@ -92,7 +93,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_SELECT'						=> 'Select extension.',
 
 	// columns
-	'EXTMGRPLUS_COL_MIGRATION_FILES'				=> 'New migration files',
+	'EXTMGRPLUS_COL_MIGRATION_FILES'				=> 'New migrations',
 	'EXTMGRPLUS_COL_SELECT'							=> 'Select',
 	'EXTMGRPLUS_COL_ORDER'							=> 'Order',
 	'EXTMGRPLUS_COL_IGNORE'							=> 'Ignore',

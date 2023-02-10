@@ -39,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, [
 	// language pack author
 	'EXTMGRPLUS_LANG_DESC'							=> 'Deutsch (Sie)',
-	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.0.8',
+	'EXTMGRPLUS_LANG_EXT_VER' 						=> '1.1.0',
 	'EXTMGRPLUS_LANG_AUTHOR'	 					=> 'LukeWCS',
 
 	// settings
@@ -57,8 +57,10 @@ $lang = array_merge($lang, [
 
 	// settings expert
 	'EXTMGRPLUS_SECTION_EXPERT_SETTINGS'			=> 'Experten-Einstellungen',
+	'EXTMGRPLUS_MIGRATION_COL'						=> 'Spalte mit neuen Migrationen anzeigen',
+	'EXTMGRPLUS_MIGRATION_COL_EXPLAIN'				=> 'Wenn diese Option aktiviert ist, dann wird eine zusätzliche Spalte angezeigt, in der die Anzahl neuer Migrationen aufgeführt ist. Die Anzahl wird sowohl bei „Deaktivierte Erweiterungen“ als auch bei „Nicht installierte Erweiterungen“ angezeigt.',
 	'EXTMGRPLUS_MIGRATIONS'							=> 'Erlaube Erweiterungen mit neuen Migrationen',
-	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'					=> 'Wenn Sie diese Option aktivieren, dann können bei der Aktion „Ausgewählte aktivieren“ auch diejenigen Erweiterungen aktiviert werden, bei denen neue Migrationsdateien vorliegen. Das trifft auf aktualisierte Erweiterungen zu, die einen Ordner „migrations“ enthalten. Ohne diese Option müssen solche Erweiterungen manuell aktiviert werden, was empfohlen wird.',
+	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'					=> 'Wenn diese Option aktiviert ist, dann können Sie bei der Aktion „Ausgewählte aktivieren“ auch diejenigen Erweiterungen aktivieren, bei denen neue Migrationen vorliegen. Das trifft auf aktualisierte Erweiterungen zu, die einen Ordner „migrations“ enthalten. Ohne diese Option müssen solche Erweiterungen manuell aktiviert werden, was empfohlen wird.',
 
 	// settings reset
 	'EXTMGRPLUS_SECTION_RESET'						=> 'Zurücksetzen',
@@ -79,11 +81,10 @@ $lang = array_merge($lang, [
 	// ext manager
 	'EXTMGRPLUS_ALL_DISABLE'						=> 'Ausgewählte deaktivieren',
 	'EXTMGRPLUS_ALL_ENABLE'							=> 'Ausgewählte aktivieren',
-	'EXTMGRPLUS_HAS_MIGRATION'						=> 'neue Migrationen',
 	'EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED'			=> 'Nicht installierte Erweiterungen',
 
 	// tooltips
-	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'				=> 'Diese Erweiterung hat neue Migrationsdateien, die beim aktivieren der Erweiterung übernommen werden.',
+	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'				=> 'Diese Erweiterung hat neue Migrationen, die beim aktivieren der Erweiterung übernommen werden.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE'				=> 'Alle ausgewählten Erweiterungen deaktivieren.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'				=> 'Alle ausgewählten Erweiterungen aktivieren.',
 	'EXTMGRPLUS_TOOLTIP_ORDER'						=> 'Reihenfolge-Gruppe im Bereich 0-99.',
@@ -92,7 +93,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_SELECT'						=> 'Erweiterung auswählen.',
 
 	// columns
-	'EXTMGRPLUS_COL_MIGRATION_FILES'				=> 'Neue Migrationsdateien',
+	'EXTMGRPLUS_COL_MIGRATION_FILES'				=> 'Neue Migrationen',
 	'EXTMGRPLUS_COL_SELECT'							=> 'Auswählen',
 	'EXTMGRPLUS_COL_ORDER'							=> 'Reihenfolge',
 	'EXTMGRPLUS_COL_IGNORE'							=> 'Ignorieren',

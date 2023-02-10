@@ -22,7 +22,11 @@ class ext_mgr_plus
 	protected $language;
 	protected $template;
 	protected $phpbb_container;
-	protected $migrator;
+	protected $db;
+	protected $table_prefix;
+	protected $phpbb_root_path;
+
+	protected $migrations_db;
 	protected $u_action;
 
 	public function __construct(
@@ -35,7 +39,10 @@ class ext_mgr_plus
 		\phpbb\config\db_text $config_text,
 		\phpbb\language\language $language,
 		\phpbb\template\template $template,
-		$phpbb_container
+		$phpbb_container,
+		\phpbb\db\driver\driver_interface $db,
+		$table_prefix,
+		$phpbb_root_path
 	)
 	{
 		$this->ext_manager		= $ext_manager;
@@ -48,6 +55,9 @@ class ext_mgr_plus
 		$this->language			= $language;
 		$this->template			= $template;
 		$this->phpbb_container	= $phpbb_container;
+		$this->db				= $db;
+		$this->table_prefix 	= $table_prefix;
+		$this->phpbb_root_path	= $phpbb_root_path;
 	}
 
 	public function todo(): void
@@ -128,6 +138,7 @@ class ext_mgr_plus
 			$this->config->set('extmgrplus_enable_checkboxes_all_set'	, $this->request->variable('extmgrplus_enable_checkboxes_all_set', 0));
 			$this->config->set('extmgrplus_enable_order_and_ignore'		, $this->request->variable('extmgrplus_enable_order_and_ignore', 0));
 			$this->config->set('extmgrplus_enable_self_disable'			, $this->request->variable('extmgrplus_enable_self_disable', 0));
+			$this->config->set('extmgrplus_enable_migration_col'		, $this->request->variable('extmgrplus_enable_migration_col', 0));
 			$this->config->set('extmgrplus_enable_migrations'			, $this->request->variable('extmgrplus_enable_migrations', 0));
 
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_SETTINGS_SAVED') . adm_back_link($this->u_action), E_USER_NOTICE);
@@ -169,15 +180,6 @@ class ext_mgr_plus
 			return;
 		}
 
-		$event['tpl_name'] = '@lukewcs_extmgrplus/acp_ext_mgr_plus_acp_ext_list';
-
-		$this_meta = $this->ext_manager->create_extension_metadata_manager('lukewcs/extmgrplus')->get_metadata('all');
-		$notes = [];
-
-		$ext_list_enabled = $this->ext_manager->all_enabled();
-		$ext_list_disabled = $this->ext_manager->all_disabled();
-		$ext_list_migrations = $this->get_exts_with_new_migration($ext_list_disabled);
-
 		$ext_list_versioncheck = [];
 		if ($this->request->variable('versioncheck_force', false))
 		{
@@ -187,6 +189,28 @@ class ext_mgr_plus
 		{
 			$ext_list_versioncheck = $this->versioncheck_list();
 		}
+
+		$event['tpl_name'] = '@lukewcs_extmgrplus/acp_ext_mgr_plus_acp_ext_list';
+
+		$this_meta = $this->ext_manager->create_extension_metadata_manager('lukewcs/extmgrplus')->get_metadata('all');
+		$notes = [];
+
+		$ext_list_available = $this->ext_manager->all_available();
+		$ext_list_enabled = $this->ext_manager->all_enabled();
+		$ext_list_disabled = $this->ext_manager->all_disabled();
+
+		$this->load_migrations_db();
+		if ($this->config['extmgrplus_enable_migration_col'])
+		{
+			$ext_list_migrations_all = $this->get_exts_with_new_migration(array_diff_key($ext_list_available, $ext_list_enabled));
+			$ext_list_migrations_disabled = array_intersect_key($ext_list_migrations_all, $ext_list_disabled);
+		}
+		else
+		{
+			$ext_list_migrations_all = $this->get_exts_with_new_migration($ext_list_disabled);
+			$ext_list_migrations_disabled = $ext_list_migrations_all;
+		}
+		unset($this->migrations_db);
 
 		if ($this->config['extmgrplus_enable_order_and_ignore'])
 		{
@@ -216,12 +240,11 @@ class ext_mgr_plus
 		}
 		if (!$this->config['extmgrplus_enable_migrations'])
 		{
-			$ext_list_disabled_and_ignored = array_merge($ext_list_disabled_and_ignored, $ext_list_migrations);
+			$ext_list_disabled_and_ignored = array_merge($ext_list_disabled_and_ignored, $ext_list_migrations_disabled);
 		}
 
-		$ext_count_available		= count($this->ext_manager->all_available());
+		$ext_count_available		= count($ext_list_available);
 		$ext_count_configured		= count($this->ext_manager->all_configured());
-		$ext_count_migrations		= count($ext_list_migrations);
 		$ext_count_enabled			= count($ext_list_enabled);
 		$ext_count_enabled_clean	= $ext_count_enabled - count($ext_list_enabled_and_ignored);
 		$ext_count_disabled			= count($ext_list_disabled);
@@ -247,9 +270,8 @@ class ext_mgr_plus
 			'EXTMGRPLUS_COUNT_ENABLED_CLEAN'			=> $ext_count_enabled_clean,
 			'EXTMGRPLUS_COUNT_DISABLED'					=> $ext_count_disabled,
 			'EXTMGRPLUS_COUNT_DISABLED_CLEAN'			=> $ext_count_disabled_clean,
-			'EXTMGRPLUS_COUNT_HAS_MIGRATION'			=> $ext_count_migrations,
 			'EXTMGRPLUS_COUNT_NOT_INSTALLED'			=> $ext_count_available - $ext_count_configured,
-			'EXTMGRPLUS_MIGRATION_EXTS'					=> $ext_list_migrations,
+			'EXTMGRPLUS_MIGRATION_EXTS'					=> $ext_list_migrations_all,
 			'EXTMGRPLUS_EXT_NAME'						=> $ext_display_name,
 			'EXTMGRPLUS_EXT_VER'						=> $ext_ver,
 			'EXTMGRPLUS_NOTES'							=> $notes,
@@ -261,6 +283,7 @@ class ext_mgr_plus
 			'EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET'		=> $this->config['extmgrplus_enable_checkboxes_all_set'],
 			'EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE'		=> $this->config['extmgrplus_enable_order_and_ignore'],
 			'EXTMGRPLUS_ENABLE_SELF_DISABLE'			=> $this->config['extmgrplus_enable_self_disable'],
+			'EXTMGRPLUS_ENABLE_MIGRATION_COL'			=> $this->config['extmgrplus_enable_migration_col'],
 			'EXTMGRPLUS_ENABLE_MIGRATIONS'				=> $this->config['extmgrplus_enable_migrations'],
 		]);
 	}
@@ -275,23 +298,24 @@ class ext_mgr_plus
 
 		$ext_name			= $this->template->retrieve_var('EXTMGRPLUS_LAST_EXT_NAME');
 		$ext_display_name	= $this->template->retrieve_var('EXTMGRPLUS_LAST_EXT_DISPLAY_NAME');
+		$ext_version		= $this->template->retrieve_var('EXTMGRPLUS_LAST_EXT_VERSION');
 		$message_text		= $this->template->retrieve_var('MESSAGE_TEXT');
 		$s_user_notice		= $this->template->retrieve_var('S_USER_NOTICE');
 		$s_user_warning		= $this->template->retrieve_var('S_USER_WARNING');
 		if (
 			$ext_name != ''
-			&& $ext_display_name != ''
 			&& $message_text != ''
 			&& ($s_user_notice || $s_user_warning)
 		)
 		{
 			$this->template->assign_vars([
-				'MESSAGE_TEXT'		=>	sprintf('%1$s<br><br><strong>%2$s (%3$s)</strong><br><br><em>%4$s</em><br><br>%5$s',
+				'MESSAGE_TEXT'		=>	sprintf('%1$s<br><br><strong>%2$s v%3$s (%4$s)</strong><br><br><em>%5$s</em><br><br>%6$s',
 											/* 1 */	$this->language->lang('EXTMGRPLUS_MSG_PROCESS_ABORTED', $this->language->lang($last_action)),
 											/* 2 */	$ext_display_name,
-											/* 3 */	$ext_name,
-											/* 4 */	$message_text,
-											/* 5 */	$this->extmgr_back_link()
+											/* 3 */	$ext_version,
+											/* 4 */	$ext_name,
+											/* 5 */	$message_text,
+											/* 6 */	$this->extmgr_back_link()
 										),
 				'S_USER_NOTICE'		=>	false,
 				'S_USER_WARNING'	=>	true,
@@ -390,8 +414,10 @@ class ext_mgr_plus
 
 		foreach ($ext_list_enabled as $ext_name => $value)
 		{
-			$ext_display_name = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('display-name');
-			$this->set_last_ext_template_vars('EXTMGRPLUS_ALL_DISABLE', $ext_name, $ext_display_name);
+			$ext_meta = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
+			$ext_display_name = $ext_meta['extra']['display-name'] ?? '';
+			$ext_version = $ext_meta['version'] ?? '';
+			$this->set_last_ext_template_vars('EXTMGRPLUS_ALL_DISABLE', $ext_name, $ext_display_name, $ext_version);
 
 			if ($this->ext_manager->is_enabled($ext_name))
 			{
@@ -428,28 +454,19 @@ class ext_mgr_plus
 				break;
 			}
 		}
-
-		$this->set_last_ext_template_vars('', '', '');
+		$this->set_last_ext_template_vars('');
 
 		if ($safe_time_exceeded)
 		{
-			trigger_error(sprintf('%1$s<br><br><strong>%2$s</strong><br><br>%3$s',
-					/* 1 */	$this->language->lang('EXTMGRPLUS_MSG_DEACTIVATION', $ext_count_success, $ext_count_enabled),
-					/* 2 */	$this->language->lang('EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED', $safe_time_limit, ini_get('max_execution_time')),
-					/* 3 */	$this->extmgr_back_link()
-				)
-				, E_USER_WARNING
-			);
+			$msg_failed = '<br><br><strong>' . $this->language->lang('EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED', $safe_time_limit, ini_get('max_execution_time')) . '</strong>';
 		}
-		else
-		{
-			trigger_error(sprintf('%1$s<br><br>%2$s',
-					/* 1 */	$this->language->lang('EXTMGRPLUS_MSG_DEACTIVATION', $ext_count_success, $ext_count_enabled),
-					/* 2 */	$this->extmgr_back_link()
-				)
-				, (($ext_count_success != $ext_count_enabled) ? E_USER_WARNING : E_USER_NOTICE)
-			);
-		}
+		trigger_error(sprintf('%1$s%2$s<br><br>%3$s',
+				/* 1 */	$this->language->lang('EXTMGRPLUS_MSG_DEACTIVATION', $ext_count_success, $ext_count_enabled),
+				/* 2 */ $msg_failed ?? '',
+				/* 3 */	$this->extmgr_back_link()
+			)
+			, (($ext_count_success != $ext_count_enabled || $safe_time_exceeded) ? E_USER_WARNING : E_USER_NOTICE)
+		);
 	}
 
 	private function exts_enable(): void
@@ -469,13 +486,13 @@ class ext_mgr_plus
 		}
 
 		$ext_list_failed_activation = [];
-		$msg_failed = '';
-		$get_failed_msg = function ($display_name, $ext_name, $message)
+		$get_failed_msg = function ($display_name, $ext_version, $ext_name, $message)
 		{
-			return sprintf('<br><br><strong>%1$s (%2$s)</strong><br><br><em>%3$s</em>',
+			return sprintf('<br><br><strong>%1$s v%2$s (%3$s)</strong><br><br><em>%4$s</em>',
 				/* 1 */	$display_name,
-				/* 2 */	$ext_name,
-				/* 3 */	$message
+				/* 2 */	$ext_version,
+				/* 3 */	$ext_name,
+				/* 4 */	$message
 			);
 		};
 
@@ -496,8 +513,10 @@ class ext_mgr_plus
 
 		foreach ($ext_list_disabled as $ext_name => $value)
 		{
-			$ext_display_name = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('display-name');
-			$this->set_last_ext_template_vars('EXTMGRPLUS_ALL_ENABLE', $ext_name, $ext_display_name);
+			$ext_meta = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
+			$ext_display_name = $ext_meta['extra']['display-name'] ?? '';
+			$ext_version = $ext_meta['version'] ?? '';
+			$this->set_last_ext_template_vars('EXTMGRPLUS_ALL_ENABLE', $ext_name, $ext_display_name, $ext_version);
 
 			$is_enableable = $this->ext_manager->get_extension($ext_name)->is_enableable();
 			if ($this->ext_manager->is_disabled($ext_name) && $is_enableable === true)
@@ -510,7 +529,7 @@ class ext_mgr_plus
 				}
 				catch (\phpbb\db\migration\exception $e)
 				{
-					$msg_failed = $get_failed_msg($ext_display_name, $ext_name, $e->getLocalisedMessage($this->user));
+					$msg_failed = $get_failed_msg($ext_display_name, $ext_version, $ext_name, $e->getLocalisedMessage($this->user));
 					trigger_error($this->language->lang('EXTMGRPLUS_MSG_PROCESS_ABORTED', $this->language->lang('EXTMGRPLUS_ALL_ENABLE')) . $msg_failed . '<br><br>' . $this->extmgr_back_link()
 						, E_USER_WARNING
 					);
@@ -525,6 +544,7 @@ class ext_mgr_plus
 			{
 				$ext_list_failed_activation[$ext_name] = [
 					'display_name'	=> $ext_display_name,
+					'ext_version'	=> $ext_version,
 					'message'		=> (empty($is_enableable) ? $this->language->lang('EXTENSION_NOT_ENABLEABLE') : $is_enableable),
 				];
 			}
@@ -545,7 +565,13 @@ class ext_mgr_plus
 			}
 		}
 
-		if (count($ext_list_failed_activation))
+		$this->set_last_ext_template_vars('');
+
+		if ($safe_time_exceeded)
+		{
+			$msg_failed = '<br><br><strong>' . $this->language->lang('EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED', $safe_time_limit, ini_get('max_execution_time')) . '</strong>';
+		}
+		else if (count($ext_list_failed_activation))
 		{
 			$msg_failed = '<br><br>' . $this->language->lang('EXTMGRPLUS_MSG_ACTIVATION_FAILED');
 			foreach ($ext_list_failed_activation as $name => $vars)
@@ -554,41 +580,27 @@ class ext_mgr_plus
 				{
 					$vars['message'] = implode('<br>', $vars['message']);
 				}
-				$msg_failed .= $get_failed_msg($vars['display_name'], $name, $vars['message']);
+				$msg_failed .= $get_failed_msg($vars['display_name'], $vars['ext_version'], $name, $vars['message']);
 			}
 		}
 
-		$this->set_last_ext_template_vars('', '', '');
-
-		if ($safe_time_exceeded)
-		{
-			trigger_error(sprintf('%1$s<br><br><strong>%2$s</strong><br><br>%3$s',
-					/* 1 */	$this->language->lang('EXTMGRPLUS_MSG_ACTIVATION', $ext_count_success, $ext_count_disabled),
-					/* 2 */	$this->language->lang('EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED', $safe_time_limit, ini_get('max_execution_time')),
-					/* 3 */	$this->extmgr_back_link()
-				)
-				, E_USER_WARNING
-			);
-		}
-		else
-		{
-			trigger_error(sprintf('%1$s%2$s<br><br>%3$s',
-					/* 1 */	$this->language->lang('EXTMGRPLUS_MSG_ACTIVATION', $ext_count_success, $ext_count_disabled),
-					/* 2 */ $msg_failed,
-					/* 3 */	$this->extmgr_back_link()
-				)
-				, (($ext_count_success != $ext_count_disabled) ? E_USER_WARNING : E_USER_NOTICE)
-			);
-		}
+		trigger_error(sprintf('%1$s%2$s<br><br>%3$s',
+				/* 1 */	$this->language->lang('EXTMGRPLUS_MSG_ACTIVATION', $ext_count_success, $ext_count_disabled),
+				/* 2 */ $msg_failed ?? '',
+				/* 3 */	$this->extmgr_back_link()
+			)
+			, (($ext_count_success != $ext_count_disabled || $safe_time_exceeded) ? E_USER_WARNING : E_USER_NOTICE)
+		);
 	}
 
 	// Store information about the current process in template variables
-	private function set_last_ext_template_vars(string $action, string $ext_name, string $ext_display_name): void
+	private function set_last_ext_template_vars(string $action, string $ext_name = '', string $ext_display_name = '', string $ext_version = ''): void
 	{
 		$this->template->assign_vars([
 			'EXTMGRPLUS_LAST_EMP_ACTION'		=> $action,
-			'EXTMGRPLUS_LAST_EXT_NAME'			=> $ext_name,
-			'EXTMGRPLUS_LAST_EXT_DISPLAY_NAME'	=> $ext_display_name,
+			'EXTMGRPLUS_LAST_EXT_NAME'			=> $action !== '' ? $ext_name : '',
+			'EXTMGRPLUS_LAST_EXT_DISPLAY_NAME'	=> $action !== '' ? $ext_display_name : '',
+			'EXTMGRPLUS_LAST_EXT_VERSION'		=> $action !== '' ? $ext_version : '',
 		]);
 	}
 
@@ -596,14 +608,16 @@ class ext_mgr_plus
 	private function get_exts_with_new_migration(array $ext_list): array
 	{
 		$ext_with_migrations_list = [];
-
-		foreach ($ext_list as $ext_name => $ext_value)
+		if (isset($this->migrations_db))
 		{
-			$ext_path = $this->ext_manager->get_extension_path($ext_name, true);
-			$migration_files_count = $this->get_migration_files_count($ext_name, $ext_path);
-			if ($migration_files_count)
+			foreach ($ext_list as $ext_name => $ext_value)
 			{
-				$ext_with_migrations_list[$ext_name] = $migration_files_count;
+				$ext_path = $this->ext_manager->get_extension_path($ext_name, true);
+				$migration_files_count = $this->get_migration_files_count($ext_name, $ext_path);
+				if ($migration_files_count)
+				{
+					$ext_with_migrations_list[$ext_name] = $migration_files_count;
+				}
 			}
 		}
 
@@ -613,17 +627,60 @@ class ext_mgr_plus
 	// Get the number of new migration files of the specified extension
 	private function get_migration_files_count(string $ext_name, string $ext_path): int
 	{
-		$migrations = $this->ext_manager->get_finder()->extension_directory('/migrations')->find_from_extension($ext_name, $ext_path, false);
-		$migrations_classes = $this->ext_manager->get_finder()->get_classes_from_files($migrations);
+		$migrations_available = $this->ext_manager->get_finder()->extension_directory('/migrations')->find_from_extension($ext_name, $ext_path, false);
 
-		// The "migrator" class must be integrated using the container function,
-		// otherwise "Test out user's permissions" will not work if EMP is active.
-		$this->migrator = $this->phpbb_container->get('migrator');
-		$this->migrator->set_migrations($migrations_classes);
-		$migrations = $this->migrator->get_installable_migrations();
-		$this->migrator->set_migrations([]);
+		foreach ($migrations_available as $file => $ext_name)
+		{
+			if ($this->is_migration($this->phpbb_root_path . $file) === 0)
+			{
+				unset($migrations_available[$file]);
+			}
+		}
+		$migrations_classes = $this->ext_manager->get_finder()->get_classes_from_files($migrations_available);
+		$migrations_ext_db = preg_grep('/' . preg_quote(str_replace('/', '\\', $ext_name . '/migrations/')) . '/', $this->migrations_db);
+		$migrations_new = array_diff($migrations_classes, $migrations_ext_db);
 
-		return count($migrations);
+		return count($migrations_new);
+	}
+
+	// Check if file is a migration file
+	private function is_migration(string $file): int
+	{
+		if (file_exists($file))
+		{
+			$file_content = file_get_contents($file);
+			if ($file_content !== false)
+			{
+				$check_migration = (
+					(preg_match('/function\s+?(?:depends_on|effectively_installed|update_schema|update_data|revert_data)\s*?\(/', $file_content)
+					&& !preg_match('/^\s*?abstract\s+?class/m', $file_content))
+					? 1
+					: 0
+				);
+			}
+		}
+
+		return ($check_migration ?? -1);
+	}
+
+	// Load all extension migrations into an array
+	private function load_migrations_db(): void
+	{
+		$this->migrations_db = [];
+
+		$sql = "SELECT migration_name
+				FROM " . $this->table_prefix . 'migrations' . "
+				WHERE migration_name LIKE '" . $this->db->sql_escape('%\\\\migrations\\\\%') . "'";
+		$result = $this->db->sql_query($sql);
+
+		if (!$this->db->get_sql_error_triggered())
+		{
+			while ($migration = $this->db->sql_fetchrow($result))
+			{
+				$this->migrations_db[] = $migration['migration_name'];
+			}
+		}
+		$this->db->sql_freeresult($result);
 	}
 
 	// Generate a log data package
@@ -705,6 +762,7 @@ class ext_mgr_plus
 			return null;
 		}
 		$vars = json_decode($this->config_text->get($container), true);
+
 		return (($vars !== null && isset($vars[$name])) ? $vars[$name] : null);
 	}
 
@@ -751,9 +809,9 @@ class ext_mgr_plus
 
 			try
 			{
-				$meta = $md_manager->get_metadata('all');
+				$ext_meta = $md_manager->get_metadata('all');
 
-				if (isset($meta['extra']['version-check']))
+				if (isset($ext_meta['extra']['version-check']))
 				{
 					$vc_data = $this->ext_manager->version_check($md_manager, false, true);
 					if (!empty($vc_data))
@@ -797,9 +855,9 @@ class ext_mgr_plus
 			}
 			if ($this->ext_manager->is_available($ext_name))
 			{
-				$meta = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
+				$ext_meta = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
 
-				if (phpbb_version_compare($meta['version'], $ext_data['current'], '<'))
+				if (phpbb_version_compare($ext_meta['version'], $ext_data['current'], '<'))
 				{
 					$ext_list_tpl[$ext_name]  = [
 						'CURRENT' => $ext_data['current'],

@@ -1,3 +1,25 @@
+### 1.1.0
+
+#### 1.1.0-b1
+* Spalte "Neue Migrationsdateien":
+  * Die Anzahl wird jetzt auch bei nicht-installierten Erweiterungen angezeigt.
+  * Die Spalte "Neue Migrationsdateien" kann jetzt ein/ausgeschaltet werden. Standard ist ausgeschaltet.
+* Zum ermitteln der neuen Migrationsdateien wird nicht mehr die Migrator Klasse verwendet, sondern eigene Funktionen.
+* In Fehlermeldungen wird jetzt zusätzlich die Version der betreffenden Ext angezeigt.
+* Überschrift "Deaktivierte Erweiterungen":
+  * Den Zusatz "(neue Migrationen: x)" entfernt.
+* Sprachdateien:
+  * Sprachvariablen hinzugefügt für die neue Option.
+  * Eine Sprachvariable entfernt.
+  * "Migrationsdateien" durch "Migrationen" ersetzt.
+* JS:
+  * Zurücksetzen-Funktion für die neue Option angepasst.
+* Neue Migration.
+* Code Optimierung.
+* PHP Maximal-Version auf 8.2 erhöht:
+  * `composer.json` angepasst.
+  * `ext.php` angepasst.
+
 ### 1.0.8
 
 #### 1.0.8
@@ -26,11 +48,11 @@
   * Funktionen ohne Rückgabewert als `: void` deklariert.
   * Variablen umbenannt.
   * Kleine Formfehler behoben.
-* PHP Mindestversion auf 7.1 erhöht:
+* PHP Mindest-Version auf 7.1 erhöht:
   * `composer.json` angepasst.
   * `ext.php` angepasst.
 * Sprachdateien:
-  * Neue Sprachvariable hinzugefügt für die Info-Tabelle.
+  * Sprachvariable hinzugefügt für die Info-Tabelle.
   * Plural-Array für Updates entfernt.
 * CSS:
   * Toggle Farben von Recent Topics übernommen.
@@ -86,7 +108,7 @@
   * CSS für Toggles optimiert und den Slider minimal vergrössert, damit das FA Icon genug Platz hat und weniger CSS Anpassungen nötig sind.
 * Sprachdateien:
   * Sprachvariablen umbenannt.
-  * Neue Sprachvariablen hinzugefügt.
+  * Sprachvariablen hinzugefügt.
   * Kleinere Änderungen.
 
 #### 1.0.7-b3
