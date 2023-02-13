@@ -99,7 +99,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_COL_IGNORE'							=> 'Ignore',
 
 	// misc
-	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'				=> 'Order/Ignore',
+	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'				=> 'Order & Ignore',
 	'EXTMGRPLUS_EXTENSION_PLURAL' => [
 													0 => '0 extensions',
 													1 => '1 extension',

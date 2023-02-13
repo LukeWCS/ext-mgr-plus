@@ -1,5 +1,15 @@
 ### 1.1.0
 
+#### 1.1.0-b2
+* Code Optimierung:
+  * Anzahl MySQL Abfragen reduziert: Mehrere Funktionen und deren Aufrufe so geändert, dass Zugriffe auf `config_text` minimiert wurden.
+  * Anzahl Dateizugriffe reduziert: Die Prüfung ob eine Migrationsdatei tatsächlich eine Migration ist, findet nur noch bei Migrationen statt, die noch nicht in der DB registriert sind.
+  * Kleine Verbesserungen.
+* Sprachdateien:
+  * "Reihenfolge/Ignorieren" zu "Reihenfolge & Ignorieren" geändert.
+* ACP-Template:
+  * Formale Fehler behoben.
+
 #### 1.1.0-b1
 * Spalte "Neue Migrationsdateien":
   * Die Anzahl wird jetzt auch bei nicht-installierten Erweiterungen angezeigt.

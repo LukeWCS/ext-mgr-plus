@@ -7,14 +7,15 @@ GH (2023-02-)
 * Einstellungen:
   * Neue Experten-Option "Spalte mit neuen Migrationsdateien anzeigen". Per Standard ist diese Option deaktiviert.
 * In allen Fehlermeldungen die beim Deaktivieren oder Aktivieren auftreten können, wird jetzt auch die Version der betroffenen Erweiterungen angezeigt.
-* Bisher wurde zum Ermitteln neuer Migrationsdateien die Migrator Klasse verwendet, diese hat jedoch 2 Nachteile:
-  * Die reguläre Integration mittels `services.yml` ist nicht möglich, da die Funktion "Berechtigungen des Benutzers testen" dann zu einem Fatal führt.
-  * Die Klassen aller ermittelten Migrationsdateien wurden dauerhaft geladen und zum Programm Kontext hinzugefügt, wodurch unnötig Speicher belegt wurde.
-
-  Statt der Migrator Klasse werden jetzt eigene Funktionen verwendet:
-  * Für den Abgleich der lokalen Migration mit der Datenbank.
+* Bisher wurde zum Ermitteln neuer Migrationsdateien die Migrator Klasse von phpBB verwendet, diese wurde entfernt da sie 3 Nachteile hat:
+  * Die Klassen aller ermittelten Migrationsdateien werden dauerhaft zur Laufzeit geladen (inkludiert) und zum Programm Kontext hinzugefügt, wodurch unnötig Speicher belegt wird.
+  * Erhöhtes Fehlerpotential, da beim Inkludieren eine defekte Migration zu einem Absturz (Fatal) von phpBB und damit von EMP führen können.
+* Um die oben genannten Probleme zu beheben, wurden jetzt eigene Funktionen für die Handhabung der Migrationsdateien implementiert:
   * Für die Prüfung ob eine Migrationsdatei tatsächlich eine Migration ist.
+  * Für den Abgleich der Migrationen mit der Datenbank.
 * Code Optimierung.
+  * Anzahl MySQL Abfragen reduziert: Mehrere Funktionen und deren Aufrufe so geändert, dass Zugriffe auf `config_text` minimiert wurden.
+  * Kleine Verbesserungen.
 * PHP Maximal-Version auf 8.2 erhöht.
 
 ### 1.0.8

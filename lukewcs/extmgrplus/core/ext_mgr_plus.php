@@ -180,15 +180,11 @@ class ext_mgr_plus
 			return;
 		}
 
-		$ext_list_versioncheck = [];
 		if ($this->request->variable('versioncheck_force', false))
 		{
 			$this->versioncheck_save();
 		}
-		if ($this->config_text->get('extmgrplus_version_check') != '')
-		{
-			$ext_list_versioncheck = $this->versioncheck_list();
-		}
+		$ext_list_versioncheck = $this->versioncheck_list();
 
 		$event['tpl_name'] = '@lukewcs_extmgrplus/acp_ext_mgr_plus_acp_ext_list';
 
@@ -214,8 +210,9 @@ class ext_mgr_plus
 
 		if ($this->config['extmgrplus_enable_order_and_ignore'])
 		{
-			$ext_list_ignore = $this->config_text_get('extmgrplus_order_and_ignore_list', 'ignore');
-			$ext_list_order = $this->config_text_get('extmgrplus_order_and_ignore_list', 'order');
+			$config_text = $this->config_text_get('extmgrplus_order_and_ignore_list');
+			$ext_list_ignore = $config_text['ignore'] ?? null;
+			$ext_list_order = $config_text['order'] ?? null;
 		}
 		if (!isset($ext_list_order) || !is_array($ext_list_order))
 		{
@@ -236,7 +233,7 @@ class ext_mgr_plus
 
 		if (!$this->config['extmgrplus_enable_self_disable'])
 		{
-			$ext_list_enabled_and_ignored['lukewcs/extmgrplus'] = '-';
+			$ext_list_enabled_and_ignored['lukewcs/extmgrplus'] = 0;
 		}
 		if (!$this->config['extmgrplus_enable_migrations'])
 		{
@@ -610,9 +607,8 @@ class ext_mgr_plus
 		$ext_with_migrations_list = [];
 		if (isset($this->migrations_db))
 		{
-			foreach ($ext_list as $ext_name => $ext_value)
+			foreach ($ext_list as $ext_name => $ext_path)
 			{
-				$ext_path = $this->ext_manager->get_extension_path($ext_name, true);
 				$migration_files_count = $this->get_migration_files_count($ext_name, $ext_path);
 				if ($migration_files_count)
 				{
@@ -628,19 +624,20 @@ class ext_mgr_plus
 	private function get_migration_files_count(string $ext_name, string $ext_path): int
 	{
 		$migrations_available = $this->ext_manager->get_finder()->extension_directory('/migrations')->find_from_extension($ext_name, $ext_path, false);
+		$migration_classes = $this->ext_manager->get_finder()->get_classes_from_files($migrations_available);
+		$migration_classes_db = preg_grep('/' . preg_quote(str_replace('/', '\\', $ext_name . '/migrations/')) . '/', $this->migrations_db);
+		$migration_classes_new = array_diff($migration_classes, $migration_classes_db);
 
-		foreach ($migrations_available as $file => $ext_name)
+		$migration_files = array_keys($migrations_available);
+		foreach ($migration_classes_new as $key => $class)
 		{
-			if ($this->is_migration($this->phpbb_root_path . $file) === 0)
+			if ($this->is_migration($this->phpbb_root_path . $migration_files[$key]) === 0)
 			{
-				unset($migrations_available[$file]);
+				unset($migration_classes_new[$key]);
 			}
 		}
-		$migrations_classes = $this->ext_manager->get_finder()->get_classes_from_files($migrations_available);
-		$migrations_ext_db = preg_grep('/' . preg_quote(str_replace('/', '\\', $ext_name . '/migrations/')) . '/', $this->migrations_db);
-		$migrations_new = array_diff($migrations_classes, $migrations_ext_db);
 
-		return count($migrations_new);
+		return count($migration_classes_new);
 	}
 
 	// Check if file is a migration file
@@ -755,15 +752,16 @@ class ext_mgr_plus
 	}
 
 	// Get a variable from a config_text variable container
-	private function config_text_get($container, $name)
+	private function config_text_get($container, $name = null)
 	{
-		if ($this->config_text->get($container) === null)
+		$config_text = $this->config_text->get($container);
+		if ($config_text === null)
 		{
 			return null;
 		}
-		$vars = json_decode($this->config_text->get($container), true);
+		$vars = json_decode($config_text, true);
 
-		return (($vars !== null && isset($vars[$name])) ? $vars[$name] : null);
+		return (($vars !== null && isset($vars[$name])) ? $vars[$name] : $vars);
 	}
 
 	// Generates a back link to the extension manager page
@@ -844,6 +842,10 @@ class ext_mgr_plus
 	private function versioncheck_list(): array
 	{
 		$ext_list_db = $this->config_text_get('extmgrplus_version_check', 'updates');
+		if ($ext_list_db === null)
+		{
+			return [];
+		}
 		$ext_list_db_update = false;
 		$ext_list_tpl = [];
 
