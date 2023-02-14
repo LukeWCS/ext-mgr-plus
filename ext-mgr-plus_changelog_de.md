@@ -7,15 +7,19 @@ GH (2023-02-)
 * Einstellungen:
   * Neue Experten-Option "Spalte mit neuen Migrationsdateien anzeigen". Per Standard ist diese Option deaktiviert.
 * In allen Fehlermeldungen die beim Deaktivieren oder Aktivieren auftreten können, wird jetzt auch die Version der betroffenen Erweiterungen angezeigt.
-* Bisher wurde zum Ermitteln neuer Migrationsdateien die Migrator Klasse von phpBB verwendet, diese wurde entfernt da sie 3 Nachteile hat:
+* Bisher wurde zum Ermitteln neuer Migrationsdateien die Migrator Klasse von phpBB verwendet, diese wurde entfernt da sie mehrere Nachteile hat:
   * Die Klassen aller ermittelten Migrationsdateien werden dauerhaft zur Laufzeit geladen (inkludiert) und zum Programm Kontext hinzugefügt, wodurch unnötig Speicher belegt wird.
-  * Erhöhtes Fehlerpotential, da beim Inkludieren eine defekte Migration zu einem Absturz (Fatal) von phpBB und damit von EMP führen können.
-* Um die oben genannten Probleme zu beheben, wurden jetzt eigene Funktionen für die Handhabung der Migrationsdateien implementiert:
-  * Für die Prüfung ob eine Migrationsdatei tatsächlich eine Migration ist.
+  * Erhöhtes Fehlerpotential, da beim Inkludieren eine defekte Migration zu einem Absturz (Fatal) von phpBB und damit von EMP führen kann.
+* Um die oben genannten Probleme zu beheben, wurden eigene Funktionen für die Handhabung von Migrationsdateien implementiert:
   * Für den Abgleich der Migrationen mit der Datenbank.
+  * Für die Prüfung ob eine Migrationsdatei tatsächlich eine Migration ist.
+* Text Änderungen:
+  * "Migrationsdateien" durch "Migrationen" ersetzt.
+  * "Reihenfolge/Ignorieren" zu "Reihenfolge & Ignorieren" geändert.
 * Code Optimierung.
-  * Anzahl MySQL Abfragen reduziert: Mehrere Funktionen und deren Aufrufe so geändert, dass Zugriffe auf `config_text` minimiert wurden.
-  * Kleine Verbesserungen.
+  * Anzahl MySQL Abfragen reduziert; Mehrere Funktionen und deren Aufrufe so geändert, dass Zugriffe auf `config_text` minimiert wurden.
+  * Mehrere Funktionsaufrufe reduziert.
+  * Kleinere Verbesserungen.
 * PHP Maximal-Version auf 8.2 erhöht.
 
 ### 1.0.8

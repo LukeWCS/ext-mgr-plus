@@ -1,5 +1,12 @@
 ### 1.1.0
 
+#### 1.1.0-b4
+* Bei der Rückfrage wird jetzt ebenfalls der EMP Footer eingefügt.
+  * Footer in ein extra Template ausgelagert.
+* Code Optimierung:
+  * Code bei Migration 1.0.3 optimiert, wodurch 4 unnötige Funktionsaufrufe entfielen.
+  * Weitere Funktionsaufrufe im Core minimiert.
+
 #### 1.1.0-b3
 * Fix: Durch einen Fehler in 1.1.0-b2 hatten die Aktionen "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" auch immer eine Selbstdeaktivierung von EMP zur Folge, wenn dabei auch eine beliebige ToDo Funktion (`purge_cache`, `add_log`) ausgeführt wurde.
 

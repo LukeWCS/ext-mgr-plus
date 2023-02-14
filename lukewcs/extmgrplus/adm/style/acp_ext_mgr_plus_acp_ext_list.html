@@ -413,10 +413,7 @@
 		</tbody>
 	</table>
 
-	<p class="extmgrplus_footer">
-		{{ EXTMGRPLUS_EXT_NAME }} v{{ EXTMGRPLUS_EXT_VER }} &copy; LukeWCS<br>
-		{{ lang('EXTMGRPLUS_LANG_DESC')|e('html') }} v{{ lang('EXTMGRPLUS_LANG_EXT_VER')|e('html') }} &bull; {{ lang('EXTMGRPLUS_LANG_AUTHOR')|e('html') }}
-	</p>
+{% INCLUDE '@lukewcs_extmgrplus/acp_ext_mgr_plus_footer.html' %}
 
 <script>
 	var ExtMgrPlus = {

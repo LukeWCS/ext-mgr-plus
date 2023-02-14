@@ -29,14 +29,10 @@ class v_1_0_3 extends \phpbb\db\migration\container_aware_migration
 		$this->config_text = $this->container->get('config_text');
 		$list_db = json_decode($this->config_text->get('extmgrplus_order_and_ignore_list'), true);
 
-		if ($list_db !== null && isset($list_db['tech_names']))
+		if (isset($list_db['tech_names']))
 		{
-			$list_order = array_filter($list_db['tech_names'], function($value) {
-				return preg_match('/^[0-9]{1,2}$/', $value);
-			});
-			$list_ignore = array_filter($list_db['tech_names'], function($value) {
-				return preg_match('/^-$/', $value);
-			});
+			$list_order = preg_grep('/^[0-9]{1,2}$/', $list_db['tech_names']);
+			$list_ignore = preg_grep('/^-$/', $list_db['tech_names']);
 			$list = [];
 			if (count($list_order))
 			{
