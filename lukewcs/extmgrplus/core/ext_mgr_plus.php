@@ -761,7 +761,14 @@ class ext_mgr_plus
 		}
 		$vars = json_decode($config_text, true);
 
-		return (($vars !== null && isset($vars[$name])) ? $vars[$name] : $vars);
+		if ($name !== null)
+		{
+			return ($vars[$name] ?? null);
+		}
+		else
+		{
+			return ($vars ?? null);
+		}
 	}
 
 	// Generates a back link to the extension manager page

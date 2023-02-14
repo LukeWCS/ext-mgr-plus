@@ -1,5 +1,8 @@
 ### 1.1.0
 
+#### 1.1.0-b3
+* Fix: Durch einen Fehler in 1.1.0-b2 hatten die Aktionen "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" auch immer eine Selbstdeaktivierung von EMP zur Folge, wenn dabei auch eine beliebige ToDo Funktion (`purge_cache`, `add_log`) ausgeführt wurde.
+
 #### 1.1.0-b2
 * Code Optimierung:
   * Anzahl MySQL Abfragen reduziert: Mehrere Funktionen und deren Aufrufe so geändert, dass Zugriffe auf `config_text` minimiert wurden.
