@@ -1,25 +1,25 @@
 ### 1.1.0
 GH (2023-02-)
 
-* Erweiterungen-Liste:
-  * Es werden jetzt auch bei den nicht-installierten Erweiterungen die Anzahl neuer Migrationsdateien angezeigt.
-  * In der Überschrift "Deaktivierte Erweiterungen" wurde der Zusatz "(neue Migrationen: x)" entfernt.
 * Einstellungen:
-  * Neue Experten-Option "Spalte mit neuen Migrationsdateien anzeigen". Per Standard ist diese Option deaktiviert.
-* In allen Fehlermeldungen die beim Deaktivieren oder Aktivieren auftreten können, wird jetzt auch die Version der betroffenen Erweiterungen angezeigt.
-* Bisher wurde zum Ermitteln neuer Migrationsdateien die Migrator Klasse von phpBB verwendet, diese wurde entfernt da sie mehrere Nachteile hat:
-  * Die Klassen aller ermittelten Migrationsdateien werden dauerhaft zur Laufzeit geladen (inkludiert) und zum Programm Kontext hinzugefügt, wodurch unnötig Speicher belegt wird.
+  * Die Anzahl neuer Migrationsdateien wird nicht mehr per Standard angezeigt, sondern ist an die neue Experten-Option "Spalte mit neuen Migrationsdateien anzeigen" gekoppelt. Per Standard ist diese Option deaktiviert.
+* Erweiterungen-Liste:
+  * Es wird jetzt auch bei den nicht-installierten Erweiterungen die Anzahl neuer Migrationsdateien angezeigt.
+  * In der Überschrift "Deaktivierte Erweiterungen" wurde der Zusatz "(neue Migrationen: x)" entfernt.
+* In allen Fehlermeldungen die beim Deaktivieren oder Aktivieren auftreten können, wird jetzt auch die Version der betroffen Erweiterung angezeigt.
+* Bisher wurde zum Ermitteln neuer Migrationsdateien die Migrator Klasse von phpBB verwendet. Diese wurde entfernt, da sie mehrere Nachteile hat:
+  * Die Klassen aller ermittelten Migrationsdateien werden dauerhaft zur Laufzeit geladen (inkludiert) und zum Programm-Kontext hinzugefügt, wodurch unnötig Speicher belegt wird.
   * Erhöhtes Fehlerpotential, da beim Inkludieren eine defekte Migration zu einem Absturz (Fatal) von phpBB und damit von EMP führen kann.
 * Um die oben genannten Probleme zu beheben, wurden eigene Funktionen für die Handhabung von Migrationsdateien implementiert:
   * Für den Abgleich der Migrationen mit der Datenbank.
   * Für die Prüfung ob eine Migrationsdatei tatsächlich eine Migration ist.
+* Code Optimierung.
+  * Anzahl der MySQL Abfragen reduziert; Mehrere Funktionen und deren Aufrufe so geändert, dass Zugriffe auf `config_text` minimiert werden.
+  * Etliche Funktionsaufrufe reduziert, unter anderem durch Verwendung alternativer Funktionen.
+  * Weitere kleine Verbesserungen.
 * Text Änderungen:
   * "Migrationsdateien" durch "Migrationen" ersetzt.
   * "Reihenfolge/Ignorieren" zu "Reihenfolge & Ignorieren" geändert.
-* Code Optimierung.
-  * Anzahl MySQL Abfragen reduziert; Mehrere Funktionen und deren Aufrufe so geändert, dass Zugriffe auf `config_text` minimiert wurden.
-  * Mehrere Funktionsaufrufe reduziert.
-  * Kleinere Verbesserungen.
 * PHP Maximal-Version auf 8.2 erhöht.
 
 ### 1.0.8

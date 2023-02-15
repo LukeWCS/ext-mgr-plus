@@ -2,252 +2,321 @@
 
 <a id="maincontent"></a>
 
-	<h1>{{ lang('EXTENSIONS_ADMIN') }}</h1>
+<h1>{{ lang('EXTENSIONS_ADMIN') }}</h1>
 
-	<p>{{ lang('EXTENSIONS_EXPLAIN') }}</p>
+<p>{{ lang('EXTENSIONS_EXPLAIN') }}</p>
 
-	{% if EXTMGRPLUS_NOTES|length %}
-		<div class="errorbox notice">
-			{% for note in EXTMGRPLUS_NOTES %}
-				<p>{{ note }}</p>
-			{% endfor %}
-		</div>
-	{% endif %}
+{% if EXTMGRPLUS_NOTES|length %}
+	<div class="errorbox notice">
+		{% for note in EXTMGRPLUS_NOTES %}
+			<p>{{ note }}</p>
+		{% endfor %}
+	</div>
+{% endif %}
+
+<table class="table1">
+	<col class="row2a"><col class="row2a"><col class="row2a">
+	<thead>
+		<tr>
+			<th>
+				{{ lang('EXTMGRPLUS_AVAILABLE_EXTENSIONS') }}
+			</th>
+			<th>
+				{{ lang('EXTMGRPLUS_LAST_VERSIONCHECK') }}
+			</th>
+			<th>
+				{{ lang('EXTMGRPLUS_AVAILABLE_UPDATES') }}
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<strong>{{ EXTMGRPLUS_COUNT_AVAILABLE }}</strong>
+			</td>
+			<td>
+				<strong>{{ EXTMGRPLUS_EXT_VERSIONCHECK.data.LOCAL_DATE ?? '-' }}</strong>
+			</td>
+			<td>
+				<strong>{{ EXTMGRPLUS_EXT_VERSIONCHECK.data.COUNT ?? '0' }}</strong>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<fieldset class="quick">
+	<span class="small">
+		<a href="https://www.phpbb.com/go/customise/extensions/{{ CDB_EXT_VER }}" target="_blank">{{ lang('BROWSE_EXTENSIONS_DATABASE') }}</a>
+		&bull; <a href="{{ U_VERSIONCHECK_FORCE }}">{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</a>
+		&bull; <a href="javascript:ExtMgrPlus.ShowHideSettings();">{{ lang('SETTINGS') }}</a>
+		{% if EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE -%}
+			&bull; <a href="javascript:ExtMgrPlus.ShowHideOrderIgnore();">{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</a>
+		{%- else -%}
+			<span class="disabled">&bull; {{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</span>
+		{%- endif ~%}
+	</span>
+</fieldset>
+
+<form class="extmgrplus_settings" id="version_check_settings" method="post" action="{{ U_ACTION }}" style="display: none;">
+	<fieldset>
+		<legend>{{ lang('EXTENSIONS_VERSION_CHECK_SETTINGS') }}</legend>
+
+		<dl>
+			<dt>
+				<label>{{ lang('FORCE_UNSTABLE') ~ lang('COLON') }}</label>
+			</dt>
+			<dd>
+				{{ _self.switch('force_unstable', FORCE_UNSTABLE) }}
+			</dd>
+		</dl>
+
+		<legend class="legend_sub">{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
+
+		<p class="submit-buttons">
+			<input class="button1" type="submit" name="update" value="{{ lang('SUBMIT') }}">&nbsp;
+			<input class="button2" type="reset" name="reset" value="{{ lang('RESET') }}">
+
+			<input type="hidden" name="action" value="set_config_version_check_force_unstable">
+		</p>
+	</fieldset>
+	{{ S_FORM_TOKEN }}
+</form>
+
+<form class="extmgrplus_settings" method="post" action="{{ U_ACTION }}" style="display: none;">
+	<fieldset>
+		<legend>{{ lang('EXTMGRPLUS_SECTION_SETTINGS') }}</legend>
+
+		<dl>
+			<dt>
+				<label>{{ lang('EXTMGRPLUS_LOG') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('EXTMGRPLUS_LOG_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				{{ _self.switch('extmgrplus_enable_log', EXTMGRPLUS_ENABLE_LOG) }}
+			</dd>
+		</dl>
+
+		<dl>
+			<dt>
+				<label>{{ lang('EXTMGRPLUS_CONFIRMATION') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('EXTMGRPLUS_CONFIRMATION_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				{{ _self.switch('extmgrplus_enable_confirmation', EXTMGRPLUS_ENABLE_CONFIRMATION) }}
+			</dd>
+		</dl>
+
+		<dl>
+			<dt>
+				<label>{{ lang('EXTMGRPLUS_CHECKBOXES_ALL_SET') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('EXTMGRPLUS_CHECKBOXES_ALL_SET_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				{{ _self.switch('extmgrplus_enable_checkboxes_all_set', EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET) }}
+			</dd>
+		</dl>
+
+		<dl>
+			<dt>
+				<label>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				{{ _self.switch('extmgrplus_enable_order_and_ignore', EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE) }}
+			</dd>
+		</dl>
+
+		<dl>
+			<dt>
+				<label>{{ lang('EXTMGRPLUS_SELF_DISABLE') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('EXTMGRPLUS_SELF_DISABLE_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				{{ _self.switch('extmgrplus_enable_self_disable', EXTMGRPLUS_ENABLE_SELF_DISABLE) }}
+			</dd>
+		</dl>
+
+		<legend class="legend_sub">{{ lang('EXTMGRPLUS_SECTION_EXPERT_SETTINGS') }}</legend>
+
+		<dl>
+			<dt>
+				<label>{{ lang('EXTMGRPLUS_MIGRATION_COL') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('EXTMGRPLUS_MIGRATION_COL_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				{{ _self.switch('extmgrplus_enable_migration_col', EXTMGRPLUS_ENABLE_MIGRATION_COL) }}
+			</dd>
+		</dl>
+
+		<dl>
+			<dt>
+				<label>{{ lang('EXTMGRPLUS_MIGRATIONS') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('EXTMGRPLUS_MIGRATIONS_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				{{ _self.switch('extmgrplus_enable_migrations', EXTMGRPLUS_ENABLE_MIGRATIONS) }}
+			</dd>
+		</dl>
+
+		<legend class="legend_sub">{{ lang('EXTMGRPLUS_SECTION_RESET') }}</legend>
+
+		<dl>
+			<dt>
+				<label>{{ lang('EXTMGRPLUS_DEFAULTS') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('EXTMGRPLUS_DEFAULTS_EXP') }}</span>
+			</dt>
+			<dd>
+				<input class="button2" type="button" name="extmgrplus_defaults" value="{{ lang('EXTMGRPLUS_BUTTON_DEFAULTS') }}">
+			</dd>
+		</dl>
+
+		<legend class="legend_sub">{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
+
+		<p class="submit-buttons">
+			<input class="button1" type="submit" name="extmgrplus_save_settings" value="{{ lang('SUBMIT') }}">&nbsp;
+			<input class="button2" type="reset" name="reset" value="{{ lang('RESET') }}">
+		</p>
+	</fieldset>
+	{{ S_FORM_TOKEN }}
+</form>
+
+<form id="extmgrplus_list" method="post" action="{{ U_ACTION }}">
+	<fieldset id="extmgrplus_order_and_ignore" style="display: none;">
+		<legend>{{ lang('EXTMGRPLUS_SECTION_SETTINGS') }}</legend>
+
+		<dl>
+			<dt>
+				<label>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE') ~ lang('COLON') }}</label><br>
+				{{ _self.icon('fa-sort') }}<span>{{ lang('EXTMGRPLUS_ORDER_EXPLAIN') }}</span>
+				<br><br>
+				{{ _self.icon('fa-ban') }}<span>{{ lang('EXTMGRPLUS_IGNORE_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+			</dd>
+		</dl>
+
+		<legend class="legend_sub">{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
+
+		<p class="submit-buttons">
+			<input class="button1" type="submit" name="extmgrplus_save_order_and_ignore" value="{{ lang('SUBMIT') }}">&nbsp;
+		</p>
+	</fieldset>
 
 	<table class="table1">
-		<col class="row2a"><col class="row2a"><col class="row2a">
+		<col class="row1"><col class="row1"><col class="row1"><col class="row1"><col class="row2"><col class="row2"><col class="row2"><col class="row2">
 		<thead>
 			<tr>
 				<th>
-					{{ lang('EXTMGRPLUS_AVAILABLE_EXTENSIONS') }}
+					<span class="extmgrplus_non_responsive">{{ lang('EXTENSION_NAME') }}</span>
 				</th>
 				<th>
-					{{ lang('EXTMGRPLUS_LAST_VERSIONCHECK') }}
+					{{ lang('CURRENT_VERSION') }}
+				</th>
+				<th{{ !EXTMGRPLUS_ENABLE_MIGRATION_COL ? ' style="display: none;"' }} title="{{ lang('EXTMGRPLUS_COL_MIGRATION_FILES') }}">
+					{{ _self.icon('fa-arrow-up') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_MIGRATION_FILES') }}</span>
 				</th>
 				<th>
-					{{ lang('EXTMGRPLUS_AVAILABLE_UPDATES') }}
+					{{ lang('EXTENSION_OPTIONS') }}
+				</th>
+				<th>
+					{{ lang('EXTENSION_ACTIONS') }}
+				</th>
+				<th title="{{ lang('EXTMGRPLUS_COL_SELECT') }}">
+					{{ _self.icon('fa-check') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_SELECT') }}</span>
+				</th>
+				<th style="display: none;" title="{{ lang('EXTMGRPLUS_COL_ORDER') }}">
+					{{ _self.icon('fa-sort') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_ORDER') }}</span>
+				</th>
+				<th style="display: none;" title="{{ lang('EXTMGRPLUS_COL_IGNORE') }}">
+					{{ _self.icon('fa-ban') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_IGNORE') }}</span>
 				</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>
-					<strong>{{ EXTMGRPLUS_COUNT_AVAILABLE }}</strong>
-				</td>
-				<td>
-					<strong>{{ EXTMGRPLUS_EXT_VERSIONCHECK.data.LOCAL_DATE ?? '-' }}</strong>
-				</td>
-				<td>
-					<strong>{{ EXTMGRPLUS_EXT_VERSIONCHECK.data.COUNT ?? '0' }}</strong>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-
-	<fieldset class="quick">
-		<span class="small">
-			<a href="https://www.phpbb.com/go/customise/extensions/{{ CDB_EXT_VER }}" target="_blank">{{ lang('BROWSE_EXTENSIONS_DATABASE') }}</a>
-			&bull; <a href="{{ U_VERSIONCHECK_FORCE }}">{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</a>
-			&bull; <a href="javascript:ExtMgrPlus.ShowHideSettings();">{{ lang('SETTINGS') }}</a>
-			{% if EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE -%}
-				&bull; <a href="javascript:ExtMgrPlus.ShowHideOrderIgnore();">{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</a>
-			{%- else -%}
-				<span class="disabled">&bull; {{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</span>
-			{%- endif ~%}
-		</span>
-	</fieldset>
-
-	<form class="extmgrplus_settings" id="version_check_settings" method="post" action="{{ U_ACTION }}" style="display: none;">
-		<fieldset>
-			<legend>{{ lang('EXTENSIONS_VERSION_CHECK_SETTINGS') }}</legend>
-
-			<dl>
-				<dt>
-					<label>{{ lang('FORCE_UNSTABLE') ~ lang('COLON') }}</label>
-				</dt>
-				<dd>
-					{{ _self.switch('force_unstable', FORCE_UNSTABLE) }}
-				</dd>
-			</dl>
-
-			<legend class="legend_sub">{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
-
-			<p class="submit-buttons">
-				<input class="button1" type="submit" name="update" value="{{ lang('SUBMIT') }}">&nbsp;
-				<input class="button2" type="reset" name="reset" value="{{ lang('RESET') }}">
-
-				<input type="hidden" name="action" value="set_config_version_check_force_unstable">
-			</p>
-		</fieldset>
-		{{ S_FORM_TOKEN }}
-	</form>
-
-	<form class="extmgrplus_settings" method="post" action="{{ U_ACTION }}" style="display: none;">
-		<fieldset>
-			<legend>{{ lang('EXTMGRPLUS_SECTION_SETTINGS') }}</legend>
-
-			<dl>
-				<dt>
-					<label>{{ lang('EXTMGRPLUS_LOG') ~ lang('COLON') }}</label><br>
-					<span>{{ lang('EXTMGRPLUS_LOG_EXPLAIN') }}</span>
-				</dt>
-				<dd>
-					{{ _self.switch('extmgrplus_enable_log', EXTMGRPLUS_ENABLE_LOG) }}
-				</dd>
-			</dl>
-
-			<dl>
-				<dt>
-					<label>{{ lang('EXTMGRPLUS_CONFIRMATION') ~ lang('COLON') }}</label><br>
-					<span>{{ lang('EXTMGRPLUS_CONFIRMATION_EXPLAIN') }}</span>
-				</dt>
-				<dd>
-					{{ _self.switch('extmgrplus_enable_confirmation', EXTMGRPLUS_ENABLE_CONFIRMATION) }}
-				</dd>
-			</dl>
-
-			<dl>
-				<dt>
-					<label>{{ lang('EXTMGRPLUS_CHECKBOXES_ALL_SET') ~ lang('COLON') }}</label><br>
-					<span>{{ lang('EXTMGRPLUS_CHECKBOXES_ALL_SET_EXPLAIN') }}</span>
-				</dt>
-				<dd>
-					{{ _self.switch('extmgrplus_enable_checkboxes_all_set', EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET) }}
-				</dd>
-			</dl>
-
-			<dl>
-				<dt>
-					<label>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE') ~ lang('COLON') }}</label><br>
-					<span>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN') }}</span>
-				</dt>
-				<dd>
-					{{ _self.switch('extmgrplus_enable_order_and_ignore', EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE) }}
-				</dd>
-			</dl>
-
-			<dl>
-				<dt>
-					<label>{{ lang('EXTMGRPLUS_SELF_DISABLE') ~ lang('COLON') }}</label><br>
-					<span>{{ lang('EXTMGRPLUS_SELF_DISABLE_EXPLAIN') }}</span>
-				</dt>
-				<dd>
-					{{ _self.switch('extmgrplus_enable_self_disable', EXTMGRPLUS_ENABLE_SELF_DISABLE) }}
-				</dd>
-			</dl>
-
-			<legend class="legend_sub">{{ lang('EXTMGRPLUS_SECTION_EXPERT_SETTINGS') }}</legend>
-
-			<dl>
-				<dt>
-					<label>{{ lang('EXTMGRPLUS_MIGRATION_COL') ~ lang('COLON') }}</label><br>
-					<span>{{ lang('EXTMGRPLUS_MIGRATION_COL_EXPLAIN') }}</span>
-				</dt>
-				<dd>
-					{{ _self.switch('extmgrplus_enable_migration_col', EXTMGRPLUS_ENABLE_MIGRATION_COL) }}
-				</dd>
-			</dl>
-
-			<dl>
-				<dt>
-					<label>{{ lang('EXTMGRPLUS_MIGRATIONS') ~ lang('COLON') }}</label><br>
-					<span>{{ lang('EXTMGRPLUS_MIGRATIONS_EXPLAIN') }}</span>
-				</dt>
-				<dd>
-					{{ _self.switch('extmgrplus_enable_migrations', EXTMGRPLUS_ENABLE_MIGRATIONS) }}
-				</dd>
-			</dl>
-
-			<legend class="legend_sub">{{ lang('EXTMGRPLUS_SECTION_RESET') }}</legend>
-
-			<dl>
-				<dt>
-					<label>{{ lang('EXTMGRPLUS_DEFAULTS') ~ lang('COLON') }}</label><br>
-					<span>{{ lang('EXTMGRPLUS_DEFAULTS_EXP') }}</span>
-				</dt>
-				<dd>
-					<input class="button2" type="button" name="extmgrplus_defaults" value="{{ lang('EXTMGRPLUS_BUTTON_DEFAULTS') }}">
-				</dd>
-			</dl>
-
-			<legend class="legend_sub">{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
-
-			<p class="submit-buttons">
-				<input class="button1" type="submit" name="extmgrplus_save_settings" value="{{ lang('SUBMIT') }}">&nbsp;
-				<input class="button2" type="reset" name="reset" value="{{ lang('RESET') }}">
-			</p>
-		</fieldset>
-		{{ S_FORM_TOKEN }}
-	</form>
-
-	<form id="extmgrplus_list" method="post" action="{{ U_ACTION }}">
-		<fieldset id="extmgrplus_order_and_ignore" style="display: none;">
-			<legend>{{ lang('EXTMGRPLUS_SECTION_SETTINGS') }}</legend>
-
-			<dl>
-				<dt>
-					<label>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE') ~ lang('COLON') }}</label><br>
-					{{ _self.icon('fa-sort') }}<span>{{ lang('EXTMGRPLUS_ORDER_EXPLAIN') }}</span>
-					<br><br>
-					{{ _self.icon('fa-ban') }}<span>{{ lang('EXTMGRPLUS_IGNORE_EXPLAIN') }}</span>
-				</dt>
-				<dd>
-				</dd>
-			</dl>
-
-			<legend class="legend_sub">{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
-
-			<p class="submit-buttons">
-				<input class="button1" type="submit" name="extmgrplus_save_order_and_ignore" value="{{ lang('SUBMIT') }}">&nbsp;
-			</p>
-		</fieldset>
-
-		<table class="table1">
-			<col class="row1"><col class="row1"><col class="row1"><col class="row1"><col class="row2"><col class="row2"><col class="row2"><col class="row2">
-			<thead>
+			{% if loops.enabled|length %}
 				<tr>
-					<th>
-						<span class="extmgrplus_non_responsive">{{ lang('EXTENSION_NAME') }}</span>
-					</th>
-					<th>
-						{{ lang('CURRENT_VERSION') }}
-					</th>
-					<th{{ !EXTMGRPLUS_ENABLE_MIGRATION_COL ? ' style="display: none;"' }} title="{{ lang('EXTMGRPLUS_COL_MIGRATION_FILES') }}">
-						{{ _self.icon('fa-arrow-up') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_MIGRATION_FILES') }}</span>
-					</th>
-					<th>
-						{{ lang('EXTENSION_OPTIONS') }}
-					</th>
-					<th>
-						{{ lang('EXTENSION_ACTIONS') }}
-					</th>
-					<th title="{{ lang('EXTMGRPLUS_COL_SELECT') }}">
-						{{ _self.icon('fa-check') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_SELECT') }}</span>
-					</th>
-					<th style="display: none;" title="{{ lang('EXTMGRPLUS_COL_ORDER') }}">
-						{{ _self.icon('fa-sort') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_ORDER') }}</span>
-					</th>
-					<th style="display: none;" title="{{ lang('EXTMGRPLUS_COL_IGNORE') }}">
-						{{ _self.icon('fa-ban') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_IGNORE') }}</span>
-					</th>
+					<td class="row3" colspan="{{ EXTMGRPLUS_ENABLE_MIGRATION_COL ? '4' : '3' }}">
+						<strong>{{ lang('EXTENSIONS_ENABLED') ~ lang('COLON') ~ ' ' ~ EXTMGRPLUS_COUNT_ENABLED }}</strong>{% EVENT acp_ext_list_enabled_title_after %}
+					</td>
+					<td class="row3">
+						{{ _self.button(
+							'disable',
+							(EXTMGRPLUS_COUNT_ENABLED_CLEAN > 0) && EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
+						) }}
+					</td>
+					<td class="row3">
+						{{ _self.checkbox_all(
+							'enabled',
+							(EXTMGRPLUS_COUNT_ENABLED_CLEAN > 0),
+							EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
+						) }}
+					</td>
+					<td class="row3" style="display: none;">
+					</td>
+					<td class="row3" style="display: none;">
+					</td>
 				</tr>
-			</thead>
-			<tbody>
-				{% if loops.enabled|length %}
+				{% for enabled in loops.enabled %}
+					<tr class="ext_enabled row-highlight">
+						<td>
+							{{ _self.name(enabled) }}{% EVENT acp_ext_list_enabled_name_after %}
+						</td>
+						<td>
+							{{ _self.version(enabled, attribute(EXTMGRPLUS_EXT_VERSIONCHECK, enabled.NAME)) }}
+						</td>
+						<td{{ !EXTMGRPLUS_ENABLE_MIGRATION_COL ? ' style="display: none;"' }}>
+						</td>
+						<td>
+							{{ _self.details(enabled) }}
+						</td>
+						<td>
+							{{ _self.actions(enabled) }}
+						</td>
+						<td>
+							{{ _self.checkbox_select(
+								'enabled',
+								enabled,
+								(enabled.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_ENABLE_SELF_DISABLE) && (EXTMGRPLUS_IGNORE[enabled.NAME] is not defined || !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE),
+								EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
+							) }}
+						</td>
+						<td style="display: none;">
+							{% if enabled.NAME != 'lukewcs/extmgrplus' %}
+								{{ _self.inputbox(
+									enabled,
+									EXTMGRPLUS_ORDER,
+									EXTMGRPLUS_IGNORE[enabled.NAME] is defined
+								) }}
+							{% endif %}
+						</td>
+						<td style="display: none;">
+							{% if enabled.NAME != 'lukewcs/extmgrplus' %}
+								{{ _self.checkbox_ignore(
+									enabled,
+									EXTMGRPLUS_IGNORE[enabled.NAME] is defined
+								) }}
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			{% endif %}
+
+			{% if loops.disabled|length %}
+				{% if EXTMGRPLUS_COUNT_DISABLED %}
 					<tr>
 						<td class="row3" colspan="{{ EXTMGRPLUS_ENABLE_MIGRATION_COL ? '4' : '3' }}">
-							<strong>{{ lang('EXTENSIONS_ENABLED') ~ lang('COLON') ~ ' ' ~ EXTMGRPLUS_COUNT_ENABLED }}</strong>{% EVENT acp_ext_list_enabled_title_after %}
+							<strong>{{ lang('EXTENSIONS_DISABLED') ~ lang('COLON') ~ ' ' ~ EXTMGRPLUS_COUNT_DISABLED }}</strong>{% EVENT acp_ext_list_disabled_title_after %}
 						</td>
 						<td class="row3">
 							{{ _self.button(
-								'disable',
-								(EXTMGRPLUS_COUNT_ENABLED_CLEAN > 0) && EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
+								'enable',
+								(EXTMGRPLUS_COUNT_DISABLED_CLEAN > 0) && EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 							) }}
 						</td>
 						<td class="row3">
 							{{ _self.checkbox_all(
-								'enabled',
-								(EXTMGRPLUS_COUNT_ENABLED_CLEAN > 0),
+								'disabled',
+								(EXTMGRPLUS_COUNT_DISABLED_CLEAN > 0),
 								EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 							) }}
 						</td>
@@ -256,69 +325,17 @@
 						<td class="row3" style="display: none;">
 						</td>
 					</tr>
-					{% for enabled in loops.enabled %}
-						<tr class="ext_enabled row-highlight">
-							<td>
-								{{ _self.name(enabled) }}{% EVENT acp_ext_list_enabled_name_after %}
-							</td>
-							<td>
-								{{ _self.version(enabled, attribute(EXTMGRPLUS_EXT_VERSIONCHECK, enabled.NAME)) }}
-							</td>
-							<td{{ !EXTMGRPLUS_ENABLE_MIGRATION_COL ? ' style="display: none;"' }}>
-							</td>
-							<td>
-								{{ _self.details(enabled) }}
-							</td>
-							<td>
-								{{ _self.actions(enabled) }}
-							</td>
-							<td>
-								{{ _self.checkbox_select(
-									'enabled',
-									enabled,
-									(enabled.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_ENABLE_SELF_DISABLE) && (EXTMGRPLUS_IGNORE[enabled.NAME] is not defined || !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE),
-									EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
-								) }}
-							</td>
-							<td style="display: none;">
-								{% if enabled.NAME != 'lukewcs/extmgrplus' %}
-									{{ _self.inputbox(
-										enabled,
-										EXTMGRPLUS_ORDER,
-										EXTMGRPLUS_IGNORE[enabled.NAME] is defined
-									) }}
-								{% endif %}
-							</td>
-							<td style="display: none;">
-								{% if enabled.NAME != 'lukewcs/extmgrplus' %}
-									{{ _self.checkbox_ignore(
-										enabled,
-										EXTMGRPLUS_IGNORE[enabled.NAME] is defined
-									) }}
-								{% endif %}
-							</td>
-						</tr>
-					{% endfor %}
 				{% endif %}
-
-				{% if loops.disabled|length %}
-					{% if EXTMGRPLUS_COUNT_DISABLED %}
+				{% for disabled in loops.disabled %}
+					{% if disabled.actions|length == 1 && !section_not_installed %}
+						{% set section_not_installed = true %}
 						<tr>
 							<td class="row3" colspan="{{ EXTMGRPLUS_ENABLE_MIGRATION_COL ? '4' : '3' }}">
-								<strong>{{ lang('EXTENSIONS_DISABLED') ~ lang('COLON') ~ ' ' ~ EXTMGRPLUS_COUNT_DISABLED }}</strong>{% EVENT acp_ext_list_disabled_title_after %}
+								<strong>{{ lang('EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED') }}{{ lang('COLON') ~ ' ' ~ EXTMGRPLUS_COUNT_NOT_INSTALLED }}</strong>
 							</td>
 							<td class="row3">
-								{{ _self.button(
-									'enable',
-									(EXTMGRPLUS_COUNT_DISABLED_CLEAN > 0) && EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
-								) }}
 							</td>
 							<td class="row3">
-								{{ _self.checkbox_all(
-									'disabled',
-									(EXTMGRPLUS_COUNT_DISABLED_CLEAN > 0),
-									EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
-								) }}
 							</td>
 							<td class="row3" style="display: none;">
 							</td>
@@ -326,92 +343,75 @@
 							</td>
 						</tr>
 					{% endif %}
-					{% for disabled in loops.disabled %}
-						{% if disabled.actions|length == 1 && !section_not_installed %}
-							{% set section_not_installed = true %}
-							<tr>
-								<td class="row3" colspan="{{ EXTMGRPLUS_ENABLE_MIGRATION_COL ? '4' : '3' }}">
-									<strong>{{ lang('EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED') }}{{ lang('COLON') ~ ' ' ~ EXTMGRPLUS_COUNT_NOT_INSTALLED }}</strong>
-								</td>
-								<td class="row3">
-								</td>
-								<td class="row3">
-								</td>
-								<td class="row3" style="display: none;">
-								</td>
-								<td class="row3" style="display: none;">
-								</td>
-							</tr>
-						{% endif %}
-						<tr class="ext_disabled row-highlight">
-							<td>
-								{{ _self.name(disabled) }}{% EVENT acp_ext_list_disabled_name_after %}
-							</td>
-							<td>
-								{{ _self.version(disabled, attribute(EXTMGRPLUS_EXT_VERSIONCHECK, disabled.NAME)) }}
-							</td>
-							<td{{ !EXTMGRPLUS_ENABLE_MIGRATION_COL ? ' style="display: none;"' }}>
-								{{ EXTMGRPLUS_ENABLE_MIGRATION_COL ? _self.has_migration(disabled, EXTMGRPLUS_MIGRATION_EXTS) }}
-							</td>
-							<td>
-								{{ _self.details(disabled) }}
-							</td>
-							<td>
-								{{ _self.actions(disabled) }}
-							</td>
-							<td>
-								{% if disabled.actions|length == 2 %}
-									{{ _self.checkbox_select(
-										'disabled',
-										disabled,
-										(EXTMGRPLUS_MIGRATION_EXTS[disabled.NAME] is not defined || EXTMGRPLUS_ALLOW_MIGRATIONS) && (EXTMGRPLUS_IGNORE[disabled.NAME] is not defined || !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE),
-										EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
-									) }}
-								{% endif %}
-							</td>
-							<td style="display: none;">
-								{{ _self.inputbox(
+					<tr class="ext_disabled row-highlight">
+						<td>
+							{{ _self.name(disabled) }}{% EVENT acp_ext_list_disabled_name_after %}
+						</td>
+						<td>
+							{{ _self.version(disabled, attribute(EXTMGRPLUS_EXT_VERSIONCHECK, disabled.NAME)) }}
+						</td>
+						<td{{ !EXTMGRPLUS_ENABLE_MIGRATION_COL ? ' style="display: none;"' }}>
+							{{ EXTMGRPLUS_ENABLE_MIGRATION_COL ? _self.has_migration(disabled, EXTMGRPLUS_MIGRATION_EXTS) }}
+						</td>
+						<td>
+							{{ _self.details(disabled) }}
+						</td>
+						<td>
+							{{ _self.actions(disabled) }}
+						</td>
+						<td>
+							{% if disabled.actions|length == 2 %}
+								{{ _self.checkbox_select(
+									'disabled',
 									disabled,
-									EXTMGRPLUS_ORDER,
-									EXTMGRPLUS_IGNORE[disabled.NAME] is defined
+									(EXTMGRPLUS_MIGRATION_EXTS[disabled.NAME] is not defined || EXTMGRPLUS_ALLOW_MIGRATIONS) && (EXTMGRPLUS_IGNORE[disabled.NAME] is not defined || !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE),
+									EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 								) }}
-							</td>
-							<td style="display: none;">
-								{{ _self.checkbox_ignore(
-									disabled,
-									EXTMGRPLUS_IGNORE[disabled.NAME] is defined
-								) }}
-							</td>
-						</tr>
-					{% endfor %}
-				{% endif %}
-			</tbody>
-		</table>
-		{{ S_FORM_TOKEN }}
-	</form>
-
-	<table class="table1">
-		<tbody>
-			<tr>
-				<th>{{ lang('EXTENSION_INSTALL_HEADLINE') }}</th>
-			</tr>
-			<tr>
-				<td class="row3">{{ lang('EXTENSION_INSTALL_EXPLAIN') }}</td>
-			</tr>
-			<tr>
-				<th>{{ lang('EXTENSION_UPDATE_HEADLINE') }}</th>
-			</tr>
-			<tr>
-				<td class="row3">{{ lang('EXTENSION_UPDATE_EXPLAIN') }}</td>
-			</tr>
-			<tr>
-				<th>{{ lang('EXTENSION_REMOVE_HEADLINE') }}</th>
-			</tr>
-			<tr>
-				<td class="row3">{{ lang('EXTENSION_REMOVE_EXPLAIN') }}</td>
-			</tr>
+							{% endif %}
+						</td>
+						<td style="display: none;">
+							{{ _self.inputbox(
+								disabled,
+								EXTMGRPLUS_ORDER,
+								EXTMGRPLUS_IGNORE[disabled.NAME] is defined
+							) }}
+						</td>
+						<td style="display: none;">
+							{{ _self.checkbox_ignore(
+								disabled,
+								EXTMGRPLUS_IGNORE[disabled.NAME] is defined
+							) }}
+						</td>
+					</tr>
+				{% endfor %}
+			{% endif %}
 		</tbody>
 	</table>
+	{{ S_FORM_TOKEN }}
+</form>
+
+<table class="table1">
+	<tbody>
+		<tr>
+			<th>{{ lang('EXTENSION_INSTALL_HEADLINE') }}</th>
+		</tr>
+		<tr>
+			<td class="row3">{{ lang('EXTENSION_INSTALL_EXPLAIN') }}</td>
+		</tr>
+		<tr>
+			<th>{{ lang('EXTENSION_UPDATE_HEADLINE') }}</th>
+		</tr>
+		<tr>
+			<td class="row3">{{ lang('EXTENSION_UPDATE_EXPLAIN') }}</td>
+		</tr>
+		<tr>
+			<th>{{ lang('EXTENSION_REMOVE_HEADLINE') }}</th>
+		</tr>
+		<tr>
+			<td class="row3">{{ lang('EXTENSION_REMOVE_EXPLAIN') }}</td>
+		</tr>
+	</tbody>
+</table>
 
 {% INCLUDE '@lukewcs_extmgrplus/acp_ext_mgr_plus_footer.html' %}
 

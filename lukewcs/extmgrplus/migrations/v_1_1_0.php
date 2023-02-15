@@ -20,7 +20,8 @@ class v_1_1_0 extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		return [
-			['config.add', ['extmgrplus_enable_migration_col', 0]],
+			['config.add', ['extmgrplus_enable_migration_col'	, 0]],
+			['config.add', ['extmgrplus_exec_todo'				, 0]],
 		];
 	}
 }

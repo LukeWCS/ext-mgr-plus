@@ -1,5 +1,12 @@
 ### 1.1.0
 
+#### 1.1.0-b5
+* Code Optimierung:
+  * Anzahl MySQL Abfragen weiter reduziert: Zugriff auf ToDo Array (`config_text`) erfolgt nur noch dann, wenn entsprechende `config` Variable gesetzt ist.
+  * Kleine Verbesserungen.
+* Migration: Neue Config Variable `extmgrplus_exec_todo`.
+* Versionsweiche beim Cache Workaround auf 3.3.8-rc1 präzisiert.
+
 #### 1.1.0-b4
 * Bei der Rückfrage wird jetzt ebenfalls der EMP Footer eingefügt.
   * Footer in ein extra Template ausgelagert.
@@ -31,10 +38,11 @@
 * Sprachdateien:
   * Sprachvariablen hinzugefügt für die neue Option.
   * Eine Sprachvariable entfernt.
-  * "Migrationsdateien" durch "Migrationen" ersetzt.
+  * "Migrationsdateien" zu "Migrationen" geändert.
 * JS:
   * Zurücksetzen-Funktion für die neue Option angepasst.
-* Neue Migration.
+* Neue Migration 1.1.0:
+  * Neue Config Variable `extmgrplus_enable_migration_col`.
 * Code Optimierung.
 * PHP Maximal-Version auf 8.2 erhöht:
   * `composer.json` angepasst.
