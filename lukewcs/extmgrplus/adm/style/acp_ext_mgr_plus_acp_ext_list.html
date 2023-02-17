@@ -35,10 +35,10 @@
 				<strong>{{ EXTMGRPLUS_COUNT_AVAILABLE }}</strong>
 			</td>
 			<td>
-				<strong>{{ EXTMGRPLUS_EXT_VERSIONCHECK.data.LOCAL_DATE ?? '-' }}</strong>
+				<strong>{{ EXTMGRPLUS_VERSIONCHECK.data.LOCAL_DATE ?? '-' }}</strong>
 			</td>
 			<td>
-				<strong>{{ EXTMGRPLUS_EXT_VERSIONCHECK.data.COUNT ?? '0' }}</strong>
+				<strong>{{ EXTMGRPLUS_VERSIONCHECK.data.COUNT ?? '0' }}</strong>
 			</td>
 		</tr>
 	</tbody>
@@ -57,7 +57,7 @@
 	</span>
 </fieldset>
 
-<form class="extmgrplus_settings" id="version_check_settings" method="post" action="{{ U_ACTION }}" style="display: none;">
+<form class="extmgrplus_settings" method="post" action="{{ U_ACTION }}" style="display: none;">
 	<fieldset>
 		<legend>{{ lang('EXTENSIONS_VERSION_CHECK_SETTINGS') }}</legend>
 
@@ -181,17 +181,17 @@
 </form>
 
 <form id="extmgrplus_list" method="post" action="{{ U_ACTION }}">
-	<fieldset id="extmgrplus_order_and_ignore" style="display: none;">
+	<fieldset class="extmgrplus_order_and_ignore" style="display: none;">
 		<legend>{{ lang('EXTMGRPLUS_SECTION_SETTINGS') }}</legend>
 
 		<dl>
 			<dt>
-				<label>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE') ~ lang('COLON') }}</label><br>
+				<label>{{ lang('EXTMGRPLUS_ORDER') ~ lang('COLON') }}</label><br>
 				{{ _self.icon('fa-sort') }}<span>{{ lang('EXTMGRPLUS_ORDER_EXPLAIN') }}</span>
-				<br><br>
-				{{ _self.icon('fa-ban') }}<span>{{ lang('EXTMGRPLUS_IGNORE_EXPLAIN') }}</span>
 			</dt>
 			<dd>
+				<label>{{ lang('EXTMGRPLUS_IGNORE') ~ lang('COLON') }}</label><br>
+				{{ _self.icon('fa-ban') }}<span>{{ lang('EXTMGRPLUS_IGNORE_EXPLAIN') }}</span>
 			</dd>
 		</dl>
 
@@ -262,7 +262,7 @@
 							{{ _self.name(enabled) }}{% EVENT acp_ext_list_enabled_name_after %}
 						</td>
 						<td>
-							{{ _self.version(enabled, attribute(EXTMGRPLUS_EXT_VERSIONCHECK, enabled.NAME)) }}
+							{{ _self.version(enabled, attribute(EXTMGRPLUS_VERSIONCHECK, enabled.NAME)) }}
 						</td>
 						<td{{ !EXTMGRPLUS_ENABLE_MIGRATION_COL ? ' style="display: none;"' }}>
 						</td>
@@ -348,7 +348,7 @@
 							{{ _self.name(disabled) }}{% EVENT acp_ext_list_disabled_name_after %}
 						</td>
 						<td>
-							{{ _self.version(disabled, attribute(EXTMGRPLUS_EXT_VERSIONCHECK, disabled.NAME)) }}
+							{{ _self.version(disabled, attribute(EXTMGRPLUS_VERSIONCHECK, disabled.NAME)) }}
 						</td>
 						<td{{ !EXTMGRPLUS_ENABLE_MIGRATION_COL ? ' style="display: none;"' }}>
 							{{ EXTMGRPLUS_ENABLE_MIGRATION_COL ? _self.has_migration(disabled, EXTMGRPLUS_MIGRATION_EXTS) }}
@@ -364,7 +364,7 @@
 								{{ _self.checkbox_select(
 									'disabled',
 									disabled,
-									(EXTMGRPLUS_MIGRATION_EXTS[disabled.NAME] is not defined || EXTMGRPLUS_ALLOW_MIGRATIONS) && (EXTMGRPLUS_IGNORE[disabled.NAME] is not defined || !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE),
+									(EXTMGRPLUS_MIGRATION_EXTS[disabled.NAME] is not defined || EXTMGRPLUS_ENABLE_MIGRATIONS) && (EXTMGRPLUS_IGNORE[disabled.NAME] is not defined || !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE),
 									EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 								) }}
 							{% endif %}
@@ -387,6 +387,15 @@
 			{% endif %}
 		</tbody>
 	</table>
+
+	<fieldset class="extmgrplus_order_and_ignore" style="display: none;">
+		<legend>{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
+
+		<p class="submit-buttons">
+			<input class="button1" type="submit" name="extmgrplus_save_order_and_ignore" value="{{ lang('SUBMIT') }}">&nbsp;
+		</p>
+	</fieldset>
+
 	{{ S_FORM_TOKEN }}
 </form>
 

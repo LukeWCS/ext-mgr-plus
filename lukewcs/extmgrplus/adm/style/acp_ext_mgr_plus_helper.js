@@ -35,14 +35,14 @@ ExtMgrPlus.SetInputBoxState = function (e) {
 ExtMgrPlus.ShowHideSettings = function () {
 	'use strict';
 
-	var show = ($('#version_check_settings').css('display') == 'none');
+	var show = ($('.extmgrplus_settings').css('display') == 'none');
 
 	if (show) {
 		$('.extmgrplus_settings')							.show();
 	} else {
 		$('.extmgrplus_settings')							.hide();
 	}
-	$('#extmgrplus_order_and_ignore')						.hide();
+	$('.extmgrplus_order_and_ignore')						.hide();
 
 	ExtMgrPlus.ShowOrderIgnoreColumns(false);
 	ExtMgrPlus.ShowActionElements(!show);
@@ -51,12 +51,12 @@ ExtMgrPlus.ShowHideSettings = function () {
 ExtMgrPlus.ShowHideOrderIgnore = function () {
 	'use strict';
 
-	var show = ($('#extmgrplus_order_and_ignore').css('display') == 'none');
+	var show = ($('.extmgrplus_order_and_ignore').css('display') == 'none');
 
 	if (show) {
-		$('#extmgrplus_order_and_ignore')					.show();
+		$('.extmgrplus_order_and_ignore')					.show();
 	} else {
-		$('#extmgrplus_order_and_ignore')					.hide();
+		$('.extmgrplus_order_and_ignore')					.hide();
 	}
 	$('.extmgrplus_settings')								.hide();
 

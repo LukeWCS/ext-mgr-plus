@@ -1,5 +1,18 @@
 ### 1.1.0
 
+#### 1.1.0-b6
+* Core und List Template: Eine unnötige Template Variable entfernt, da hierfür bereits eine Config Template Variable existiert.
+* Die maximale PHP Laufzeit wird nicht mehr direkt aus der PHP INI geladen, sondern aus dem Event Datenpaket ermittelt.
+* Reihenfolge & Ignorieren:
+  * Die Beschreibungen von Reihenfolge und Ignorieren werden jetzt nebeneinander statt untereinander dargestellt. [Vorschlag von Kirk]
+  * Unterhalb der Erweiterungen-Liste wird jetzt ebenfalls ein Absenden-Button eingefügt. [Vorschlag von Kirk]
+* Sprachdateien:
+  * Meldungen bezüglich Überschreitung der maximalen PHP Laufzeit vereinfacht.
+  * Für "Reihenfolge & Ignorieren" 2 Variablen hinzugefügt und 2 Variablen geändert.
+* CSS:
+  * Nicht mehr benötigtes CSS entfernt.
+  * Mehrere neue Gruppen für Reihenfolge & Ignorieren hinzugefügt.
+
 #### 1.1.0-b5
 * Code Optimierung:
   * Anzahl MySQL Abfragen weiter reduziert: Zugriff auf ToDo Array (`config_text`) erfolgt nur noch dann, wenn entsprechende `config` Variable gesetzt ist.
@@ -29,7 +42,7 @@
 
 #### 1.1.0-b1
 * Spalte "Neue Migrationsdateien":
-  * Die Anzahl wird jetzt auch bei nicht-installierten Erweiterungen angezeigt.
+  * Die Anzahl wird jetzt auch bei nicht installierten Erweiterungen angezeigt.
   * Die Spalte "Neue Migrationsdateien" kann jetzt ein/ausgeschaltet werden. Standard ist ausgeschaltet.
 * Zum ermitteln der neuen Migrationsdateien wird nicht mehr die Migrator Klasse verwendet, sondern eigene Funktionen.
 * In Fehlermeldungen wird jetzt zusätzlich die Version der betreffenden Ext angezeigt.

@@ -21,14 +21,14 @@ class ext_mgr_plus
 	protected $config_text;
 	protected $language;
 	protected $template;
-	protected $phpbb_container;
 	protected $db;
 	protected $table_prefix;
 	protected $phpbb_root_path;
 
-	protected $migrations_db;
-	protected $metadata;
 	protected $u_action;
+	protected $metadata;
+	protected $migrations_db;
+	protected $safe_time_limit;
 
 	public function __construct(
 		\phpbb\extension\manager $ext_manager,
@@ -40,7 +40,6 @@ class ext_mgr_plus
 		\phpbb\config\db_text $config_text,
 		\phpbb\language\language $language,
 		\phpbb\template\template $template,
-		$phpbb_container,
 		\phpbb\db\driver\driver_interface $db,
 		$table_prefix,
 		$phpbb_root_path
@@ -55,7 +54,6 @@ class ext_mgr_plus
 		$this->config_text		= $config_text;
 		$this->language			= $language;
 		$this->template			= $template;
-		$this->phpbb_container	= $phpbb_container;
 		$this->db				= $db;
 		$this->table_prefix 	= $table_prefix;
 		$this->phpbb_root_path	= $phpbb_root_path;
@@ -81,6 +79,7 @@ class ext_mgr_plus
 		if ($this->config_text_get('extmgrplus_todo_list', 'purge_cache'))
 		{
 			$this->config_text_set('extmgrplus_todo_list', 'purge_cache', null);
+
 			$this->cache->purge();
 		}
 
@@ -118,6 +117,7 @@ class ext_mgr_plus
 		$this->u_action = $event['u_action'];
 		$this->language->add_lang('acp_ext_mgr_plus', 'lukewcs/extmgrplus');
 		$this->metadata = $this->ext_manager->create_extension_metadata_manager('lukewcs/extmgrplus')->get_metadata('all');
+		$this->safe_time_limit = $event['safe_time_limit'];
 
 		add_form_key('lukewcs_extmgrplus');
 
@@ -212,8 +212,8 @@ class ext_mgr_plus
 		if ($this->config['extmgrplus_enable_order_and_ignore'])
 		{
 			$config_text = $this->config_text_get('extmgrplus_order_and_ignore_list');
-			$ext_list_ignore = $config_text['ignore'] ?? null;
 			$ext_list_order = $config_text['order'] ?? null;
+			$ext_list_ignore = $config_text['ignore'] ?? null;
 		}
 		if (!isset($ext_list_order) || !is_array($ext_list_order))
 		{
@@ -260,20 +260,19 @@ class ext_mgr_plus
 		}
 
 		$this->template->assign_vars([
-			'EXTMGRPLUS_ALLOW_MIGRATIONS'			=> $this->config['extmgrplus_enable_migrations'],
 			'EXTMGRPLUS_ORDER'						=> $ext_list_order,
 			'EXTMGRPLUS_IGNORE'						=> $ext_list_ignore,
+			'EXTMGRPLUS_VERSIONCHECK'				=> $ext_list_versioncheck,
+			'EXTMGRPLUS_MIGRATION_EXTS'				=> $ext_list_migrations_inactive,
 			'EXTMGRPLUS_COUNT_AVAILABLE'			=> $ext_count_available,
 			'EXTMGRPLUS_COUNT_ENABLED'				=> $ext_count_enabled,
 			'EXTMGRPLUS_COUNT_ENABLED_CLEAN'		=> $ext_count_enabled_clean,
 			'EXTMGRPLUS_COUNT_DISABLED'				=> $ext_count_disabled,
 			'EXTMGRPLUS_COUNT_DISABLED_CLEAN'		=> $ext_count_disabled_clean,
 			'EXTMGRPLUS_COUNT_NOT_INSTALLED'		=> $ext_count_available - $ext_count_configured,
-			'EXTMGRPLUS_MIGRATION_EXTS'				=> $ext_list_migrations_inactive,
 			'EXTMGRPLUS_EXT_NAME'					=> $ext_display_name,
 			'EXTMGRPLUS_EXT_VER'					=> $ext_ver,
 			'EXTMGRPLUS_NOTES'						=> $notes,
-			'EXTMGRPLUS_EXT_VERSIONCHECK'			=> $ext_list_versioncheck,
 			'CDB_EXT_VER'							=> vsprintf('%u.%u', explode('.', PHPBB_VERSION)),
 
 			'EXTMGRPLUS_ENABLE_LOG'					=> $this->config['extmgrplus_enable_log'],
@@ -334,7 +333,6 @@ class ext_mgr_plus
 		if ($this->request->is_set_post('extmgrplus_disable_all'))
 		{
 			$ext_list_marked = $this->request->variable('ext_mark_enabled', ['']);
-			$ext_count_enabled = count($ext_list_marked);
 
 			if ($this->config['extmgrplus_enable_confirmation'])
 			{
@@ -349,7 +347,7 @@ class ext_mgr_plus
 					]);
 					confirm_box(
 						false,
-						$this->language->lang('EXTMGRPLUS_MSG_CONFIRM_DISABLE', $this->language->lang('EXTMGRPLUS_EXTENSION_PLURAL', $ext_count_enabled)) .
+						$this->language->lang('EXTMGRPLUS_MSG_CONFIRM_DISABLE', $this->language->lang('EXTMGRPLUS_EXTENSION_PLURAL', count($ext_list_marked))) .
 							(array_search('lukewcs/extmgrplus', $ext_list_marked) !== false ? '<br><br>' . $this->language->lang('EXTMGRPLUS_MSG_SELF_DISABLE') : ''),
 						build_hidden_fields([
 							'extmgrplus_disable_all'	=> true,
@@ -368,7 +366,6 @@ class ext_mgr_plus
 		else if ($this->request->is_set_post('extmgrplus_enable_all'))
 		{
 			$ext_list_marked = $this->request->variable('ext_mark_disabled', ['']);
-			$ext_count_disabled = count($ext_list_marked);
 
 			if ($this->config['extmgrplus_enable_confirmation'])
 			{
@@ -383,7 +380,7 @@ class ext_mgr_plus
 					]);
 					confirm_box(
 						false,
-						$this->language->lang('EXTMGRPLUS_MSG_CONFIRM_ENABLE', $this->language->lang('EXTMGRPLUS_EXTENSION_PLURAL', $ext_count_disabled)),
+						$this->language->lang('EXTMGRPLUS_MSG_CONFIRM_ENABLE', $this->language->lang('EXTMGRPLUS_EXTENSION_PLURAL', count($ext_list_marked))),
 						build_hidden_fields([
 							'extmgrplus_enable_all'		=> true,
 							'ext_mark_disabled'			=> $ext_list_marked,
@@ -404,7 +401,6 @@ class ext_mgr_plus
 
 	private function exts_disable(): void
 	{
-		$safe_time_limit = round(ini_get('max_execution_time') / 2);
 		$start_time = time();
 		$safe_time_exceeded = false;
 
@@ -455,7 +451,7 @@ class ext_mgr_plus
 				));
 			}
 
-			if ((time() - $start_time) >= $safe_time_limit)
+			if ((time() - $start_time) >= $this->safe_time_limit)
 			{
 				$safe_time_exceeded = true;
 				break;
@@ -465,7 +461,7 @@ class ext_mgr_plus
 
 		if ($safe_time_exceeded)
 		{
-			$msg_failed = '<br><br><strong>' . $this->language->lang('EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED', $safe_time_limit, ini_get('max_execution_time')) . '</strong>';
+			$msg_failed = '<br><br><strong>' . $this->language->lang('EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED', $this->safe_time_limit) . '</strong>';
 		}
 		trigger_error(sprintf('%1$s%2$s<br><br>%3$s',
 				/* 1 */	$this->language->lang('EXTMGRPLUS_MSG_DEACTIVATION', $ext_count_success, $ext_count_enabled),
@@ -478,7 +474,6 @@ class ext_mgr_plus
 
 	private function exts_enable(): void
 	{
-		$safe_time_limit = round(ini_get('max_execution_time') / 2);
 		$start_time = time();
 		$safe_time_exceeded = false;
 
@@ -566,7 +561,7 @@ class ext_mgr_plus
 				));
 			}
 
-			if ((time() - $start_time) >= $safe_time_limit)
+			if ((time() - $start_time) >= $this->safe_time_limit)
 			{
 				$safe_time_exceeded = true;
 				break;
@@ -577,7 +572,7 @@ class ext_mgr_plus
 
 		if ($safe_time_exceeded)
 		{
-			$msg_failed = '<br><br><strong>' . $this->language->lang('EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED', $safe_time_limit, ini_get('max_execution_time')) . '</strong>';
+			$msg_failed = '<br><br><strong>' . $this->language->lang('EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED', $this->safe_time_limit) . '</strong>';
 		}
 		else if (count($ext_list_failed_activation))
 		{
@@ -762,7 +757,7 @@ class ext_mgr_plus
 		}
 	}
 
-	// Get a variable from a config_text variable container
+	// Get a variable/array from a config_text variable container
 	private function config_text_get($container, $name = null)
 	{
 		$config_text = $this->config_text->get($container);

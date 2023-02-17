@@ -11,7 +11,6 @@ services:
             - '@config_text'
             - '@language'
             - '@template'
-            - '@service_container'
             - '@dbal.conn'
             - '%core.table_prefix%'
             - '%core.root_path%'
