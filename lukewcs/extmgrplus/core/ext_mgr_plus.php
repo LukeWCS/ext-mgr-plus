@@ -263,7 +263,7 @@ class ext_mgr_plus
 			'EXTMGRPLUS_ORDER'						=> $ext_list_order,
 			'EXTMGRPLUS_IGNORE'						=> $ext_list_ignore,
 			'EXTMGRPLUS_VERSIONCHECK'				=> $ext_list_versioncheck,
-			'EXTMGRPLUS_MIGRATION_EXTS'				=> $ext_list_migrations_inactive,
+			'EXTMGRPLUS_MIGRATIONS_INACTIVE'		=> $ext_list_migrations_inactive,
 			'EXTMGRPLUS_COUNT_AVAILABLE'			=> $ext_count_available,
 			'EXTMGRPLUS_COUNT_ENABLED'				=> $ext_count_enabled,
 			'EXTMGRPLUS_COUNT_ENABLED_CLEAN'		=> $ext_count_enabled_clean,
@@ -332,7 +332,7 @@ class ext_mgr_plus
 
 		if ($this->request->is_set_post('extmgrplus_disable_all'))
 		{
-			$ext_list_marked = $this->request->variable('ext_mark_enabled', ['']);
+			$ext_mark_enabled = $this->request->variable('ext_mark_enabled', ['']);
 
 			if ($this->config['extmgrplus_enable_confirmation'])
 			{
@@ -347,11 +347,11 @@ class ext_mgr_plus
 					]);
 					confirm_box(
 						false,
-						$this->language->lang('EXTMGRPLUS_MSG_CONFIRM_DISABLE', $this->language->lang('EXTMGRPLUS_EXTENSION_PLURAL', count($ext_list_marked))) .
-							(array_search('lukewcs/extmgrplus', $ext_list_marked) !== false ? '<br><br>' . $this->language->lang('EXTMGRPLUS_MSG_SELF_DISABLE') : ''),
+						$this->language->lang('EXTMGRPLUS_MSG_CONFIRM_DISABLE', $this->language->lang('EXTMGRPLUS_EXTENSION_PLURAL', count($ext_mark_enabled))) .
+							(array_search('lukewcs/extmgrplus', $ext_mark_enabled) !== false ? '<br><br>' . $this->language->lang('EXTMGRPLUS_MSG_SELF_DISABLE') : ''),
 						build_hidden_fields([
 							'extmgrplus_disable_all'	=> true,
-							'ext_mark_enabled'			=> $ext_list_marked,
+							'ext_mark_enabled'			=> $ext_mark_enabled,
 							'u_action'					=> $this->u_action
 						]),
 						'@lukewcs_extmgrplus/acp_ext_mgr_plus_confirm_body.html'
@@ -365,7 +365,7 @@ class ext_mgr_plus
 		}
 		else if ($this->request->is_set_post('extmgrplus_enable_all'))
 		{
-			$ext_list_marked = $this->request->variable('ext_mark_disabled', ['']);
+			$ext_mark_disabled = $this->request->variable('ext_mark_disabled', ['']);
 
 			if ($this->config['extmgrplus_enable_confirmation'])
 			{
@@ -380,10 +380,10 @@ class ext_mgr_plus
 					]);
 					confirm_box(
 						false,
-						$this->language->lang('EXTMGRPLUS_MSG_CONFIRM_ENABLE', $this->language->lang('EXTMGRPLUS_EXTENSION_PLURAL', count($ext_list_marked))),
+						$this->language->lang('EXTMGRPLUS_MSG_CONFIRM_ENABLE', $this->language->lang('EXTMGRPLUS_EXTENSION_PLURAL', count($ext_mark_disabled))),
 						build_hidden_fields([
 							'extmgrplus_enable_all'		=> true,
-							'ext_mark_disabled'			=> $ext_list_marked,
+							'ext_mark_disabled'			=> $ext_mark_disabled,
 							'u_action'					=> $this->u_action
 						]),
 						'@lukewcs_extmgrplus/acp_ext_mgr_plus_confirm_body.html'

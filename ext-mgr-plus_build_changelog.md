@@ -1,7 +1,16 @@
 ### 1.1.0
 
+#### 1.1.0-b7
+* Core:
+  * Variablen umbenannt.
+* ACP-Template: 
+  * Variablen umbenannt.
+  * Twig Makro für FA Icons von `<span>` auf ``<i>` geändert, was wieder phpBB Standard entspricht.
+* CSS:
+  * Nicht mehr benötigtes CSS entfernt.
+
 #### 1.1.0-b6
-* Core und List Template: Eine unnötige Template Variable entfernt, da hierfür bereits eine Config Template Variable existiert.
+* Core und ACP-Template: Eine unnötige Template Variable entfernt, da hierfür bereits eine Config Template Variable existiert.
 * Die maximale PHP Laufzeit wird nicht mehr direkt aus der PHP INI geladen, sondern aus dem Event Datenpaket ermittelt.
 * Reihenfolge & Ignorieren:
   * Die Beschreibungen von Reihenfolge und Ignorieren werden jetzt nebeneinander statt untereinander dargestellt. [Vorschlag von Kirk]

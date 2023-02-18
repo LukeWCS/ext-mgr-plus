@@ -5,7 +5,7 @@ GH (2023-02-)
   * Die Spalte mit der Anzahl neuer Migrationen ist jetzt an die neue Experten-Option "Spalte mit neuen Migrationen anzeigen" gebunden. Diese ist per Standard deaktiviert.
 * Einstellungen - Reihenfolge und Ignorieren:
   * Die Beschreibungen von Reihenfolge und Ignorieren werden jetzt nebeneinander statt untereinander dargestellt. [Vorschlag von Kirk]
-  * Unterhalb der Erweiterungen-Liste wird jetzt ebenfalls ein "Absenden" Button eingefügt. [Vorschlag von Kirk]
+  * Unterhalb der Erweiterungen-Liste wird jetzt ebenfalls ein Absenden-Button eingefügt. [Vorschlag von Kirk]
 * Erweiterungen-Liste:
   * Es wird jetzt auch bei den nicht installierten Erweiterungen die Anzahl neuer Migrationsdateien angezeigt.
   * In der Überschrift "Deaktivierte Erweiterungen" wurde der Zusatz "(neue Migrationen: x)" entfernt.

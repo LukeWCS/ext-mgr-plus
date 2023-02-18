@@ -187,11 +187,11 @@
 		<dl>
 			<dt>
 				<label>{{ lang('EXTMGRPLUS_ORDER') ~ lang('COLON') }}</label><br>
-				{{ _self.icon('fa-sort') }}<span>{{ lang('EXTMGRPLUS_ORDER_EXPLAIN') }}</span>
+				{{ _self.icon('fa-sort') }} <span>{{ lang('EXTMGRPLUS_ORDER_EXPLAIN') }}</span>
 			</dt>
 			<dd>
 				<label>{{ lang('EXTMGRPLUS_IGNORE') ~ lang('COLON') }}</label><br>
-				{{ _self.icon('fa-ban') }}<span>{{ lang('EXTMGRPLUS_IGNORE_EXPLAIN') }}</span>
+				{{ _self.icon('fa-ban') }} <span>{{ lang('EXTMGRPLUS_IGNORE_EXPLAIN') }}</span>
 			</dd>
 		</dl>
 
@@ -351,7 +351,7 @@
 							{{ _self.version(disabled, attribute(EXTMGRPLUS_VERSIONCHECK, disabled.NAME)) }}
 						</td>
 						<td{{ !EXTMGRPLUS_ENABLE_MIGRATION_COL ? ' style="display: none;"' }}>
-							{{ EXTMGRPLUS_ENABLE_MIGRATION_COL ? _self.has_migration(disabled, EXTMGRPLUS_MIGRATION_EXTS) }}
+							{{ EXTMGRPLUS_ENABLE_MIGRATION_COL ? _self.has_migration(disabled, EXTMGRPLUS_MIGRATIONS_INACTIVE) }}
 						</td>
 						<td>
 							{{ _self.details(disabled) }}
@@ -364,7 +364,7 @@
 								{{ _self.checkbox_select(
 									'disabled',
 									disabled,
-									(EXTMGRPLUS_MIGRATION_EXTS[disabled.NAME] is not defined || EXTMGRPLUS_ENABLE_MIGRATIONS) && (EXTMGRPLUS_IGNORE[disabled.NAME] is not defined || !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE),
+									(EXTMGRPLUS_MIGRATIONS_INACTIVE[disabled.NAME] is not defined || EXTMGRPLUS_ENABLE_MIGRATIONS) && (EXTMGRPLUS_IGNORE[disabled.NAME] is not defined || !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE),
 									EXTMGRPLUS_ENABLE_CHECKBOXES_ALL_SET
 								) }}
 							{% endif %}
@@ -510,7 +510,7 @@
 {%- endmacro %}
 
 {% macro icon(classes, decorative = true) -%}
-	<span class="icon {{ classes }}"{{ decorative ? ' aria-hidden="true"' }}></span>
+	<i class="icon {{ classes }}"{{ decorative ? ' aria-hidden="true"' }}></i>
 {%- endmacro %}
 
 {% macro switch(name, checked = false) -%}

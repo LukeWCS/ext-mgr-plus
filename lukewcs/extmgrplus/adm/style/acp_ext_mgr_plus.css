@@ -51,10 +51,6 @@ fieldset.extmgrplus_order_and_ignore label {
 	color: #4A5A73;
 }
 
-fieldset.extmgrplus_order_and_ignore dd span {
-	padding: 0 5px 0 0;
-}
-
 /* LIST */
 
 #extmgrplus_list input[name="extmgrplus_disable_all"],
