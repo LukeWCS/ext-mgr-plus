@@ -29,7 +29,7 @@ legend.legend_sub:after {
 	margin: 0 0 .5em 1em;
 }
 
-input[name="extmgrplus_defaults"],
+input[name*="extmgrplus_"].button2,
 .submit-buttons input[type=submit],
 .submit-buttons input[type=reset] {
 	padding: 3px 4px;

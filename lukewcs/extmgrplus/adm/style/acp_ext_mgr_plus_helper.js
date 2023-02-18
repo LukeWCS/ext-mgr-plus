@@ -7,6 +7,12 @@
 *
 */
 
+ExtMgrPlus.constants = Object.freeze({
+	CheckBoxModeOff		: '0',
+	CheckBoxModeAll		: '1',
+	CheckBoxModeLast	: '2',
+});
+
 ExtMgrPlus.CheckUncheckAll = function (e) {
 	'use strict';
 
@@ -117,9 +123,11 @@ ExtMgrPlus.ConfirmMigrations = function () {
 ExtMgrPlus.SetDefaults = function () {
 	'use strict';
 
+	var c = ExtMgrPlus.constants;
+
 	$('input[name="extmgrplus_enable_log"]'					).prop('checked'	, true);
 	$('input[name="extmgrplus_enable_confirmation"]'		).prop('checked'	, true);
-	$('input[name="extmgrplus_enable_checkboxes_all_set"]'	).prop('checked'	, true);
+	$('select[name="extmgrplus_enable_checkbox_mode"]	'	).prop('value'		, c.CheckBoxModeAll);
 	$('input[name="extmgrplus_enable_order_and_ignore"]'	).prop('checked'	, true);
 	$('input[name="extmgrplus_enable_self_disable"]'		).prop('checked'	, false);
 	$('input[name="extmgrplus_enable_migration_col"]'		).prop('checked'	, false);
@@ -136,7 +144,7 @@ $('#extmgrplus_list').keypress(function(e) {
 
 $(window).ready(function() {
 	'use strict';
-
+// ExtMgrPlus.ShowHideSettings();
 	$('input[name="extmgrplus_enable_migrations"]'	).on('change'	, ExtMgrPlus.ConfirmMigrations);
 	$('input[name="extmgrplus_defaults"]'			).on('click'	, ExtMgrPlus.SetDefaults);
 	$('input[name="ext_mark_all_enabled"]:enabled'	).on('change'	, {CheckBoxType: 'enabled'}, ExtMgrPlus.CheckUncheckAll);

@@ -1,11 +1,25 @@
 ### 1.1.0
 
+#### 1.1.0-b8
+* Neue Eigenschaft für Checkboxen: Letzten Zustand merken.
+* ACP-Template:
+  * Schalter für Checkboxen durch Optionsliste ersetzt.
+  * Neues Twig Makro `select` um simpel Optionslisten einfügen zu können.
+  * Template an die Änderungen der Checkbox Handhabung angepasst.
+  * JS Defaults Funktion für neue Optionsliste angepasst.
+* Sprachdateien:
+  * Für die neue Checkboxen Eigenschaft 3 Variablen hinzugefügt und 1 Variable geändert.
+  * 2 Variablen umbenannt.
+* Migration: 
+  * Neue Config Variable `extmgrplus_enable_checkbox_mode`.
+  * Config Variable `extmgrplus_enable_checkboxes_all_set` entfernt.
+  
 #### 1.1.0-b7
 * Core:
   * Variablen umbenannt.
 * ACP-Template: 
   * Variablen umbenannt.
-  * Twig Makro für FA Icons von `<span>` auf ``<i>` geändert, was wieder phpBB Standard entspricht.
+  * Twig Makro für FA Icons von `<span>` auf `<i>` geändert, was wieder phpBB Standard entspricht.
 * CSS:
   * Nicht mehr benötigtes CSS entfernt.
 

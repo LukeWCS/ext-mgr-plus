@@ -1,8 +1,10 @@
 ### 1.1.0
 GH (2023-02-)
 
+* Für die Handhabung der Auswahl-Kontrollkästchen steht eine neue Eigenschaft zur Verfügung die es erlaubt, den letzten Zustand aller Kontrollkästchen automatisch zu speichern. Das ist insbesondere bei phpBB Updates hilfreich wenn man alle Erweiterungen deaktivieren will, aber auch Erweiterungen hat, die nur fallweise aktiviert werden sollen.
 * Einstellungen:
   * Die Spalte mit der Anzahl neuer Migrationen ist jetzt an die neue Experten-Option "Spalte mit neuen Migrationen anzeigen" gebunden. Diese ist per Standard deaktiviert.
+  * Der Schalter "Kontrollkästchen setzen" wurde durch eine Optionsliste mit der Auswahl "Aus", "Alle setzen" und "Letzten Zustand merken" ersetzt.
 * Einstellungen - Reihenfolge und Ignorieren:
   * Die Beschreibungen von Reihenfolge und Ignorieren werden jetzt nebeneinander statt untereinander dargestellt. [Vorschlag von Kirk]
   * Unterhalb der Erweiterungen-Liste wird jetzt ebenfalls ein Absenden-Button eingefügt. [Vorschlag von Kirk]
