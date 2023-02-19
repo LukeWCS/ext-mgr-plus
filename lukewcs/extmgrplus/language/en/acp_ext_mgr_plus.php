@@ -49,7 +49,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_CONFIRMATION'				=> 'Confirmation',
 	'EXTMGRPLUS_CONFIRMATION_EXPLAIN'		=> 'Here you can specify whether the actions “Enable selected” and “Disable selected” should be prompted and must be confirmed.',
 	'EXTMGRPLUS_CHECKBOX_MODE'				=> 'Set check boxes.',
-	'EXTMGRPLUS_CHECKBOX_MODE_EXPLAIN'		=> 'If you select “Set all”, all check boxes are automatically set. If you choose “Remember last state”, the states of all checkboxes are saved when the “Enable selected” or “Disable selected” action is performed.',
+	'EXTMGRPLUS_CHECKBOX_MODE_EXPLAIN'		=> 'If you select “Set all”, all check boxes are automatically set. If you choose “Remember last state”, the states of all checkboxes are saved when the “Enable selected” or “Disable selected” action is performed. In addition, the status of all checkboxes can also be saved via the “Save checkboxes” link.',
 	'EXTMGRPLUS_CHECKBOX_MODE_OFF'			=> 'Off',
 	'EXTMGRPLUS_CHECKBOX_MODE_ALL'			=> 'Set all',
 	'EXTMGRPLUS_CHECKBOX_MODE_LAST'			=> 'Remember last state',
@@ -105,6 +105,7 @@ $lang = array_merge($lang, [
 
 	// misc
 	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'		=> 'Order & Ignore',
+	'EXTMGRPLUS_LINK_SAVE_CHECKBOXES'		=> 'Save checkboxes',
 	'EXTMGRPLUS_EXTENSION_PLURAL' => [
 											0 => '0 extensions',
 											1 => '1 extension',
@@ -117,6 +118,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_CONFIRM_MIGRATIONS'		=> 'Are you sure you want to allow activation of extensions with new migrations?',
 	'EXTMGRPLUS_MSG_SETTINGS_SAVED'			=> 'ExtMgrPlus: Settings saved successfully.',
 	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'	=> 'ExtMgrPlus: Order/Ignore columns saved successfully.',
+	'EXTMGRPLUS_MSG_CHECKBOXES_SAVED'		=> 'ExtMgrPlus: Selection of checkboxes saved successfully.',
 	'EXTMGRPLUS_MSG_PROCESS_ABORTED'		=> 'ExtMgrPlus: The “%s” operation was interrupted by the following extension:',
 	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'		=> 'The following extensions could not be activated:',
 	'EXTMGRPLUS_MSG_DEACTIVATION'			=> 'ExtMgrPlus: %1$u of %2$u enabled extensions have been disabled.',

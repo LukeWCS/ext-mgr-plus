@@ -134,6 +134,13 @@ ExtMgrPlus.SetDefaults = function () {
 	$('input[name="extmgrplus_enable_migrations"]'			).prop('checked'	, false);
 };
 
+ExtMgrPlus.SaveCheckboxes = function () {
+	'use strict';
+
+	$('#extmgrplus_list').append('<input type="hidden" name="extmgrplus_save_checkboxes" value="1">');
+	$('#extmgrplus_list').submit();
+};
+
 $('#extmgrplus_list').keypress(function(e) {
 	'use strict';
 
@@ -144,7 +151,7 @@ $('#extmgrplus_list').keypress(function(e) {
 
 $(window).ready(function() {
 	'use strict';
-// ExtMgrPlus.ShowHideSettings();
+
 	$('input[name="extmgrplus_enable_migrations"]'	).on('change'	, ExtMgrPlus.ConfirmMigrations);
 	$('input[name="extmgrplus_defaults"]'			).on('click'	, ExtMgrPlus.SetDefaults);
 	$('input[name="ext_mark_all_enabled"]:enabled'	).on('change'	, {CheckBoxType: 'enabled'}, ExtMgrPlus.CheckUncheckAll);

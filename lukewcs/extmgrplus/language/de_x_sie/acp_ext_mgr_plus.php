@@ -49,7 +49,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_CONFIRMATION'				=> 'Rückfrage',
 	'EXTMGRPLUS_CONFIRMATION_EXPLAIN'		=> 'Hier können Sie festlegen, ob bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ eine Rückfrage erfolgen soll, die bestätigt werden muss.',
 	'EXTMGRPLUS_CHECKBOX_MODE'				=> 'Kontrollkästchen setzen',
-	'EXTMGRPLUS_CHECKBOX_MODE_EXPLAIN'		=> 'Bei der Auswahl „Alle setzen“ werden automatisch alle Kontrollkästchen gesetzt. Bei der Auswahl „Letzten Zustand merken“ werden die Zustände aller Kontrollkästchen gespeichert, wenn die Aktion „Ausgewählte aktivieren“ oder „Ausgewählte deaktivieren“ ausgeführt wird.',
+	'EXTMGRPLUS_CHECKBOX_MODE_EXPLAIN'		=> 'Bei der Auswahl „Alle setzen“ werden automatisch alle Kontrollkästchen gesetzt. Bei der Auswahl „Letzten Zustand merken“ werden die Zustände aller Kontrollkästchen gespeichert, wenn die Aktion „Ausgewählte aktivieren“ oder „Ausgewählte deaktivieren“ ausgeführt wird. Zusätzlich kann der Zustand aller Kontrollkästchen auch über den Link „Kontrollkästchen speichern“ gespeichert werden.',
 	'EXTMGRPLUS_CHECKBOX_MODE_OFF'			=> 'Aus',
 	'EXTMGRPLUS_CHECKBOX_MODE_ALL'			=> 'Alle setzen',
 	'EXTMGRPLUS_CHECKBOX_MODE_LAST'			=> 'Letzten Zustand merken',
@@ -105,6 +105,7 @@ $lang = array_merge($lang, [
 
 	// misc
 	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'		=> 'Reihenfolge & Ignorieren',
+	'EXTMGRPLUS_LINK_SAVE_CHECKBOXES'		=> 'Kontrollkästchen speichern',
 	'EXTMGRPLUS_EXTENSION_PLURAL' => [
 											0 => '0 Erweiterungen',
 											1 => '1 Erweiterung',
@@ -117,6 +118,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_CONFIRM_MIGRATIONS'		=> 'Sind Sie sich sicher, dass Sie die Aktivierung von Erweiterungen mit neuen Migrationen erlauben möchten?',
 	'EXTMGRPLUS_MSG_SETTINGS_SAVED'			=> 'ExtMgrPlus: Einstellungen erfolgreich gespeichert.',
 	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'	=> 'ExtMgrPlus: Spalten für Reihenfolge/Ignorieren erfolgreich gespeichert.',
+	'EXTMGRPLUS_MSG_CHECKBOXES_SAVED'		=> 'ExtMgrPlus: Auswahl der Kontrollkästchen erfolgreich gespeichert.',
 	'EXTMGRPLUS_MSG_PROCESS_ABORTED'		=> 'ExtMgrPlus: Der Vorgang „%s“ wurde von folgender Erweiterung unterbrochen:',
 	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'		=> 'Die folgenden Erweiterungen konnten nicht aktiviert werden:',
 	'EXTMGRPLUS_MSG_DEACTIVATION'			=> 'ExtMgrPlus: %1$u von %2$u aktivierten Erweiterungen wurden deaktiviert.',

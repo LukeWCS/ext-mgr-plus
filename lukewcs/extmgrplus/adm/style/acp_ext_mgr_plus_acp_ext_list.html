@@ -54,6 +54,11 @@
 		{%- else -%}
 			<span class="disabled">&bull; {{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</span>
 		{%- endif ~%}
+		{% if EXTMGRPLUS_ENABLE_CHECKBOX_MODE == 2 -%}
+			&bull; <a href="javascript:ExtMgrPlus.SaveCheckboxes();">{{ lang('EXTMGRPLUS_LINK_SAVE_CHECKBOXES') }}</a>
+		{%- else -%}
+			<span class="disabled">&bull; {{ lang('EXTMGRPLUS_LINK_SAVE_CHECKBOXES') }}</span>
+		{%- endif ~%}
 	</span>
 </fieldset>
 

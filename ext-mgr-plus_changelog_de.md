@@ -1,7 +1,7 @@
 ### 1.1.0
 GH (2023-02-)
 
-* Für die Handhabung der Auswahl-Kontrollkästchen steht eine neue Eigenschaft zur Verfügung die es erlaubt, den letzten Zustand aller Kontrollkästchen automatisch zu speichern. Das ist insbesondere bei phpBB Updates hilfreich wenn man alle Erweiterungen deaktivieren will, aber auch Erweiterungen hat, die nur fallweise aktiviert werden sollen.
+* Für die Handhabung der Auswahl-Kontrollkästchen steht eine neue Eigenschaft zur Verfügung die es erlaubt, den letzten Zustand aller Kontrollkästchen zu speichern. Das ist insbesondere bei phpBB Updates hilfreich wenn man alle Erweiterungen deaktivieren will, aber auch Erweiterungen hat, die nur fallweise aktiviert werden sollen. Es werden automatisch alle Kontrollkästchen gespeichert, wenn die Aktion "Ausgewählte deaktivieren" oder "Ausgewählte aktivieren" ausgeführt wird. Zusätzlich kann auch mit einem Link oben rechts jederzeit die aktuelle Auswahl gespeichert werden.
 * Einstellungen:
   * Die Spalte mit der Anzahl neuer Migrationen ist jetzt an die neue Experten-Option "Spalte mit neuen Migrationen anzeigen" gebunden. Diese ist per Standard deaktiviert.
   * Der Schalter "Kontrollkästchen setzen" wurde durch eine Optionsliste mit der Auswahl "Aus", "Alle setzen" und "Letzten Zustand merken" ersetzt.

@@ -1,5 +1,14 @@
 ### 1.1.0
 
+#### 1.1.0-b9
+* Ist "Letzten Zustand merken" aktiv, kann jetzt jederzeit die aktuelle Checkbox-Auswahl gespeichert werden, unabhängig von Deaktivieren/Aktivieren.
+* ACP-Template:
+  * Oben rechts ein Link eingefügt, mit dem die aktuelle Checkbox-Auswahl gespeichert werden kann. Der Link ist von "Letzten Zustand merken" abhängig.
+* JS:
+  * Neue Funktion für das Speichern der Checkboxen hinzugefügt.
+* Sprachdateien:
+  * Für die neue Checkbox-Save Funktion 2 Variablen hinzugefügt und 2 Variablen geändert.
+ 
 #### 1.1.0-b8
 * Neue Eigenschaft für Checkboxen: Letzten Zustand merken.
 * ACP-Template:

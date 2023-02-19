@@ -168,6 +168,15 @@ class ext_mgr_plus
 
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED') . adm_back_link($this->u_action), E_USER_NOTICE);
 		}
+		else if ($this->request->is_set_post('extmgrplus_save_checkboxes'))
+		{
+			$ext_mark_enabled = $this->request->variable('ext_mark_enabled', ['']);
+			$ext_mark_disabled = $this->request->variable('ext_mark_disabled', ['']);
+			$ext_mark_list = array_merge($ext_mark_enabled, $ext_mark_disabled);
+			$this->config_text_set('extmgrplus_selected_list', 'selected', count($ext_mark_list) ? $ext_mark_list : null);
+
+			trigger_error($this->language->lang('EXTMGRPLUS_MSG_CHECKBOXES_SAVED') . adm_back_link($this->u_action), E_USER_NOTICE);
+		}
 	}
 
 	public function ext_manager_after($event): void
@@ -226,23 +235,23 @@ class ext_mgr_plus
 		if (isset($ext_list_ignore) && is_array($ext_list_ignore))
 		{
 			$ext_list_ignore = array_flip($ext_list_ignore);
-			$ext_list_enabled_and_ignored = array_intersect_key($ext_list_ignore, $ext_list_enabled);
-			$ext_list_disabled_and_ignored = array_intersect_key($ext_list_ignore, $ext_list_disabled);
+			$ext_list_ignore_enabled = array_intersect_key($ext_list_ignore, $ext_list_enabled);
+			$ext_list_ignore_disabled = array_intersect_key($ext_list_ignore, $ext_list_disabled);
 		}
 		else
 		{
 			$ext_list_ignore = [];
-			$ext_list_enabled_and_ignored = [];
-			$ext_list_disabled_and_ignored = [];
+			$ext_list_ignore_enabled = [];
+			$ext_list_ignore_disabled = [];
 		}
 
 		if (!$this->config['extmgrplus_enable_self_disable'])
 		{
-			$ext_list_enabled_and_ignored['lukewcs/extmgrplus'] = 0;
+			$ext_list_ignore_enabled['lukewcs/extmgrplus'] = 0;
 		}
 		if (!$this->config['extmgrplus_enable_migrations'])
 		{
-			$ext_list_disabled_and_ignored = array_merge($ext_list_disabled_and_ignored, $ext_list_migrations_disabled);
+			$ext_list_ignore_disabled = array_merge($ext_list_ignore_disabled, $ext_list_migrations_disabled);
 		}
 
 		if ($this->config['extmgrplus_enable_checkbox_mode'] == self::CHECKBOX_MODE_LAST)
@@ -254,8 +263,8 @@ class ext_mgr_plus
 			$ext_list_selected = array_flip($ext_list_selected);
 			$ext_list_selected_enabled = array_intersect_key($ext_list_selected, $ext_list_enabled);
 			$ext_list_selected_disabled = array_intersect_key($ext_list_selected, $ext_list_disabled);
-			$ext_list_selected_enabled_clean = array_diff_key($ext_list_selected_enabled, $ext_list_enabled_and_ignored);
-			$ext_list_selected_disabled_clean = array_diff_key($ext_list_selected_disabled, $ext_list_disabled_and_ignored);
+			$ext_list_selected_enabled_clean = array_diff_key($ext_list_selected_enabled, $ext_list_ignore_enabled);
+			$ext_list_selected_disabled_clean = array_diff_key($ext_list_selected_disabled, $ext_list_ignore_disabled);
 		}
 		else
 		{
@@ -267,9 +276,9 @@ class ext_mgr_plus
 		$ext_count_available				= count($ext_list_available);
 		$ext_count_configured				= count($this->ext_manager->all_configured());
 		$ext_count_enabled					= count($ext_list_enabled);
-		$ext_count_enabled_clean			= $ext_count_enabled - count($ext_list_enabled_and_ignored);
+		$ext_count_enabled_clean			= $ext_count_enabled - count($ext_list_ignore_enabled);
 		$ext_count_disabled					= count($ext_list_disabled);
-		$ext_count_disabled_clean			= $ext_count_disabled - count($ext_list_disabled_and_ignored);
+		$ext_count_disabled_clean			= $ext_count_disabled - count($ext_list_ignore_disabled);
 		$ext_count_selected_enabled_clean	= count($ext_list_selected_enabled_clean);
 		$ext_count_selected_disabled_clean	= count($ext_list_selected_disabled_clean);
 
@@ -388,7 +397,7 @@ class ext_mgr_plus
 						$this->language->lang('EXTMGRPLUS_MSG_CONFIRM_DISABLE', $this->language->lang('EXTMGRPLUS_EXTENSION_PLURAL', count($ext_mark_enabled))) .
 							(array_search('lukewcs/extmgrplus', $ext_mark_enabled) !== false ? '<br><br>' . $this->language->lang('EXTMGRPLUS_MSG_SELF_DISABLE') : ''),
 						build_hidden_fields([
-							'extmgrplus_disable_all'	=> true,
+							'extmgrplus_disable_all'	=> '1',
 							'ext_mark_enabled'			=> $ext_mark_enabled,
 							'u_action'					=> $this->u_action
 						]),
@@ -418,7 +427,7 @@ class ext_mgr_plus
 						false,
 						$this->language->lang('EXTMGRPLUS_MSG_CONFIRM_ENABLE', $this->language->lang('EXTMGRPLUS_EXTENSION_PLURAL', count($ext_mark_disabled))),
 						build_hidden_fields([
-							'extmgrplus_enable_all'		=> true,
+							'extmgrplus_enable_all'		=> '1',
 							'ext_mark_disabled'			=> $ext_mark_disabled,
 							'u_action'					=> $this->u_action
 						]),
