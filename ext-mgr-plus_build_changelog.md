@@ -1,11 +1,24 @@
 ### 1.1.0
 
+#### 1.1.0-b10
+* Core:
+  * Alle `config` und `config_text` Variablen umbenannt.
+* Migration geändert, vorherige Betas müssen deinstalliert werden.
+* ACP-Template:
+  * Die Link-Leiste so gestaltet wie die Schnellzugriff-Leiste im Forenindex mit individuellen Icons für jede Aktion.
+* JS:
+  * Der Checkbox-Save Link wird jetzt deaktiviert, wenn eine der Einstellungsgruppen geöffnet ist.
+  * An umbenannte Config-Variablen angepasst.
+* Sprachdateien:
+  * 2 Variablen geändert.
+* Code Optimierung.
+
 #### 1.1.0-b9
 * Ist "Letzten Zustand merken" aktiv, kann jetzt jederzeit die aktuelle Checkbox-Auswahl gespeichert werden, unabhängig von Deaktivieren/Aktivieren.
 * ACP-Template:
   * Oben rechts ein Link eingefügt, mit dem die aktuelle Checkbox-Auswahl gespeichert werden kann. Der Link ist von "Letzten Zustand merken" abhängig.
 * JS:
-  * Neue Funktion für das Speichern der Checkboxen hinzugefügt.
+  * Neue Funktion für das Speichern der Checkboxen hinzugefügt. Damit wird ein spezifischer Submit-Button innerhalb eines Formulars simuliert, indem dynamisch eine `hidden` Eigenschaft zum DOM hinzugefügt wird. Dieser Kniff ist nötig, da sich das aufrufende Element ausserhalb des Formulars befindet und zudem ein normaler Link ist, kein Submit-Button.
 * Sprachdateien:
   * Für die neue Checkbox-Save Funktion 2 Variablen hinzugefügt und 2 Variablen geändert.
  

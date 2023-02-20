@@ -1,3 +1,12 @@
+<!--
+*
+* Extension Manager Plus. An extension for the phpBB Forum Software package.
+*
+* @copyright (c) 2022, LukeWCS, https://www.wcsaga.org
+* @license GNU General Public License, version 2 (GPL-2.0-only)
+*
+ -->
+
 {% INCLUDE 'overall_header.html' %}
 
 <a id="maincontent"></a>
@@ -46,18 +55,18 @@
 
 <fieldset class="quick">
 	<span class="small">
-		<a href="https://www.phpbb.com/go/customise/extensions/{{ CDB_EXT_VER }}" target="_blank">{{ lang('BROWSE_EXTENSIONS_DATABASE') }}</a>
-		&bull; <a href="{{ U_VERSIONCHECK_FORCE }}">{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</a>
-		&bull; <a href="javascript:ExtMgrPlus.ShowHideSettings();">{{ lang('SETTINGS') }}</a>
-		{% if EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE -%}
-			&bull; <a href="javascript:ExtMgrPlus.ShowHideOrderIgnore();">{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</a>
+		<a href="https://www.phpbb.com/go/customise/extensions/{{ CDB_EXT_VER }}" target="_blank">{{ _self.icon('fa-database') }} {{ lang('BROWSE_EXTENSIONS_DATABASE') }}</a>
+		&nbsp;<a href="{{ U_VERSIONCHECK_FORCE }}">{{ _self.icon('fa-wifi') }} {{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</a>
+		&nbsp;<a href="javascript:ExtMgrPlus.ShowHideSettings();">{{ _self.icon('fa-cogs') }} {{ lang('SETTINGS') }}</a>
+		{% if EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE -%}
+			&nbsp;<a href="javascript:ExtMgrPlus.ShowHideOrderIgnore();">{{ _self.icon('fa-sort') }} {{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</a>
 		{%- else -%}
-			<span class="disabled">&bull; {{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</span>
+			&nbsp;<span class="disabled">{{ _self.icon('fa-sort') }} {{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</span>
 		{%- endif ~%}
-		{% if EXTMGRPLUS_ENABLE_CHECKBOX_MODE == 2 -%}
-			&bull; <a href="javascript:ExtMgrPlus.SaveCheckboxes();">{{ lang('EXTMGRPLUS_LINK_SAVE_CHECKBOXES') }}</a>
+		{% if EXTMGRPLUS_SELECT_CHECKBOX_MODE == 2 -%}
+			&nbsp;<a href="javascript:ExtMgrPlus.SaveCheckboxes();" id="extmgrplus_save_checkboxes">{{ _self.icon('fa-check-square-o') }} {{ lang('EXTMGRPLUS_LINK_SAVE_CHECKBOXES') }}</a>
 		{%- else -%}
-			<span class="disabled">&bull; {{ lang('EXTMGRPLUS_LINK_SAVE_CHECKBOXES') }}</span>
+			&nbsp;<span class="disabled">{{ _self.icon('fa-check-square-o') }} {{ lang('EXTMGRPLUS_LINK_SAVE_CHECKBOXES') }}</span>
 		{%- endif ~%}
 	</span>
 </fieldset>
@@ -97,7 +106,7 @@
 				<span>{{ lang('EXTMGRPLUS_LOG_EXPLAIN') }}</span>
 			</dt>
 			<dd>
-				{{ _self.switch('extmgrplus_enable_log', EXTMGRPLUS_ENABLE_LOG) }}
+				{{ _self.switch('extmgrplus_switch_log', EXTMGRPLUS_SWITCH_LOG) }}
 			</dd>
 		</dl>
 
@@ -107,7 +116,7 @@
 				<span>{{ lang('EXTMGRPLUS_CONFIRMATION_EXPLAIN') }}</span>
 			</dt>
 			<dd>
-				{{ _self.switch('extmgrplus_enable_confirmation', EXTMGRPLUS_ENABLE_CONFIRMATION) }}
+				{{ _self.switch('extmgrplus_switch_confirmation', EXTMGRPLUS_SWITCH_CONFIRMATION) }}
 			</dd>
 		</dl>
 
@@ -117,7 +126,7 @@
 				<span>{{ lang('EXTMGRPLUS_CHECKBOX_MODE_EXPLAIN') }}</span>
 			</dt>
 			<dd>
-				{{ _self.select('extmgrplus_enable_checkbox_mode', EXTMGRPLUS_ENABLE_CHECKBOX_MODE, EXTMGRPLUS_ENABLE_CHECKBOX_MODE_OPTIONS) }}
+				{{ _self.select('extmgrplus_select_checkbox_mode', EXTMGRPLUS_SELECT_CHECKBOX_MODE, EXTMGRPLUS_SELECT_CHECKBOX_MODE_OPTIONS) }}
 			</dd>
 		</dl>
 
@@ -127,7 +136,7 @@
 				<span>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN') }}</span>
 			</dt>
 			<dd>
-				{{ _self.switch('extmgrplus_enable_order_and_ignore', EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE) }}
+				{{ _self.switch('extmgrplus_switch_order_and_ignore', EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE) }}
 			</dd>
 		</dl>
 
@@ -137,7 +146,7 @@
 				<span>{{ lang('EXTMGRPLUS_SELF_DISABLE_EXPLAIN') }}</span>
 			</dt>
 			<dd>
-				{{ _self.switch('extmgrplus_enable_self_disable', EXTMGRPLUS_ENABLE_SELF_DISABLE) }}
+				{{ _self.switch('extmgrplus_switch_self_disable', EXTMGRPLUS_SWITCH_SELF_DISABLE) }}
 			</dd>
 		</dl>
 
@@ -149,7 +158,7 @@
 				<span>{{ lang('EXTMGRPLUS_MIGRATION_COL_EXPLAIN') }}</span>
 			</dt>
 			<dd>
-				{{ _self.switch('extmgrplus_enable_migration_col', EXTMGRPLUS_ENABLE_MIGRATION_COL) }}
+				{{ _self.switch('extmgrplus_switch_migration_col', EXTMGRPLUS_SWITCH_MIGRATION_COL) }}
 			</dd>
 		</dl>
 
@@ -159,7 +168,7 @@
 				<span>{{ lang('EXTMGRPLUS_MIGRATIONS_EXPLAIN') }}</span>
 			</dt>
 			<dd>
-				{{ _self.switch('extmgrplus_enable_migrations', EXTMGRPLUS_ENABLE_MIGRATIONS) }}
+				{{ _self.switch('extmgrplus_switch_migrations', EXTMGRPLUS_SWITCH_MIGRATIONS) }}
 			</dd>
 		</dl>
 
@@ -217,7 +226,7 @@
 				<th>
 					{{ lang('CURRENT_VERSION') }}
 				</th>
-				<th{{ !EXTMGRPLUS_ENABLE_MIGRATION_COL ? ' style="display: none;"' }} title="{{ lang('EXTMGRPLUS_COL_MIGRATION_FILES') }}">
+				<th{{ !EXTMGRPLUS_SWITCH_MIGRATION_COL ? ' style="display: none;"' }} title="{{ lang('EXTMGRPLUS_COL_MIGRATION_FILES') }}">
 					{{ _self.icon('fa-arrow-up') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_MIGRATION_FILES') }}</span>
 				</th>
 				<th>
@@ -240,20 +249,20 @@
 		<tbody>
 			{% if loops.enabled|length %}
 				<tr>
-					<td class="row3" colspan="{{ EXTMGRPLUS_ENABLE_MIGRATION_COL ? '4' : '3' }}">
+					<td class="row3" colspan="{{ EXTMGRPLUS_SWITCH_MIGRATION_COL ? '4' : '3' }}">
 						<strong>{{ lang('EXTENSIONS_ENABLED') ~ lang('COLON') ~ ' ' ~ EXTMGRPLUS_COUNT_ENABLED }}</strong>{% EVENT acp_ext_list_enabled_title_after %}
 					</td>
 					<td class="row3">
 						{{ _self.button(
 							'disable',
-							(EXTMGRPLUS_COUNT_ENABLED_CLEAN > 0 && EXTMGRPLUS_ENABLE_CHECKBOX_MODE == 1) || EXTMGRPLUS_COUNT_SELECTED_ENABLED_CLEAN > 0
+							(EXTMGRPLUS_COUNT_ENABLED_CLEAN > 0 && EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1) || EXTMGRPLUS_COUNT_SELECTED_ENABLED_CLEAN > 0
 						) }}
 					</td>
 					<td class="row3">
 						{{ _self.checkbox_all(
 							'enabled',
 							EXTMGRPLUS_COUNT_ENABLED_CLEAN > 0,
-							EXTMGRPLUS_ENABLE_CHECKBOX_MODE == 1
+							EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1
 						) }}
 					</td>
 					<td class="row3" style="display: none;">
@@ -269,7 +278,7 @@
 						<td>
 							{{ _self.version(enabled, attribute(EXTMGRPLUS_VERSIONCHECK, enabled.NAME)) }}
 						</td>
-						<td{{ !EXTMGRPLUS_ENABLE_MIGRATION_COL ? ' style="display: none;"' }}>
+						<td{{ !EXTMGRPLUS_SWITCH_MIGRATION_COL ? ' style="display: none;"' }}>
 						</td>
 						<td>
 							{{ _self.details(enabled) }}
@@ -281,8 +290,8 @@
 							{{ _self.checkbox_select(
 								'enabled',
 								enabled,
-								(enabled.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_ENABLE_SELF_DISABLE) && (EXTMGRPLUS_IGNORE[enabled.NAME] is not defined || !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE),
-								EXTMGRPLUS_ENABLE_CHECKBOX_MODE == 1 || EXTMGRPLUS_SELECTED[enabled.NAME] is defined
+								(enabled.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_SWITCH_SELF_DISABLE) && (EXTMGRPLUS_IGNORE[enabled.NAME] is not defined || !EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE),
+								EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1 || EXTMGRPLUS_SELECTED[enabled.NAME] is defined
 							) }}
 						</td>
 						<td style="display: none;">
@@ -309,20 +318,20 @@
 			{% if loops.disabled|length %}
 				{% if EXTMGRPLUS_COUNT_DISABLED %}
 					<tr>
-						<td class="row3" colspan="{{ EXTMGRPLUS_ENABLE_MIGRATION_COL ? '4' : '3' }}">
+						<td class="row3" colspan="{{ EXTMGRPLUS_SWITCH_MIGRATION_COL ? '4' : '3' }}">
 							<strong>{{ lang('EXTENSIONS_DISABLED') ~ lang('COLON') ~ ' ' ~ EXTMGRPLUS_COUNT_DISABLED }}</strong>{% EVENT acp_ext_list_disabled_title_after %}
 						</td>
 						<td class="row3">
 							{{ _self.button(
 								'enable',
-								(EXTMGRPLUS_COUNT_DISABLED_CLEAN > 0 && EXTMGRPLUS_ENABLE_CHECKBOX_MODE == 1) || EXTMGRPLUS_COUNT_SELECTED_DISABLED_CLEAN > 0
+								(EXTMGRPLUS_COUNT_DISABLED_CLEAN > 0 && EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1) || EXTMGRPLUS_COUNT_SELECTED_DISABLED_CLEAN > 0
 							) }}
 						</td>
 						<td class="row3">
 							{{ _self.checkbox_all(
 								'disabled',
 								EXTMGRPLUS_COUNT_DISABLED_CLEAN > 0,
-								EXTMGRPLUS_ENABLE_CHECKBOX_MODE == 1
+								EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1
 							) }}
 						</td>
 						<td class="row3" style="display: none;">
@@ -335,7 +344,7 @@
 					{% if disabled.actions|length == 1 && !section_not_installed %}
 						{% set section_not_installed = true %}
 						<tr>
-							<td class="row3" colspan="{{ EXTMGRPLUS_ENABLE_MIGRATION_COL ? '4' : '3' }}">
+							<td class="row3" colspan="{{ EXTMGRPLUS_SWITCH_MIGRATION_COL ? '4' : '3' }}">
 								<strong>{{ lang('EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED') }}{{ lang('COLON') ~ ' ' ~ EXTMGRPLUS_COUNT_NOT_INSTALLED }}</strong>
 							</td>
 							<td class="row3">
@@ -355,8 +364,8 @@
 						<td>
 							{{ _self.version(disabled, attribute(EXTMGRPLUS_VERSIONCHECK, disabled.NAME)) }}
 						</td>
-						<td{{ !EXTMGRPLUS_ENABLE_MIGRATION_COL ? ' style="display: none;"' }}>
-							{{ EXTMGRPLUS_ENABLE_MIGRATION_COL ? _self.has_migration(disabled, EXTMGRPLUS_MIGRATIONS_INACTIVE) }}
+						<td{{ !EXTMGRPLUS_SWITCH_MIGRATION_COL ? ' style="display: none;"' }}>
+							{{ EXTMGRPLUS_SWITCH_MIGRATION_COL ? _self.has_migration(disabled, EXTMGRPLUS_MIGRATIONS_INACTIVE) }}
 						</td>
 						<td>
 							{{ _self.details(disabled) }}
@@ -369,8 +378,8 @@
 								{{ _self.checkbox_select(
 									'disabled',
 									disabled,
-									(EXTMGRPLUS_MIGRATIONS_INACTIVE[disabled.NAME] is not defined || EXTMGRPLUS_ENABLE_MIGRATIONS) && (EXTMGRPLUS_IGNORE[disabled.NAME] is not defined || !EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE),
-									EXTMGRPLUS_ENABLE_CHECKBOX_MODE == 1 || EXTMGRPLUS_SELECTED[disabled.NAME] is defined
+									(EXTMGRPLUS_MIGRATIONS_INACTIVE[disabled.NAME] is not defined || EXTMGRPLUS_SWITCH_MIGRATIONS) && (EXTMGRPLUS_IGNORE[disabled.NAME] is not defined || !EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE),
+									EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1 || EXTMGRPLUS_SELECTED[disabled.NAME] is defined
 								) }}
 							{% endif %}
 						</td>

@@ -70,9 +70,9 @@ class ext_mgr_plus
 			return;
 		}
 
-		if ($this->config_text_get('extmgrplus_todo_list', 'self_disable'))
+		if ($this->config_text_get('extmgrplus_todo', 'self_disable'))
 		{
-			$this->config_text_set('extmgrplus_todo_list', 'self_disable', null);
+			$this->config_text_set('extmgrplus_todo', 'self_disable', null);
 
 			while ($this->ext_manager->disable_step('lukewcs/extmgrplus'))
 			{
@@ -80,17 +80,17 @@ class ext_mgr_plus
 		}
 
 		// Not needed with phpBB >=3.3.8-rc1: https://github.com/phpbb/phpbb/pull/6359
-		if ($this->config_text_get('extmgrplus_todo_list', 'purge_cache'))
+		if ($this->config_text_get('extmgrplus_todo', 'purge_cache'))
 		{
-			$this->config_text_set('extmgrplus_todo_list', 'purge_cache', null);
+			$this->config_text_set('extmgrplus_todo', 'purge_cache', null);
 
 			$this->cache->purge();
 		}
 
-		if ($this->config_text_get('extmgrplus_todo_list', 'add_log'))
+		if ($this->config_text_get('extmgrplus_todo', 'add_log'))
 		{
-			$last_job = $this->config_text_get('extmgrplus_todo_list', 'add_log');
-			$this->config_text_set('extmgrplus_todo_list', 'add_log', null);
+			$last_job = $this->config_text_get('extmgrplus_todo', 'add_log');
+			$this->config_text_set('extmgrplus_todo', 'add_log', null);
 
 			if ($last_job !== null)
 			{
@@ -108,7 +108,7 @@ class ext_mgr_plus
 			}
 		}
 
-		$this->config->set('extmgrplus_exec_todo', ($this->config_text->get('extmgrplus_todo_list') != '') ? 1 : 0);
+		$this->config->set('extmgrplus_exec_todo', ($this->config_text->get('extmgrplus_todo') != '') ? 1 : 0);
 	}
 
 	public function ext_manager_before($event): void
@@ -127,53 +127,47 @@ class ext_mgr_plus
 
 		if ($this->request->is_set_post('extmgrplus_enable_all') || $this->request->is_set_post('extmgrplus_disable_all'))
 		{
-			if (!check_form_key('lukewcs_extmgrplus'))
-			{
-				trigger_error($this->language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
-			}
+			$this->check_form_key_error();
 
 			$this->exts_switch_confirm();
 		}
 		else if ($this->request->is_set_post('extmgrplus_save_settings'))
 		{
-			if (!check_form_key('lukewcs_extmgrplus'))
-			{
-				trigger_error($this->language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
-			}
+			$this->check_form_key_error();
 
-			$this->config->set('extmgrplus_enable_log'					, $this->request->variable('extmgrplus_enable_log', 0));
-			$this->config->set('extmgrplus_enable_confirmation'			, $this->request->variable('extmgrplus_enable_confirmation', 0));
-			$this->config->set('extmgrplus_enable_checkbox_mode'		, $this->request->variable('extmgrplus_enable_checkbox_mode', 0));
-			$this->config->set('extmgrplus_enable_order_and_ignore'		, $this->request->variable('extmgrplus_enable_order_and_ignore', 0));
-			$this->config->set('extmgrplus_enable_self_disable'			, $this->request->variable('extmgrplus_enable_self_disable', 0));
-			$this->config->set('extmgrplus_enable_migration_col'		, $this->request->variable('extmgrplus_enable_migration_col', 0));
-			$this->config->set('extmgrplus_enable_migrations'			, $this->request->variable('extmgrplus_enable_migrations', 0));
+			$this->config->set('extmgrplus_switch_log'				, $this->request->variable('extmgrplus_switch_log', 0));
+			$this->config->set('extmgrplus_switch_confirmation'		, $this->request->variable('extmgrplus_switch_confirmation', 0));
+			$this->config->set('extmgrplus_select_checkbox_mode'	, $this->request->variable('extmgrplus_select_checkbox_mode', 0));
+			$this->config->set('extmgrplus_switch_order_and_ignore'	, $this->request->variable('extmgrplus_switch_order_and_ignore', 0));
+			$this->config->set('extmgrplus_switch_self_disable'		, $this->request->variable('extmgrplus_switch_self_disable', 0));
+			$this->config->set('extmgrplus_switch_migration_col'	, $this->request->variable('extmgrplus_switch_migration_col', 0));
+			$this->config->set('extmgrplus_switch_migrations'		, $this->request->variable('extmgrplus_switch_migrations', 0));
 
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_SETTINGS_SAVED') . adm_back_link($this->u_action), E_USER_NOTICE);
 		}
-		else if ($this->request->is_set_post('extmgrplus_save_order_and_ignore') && $this->config['extmgrplus_enable_order_and_ignore'])
+		else if ($this->request->is_set_post('extmgrplus_save_order_and_ignore') && $this->config['extmgrplus_switch_order_and_ignore'])
 		{
-			if (!check_form_key('lukewcs_extmgrplus'))
-			{
-				trigger_error($this->language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
-			}
+			$this->check_form_key_error();
 
 			$order_list = $this->request->variable('ext_order', ['' => '']);
 			$ignore_list = $this->request->variable('ext_ignore', ['']);
 
 			$order_list = preg_grep('/^[0-9]{1,2}$/', $order_list);
 
-			$this->config_text_set('extmgrplus_order_and_ignore_list', 'order', count($order_list) ? $order_list : null);
-			$this->config_text_set('extmgrplus_order_and_ignore_list', 'ignore', count($ignore_list) ? $ignore_list : null);
+			$this->config_text_set('extmgrplus_list_order_and_ignore', 'order', count($order_list) ? $order_list : null);
+			$this->config_text_set('extmgrplus_list_order_and_ignore', 'ignore', count($ignore_list) ? $ignore_list : null);
 
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED') . adm_back_link($this->u_action), E_USER_NOTICE);
 		}
 		else if ($this->request->is_set_post('extmgrplus_save_checkboxes'))
 		{
-			$ext_mark_enabled = $this->request->variable('ext_mark_enabled', ['']);
-			$ext_mark_disabled = $this->request->variable('ext_mark_disabled', ['']);
-			$ext_mark_list = array_merge($ext_mark_enabled, $ext_mark_disabled);
-			$this->config_text_set('extmgrplus_selected_list', 'selected', count($ext_mark_list) ? $ext_mark_list : null);
+			$this->check_form_key_error();
+
+			$ext_mark_enabled	= $this->request->variable('ext_mark_enabled', ['']);
+			$ext_mark_disabled	= $this->request->variable('ext_mark_disabled', ['']);
+			$ext_mark_list		= array_merge($ext_mark_enabled, $ext_mark_disabled);
+
+			$this->config_text_set('extmgrplus_list_selected', 'selected', count($ext_mark_list) ? $ext_mark_list : null);
 
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_CHECKBOXES_SAVED') . adm_back_link($this->u_action), E_USER_NOTICE);
 		}
@@ -205,12 +199,12 @@ class ext_mgr_plus
 
 		$notes = [];
 
-		$ext_list_available = $this->ext_manager->all_available();
-		$ext_list_enabled = $this->ext_manager->all_enabled();
-		$ext_list_disabled = $this->ext_manager->all_disabled();
+		$ext_list_available	= $this->ext_manager->all_available();
+		$ext_list_enabled	= $this->ext_manager->all_enabled();
+		$ext_list_disabled	= $this->ext_manager->all_disabled();
 
 		$this->load_migrations_db();
-		if ($this->config['extmgrplus_enable_migration_col'])
+		if ($this->config['extmgrplus_switch_migration_col'])
 		{
 			$ext_list_migrations_inactive = $this->get_exts_with_new_migration(array_diff_key($ext_list_available, $ext_list_enabled));
 			$ext_list_migrations_disabled = array_intersect_key($ext_list_migrations_inactive, $ext_list_disabled);
@@ -222,11 +216,11 @@ class ext_mgr_plus
 		}
 		unset($this->migrations_db);
 
-		if ($this->config['extmgrplus_enable_order_and_ignore'])
+		if ($this->config['extmgrplus_switch_order_and_ignore'])
 		{
-			$config_text = $this->config_text_get('extmgrplus_order_and_ignore_list');
-			$ext_list_order = $config_text['order'] ?? null;
-			$ext_list_ignore = $config_text['ignore'] ?? null;
+			$config_text		= $this->config_text_get('extmgrplus_list_order_and_ignore');
+			$ext_list_order		= $config_text['order'] ?? null;
+			$ext_list_ignore	= $config_text['ignore'] ?? null;
 		}
 		if (!isset($ext_list_order) || !is_array($ext_list_order))
 		{
@@ -234,9 +228,9 @@ class ext_mgr_plus
 		}
 		if (isset($ext_list_ignore) && is_array($ext_list_ignore))
 		{
-			$ext_list_ignore = array_flip($ext_list_ignore);
-			$ext_list_ignore_enabled = array_intersect_key($ext_list_ignore, $ext_list_enabled);
-			$ext_list_ignore_disabled = array_intersect_key($ext_list_ignore, $ext_list_disabled);
+			$ext_list_ignore			= array_flip($ext_list_ignore);
+			$ext_list_ignore_enabled	= array_intersect_key($ext_list_ignore, $ext_list_enabled);
+			$ext_list_ignore_disabled	= array_intersect_key($ext_list_ignore, $ext_list_disabled);
 		}
 		else
 		{
@@ -245,26 +239,26 @@ class ext_mgr_plus
 			$ext_list_ignore_disabled = [];
 		}
 
-		if (!$this->config['extmgrplus_enable_self_disable'])
+		if (!$this->config['extmgrplus_switch_self_disable'])
 		{
 			$ext_list_ignore_enabled['lukewcs/extmgrplus'] = 0;
 		}
-		if (!$this->config['extmgrplus_enable_migrations'])
+		if (!$this->config['extmgrplus_switch_migrations'])
 		{
 			$ext_list_ignore_disabled = array_merge($ext_list_ignore_disabled, $ext_list_migrations_disabled);
 		}
 
-		if ($this->config['extmgrplus_enable_checkbox_mode'] == self::CHECKBOX_MODE_LAST)
+		if ($this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_LAST)
 		{
-			$ext_list_selected = $this->config_text_get('extmgrplus_selected_list', 'selected');
+			$ext_list_selected = $this->config_text_get('extmgrplus_list_selected', 'selected');
 		}
 		if (isset($ext_list_selected) && is_array($ext_list_selected))
 		{
-			$ext_list_selected = array_flip($ext_list_selected);
-			$ext_list_selected_enabled = array_intersect_key($ext_list_selected, $ext_list_enabled);
-			$ext_list_selected_disabled = array_intersect_key($ext_list_selected, $ext_list_disabled);
-			$ext_list_selected_enabled_clean = array_diff_key($ext_list_selected_enabled, $ext_list_ignore_enabled);
-			$ext_list_selected_disabled_clean = array_diff_key($ext_list_selected_disabled, $ext_list_ignore_disabled);
+			$ext_list_selected					= array_flip($ext_list_selected);
+			$ext_list_selected_enabled			= array_intersect_key($ext_list_selected, $ext_list_enabled);
+			$ext_list_selected_disabled			= array_intersect_key($ext_list_selected, $ext_list_disabled);
+			$ext_list_selected_enabled_clean	= array_diff_key($ext_list_selected_enabled, $ext_list_ignore_enabled);
+			$ext_list_selected_disabled_clean	= array_diff_key($ext_list_selected_disabled, $ext_list_ignore_disabled);
 		}
 		else
 		{
@@ -312,18 +306,18 @@ class ext_mgr_plus
 			'EXTMGRPLUS_NOTES'							=> $notes,
 			'CDB_EXT_VER'								=> vsprintf('%u.%u', explode('.', PHPBB_VERSION)),
 
-			'EXTMGRPLUS_ENABLE_LOG'						=> $this->config['extmgrplus_enable_log'],
-			'EXTMGRPLUS_ENABLE_CONFIRMATION'			=> $this->config['extmgrplus_enable_confirmation'],
-			'EXTMGRPLUS_ENABLE_CHECKBOX_MODE'			=> $this->config['extmgrplus_enable_checkbox_mode'],
-			'EXTMGRPLUS_ENABLE_CHECKBOX_MODE_OPTIONS'	=> [
+			'EXTMGRPLUS_SWITCH_LOG'						=> $this->config['extmgrplus_switch_log'],
+			'EXTMGRPLUS_SWITCH_CONFIRMATION'			=> $this->config['extmgrplus_switch_confirmation'],
+			'EXTMGRPLUS_SELECT_CHECKBOX_MODE'			=> $this->config['extmgrplus_select_checkbox_mode'],
+			'EXTMGRPLUS_SELECT_CHECKBOX_MODE_OPTIONS'	=> [
 															'0' => 'EXTMGRPLUS_CHECKBOX_MODE_OFF',
 															'1' => 'EXTMGRPLUS_CHECKBOX_MODE_ALL',
 															'2' => 'EXTMGRPLUS_CHECKBOX_MODE_LAST',
 														],
-			'EXTMGRPLUS_ENABLE_ORDER_AND_IGNORE'		=> $this->config['extmgrplus_enable_order_and_ignore'],
-			'EXTMGRPLUS_ENABLE_SELF_DISABLE'			=> $this->config['extmgrplus_enable_self_disable'],
-			'EXTMGRPLUS_ENABLE_MIGRATION_COL'			=> $this->config['extmgrplus_enable_migration_col'],
-			'EXTMGRPLUS_ENABLE_MIGRATIONS'				=> $this->config['extmgrplus_enable_migrations'],
+			'EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE'		=> $this->config['extmgrplus_switch_order_and_ignore'],
+			'EXTMGRPLUS_SWITCH_SELF_DISABLE'			=> $this->config['extmgrplus_switch_self_disable'],
+			'EXTMGRPLUS_SWITCH_MIGRATION_COL'			=> $this->config['extmgrplus_switch_migration_col'],
+			'EXTMGRPLUS_SWITCH_MIGRATIONS'				=> $this->config['extmgrplus_switch_migrations'],
 		]);
 	}
 
@@ -364,7 +358,7 @@ class ext_mgr_plus
 
 	private function exts_switch_confirm(): void
 	{
-		if ($this->config['extmgrplus_enable_confirmation'])
+		if ($this->config['extmgrplus_switch_confirmation'])
 		{
 			$this->template->assign_vars([
 				'EXTMGRPLUS_EXT_NAME'	=> $this->metadata['extra']['display-name'],
@@ -374,14 +368,14 @@ class ext_mgr_plus
 
 		$ext_mark_enabled = $this->request->variable('ext_mark_enabled', ['']);
 		$ext_mark_disabled = $this->request->variable('ext_mark_disabled', ['']);
-		if ($this->config['extmgrplus_enable_checkbox_mode'] == self::CHECKBOX_MODE_LAST && !$this->request->is_set_post('confirm_uid'))
+		if ($this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_LAST && !$this->request->is_set_post('confirm_uid'))
 		{
-			$this->config_text_set('extmgrplus_selected_list', 'selected', array_merge($ext_mark_enabled, $ext_mark_disabled));
+			$this->config_text_set('extmgrplus_list_selected', 'selected', array_merge($ext_mark_enabled, $ext_mark_disabled));
 		}
 
 		if ($this->request->is_set_post('extmgrplus_disable_all'))
 		{
-			if ($this->config['extmgrplus_enable_confirmation'])
+			if ($this->config['extmgrplus_switch_confirmation'])
 			{
 				if (confirm_box(true))
 				{
@@ -412,7 +406,7 @@ class ext_mgr_plus
 		}
 		else if ($this->request->is_set_post('extmgrplus_enable_all'))
 		{
-			if ($this->config['extmgrplus_enable_confirmation'])
+			if ($this->config['extmgrplus_switch_confirmation'])
 			{
 				if (confirm_box(true))
 				{
@@ -457,7 +451,7 @@ class ext_mgr_plus
 		$this->config->set('extmgrplus_exec_todo', 1);
 		if (phpbb_version_compare(PHPBB_VERSION, '3.3.8-rc1', '<'))
 		{
-			$this->config_text_set('extmgrplus_todo_list', 'purge_cache', true);
+			$this->config_text_set('extmgrplus_todo', 'purge_cache', true);
 		}
 
 		foreach ($ext_list_enabled as $ext_name => $value)
@@ -475,9 +469,9 @@ class ext_mgr_plus
 					{
 					}
 				}
-				else if ($this->config['extmgrplus_enable_self_disable'])
+				else if ($this->config['extmgrplus_switch_self_disable'])
 				{
-					$this->config_text_set('extmgrplus_todo_list', 'self_disable', true);
+					$this->config_text_set('extmgrplus_todo', 'self_disable', true);
 					$ext_count_success++;
 				}
 			}
@@ -487,9 +481,9 @@ class ext_mgr_plus
 				$ext_count_success++;
 			}
 
-			if ($this->config['extmgrplus_enable_log'])
+			if ($this->config['extmgrplus_switch_log'])
 			{
-				$this->config_text_set('extmgrplus_todo_list', 'add_log', $this->get_log_data(
+				$this->config_text_set('extmgrplus_todo', 'add_log', $this->get_log_data(
 					'EXTMGRPLUS_LOG_EXT_DISABLE_ALL',
 					$ext_count_success,
 					$ext_count_enabled
@@ -530,7 +524,7 @@ class ext_mgr_plus
 		$this->config->set('extmgrplus_exec_todo', 1);
 		if (phpbb_version_compare(PHPBB_VERSION, '3.3.8-rc1', '<'))
 		{
-			$this->config_text_set('extmgrplus_todo_list', 'purge_cache', true);
+			$this->config_text_set('extmgrplus_todo', 'purge_cache', true);
 		}
 
 		$ext_list_failed_activation = [];
@@ -544,9 +538,9 @@ class ext_mgr_plus
 			);
 		};
 
-		if ($this->config['extmgrplus_enable_order_and_ignore'])
+		if ($this->config['extmgrplus_switch_order_and_ignore'])
 		{
-			$ext_list_order = $this->config_text_get('extmgrplus_order_and_ignore_list', 'order');
+			$ext_list_order = $this->config_text_get('extmgrplus_list_order_and_ignore', 'order');
 		}
 		if (isset($ext_list_order) && is_array($ext_list_order))
 		{
@@ -597,9 +591,9 @@ class ext_mgr_plus
 				];
 			}
 
-			if ($this->config['extmgrplus_enable_log'])
+			if ($this->config['extmgrplus_switch_log'])
 			{
-				$this->config_text_set('extmgrplus_todo_list', 'add_log', $this->get_log_data(
+				$this->config_text_set('extmgrplus_todo', 'add_log', $this->get_log_data(
 					'EXTMGRPLUS_LOG_EXT_ENABLE_ALL',
 					$ext_count_success,
 					$ext_count_disabled
@@ -639,6 +633,14 @@ class ext_mgr_plus
 			)
 			, (($ext_count_success != $ext_count_disabled || $safe_time_exceeded) ? E_USER_WARNING : E_USER_NOTICE)
 		);
+	}
+
+	private function check_form_key_error(): void
+	{
+		if (!check_form_key('lukewcs_extmgrplus'))
+		{
+			trigger_error($this->language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
+		}
 	}
 
 	// Store information about the current process in template variables
@@ -772,7 +774,7 @@ class ext_mgr_plus
 	}
 
 	// Set a variable/array in a config_text variable container or delete one or all variables/arrays
-	private function config_text_set($container, $name, $value): void
+	private function config_text_set(string $container, $name, $value): void
 	{
 		if ($this->config_text->get($container) === null)
 		{
@@ -803,7 +805,7 @@ class ext_mgr_plus
 	}
 
 	// Get a variable/array from a config_text variable container
-	private function config_text_get($container, $name = null)
+	private function config_text_get(string $container, $name = null)
 	{
 		$config_text = $this->config_text->get($container);
 		if ($config_text === null)
@@ -834,9 +836,9 @@ class ext_mgr_plus
 	// Writes the cached version check data to the database.
 	private function versioncheck_save(string $param_ext_name = ''): void
 	{
-		if ($param_ext_name != '' && $this->config_text->get('extmgrplus_version_check') != '')
+		if ($param_ext_name != '' && $this->config_text->get('extmgrplus_list_version_check') != '')
 		{
-			$ext_list_db = $this->config_text_get('extmgrplus_version_check', 'updates');
+			$ext_list_db = $this->config_text_get('extmgrplus_list_version_check', 'updates');
 		}
 		else
 		{
@@ -889,14 +891,14 @@ class ext_mgr_plus
 		}
 		if ($ext_list_db_update)
 		{
-			$this->config_text_set('extmgrplus_version_check', 'updates', $ext_list_db);
+			$this->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_db);
 		}
 	}
 
 	// Reads the version check data from the database and removes obsolete entries and generates a list for the template
 	private function versioncheck_list(): array
 	{
-		$ext_list_db = $this->config_text_get('extmgrplus_version_check', 'updates');
+		$ext_list_db = $this->config_text_get('extmgrplus_list_version_check', 'updates');
 		if ($ext_list_db === null)
 		{
 			return [];
@@ -929,7 +931,7 @@ class ext_mgr_plus
 		}
 		if ($ext_list_db_update)
 		{
-			$this->config_text_set('extmgrplus_version_check', 'updates', $ext_list_db);
+			$this->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_db);
 		}
 
 		$ext_list_tpl['data'] = [

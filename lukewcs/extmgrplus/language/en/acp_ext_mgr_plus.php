@@ -49,7 +49,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_CONFIRMATION'				=> 'Confirmation',
 	'EXTMGRPLUS_CONFIRMATION_EXPLAIN'		=> 'Here you can specify whether the actions “Enable selected” and “Disable selected” should be prompted and must be confirmed.',
 	'EXTMGRPLUS_CHECKBOX_MODE'				=> 'Set check boxes.',
-	'EXTMGRPLUS_CHECKBOX_MODE_EXPLAIN'		=> 'If you select “Set all”, all check boxes are automatically set. If you choose “Remember last state”, the states of all checkboxes are saved when the “Enable selected” or “Disable selected” action is performed. In addition, the status of all checkboxes can also be saved via the “Save checkboxes” link.',
+	'EXTMGRPLUS_CHECKBOX_MODE_EXPLAIN'		=> 'If you select “Set all”, all check boxes are automatically set. If you choose “Remember last state”, the state of all checkboxes is saved when the “Enable selected” or “Disable selected” action is performed. In addition, the state of all checkboxes can also be saved via the “Save” link.',
 	'EXTMGRPLUS_CHECKBOX_MODE_OFF'			=> 'Off',
 	'EXTMGRPLUS_CHECKBOX_MODE_ALL'			=> 'Set all',
 	'EXTMGRPLUS_CHECKBOX_MODE_LAST'			=> 'Remember last state',
@@ -105,7 +105,7 @@ $lang = array_merge($lang, [
 
 	// misc
 	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'		=> 'Order & Ignore',
-	'EXTMGRPLUS_LINK_SAVE_CHECKBOXES'		=> 'Save checkboxes',
+	'EXTMGRPLUS_LINK_SAVE_CHECKBOXES'		=> 'Save',
 	'EXTMGRPLUS_EXTENSION_PLURAL' => [
 											0 => '0 extensions',
 											1 => '1 extension',
