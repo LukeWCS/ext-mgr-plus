@@ -1,31 +1,33 @@
 ### 1.1.0
 GH (2023-02-)
 
-* Für die Handhabung der Auswahl-Kontrollkästchen steht eine neue Eigenschaft zur Verfügung die es erlaubt, den letzten Zustand aller Kontrollkästchen zu speichern. Das ist insbesondere bei phpBB Updates hilfreich wenn man alle Erweiterungen deaktivieren will, aber auch Erweiterungen hat, die nur fallweise aktiviert werden sollen. Es werden automatisch alle Kontrollkästchen gespeichert, wenn die Aktion "Ausgewählte deaktivieren" oder "Ausgewählte aktivieren" ausgeführt wird. Zusätzlich kann auch mit einem Link oben rechts jederzeit die aktuelle Auswahl gespeichert werden.
+* Für die Handhabung der Auswahl-Kontrollkästchen steht eine neue Eigenschaft zur Verfügung die es erlaubt, den letzten Zustand aller Kontrollkästchen speichern zu können. Das ist insbesondere bei phpBB Updates hilfreich wenn man alle Erweiterungen deaktivieren will, aber auch Erweiterungen hat, die nur fallweise aktiviert werden sollen. Es werden automatisch alle Kontrollkästchen gespeichert, wenn die Aktion "Ausgewählte deaktivieren" oder "Ausgewählte aktivieren" ausgeführt wird. Zusätzlich kann auch in der Link-Leiste oberhalb der Erweiterungen-Liste mit der Aktion "Speichern" jederzeit die aktuelle Auswahl gespeichert werden.
+* Erweiterungen-Liste:
+  * Es wird jetzt auch bei den nicht installierten Erweiterungen die Anzahl neuer Migrationen angezeigt.
+  * In der Überschrift "Deaktivierte Erweiterungen" wurde der Zusatz "(neue Migrationen: x)" entfernt.
 * Einstellungen:
   * Die Spalte mit der Anzahl neuer Migrationen ist jetzt an die neue Experten-Option "Spalte mit neuen Migrationen anzeigen" gebunden. Diese ist per Standard deaktiviert.
   * Der Schalter "Kontrollkästchen setzen" wurde durch eine Optionsliste mit der Auswahl "Aus", "Alle setzen" und "Letzten Zustand merken" ersetzt.
 * Einstellungen - Reihenfolge und Ignorieren:
-  * Die Beschreibungen von Reihenfolge und Ignorieren werden jetzt nebeneinander statt untereinander dargestellt. [Vorschlag von Kirk]
-  * Unterhalb der Erweiterungen-Liste wird jetzt ebenfalls ein Absenden-Button eingefügt. [Vorschlag von Kirk]
-* Erweiterungen-Liste:
-  * Es wird jetzt auch bei den nicht installierten Erweiterungen die Anzahl neuer Migrationsdateien angezeigt.
-  * In der Überschrift "Deaktivierte Erweiterungen" wurde der Zusatz "(neue Migrationen: x)" entfernt.
+  * Die Beschreibungen von Reihenfolge und Ignorieren werden nebeneinander statt untereinander dargestellt. [Vorschlag von Kirk]
+  * Unterhalb der Erweiterungen-Liste wird ebenfalls ein Absenden-Button eingefügt. [Vorschlag von Kirk]
 * In allen Fehlermeldungen die beim Deaktivieren oder Aktivieren auftreten können, wird jetzt auch die Version der betroffen Erweiterung angezeigt.
-* Bisher wurde zum Ermitteln neuer Migrationsdateien die Migrator Klasse von phpBB verwendet. Diese wurde entfernt, da sie mehrere Nachteile hat:
-  * Die Klassen aller ermittelten Migrationsdateien werden dauerhaft zur Laufzeit geladen (inkludiert) und zum Programm-Kontext hinzugefügt, wodurch unnötig Speicher belegt wird.
+* Die Link-Leiste so gestaltet wie die Schnellzugriff-Leiste im Forenindex mit individuellen Icons für jede Aktion.
+* Bisher wurde zum Ermitteln neuer Migrationen die Migrator Klasse von phpBB verwendet. Diese wurde entfernt, da sie mehrere Nachteile hat:
+  * Die Klassen aller ermittelten Migrationen werden dauerhaft zur Laufzeit geladen (inkludiert) und zum Programm-Kontext hinzugefügt, wodurch unnötig Speicher belegt wird.
   * Erhöhtes Fehlerpotential, da beim Inkludieren eine defekte Migration zu einem Absturz (Fatal) von phpBB und damit von EMP führen kann.
-* Um die oben genannten Probleme zu beheben, wurden eigene Funktionen für die Handhabung von Migrationsdateien implementiert:
-  * Für den Abgleich der lokalen Migrationen mit der Datenbank.
+* Um die oben genannten Probleme zu beheben, wurden eigene Funktionen für die Handhabung von Migrationen implementiert:
+  * Für den Abgleich der lokalen Migrationen der Erweiterungen mit der Datenbank.
   * Für die Prüfung ob eine Migrationsdatei tatsächlich eine Migration ist.
 * Code Optimierung.
-  * Anzahl der MySQL Abfragen reduziert; Mehrere Funktionen und deren Aufrufe so geändert, dass Zugriffe auf `config_text` minimiert werden.
+  * Anzahl der MySQL Abfragen reduziert; Etliche Funktionen und deren Aufrufe so geändert, dass Zugriffe auf `config_text` minimiert werden.
   * Mehrere Funktionsaufrufe reduziert, unter anderem durch Verwendung alternativer Funktionen.
-  * Kleinere Verbesserungen.
+  * Viele kleinere Verbesserungen.
 * Text Änderungen:
   * "Migrationsdateien" zu "Migrationen" geändert.
   * "Reihenfolge/Ignorieren" zu "Reihenfolge & Ignorieren" geändert.
 * PHP Maximal-Version auf 8.2 erhöht.
+* Für Erweiterung-Autoren: Bei der Auswertung von `is_enableable` wird jetzt strikt nach phpBB Version unterschieden. Unverändert muss bei >=3.3.0 ein explizites `true` zurückgegeben werden. Bei <3.3.0 genügt jetzt ein implizites `true`. Damit verhält sich EMP identisch zur jeweiligen phpBB Minor Version.
 
 ### 1.0.8
 GH (2023-02-01)

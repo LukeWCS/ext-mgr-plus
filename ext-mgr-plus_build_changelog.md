@@ -1,17 +1,30 @@
 ### 1.1.0
 
-#### 1.1.0-b10
+#### 1.1.0-b11
+* Release
 * Core:
-  * Alle `config` und `config_text` Variablen umbenannt.
+  * Bei der Auswertung von `is_enableable` wird jetzt strikt nach phpBB Version unterschieden: Bei <3.3.0 genügt ein implizites `true`. Bei >=3.3.0 muss es ein explizites `true` sein.
+  * Mehrere Template-Variablen umbenannt.
+  * Code Optimierung.
+* ACP-Template:
+  * An umbenannte Template-Variablen angepasst.
+  * Twig optimiert.
+  * Icons der Link-Leiste werden beim überfahren nicht mehr unterstrichen und verhalten sich damit wie die Schnellzugriff-Leiste. Ausserdem Icons etwas grösser definiert.
+
+#### 1.1.0-b10
 * Migration geändert, vorherige Betas müssen deinstalliert werden.
+  * Alle `config` und `config_text` Variablen umbenannt.
+* Core:
+  * An umbenannte Config-Variablen angepasst.
+  * Code Optimierung.
 * ACP-Template:
   * Die Link-Leiste so gestaltet wie die Schnellzugriff-Leiste im Forenindex mit individuellen Icons für jede Aktion.
+  * An umbenannte Config-Variablen angepasst.
 * JS:
   * Der Checkbox-Save Link wird jetzt deaktiviert, wenn eine der Einstellungsgruppen geöffnet ist.
   * An umbenannte Config-Variablen angepasst.
 * Sprachdateien:
   * 2 Variablen geändert.
-* Code Optimierung.
 
 #### 1.1.0-b9
 * Ist "Letzten Zustand merken" aktiv, kann jetzt jederzeit die aktuelle Checkbox-Auswahl gespeichert werden, unabhängig von Deaktivieren/Aktivieren.

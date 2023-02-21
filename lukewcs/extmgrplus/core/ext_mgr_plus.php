@@ -203,18 +203,20 @@ class ext_mgr_plus
 		$ext_list_enabled	= $this->ext_manager->all_enabled();
 		$ext_list_disabled	= $this->ext_manager->all_disabled();
 
-		$this->load_migrations_db();
 		if ($this->config['extmgrplus_switch_migration_col'])
 		{
 			$ext_list_migrations_inactive = $this->get_exts_with_new_migration(array_diff_key($ext_list_available, $ext_list_enabled));
 			$ext_list_migrations_disabled = array_intersect_key($ext_list_migrations_inactive, $ext_list_disabled);
 		}
-		else
+		else if (!$this->config['extmgrplus_switch_migrations'])
 		{
 			$ext_list_migrations_inactive = $this->get_exts_with_new_migration($ext_list_disabled);
 			$ext_list_migrations_disabled = $ext_list_migrations_inactive;
 		}
-		unset($this->migrations_db);
+		else
+		{
+			$ext_list_migrations_inactive = [];
+		}
 
 		if ($this->config['extmgrplus_switch_order_and_ignore'])
 		{
@@ -288,11 +290,11 @@ class ext_mgr_plus
 		}
 
 		$this->template->assign_vars([
-			'EXTMGRPLUS_ORDER'							=> $ext_list_order,
-			'EXTMGRPLUS_IGNORE'							=> $ext_list_ignore,
-			'EXTMGRPLUS_VERSIONCHECK'					=> $ext_list_versioncheck,
-			'EXTMGRPLUS_MIGRATIONS_INACTIVE'			=> $ext_list_migrations_inactive,
-			'EXTMGRPLUS_SELECTED'						=> $ext_list_selected,
+			'EXTMGRPLUS_LIST_ORDER'						=> $ext_list_order,
+			'EXTMGRPLUS_LIST_IGNORE'					=> $ext_list_ignore,
+			'EXTMGRPLUS_LIST_VERSIONCHECK'				=> $ext_list_versioncheck,
+			'EXTMGRPLUS_LIST_MIGRATIONS_INACTIVE'		=> $ext_list_migrations_inactive,
+			'EXTMGRPLUS_LIST_SELECTED'					=> $ext_list_selected,
 			'EXTMGRPLUS_COUNT_SELECTED_ENABLED_CLEAN'	=> $ext_count_selected_enabled_clean,
 			'EXTMGRPLUS_COUNT_SELECTED_DISABLED_CLEAN'	=> $ext_count_selected_disabled_clean,
 			'EXTMGRPLUS_COUNT_AVAILABLE'				=> $ext_count_available,
@@ -561,7 +563,11 @@ class ext_mgr_plus
 			$this->set_last_ext_template_vars('EXTMGRPLUS_ALL_ENABLE', $ext_name, $ext_display_name, $ext_version);
 
 			$is_enableable = $this->ext_manager->get_extension($ext_name)->is_enableable();
-			if ($this->ext_manager->is_disabled($ext_name) && $is_enableable === true)
+			$is_enableable_condition = (phpbb_version_compare(PHPBB_VERSION, '3.3.0-dev', '<')
+				? $is_enableable == true
+				: $is_enableable === true
+			);
+			if ($this->ext_manager->is_disabled($ext_name) && $is_enableable_condition)
 			{
 				try
 				{
@@ -657,6 +663,8 @@ class ext_mgr_plus
 	// Determine all extensions that have new migrations from the passed list of extensions
 	private function get_exts_with_new_migration(array $ext_list): array
 	{
+		$this->load_migrations_db();
+
 		$ext_with_migrations_list = [];
 		if (isset($this->migrations_db))
 		{
@@ -669,6 +677,7 @@ class ext_mgr_plus
 				}
 			}
 		}
+		unset($this->migrations_db);
 
 		return $ext_with_migrations_list;
 	}

@@ -1,3 +1,11 @@
+/* LINK BAR */
+
+.extmgrplus_link_icon {
+	display: inline-block;
+	margin-right: .3em;
+	font-size: 12px;
+}
+
 /* SETTINGS */
 
 fieldset {
@@ -45,7 +53,7 @@ fieldset.extmgrplus_order_and_ignore dd {
 }
 
 fieldset.extmgrplus_order_and_ignore label {
-	font-size: 1.00em;
+	font-size: 1em;
 	text-align: left;
 	font-weight: bold;
 	color: #4A5A73;
