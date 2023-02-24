@@ -1,15 +1,22 @@
 ### 1.1.0
 
-#### 1.1.0-b11
+#### 1.1.0
 * Release
 * Core:
-  * Bei der Auswertung von `is_enableable` wird jetzt strikt nach phpBB Version unterschieden: Bei <3.3.0 genügt ein implizites `true`. Bei >=3.3.0 muss es ein explizites `true` sein.
+  * Bei der Prüfung der Bedingungen für die Speicherung der Checkboxen wird jetzt auch "Letzten Zustand merken" berücksichtigt.
+* Sprachdateien:
+  * In der Erklärung von "Kontrollkästchen setzen" wird das FA Checkbox Icon jetzt per Platzhalter in der Sprachvariable eingefügt. 
+  * Bei den Erklärungen für "Reihenfolge" und "Ignorieren" wird das FA Icon jetzt ebenfalls per Platzhalter in der Sprachvariable eingefügt.
+
+#### 1.1.0-b11
+* Core:
+  * Bei der Auswertung von `is_enableable` wird jetzt strikt nach phpBB Version unterschieden. Unverändert muss bei >=3.3.0 ein explizites `true` zurückgegeben werden, damit eine Erweiterung aktiviert werden kann. Bei <3.3.0 genügt jetzt auch ein implizites `true`.
   * Mehrere Template-Variablen umbenannt.
   * Code Optimierung.
 * ACP-Template:
   * An umbenannte Template-Variablen angepasst.
   * Twig optimiert.
-  * Icons der Link-Leiste werden beim überfahren nicht mehr unterstrichen und verhalten sich damit wie die Schnellzugriff-Leiste. Ausserdem Icons etwas grösser definiert.
+  * Icons der Link-Leiste werden beim überfahren nicht mehr unterstrichen und verhalten sich damit wie die Icons der Schnellzugriff-Leiste. Ausserdem Icons etwas grösser definiert.
 
 #### 1.1.0-b10
 * Migration geändert, vorherige Betas müssen deinstalliert werden.
@@ -29,7 +36,7 @@
 #### 1.1.0-b9
 * Ist "Letzten Zustand merken" aktiv, kann jetzt jederzeit die aktuelle Checkbox-Auswahl gespeichert werden, unabhängig von Deaktivieren/Aktivieren.
 * ACP-Template:
-  * Oben rechts ein Link eingefügt, mit dem die aktuelle Checkbox-Auswahl gespeichert werden kann. Der Link ist von "Letzten Zustand merken" abhängig.
+  * Oben rechts ein Link eingefügt, mit dem die aktuelle Checkbox-Auswahl gespeichert werden kann. Der Zustand des Links ist von "Letzten Zustand merken" abhängig.
 * JS:
   * Neue Funktion für das Speichern der Checkboxen hinzugefügt. Damit wird ein spezifischer Submit-Button innerhalb eines Formulars simuliert, indem dynamisch eine `hidden` Eigenschaft zum DOM hinzugefügt wird. Dieser Kniff ist nötig, da sich das aufrufende Element ausserhalb des Formulars befindet und zudem ein normaler Link ist, kein Submit-Button.
 * Sprachdateien:

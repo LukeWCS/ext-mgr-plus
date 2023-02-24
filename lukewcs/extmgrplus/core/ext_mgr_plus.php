@@ -159,7 +159,7 @@ class ext_mgr_plus
 
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED') . adm_back_link($this->u_action), E_USER_NOTICE);
 		}
-		else if ($this->request->is_set_post('extmgrplus_save_checkboxes'))
+		else if ($this->request->is_set_post('extmgrplus_save_checkboxes') && $this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_LAST)
 		{
 			$this->check_form_key_error();
 
@@ -312,10 +312,10 @@ class ext_mgr_plus
 			'EXTMGRPLUS_SWITCH_CONFIRMATION'			=> $this->config['extmgrplus_switch_confirmation'],
 			'EXTMGRPLUS_SELECT_CHECKBOX_MODE'			=> $this->config['extmgrplus_select_checkbox_mode'],
 			'EXTMGRPLUS_SELECT_CHECKBOX_MODE_OPTIONS'	=> [
-															'0' => 'EXTMGRPLUS_CHECKBOX_MODE_OFF',
-															'1' => 'EXTMGRPLUS_CHECKBOX_MODE_ALL',
-															'2' => 'EXTMGRPLUS_CHECKBOX_MODE_LAST',
-														],
+														'0' => 'EXTMGRPLUS_CHECKBOX_MODE_OFF',
+														'1' => 'EXTMGRPLUS_CHECKBOX_MODE_ALL',
+														'2' => 'EXTMGRPLUS_CHECKBOX_MODE_LAST',
+			],
 			'EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE'		=> $this->config['extmgrplus_switch_order_and_ignore'],
 			'EXTMGRPLUS_SWITCH_SELF_DISABLE'			=> $this->config['extmgrplus_switch_self_disable'],
 			'EXTMGRPLUS_SWITCH_MIGRATION_COL'			=> $this->config['extmgrplus_switch_migration_col'],
@@ -445,8 +445,8 @@ class ext_mgr_plus
 		$start_time = time();
 		$safe_time_exceeded = false;
 
-		$ext_list_marked = $this->request->variable('ext_mark_enabled', ['']);
-		$ext_list_enabled = array_flip($ext_list_marked);
+		$ext_mark_enabled = $this->request->variable('ext_mark_enabled', ['']);
+		$ext_list_enabled = array_flip($ext_mark_enabled);
 		$ext_count_enabled = count($ext_list_enabled);
 		$ext_count_success = 0;
 
@@ -518,8 +518,8 @@ class ext_mgr_plus
 		$start_time = time();
 		$safe_time_exceeded = false;
 
-		$ext_list_marked = $this->request->variable('ext_mark_disabled', ['']);
-		$ext_list_disabled = array_flip($ext_list_marked);
+		$ext_mark_disabled = $this->request->variable('ext_mark_disabled', ['']);
+		$ext_list_disabled = array_flip($ext_mark_disabled);
 		$ext_count_disabled = count($ext_list_disabled);
 		$ext_count_success = 0;
 

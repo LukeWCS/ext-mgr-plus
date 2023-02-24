@@ -48,8 +48,8 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_LOG_EXPLAIN'				=> 'Here you can specify whether an entry should be added to the administrator log for the actions “Enable selected” and “Disable selected”.',
 	'EXTMGRPLUS_CONFIRMATION'				=> 'Confirmation',
 	'EXTMGRPLUS_CONFIRMATION_EXPLAIN'		=> 'Here you can specify whether the actions “Enable selected” and “Disable selected” should be prompted and must be confirmed.',
-	'EXTMGRPLUS_CHECKBOX_MODE'				=> 'Set check boxes.',
-	'EXTMGRPLUS_CHECKBOX_MODE_EXPLAIN'		=> 'If you select “Set all”, all check boxes are automatically set. If you choose “Remember last state”, the state of all checkboxes is saved when the “Enable selected” or “Disable selected” action is performed. In addition, the state of all checkboxes can also be saved via the “Save” link.',
+	'EXTMGRPLUS_CHECKBOX_MODE'				=> 'Set check boxes',
+	'EXTMGRPLUS_CHECKBOX_MODE_EXPLAIN'		=> 'If you select “Set all”, all check boxes are automatically set. If you choose “Remember last state”, the state of all checkboxes is saved when the “Enable selected” or “Disable selected” action is performed. In addition, the state of all checkboxes can also be saved via the “%s Save” link.',
 	'EXTMGRPLUS_CHECKBOX_MODE_OFF'			=> 'Off',
 	'EXTMGRPLUS_CHECKBOX_MODE_ALL'			=> 'Set all',
 	'EXTMGRPLUS_CHECKBOX_MODE_LAST'			=> 'Remember last state',
@@ -73,9 +73,9 @@ $lang = array_merge($lang, [
 
 	// settings order and ignore
 	'EXTMGRPLUS_ORDER'						=> 'Order',
-	'EXTMGRPLUS_ORDER_EXPLAIN'				=> 'This column allows you to define order groups in the range 0 to 99 for the “Enable selected” action. This allows extensions that other extensions depend on to be activated before them to avoid error messages. Extensions belonging to such a group are activated first, starting with group 0, then group 1 and so on. Extensions without a group are activated last.',
+	'EXTMGRPLUS_ORDER_EXPLAIN'				=> '%s This column allows you to define order groups in the range 0 to 99 for the “Enable selected” action. This allows extensions that other extensions depend on to be activated before them to avoid error messages. Extensions belonging to such a group are activated first, starting with group 0, then group 1 and so on. Extensions without a group are activated last.',
 	'EXTMGRPLUS_IGNORE'						=> 'Ignore',
-	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> 'This column allows you to specify which extensions should be ignored during the “Enable selected” and “Disable selected” actions. Ignored extensions can no longer be selected in the extensions list. If an order group was defined for an ignored extension, then this is retained, but it no longer has any meaning.',
+	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> '%s This column allows you to specify which extensions should be ignored during the “Enable selected” and “Disable selected” actions. Ignored extensions can no longer be selected in the extensions list. If an order group was defined for an ignored extension, then this is retained, but it no longer has any meaning.',
 	'EXTMGRPLUS_ORDER_AND_IGNORE_SAVE'		=> 'Save',
 
 	// info table
@@ -86,7 +86,7 @@ $lang = array_merge($lang, [
 	// ext manager
 	'EXTMGRPLUS_ALL_DISABLE'				=> 'Disable selected',
 	'EXTMGRPLUS_ALL_ENABLE'					=> 'Enable selected',
-	'EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED'	=> 'Not installed extensions',
+	'EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED'	=> 'Not installed Extensions',
 
 	// tooltips
 	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'		=> 'This extension has new migrations that are applied when activating the extension.',
@@ -98,7 +98,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_SELECT'				=> 'Select extension.',
 
 	// columns
-	'EXTMGRPLUS_COL_MIGRATION_FILES'		=> 'New migrations',
+	'EXTMGRPLUS_COL_MIGRATIONS'				=> 'New migrations',
 	'EXTMGRPLUS_COL_SELECT'					=> 'Select',
 	'EXTMGRPLUS_COL_ORDER'					=> 'Order',
 	'EXTMGRPLUS_COL_IGNORE'					=> 'Ignore',
@@ -106,7 +106,7 @@ $lang = array_merge($lang, [
 	// misc
 	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'		=> 'Order & Ignore',
 	'EXTMGRPLUS_LINK_SAVE_CHECKBOXES'		=> 'Save',
-	'EXTMGRPLUS_EXTENSION_PLURAL' => [
+	'EXTMGRPLUS_EXTENSION_PLURAL'			=> [
 											0 => '0 extensions',
 											1 => '1 extension',
 											2 => '%u extensions',
@@ -117,13 +117,13 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_CONFIRM_ENABLE'			=> 'Are you sure that you wish to enable %s?',
 	'EXTMGRPLUS_MSG_CONFIRM_MIGRATIONS'		=> 'Are you sure you want to allow activation of extensions with new migrations?',
 	'EXTMGRPLUS_MSG_SETTINGS_SAVED'			=> 'ExtMgrPlus: Settings saved successfully.',
-	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'	=> 'ExtMgrPlus: Order/Ignore columns saved successfully.',
+	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'	=> 'ExtMgrPlus: Order and Ignore columns saved successfully.',
 	'EXTMGRPLUS_MSG_CHECKBOXES_SAVED'		=> 'ExtMgrPlus: Selection of checkboxes saved successfully.',
 	'EXTMGRPLUS_MSG_PROCESS_ABORTED'		=> 'ExtMgrPlus: The “%s” operation was interrupted by the following extension:',
-	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'		=> 'The following extensions could not be activated:',
 	'EXTMGRPLUS_MSG_DEACTIVATION'			=> 'ExtMgrPlus: %1$u of %2$u enabled extensions have been disabled.',
 	'EXTMGRPLUS_MSG_ACTIVATION'				=> 'ExtMgrPlus: %1$u of %2$u disabled extensions have been enabled.',
-	'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED'	=> 'Note: The language pack for the extension <strong>%1$s</strong> is no longer up-to-date. (installed: %2$s / needed: %3$s)',
+	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'		=> 'The following extensions could not be activated:',
 	'EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED'		=> 'The tolerance range (%u seconds) of the maximum PHP execution time has been exceeded.',
+	'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED'	=> 'Note: The language pack for the extension <strong>%1$s</strong> is no longer up-to-date. (installed: %2$s / needed: %3$s)',
 	'EXTMGRPLUS_MSG_SELF_DISABLE'			=> 'Note: The “Extension Manager Plus” extension will also be disabled.',
 ]);

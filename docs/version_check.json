@@ -1,7 +1,7 @@
 {
     "stable": {
-        "1.0": {
-            "current": "1.0.8",
+        "1.1": {
+            "current": "1.1.0",
             "announcement": "https://github.com/LukeWCS/ext-mgr-plus/releases",
             "eol": null,
             "security": false

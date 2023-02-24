@@ -49,7 +49,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_CONFIRMATION'				=> 'Rückfrage',
 	'EXTMGRPLUS_CONFIRMATION_EXPLAIN'		=> 'Hier können Sie festlegen, ob bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ eine Rückfrage erfolgen soll, die bestätigt werden muss.',
 	'EXTMGRPLUS_CHECKBOX_MODE'				=> 'Kontrollkästchen setzen',
-	'EXTMGRPLUS_CHECKBOX_MODE_EXPLAIN'		=> 'Bei der Auswahl „Alle setzen“ werden automatisch alle Kontrollkästchen gesetzt. Bei der Auswahl „Letzten Zustand merken“ wird der Zustand aller Kontrollkästchen gespeichert, wenn die Aktion „Ausgewählte aktivieren“ oder „Ausgewählte deaktivieren“ ausgeführt wird. Zusätzlich kann der Zustand aller Kontrollkästchen auch über den Link „Speichern“ gespeichert werden.',
+	'EXTMGRPLUS_CHECKBOX_MODE_EXPLAIN'		=> 'Bei der Auswahl „Alle setzen“ werden automatisch alle Kontrollkästchen gesetzt. Bei der Auswahl „Letzten Zustand merken“ wird der Zustand aller Kontrollkästchen gespeichert, wenn die Aktion „Ausgewählte aktivieren“ oder „Ausgewählte deaktivieren“ ausgeführt wird. Zusätzlich kann der Zustand aller Kontrollkästchen auch über den Link „%s Speichern“ gespeichert werden.',
 	'EXTMGRPLUS_CHECKBOX_MODE_OFF'			=> 'Aus',
 	'EXTMGRPLUS_CHECKBOX_MODE_ALL'			=> 'Alle setzen',
 	'EXTMGRPLUS_CHECKBOX_MODE_LAST'			=> 'Letzten Zustand merken',
@@ -73,9 +73,9 @@ $lang = array_merge($lang, [
 
 	// settings order and ignore
 	'EXTMGRPLUS_ORDER'						=> 'Reihenfolge',
-	'EXTMGRPLUS_ORDER_EXPLAIN'				=> 'In dieser Spalte können Sie Reihenfolge-Gruppen im Bereich 0 bis 99 für die Aktion „Ausgewählte aktivieren“ definieren. Damit können Erweiterungen, von denen andere Erweiterungen abhängig sind, vor diesen aktiviert werden, um Fehlermeldungen zu vermeiden. Erweiterungen die zu einer solchen Gruppe gehören, werden zuerst aktiviert und zwar beginnend bei Gruppe 0, dann Gruppe 1 und so weiter. Erweiterungen ohne Gruppe werden als letztes aktiviert.',
+	'EXTMGRPLUS_ORDER_EXPLAIN'				=> '%s In dieser Spalte können Sie Reihenfolge-Gruppen im Bereich 0 bis 99 für die Aktion „Ausgewählte aktivieren“ definieren. Damit können Erweiterungen, von denen andere Erweiterungen abhängig sind, vor diesen aktiviert werden, um Fehlermeldungen zu vermeiden. Erweiterungen die zu einer solchen Gruppe gehören, werden zuerst aktiviert und zwar beginnend bei Gruppe 0, dann Gruppe 1 und so weiter. Erweiterungen ohne Gruppe werden als letztes aktiviert.',
 	'EXTMGRPLUS_IGNORE'						=> 'Ignorieren',
-	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> 'In dieser Spalte können Sie festlegen, welche Erweiterungen bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ ignoriert werden sollen. Ignorierte Erweiterungen können in der Erweiterungen-Liste nicht mehr ausgewählt werden. Wenn bei einer ignorierten Erweiterung eine Reihenfolge-Gruppe definiert wurde, dann bleibt diese erhalten, sie hat jedoch keine Bedeutung mehr.',
+	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> '%s In dieser Spalte können Sie festlegen, welche Erweiterungen bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ ignoriert werden sollen. Ignorierte Erweiterungen können in der Erweiterungen-Liste nicht mehr ausgewählt werden. Wenn bei einer ignorierten Erweiterung eine Reihenfolge-Gruppe definiert wurde, dann bleibt diese erhalten, sie hat jedoch keine Bedeutung mehr.',
 	'EXTMGRPLUS_ORDER_AND_IGNORE_SAVE'		=> 'Speichern',
 
 	// info table
@@ -98,7 +98,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_SELECT'				=> 'Erweiterung auswählen.',
 
 	// columns
-	'EXTMGRPLUS_COL_MIGRATION_FILES'		=> 'Neue Migrationen',
+	'EXTMGRPLUS_COL_MIGRATIONS'				=> 'Neue Migrationen',
 	'EXTMGRPLUS_COL_SELECT'					=> 'Auswählen',
 	'EXTMGRPLUS_COL_ORDER'					=> 'Reihenfolge',
 	'EXTMGRPLUS_COL_IGNORE'					=> 'Ignorieren',
@@ -106,7 +106,7 @@ $lang = array_merge($lang, [
 	// misc
 	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'		=> 'Reihenfolge & Ignorieren',
 	'EXTMGRPLUS_LINK_SAVE_CHECKBOXES'		=> 'Speichern',
-	'EXTMGRPLUS_EXTENSION_PLURAL' => [
+	'EXTMGRPLUS_EXTENSION_PLURAL'			=> [
 											0 => '0 Erweiterungen',
 											1 => '1 Erweiterung',
 											2 => '%u Erweiterungen',
@@ -117,13 +117,13 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_CONFIRM_ENABLE'			=> 'Sind Sie sich sicher, dass Sie %s aktivieren möchten?',
 	'EXTMGRPLUS_MSG_CONFIRM_MIGRATIONS'		=> 'Sind Sie sich sicher, dass Sie die Aktivierung von Erweiterungen mit neuen Migrationen erlauben möchten?',
 	'EXTMGRPLUS_MSG_SETTINGS_SAVED'			=> 'ExtMgrPlus: Einstellungen erfolgreich gespeichert.',
-	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'	=> 'ExtMgrPlus: Spalten für Reihenfolge/Ignorieren erfolgreich gespeichert.',
+	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'	=> 'ExtMgrPlus: Spalten für Reihenfolge und Ignorieren erfolgreich gespeichert.',
 	'EXTMGRPLUS_MSG_CHECKBOXES_SAVED'		=> 'ExtMgrPlus: Auswahl der Kontrollkästchen erfolgreich gespeichert.',
 	'EXTMGRPLUS_MSG_PROCESS_ABORTED'		=> 'ExtMgrPlus: Der Vorgang „%s“ wurde von folgender Erweiterung unterbrochen:',
-	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'		=> 'Die folgenden Erweiterungen konnten nicht aktiviert werden:',
 	'EXTMGRPLUS_MSG_DEACTIVATION'			=> 'ExtMgrPlus: %1$u von %2$u aktivierten Erweiterungen wurden deaktiviert.',
 	'EXTMGRPLUS_MSG_ACTIVATION'				=> 'ExtMgrPlus: %1$u von %2$u deaktivierten Erweiterungen wurden aktiviert.',
-	'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED'	=> 'Hinweis: Das Sprachpaket der Erweiterung <strong>%1$s</strong> ist nicht mehr aktuell. (vorhanden: %2$s / benötigt: %3$s)',
+	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'		=> 'Die folgenden Erweiterungen konnten nicht aktiviert werden:',
 	'EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED'		=> 'Der Toleranzbereich (%u Sekunden) der maximalen PHP Ausführungszeit wurde überschritten.',
+	'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED'	=> 'Hinweis: Das Sprachpaket der Erweiterung <strong>%1$s</strong> ist nicht mehr aktuell. (vorhanden: %2$s / benötigt: %3$s)',
 	'EXTMGRPLUS_MSG_SELF_DISABLE'			=> 'Hinweis: Die Erweiterung „Extension Manager Plus“ wird ebenfalls deaktiviert.',
 ]);

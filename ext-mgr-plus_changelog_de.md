@@ -1,5 +1,5 @@
 ### 1.1.0
-GH (2023-02-)
+GH (2023-02-24) / CDB (2023--)
 
 * Für die Handhabung der Auswahl-Kontrollkästchen steht eine neue Eigenschaft zur Verfügung die es erlaubt, den letzten Zustand aller Kontrollkästchen speichern zu können. Das ist insbesondere bei phpBB Updates hilfreich wenn man alle Erweiterungen deaktivieren will, aber auch Erweiterungen hat, die nur fallweise aktiviert werden sollen. Es werden automatisch alle Kontrollkästchen gespeichert, wenn die Aktion "Ausgewählte deaktivieren" oder "Ausgewählte aktivieren" ausgeführt wird. Zusätzlich kann auch in der Link-Leiste oberhalb der Erweiterungen-Liste mit der Aktion "Speichern" jederzeit die aktuelle Auswahl gespeichert werden.
 * Erweiterungen-Liste:
@@ -11,23 +11,21 @@ GH (2023-02-)
 * Einstellungen - Reihenfolge und Ignorieren:
   * Die Beschreibungen von Reihenfolge und Ignorieren werden nebeneinander statt untereinander dargestellt. [Vorschlag von Kirk]
   * Unterhalb der Erweiterungen-Liste wird ebenfalls ein Absenden-Button eingefügt. [Vorschlag von Kirk]
-* In allen Fehlermeldungen die beim Deaktivieren oder Aktivieren auftreten können, wird jetzt auch die Version der betroffen Erweiterung angezeigt.
+* Bisher wurde zum Ermitteln neuer Migrationen die Migrator Klasse von phpBB verwendet. Diese wurde entfernt, da sie mehrere Nachteile hat: 1) Die Klassen aller ermittelten Migrationen werden dauerhaft zur Laufzeit geladen (inkludiert) und zum Programm-Kontext hinzugefügt, wodurch unnötig Speicher belegt wird. 2) Erhöhtes Fehlerpotential, da beim Inkludieren eine defekte Migration zu einem Absturz (Fatal) von phpBB und damit von EMP führen kann. Um diese Probleme zu beheben, wurden eigene Funktionen für die Handhabung von Migrationen implementiert:
+  * Für den Abgleich der lokalen Migrationen der Erweiterungen mit der Datenbank. Dabei wird festgestellt, welche Migrationen noch nicht ausgeführt wurden.
+  * Für die Prüfung ob eine Migrationsdatei tatsächlich eine Migration ist. Damit werden Dateien ausgefiltert, die lediglich eine Helfer-Klasse beinhalten.
+* In allen Fehlermeldungen die beim Deaktivieren oder Aktivieren auftreten können, wird jetzt auch immer die Version der betroffen Erweiterung angezeigt. Das ist relevant, wenn im Supportfall Fehlermeldungen per Copy&Paste in Beiträgen eingefügt werden.
 * Die Link-Leiste so gestaltet wie die Schnellzugriff-Leiste im Forenindex mit individuellen Icons für jede Aktion.
-* Bisher wurde zum Ermitteln neuer Migrationen die Migrator Klasse von phpBB verwendet. Diese wurde entfernt, da sie mehrere Nachteile hat:
-  * Die Klassen aller ermittelten Migrationen werden dauerhaft zur Laufzeit geladen (inkludiert) und zum Programm-Kontext hinzugefügt, wodurch unnötig Speicher belegt wird.
-  * Erhöhtes Fehlerpotential, da beim Inkludieren eine defekte Migration zu einem Absturz (Fatal) von phpBB und damit von EMP führen kann.
-* Um die oben genannten Probleme zu beheben, wurden eigene Funktionen für die Handhabung von Migrationen implementiert:
-  * Für den Abgleich der lokalen Migrationen der Erweiterungen mit der Datenbank.
-  * Für die Prüfung ob eine Migrationsdatei tatsächlich eine Migration ist.
 * Code Optimierung.
   * Anzahl der MySQL Abfragen reduziert; Etliche Funktionen und deren Aufrufe so geändert, dass Zugriffe auf `config_text` minimiert werden.
-  * Mehrere Funktionsaufrufe reduziert, unter anderem durch Verwendung alternativer Funktionen.
+  * Mehrere Funktionsaufrufe reduziert, unter anderem durch Verwendung alternativer Funktionen und Neuordnung von Code.
   * Viele kleinere Verbesserungen.
-* Text Änderungen:
-  * "Migrationsdateien" zu "Migrationen" geändert.
-  * "Reihenfolge/Ignorieren" zu "Reihenfolge & Ignorieren" geändert.
 * PHP Maximal-Version auf 8.2 erhöht.
-* Für Erweiterung-Autoren: Bei der Auswertung von `is_enableable` wird jetzt strikt nach phpBB Version unterschieden. Unverändert muss bei >=3.3.0 ein explizites `true` zurückgegeben werden. Bei <3.3.0 genügt jetzt ein implizites `true`. Damit verhält sich EMP identisch zur jeweiligen phpBB Minor Version.
+* Sprachdateien:
+  * "Migrationsdateien" global zu "Migrationen" geändert.
+  * 9 Variablen hinzugefügt, 3 umbenannt, 1 entfernt.
+  * Kleine Änderungen.
+* Für Erweiterung-Autoren: Bei der Auswertung von `is_enableable` wird jetzt strikt nach phpBB Version unterschieden. Unverändert muss bei >=3.3.0 ein explizites `true` zurückgegeben werden, damit eine Erweiterung aktiviert werden kann. Bei <3.3.0 genügt jetzt auch ein implizites `true`. Damit verhält sich EMP identisch zur jeweiligen phpBB Minor Version auf der es installiert ist.
 
 ### 1.0.8
 GH (2023-02-01)
