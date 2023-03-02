@@ -56,7 +56,7 @@
 <fieldset class="quick">
 	<span class="small">
 		<a href="https://www.phpbb.com/go/customise/extensions/{{ CDB_EXT_VER }}" target="_blank">{{ _self.icon('fa-database extmgrplus_link_icon') }}{{ lang('BROWSE_EXTENSIONS_DATABASE') }}</a>
-		&nbsp;<a href="{{ U_VERSIONCHECK_FORCE }}">{{ _self.icon('fa-wifi extmgrplus_link_icon') }}{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</a>
+		&nbsp;<a href="javascript:ExtMgrPlus.VersionCheck('{{ U_VERSIONCHECK_FORCE }}');">{{ _self.icon('fa-refresh extmgrplus_link_icon') }}{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</a>
 		&nbsp;<a href="javascript:ExtMgrPlus.ShowHideSettings();">{{ _self.icon('fa-cogs extmgrplus_link_icon') }}{{ lang('SETTINGS') }}</a>
 		{% if EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE -%}
 			&nbsp;<a href="javascript:ExtMgrPlus.ShowHideOrderIgnore();">{{ _self.icon('fa-sort extmgrplus_link_icon') }}{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</a>

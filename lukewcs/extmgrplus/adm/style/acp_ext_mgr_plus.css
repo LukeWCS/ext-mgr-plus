@@ -1,3 +1,23 @@
+/* GENERAL */
+
+.disabled,
+.disabled:hover {
+	color: inherit !important;
+	text-decoration: none;
+}
+
+.inactive,
+.disabled,
+input[type="submit"]:disabled {
+	opacity: .5;
+}
+
+.disabled,
+input[type="submit"]:disabled,
+input[type="checkbox"]:disabled {
+	cursor: not-allowed;
+}
+
 /* LINK BAR */
 
 .extmgrplus_link_icon {
@@ -37,9 +57,8 @@ legend.legend_sub:after {
 	margin: 0 0 .5em 1em;
 }
 
-input[name*="extmgrplus_"].button2,
-.submit-buttons input[type=submit],
-.submit-buttons input[type=reset] {
+input[name^="extmgrplus_"].button2,
+.submit-buttons input[class^="button"] {
 	padding: 3px 4px;
 }
 
@@ -61,9 +80,19 @@ fieldset.extmgrplus_order_and_ignore label {
 
 /* LIST */
 
-#extmgrplus_list input[name="extmgrplus_disable_all"],
-#extmgrplus_list input[name="extmgrplus_enable_all"] {
+#extmgrplus_list input[name$="able_all"] {
 	padding: 1px 5px;
+}
+
+#extmgrplus_list input[type="text"] {
+	text-align: right;
+	padding: 0 2px;
+	margin: 0 2px;
+	background-color: #F9F9F9;
+}
+
+.extmgrplus_migration_files {
+	cursor: help;
 }
 
 #extmgrplus_list th:nth-of-type(1n + 2),	/* version+ */
@@ -93,31 +122,6 @@ fieldset.extmgrplus_order_and_ignore label {
 
 #extmgrplus_list td:nth-of-type(1n + 6) {	/* checkboxes(select)+  */
 	padding: 0 4px;
-}
-
-.extmgrplus_migration_files {
-	cursor: help;
-}
-
-.inactive {
-	opacity: .5;
-}
-
-.disabled,
-#extmgrplus_list input[type="submit"]:disabled {
-	opacity: .5;
-	cursor: not-allowed;
-}
-
-#extmgrplus_list input[type="checkbox"]:disabled {
-	cursor: not-allowed;
-}
-
-#extmgrplus_list input[type="text"] {
-	text-align: right;
-	padding: 0 2px;
-	margin: 0 2px;
-	background-color: #F9F9F9;
 }
 
 /* FOOTER */

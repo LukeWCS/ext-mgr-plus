@@ -192,6 +192,7 @@ class ext_mgr_plus
 		if ($this->request->variable('versioncheck_force', false))
 		{
 			$this->versioncheck_save();
+			redirect($this->u_action);
 		}
 		$ext_list_versioncheck = $this->versioncheck_list();
 

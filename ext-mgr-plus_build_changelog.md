@@ -1,4 +1,16 @@
-### 1.1.0
+### 1.1.1
+
+#### 1.1.1-b1
+* ACP-Template:
+  * Icon von `fa-wifi` auf `fa-refresh` geändert. Während der Versionsprüfung wird dieses Icon jetzt animiert.
+  * Die URL der Versionsprüfung wird nicht mehr direkt aufgerufen, sondern an eine neue JS Funktion übergeben.
+* JS:
+  * Funktion hinzugefügt um die Versionsprüfung starten und das zugehörige Icon animieren zu können.
+* Core:
+  * Nach der Ausführung der Versionsprüfung erfolgt ein Redirect auf die normale URL der "Erweiterungen verwalten" Seite. Dadurch wird verhindert, dass nach einer Versionsprüfung durch Neuladen der Seite erneut eine Versionsprüfung ausgeführt wird.
+* CSS:
+  * Wenn der Speichern-Link für Checkboxen deaktiviert ist, verhält er sich jetzt vollständig wie ein deaktiviertes Element, hat also keinerlei Hover-Effekte mehr. Ebenso wird jetzt die Link-Farbe entfernt.
+  * Optimierung. 1) Mehrere Eigenschaften neu gruppiert. 2) Mehrere Selektoren anders definiert, um diese reduzieren zu können.
 
 #### 1.1.0
 * Release

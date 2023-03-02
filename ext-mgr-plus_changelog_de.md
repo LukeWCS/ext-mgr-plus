@@ -1,7 +1,15 @@
+### 1.1.1
+GH (2023--) / CDB (2023--)
+
+* Versionsprüfung:
+  * Icon von `fa-wifi` auf `fa-refresh` geändert.
+  * Während der Ausführung der Versionsprüfung wird das zugehörige Icon jetzt animiert. Das dient als kleiner Indikator für die laufende Versionsprüfung, da phpBB selbst keinerlei Indikator bietet.
+  * Nach der Ausführung der Versionsprüfung erfolgt ein Redirect auf die normale URL der "Erweiterungen verwalten" Seite. Dadurch wird verhindert, dass nach einer Versionsprüfung durch Neuladen der Seite erneut eine Versionsprüfung ausgeführt wird.
+
 ### 1.1.0
 GH (2023-02-24) / CDB (2023--)
 
-* Für die Handhabung der Auswahl-Kontrollkästchen steht eine neue Eigenschaft zur Verfügung die es erlaubt, den letzten Zustand aller Kontrollkästchen speichern zu können. Das ist insbesondere bei phpBB Updates hilfreich wenn man alle Erweiterungen deaktivieren will, aber auch Erweiterungen hat, die nur fallweise aktiviert werden sollen. Es werden automatisch alle Kontrollkästchen gespeichert, wenn die Aktion "Ausgewählte deaktivieren" oder "Ausgewählte aktivieren" ausgeführt wird. Zusätzlich kann auch in der Link-Leiste oberhalb der Erweiterungen-Liste mit der Aktion "Speichern" jederzeit die aktuelle Auswahl gespeichert werden.
+* Für die Handhabung der Auswahl-Kontrollkästchen steht eine neue Eigenschaft zur Verfügung, die es erlaubt, den letzten Zustand aller Kontrollkästchen speichern zu können. Das ist insbesondere bei phpBB Updates hilfreich, wenn man alle Erweiterungen deaktivieren will, aber auch Erweiterungen hat, die nur fallweise aktiviert werden sollen. Es werden automatisch alle Kontrollkästchen gespeichert, wenn die Aktion "Ausgewählte deaktivieren" oder "Ausgewählte aktivieren" ausgeführt wird. Zusätzlich kann auch in der Link-Leiste oberhalb der Erweiterungen-Liste mit der Aktion "Speichern" jederzeit die aktuelle Auswahl gespeichert werden.
 * Erweiterungen-Liste:
   * Es wird jetzt auch bei den nicht installierten Erweiterungen die Anzahl neuer Migrationen angezeigt.
   * In der Überschrift "Deaktivierte Erweiterungen" wurde der Zusatz "(neue Migrationen: x)" entfernt.
@@ -13,19 +21,19 @@ GH (2023-02-24) / CDB (2023--)
   * Unterhalb der Erweiterungen-Liste wird ebenfalls ein Absenden-Button eingefügt. [Vorschlag von Kirk]
 * Bisher wurde zum Ermitteln neuer Migrationen die Migrator Klasse von phpBB verwendet. Diese wurde entfernt, da sie mehrere Nachteile hat: 1) Die Klassen aller ermittelten Migrationen werden dauerhaft zur Laufzeit geladen (inkludiert) und zum Programm-Kontext hinzugefügt, wodurch unnötig Speicher belegt wird. 2) Erhöhtes Fehlerpotential, da beim Inkludieren eine defekte Migration zu einem Absturz (Fatal) von phpBB und damit von EMP führen kann. Um diese Probleme zu beheben, wurden eigene Funktionen für die Handhabung von Migrationen implementiert:
   * Für den Abgleich der lokalen Migrationen der Erweiterungen mit der Datenbank. Dabei wird festgestellt, welche Migrationen noch nicht ausgeführt wurden.
-  * Für die Prüfung ob eine Migrationsdatei tatsächlich eine Migration ist. Damit werden Dateien ausgefiltert, die lediglich eine Helfer-Klasse beinhalten.
-* In allen Fehlermeldungen die beim Deaktivieren oder Aktivieren auftreten können, wird jetzt auch immer die Version der betroffen Erweiterung angezeigt. Das ist relevant, wenn im Supportfall Fehlermeldungen per Copy&Paste in Beiträgen eingefügt werden.
-* Die Link-Leiste so gestaltet wie die Schnellzugriff-Leiste im Forenindex mit individuellen Icons für jede Aktion.
+  * Für die Prüfung, ob eine Migrationsdatei tatsächlich eine Migration ist. Damit werden Dateien ausgefiltert, die lediglich eine Helfer-Klasse beinhalten.
+* In allen Fehlermeldungen, die beim Deaktivieren oder Aktivieren auftreten können, wird jetzt auch immer die Version der betroffenen Erweiterung angezeigt. Das ist relevant, wenn im Supportfall Fehlermeldungen per Copy&Paste in Beiträgen eingefügt werden.
+* Die Link-Leiste so gestaltet wie die Schnellzugriff-Leiste im Forenindex, mit individuellen Icons für jede Aktion.
 * Code Optimierung.
-  * Anzahl der MySQL Abfragen reduziert; Etliche Funktionen und deren Aufrufe so geändert, dass Zugriffe auf `config_text` minimiert werden.
-  * Mehrere Funktionsaufrufe reduziert, unter anderem durch Verwendung alternativer Funktionen und Neuordnung von Code.
+  * Anzahl der MySQL Abfragen reduziert; etliche Funktionen und deren Aufrufe so geändert, dass Zugriffe auf `config_text` minimiert werden.
+  * Mehrere Funktionsaufrufe reduziert; unter anderem durch Verwendung alternativer Funktionen und Neuordnung von Code.
   * Viele kleinere Verbesserungen.
 * PHP Maximal-Version auf 8.2 erhöht.
 * Sprachdateien:
   * "Migrationsdateien" global zu "Migrationen" geändert.
   * 9 Variablen hinzugefügt, 3 umbenannt, 1 entfernt.
   * Kleine Änderungen.
-* Für Erweiterung-Autoren: Bei der Auswertung von `is_enableable` wird jetzt strikt nach phpBB Version unterschieden. Unverändert muss bei >=3.3.0 ein explizites `true` zurückgegeben werden, damit eine Erweiterung aktiviert werden kann. Bei <3.3.0 genügt jetzt auch ein implizites `true`. Damit verhält sich EMP identisch zur jeweiligen phpBB Minor Version auf der es installiert ist.
+* Für Erweiterung-Autoren: Bei der Auswertung von `is_enableable` wird jetzt strikt nach phpBB Version unterschieden. Unverändert muss bei >=3.3.0 ein explizites `true` zurückgegeben werden, damit eine Erweiterung aktiviert werden kann. Bei <3.3.0 genügt jetzt auch ein implizites `true`. Damit verhält sich EMP identisch zur jeweiligen phpBB Minor Version, auf der es installiert ist.
 
 ### 1.0.8
 GH (2023-02-01)

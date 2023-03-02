@@ -136,6 +136,13 @@ ExtMgrPlus.SetDefaults = function () {
 	$('input[name="extmgrplus_switch_migrations"]'			).prop('checked'	, false);
 };
 
+ExtMgrPlus.VersionCheck = function (VersionCheckURL) {
+	'use strict';
+
+	$('.fa-refresh.extmgrplus_link_icon').addClass('fa-spin');
+	$(location).prop('href', VersionCheckURL);
+};
+
 ExtMgrPlus.SaveCheckboxes = function () {
 	'use strict';
 
