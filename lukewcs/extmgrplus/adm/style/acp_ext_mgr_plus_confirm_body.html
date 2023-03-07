@@ -8,10 +8,10 @@
 
 <form id="confirm" method="post" action="{{ S_CONFIRM_ACTION }}">
 	<fieldset>
-		<h2>{MESSAGE_TITLE}</h1>
-		<p>{MESSAGE_TEXT}</p>
+		<h2>{{ MESSAGE_TITLE }}</h2>
+		<p>{{ MESSAGE_TEXT }}</p>
 
-		{S_HIDDEN_FIELDS}
+		{{ S_HIDDEN_FIELDS }}
 
 		<fieldset class="submit-buttons">
 			<input type="submit" name="confirm" value="{{ lang('YES') }}" class="button1">&nbsp;

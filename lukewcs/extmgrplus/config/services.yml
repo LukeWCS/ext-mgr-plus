@@ -14,6 +14,7 @@ services:
             - '@dbal.conn'
             - '%core.table_prefix%'
             - '%core.root_path%'
+            - '%core.php_ext%'
     lukewcs.extmgrplus.listener:
         class: lukewcs\extmgrplus\event\listener
         arguments:

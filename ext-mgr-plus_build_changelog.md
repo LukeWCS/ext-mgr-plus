@@ -1,5 +1,16 @@
 ### 1.1.1
 
+#### 1.1.1-b2
+* ConfirmBox-Template:
+  * HTML Tag Fehler in `acp_ext_mgr_plus_confirm_body.html` korrigiert. [Meldung von IMC]
+  * Restliche veraltete Template Syntax durch Twig ersetzt.
+* Prüfung auf gültige Migration verbessert durch 2 neue Bedingungen:
+  * Suffix der Datei muss dem Serverseitig eingestellten PHP Suffix entsprechen.
+  * Der deklarierte Klassenname innerhalb der Migrationsdatei muss exakt dem Dateinamen entsprechen.
+* Core:
+  * Code Optimierung.
+* `services.yml` erweitert.
+
 #### 1.1.1-b1
 * ACP-Template:
   * Icon von `fa-wifi` auf `fa-refresh` geändert. Während der Versionsprüfung wird dieses Icon jetzt animiert.

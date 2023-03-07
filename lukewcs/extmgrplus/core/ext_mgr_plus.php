@@ -28,6 +28,7 @@ class ext_mgr_plus
 	protected $db;
 	protected $table_prefix;
 	protected $phpbb_root_path;
+	protected $php_ext;
 
 	protected $u_action;
 	protected $metadata;
@@ -46,7 +47,8 @@ class ext_mgr_plus
 		\phpbb\template\template $template,
 		\phpbb\db\driver\driver_interface $db,
 		$table_prefix,
-		$phpbb_root_path
+		$phpbb_root_path,
+		$php_ext
 	)
 	{
 		$this->ext_manager		= $ext_manager;
@@ -61,6 +63,7 @@ class ext_mgr_plus
 		$this->db				= $db;
 		$this->table_prefix 	= $table_prefix;
 		$this->phpbb_root_path	= $phpbb_root_path;
+		$this->php_ext			= $php_ext;
 	}
 
 	public function todo(): void
@@ -143,7 +146,7 @@ class ext_mgr_plus
 			$this->config->set('extmgrplus_switch_migration_col'	, $this->request->variable('extmgrplus_switch_migration_col', 0));
 			$this->config->set('extmgrplus_switch_migrations'		, $this->request->variable('extmgrplus_switch_migrations', 0));
 
-			trigger_error($this->language->lang('EXTMGRPLUS_MSG_SETTINGS_SAVED') . adm_back_link($this->u_action), E_USER_NOTICE);
+			trigger_error($this->language->lang('EXTMGRPLUS_MSG_SETTINGS_SAVED') . $this->extmgr_back_link(), E_USER_NOTICE);
 		}
 		else if ($this->request->is_set_post('extmgrplus_save_order_and_ignore') && $this->config['extmgrplus_switch_order_and_ignore'])
 		{
@@ -157,7 +160,7 @@ class ext_mgr_plus
 			$this->config_text_set('extmgrplus_list_order_and_ignore', 'order', count($order_list) ? $order_list : null);
 			$this->config_text_set('extmgrplus_list_order_and_ignore', 'ignore', count($ignore_list) ? $ignore_list : null);
 
-			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED') . adm_back_link($this->u_action), E_USER_NOTICE);
+			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED') . $this->extmgr_back_link(), E_USER_NOTICE);
 		}
 		else if ($this->request->is_set_post('extmgrplus_save_checkboxes') && $this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_LAST)
 		{
@@ -169,7 +172,7 @@ class ext_mgr_plus
 
 			$this->config_text_set('extmgrplus_list_selected', 'selected', count($ext_mark_list) ? $ext_mark_list : null);
 
-			trigger_error($this->language->lang('EXTMGRPLUS_MSG_CHECKBOXES_SAVED') . adm_back_link($this->u_action), E_USER_NOTICE);
+			trigger_error($this->language->lang('EXTMGRPLUS_MSG_CHECKBOXES_SAVED') . $this->extmgr_back_link(), E_USER_NOTICE);
 		}
 	}
 
@@ -237,9 +240,9 @@ class ext_mgr_plus
 		}
 		else
 		{
-			$ext_list_ignore = [];
-			$ext_list_ignore_enabled = [];
-			$ext_list_ignore_disabled = [];
+			$ext_list_ignore			= [];
+			$ext_list_ignore_enabled	= [];
+			$ext_list_ignore_disabled	= [];
 		}
 
 		if (!$this->config['extmgrplus_switch_self_disable'])
@@ -265,9 +268,9 @@ class ext_mgr_plus
 		}
 		else
 		{
-			$ext_list_selected = [];
-			$ext_list_selected_enabled_clean = [];
-			$ext_list_selected_disabled_clean = [];
+			$ext_list_selected					= [];
+			$ext_list_selected_enabled_clean	= [];
+			$ext_list_selected_disabled_clean	= [];
 		}
 
 		$ext_count_available				= count($ext_list_available);
@@ -345,7 +348,7 @@ class ext_mgr_plus
 		)
 		{
 			$this->template->assign_vars([
-				'MESSAGE_TEXT'		=>	sprintf('%1$s<br><br><strong>%2$s v%3$s (%4$s)</strong><br><br><em>%5$s</em><br><br>%6$s',
+				'MESSAGE_TEXT'		=>	sprintf('%1$s<br><br><strong>%2$s v%3$s (%4$s)</strong><br><br><em>%5$s</em>%6$s',
 											/* 1 */	$this->language->lang('EXTMGRPLUS_MSG_PROCESS_ABORTED', $this->language->lang($last_action)),
 											/* 2 */	$ext_display_name,
 											/* 3 */	$ext_version,
@@ -505,7 +508,7 @@ class ext_mgr_plus
 		{
 			$msg_failed = '<br><br><strong>' . $this->language->lang('EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED', $this->safe_time_limit) . '</strong>';
 		}
-		trigger_error(sprintf('%1$s%2$s<br><br>%3$s',
+		trigger_error(sprintf('%1$s%2$s%3$s',
 				/* 1 */	$this->language->lang('EXTMGRPLUS_MSG_DEACTIVATION', $ext_count_success, $ext_count_enabled),
 				/* 2 */ $msg_failed ?? '',
 				/* 3 */	$this->extmgr_back_link()
@@ -579,7 +582,7 @@ class ext_mgr_plus
 				catch (\phpbb\db\migration\exception $e)
 				{
 					$msg_failed = $get_failed_msg($ext_display_name, $ext_version, $ext_name, $e->getLocalisedMessage($this->user));
-					trigger_error($this->language->lang('EXTMGRPLUS_MSG_PROCESS_ABORTED', $this->language->lang('EXTMGRPLUS_ALL_ENABLE')) . $msg_failed . '<br><br>' . $this->extmgr_back_link()
+					trigger_error($this->language->lang('EXTMGRPLUS_MSG_PROCESS_ABORTED', $this->language->lang('EXTMGRPLUS_ALL_ENABLE')) . $msg_failed . $this->extmgr_back_link()
 						, E_USER_WARNING
 					);
 				}
@@ -633,7 +636,7 @@ class ext_mgr_plus
 			}
 		}
 
-		trigger_error(sprintf('%1$s%2$s<br><br>%3$s',
+		trigger_error(sprintf('%1$s%2$s%3$s',
 				/* 1 */	$this->language->lang('EXTMGRPLUS_MSG_ACTIVATION', $ext_count_success, $ext_count_disabled),
 				/* 2 */ $msg_failed ?? '',
 				/* 3 */	$this->extmgr_back_link()
@@ -646,7 +649,7 @@ class ext_mgr_plus
 	{
 		if (!check_form_key('lukewcs_extmgrplus'))
 		{
-			trigger_error($this->language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
+			trigger_error($this->language->lang('FORM_INVALID') . $this->extmgr_back_link(), E_USER_WARNING);
 		}
 	}
 
@@ -688,13 +691,13 @@ class ext_mgr_plus
 	{
 		$migrations_available = $this->ext_manager->get_finder()->extension_directory('/migrations')->find_from_extension($ext_name, $ext_path, false);
 		$migration_classes = $this->ext_manager->get_finder()->get_classes_from_files($migrations_available);
-		$migration_classes_db = preg_grep('/' . preg_quote(str_replace('/', '\\', $ext_name . '/migrations/')) . '/', $this->migrations_db);
+		$migration_classes_db = preg_grep('/' . str_replace('/', '\\\\', $ext_name) . '\\\\migrations\\\\/', $this->migrations_db);
 		$migration_classes_new = array_diff($migration_classes, $migration_classes_db);
 
 		$migration_files = array_keys($migrations_available);
 		foreach ($migration_classes_new as $key => $class)
 		{
-			if ($this->is_migration($this->phpbb_root_path . $migration_files[$key]) === 0)
+			if ($this->is_migration($this->phpbb_root_path . $migration_files[$key]) !== 1)
 			{
 				unset($migration_classes_new[$key]);
 			}
@@ -706,14 +709,16 @@ class ext_mgr_plus
 	// Check if file is a migration file
 	private function is_migration(string $file): int
 	{
-		if (file_exists($file))
+		$file_info = pathinfo($file);
+		if ($file_info['extension'] == $this->php_ext && file_exists($file))
 		{
 			$file_content = file_get_contents($file);
 			if ($file_content !== false)
 			{
-				$check_migration = (
-					(preg_match('/function\s+?(?:depends_on|effectively_installed|update_schema|update_data|revert_data)\s*?\(/', $file_content)
-					&& !preg_match('/^\s*?abstract\s+?class/m', $file_content))
+				$check_migration = ((
+						preg_match('/function\s+?(?:depends_on|effectively_installed|update_schema|update_data|revert_data)\s*?\(/', $file_content)
+						&& preg_match('/^\s*?class\s+?' . $file_info['filename'] . '\s+/m', $file_content)
+					)
 					? 1
 					: 0
 				);
@@ -837,7 +842,7 @@ class ext_mgr_plus
 	// Generates a back link to the extension manager page
 	private function extmgr_back_link(): string
 	{
-		return sprintf('<a href="%1$s">%2$s</a>',
+		return sprintf('<br><br><a href="%1$s">%2$s</a>',
 			/* 1 */ $this->u_action . '&amp;action=list',
 			/* 2 */ $this->language->lang('RETURN_TO_EXTENSION_LIST')
 		);
