@@ -39,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, [
 	// language pack author
 	'EXTMGRPLUS_LANG_DESC'					=> 'English',
-	'EXTMGRPLUS_LANG_VER' 					=> '1.1.0',
+	'EXTMGRPLUS_LANG_VER' 					=> '1.1.1',
 	'EXTMGRPLUS_LANG_AUTHOR'	 			=> 'LukeWCS',
 
 	// settings
@@ -86,7 +86,9 @@ $lang = array_merge($lang, [
 	// ext manager
 	'EXTMGRPLUS_ALL_DISABLE'				=> 'Disable selected',
 	'EXTMGRPLUS_ALL_ENABLE'					=> 'Enable selected',
-	'EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED'	=> 'Not installed Extensions',
+	'EXTMGRPLUS_EXTENSIONS_ENABLED'			=> 'Enabled Extensions: %u',
+	'EXTMGRPLUS_EXTENSIONS_DISABLED'		=> 'Disabled Extensions: %u',
+	'EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED'	=> 'Not installed Extensions: %u',
 
 	// tooltips
 	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'		=> 'This extension has new migrations that are applied when activating the extension.',
@@ -103,25 +105,27 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_COL_ORDER'					=> 'Order',
 	'EXTMGRPLUS_COL_IGNORE'					=> 'Ignore',
 
-	// misc
+	// link bar
 	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'		=> 'Order & Ignore',
 	'EXTMGRPLUS_LINK_SAVE_CHECKBOXES'		=> 'Save',
-	'EXTMGRPLUS_EXTENSION_PLURAL'			=> [
-											0 => '0 extensions',
-											1 => '1 extension',
-											2 => '%u extensions',
+
+	// misc
+	'EXTMGRPLUS_EXTENSION_PLURAL' => [
+		0									=> '0 extensions',
+		1									=> '1 extension',
+		2									=> '%u extensions',
 	],
 
 	// messages
 	'EXTMGRPLUS_MSG_CONFIRM_DISABLE'		=> 'Are you sure that you wish to disable %s?',
 	'EXTMGRPLUS_MSG_CONFIRM_ENABLE'			=> 'Are you sure that you wish to enable %s?',
 	'EXTMGRPLUS_MSG_CONFIRM_MIGRATIONS'		=> 'Are you sure you want to allow activation of extensions with new migrations?',
-	'EXTMGRPLUS_MSG_SETTINGS_SAVED'			=> 'ExtMgrPlus: Settings saved successfully.',
-	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'	=> 'ExtMgrPlus: Order and Ignore columns saved successfully.',
-	'EXTMGRPLUS_MSG_CHECKBOXES_SAVED'		=> 'ExtMgrPlus: Selection of checkboxes saved successfully.',
-	'EXTMGRPLUS_MSG_PROCESS_ABORTED'		=> 'ExtMgrPlus: The “%s” operation was interrupted by the following extension:',
-	'EXTMGRPLUS_MSG_DEACTIVATION'			=> 'ExtMgrPlus: %1$u of %2$u enabled extensions have been disabled.',
-	'EXTMGRPLUS_MSG_ACTIVATION'				=> 'ExtMgrPlus: %1$u of %2$u disabled extensions have been enabled.',
+	'EXTMGRPLUS_MSG_SETTINGS_SAVED'			=> 'Settings saved successfully.',
+	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'	=> 'Order and Ignore columns saved successfully.',
+	'EXTMGRPLUS_MSG_CHECKBOXES_SAVED'		=> 'Selection of checkboxes saved successfully.',
+	'EXTMGRPLUS_MSG_PROCESS_ABORTED'		=> 'The “%s” operation was interrupted by the following extension:',
+	'EXTMGRPLUS_MSG_DEACTIVATION'			=> '%1$u of %2$u enabled extensions have been disabled.',
+	'EXTMGRPLUS_MSG_ACTIVATION'				=> '%1$u of %2$u disabled extensions have been enabled.',
 	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'		=> 'The following extensions could not be activated:',
 	'EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED'		=> 'The tolerance range (%u seconds) of the maximum PHP execution time has been exceeded.',
 	'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED'	=> 'Note: The language pack for the extension <strong>%1$s</strong> is no longer up-to-date. (installed: %2$s / needed: %3$s)',

@@ -126,6 +126,11 @@ class ext_mgr_plus
 		$this->metadata = $this->ext_manager->create_extension_metadata_manager('lukewcs/extmgrplus')->get_metadata('all');
 		$this->safe_time_limit = $event['safe_time_limit'];
 
+		$this->template->assign_vars([
+			'EXTMGRPLUS_EXT_NAME'	=> $this->metadata['extra']['display-name'],
+			'EXTMGRPLUS_EXT_VER'	=> $this->metadata['version'],
+		]);
+
 		add_form_key('lukewcs_extmgrplus');
 
 		if ($this->request->is_set_post('extmgrplus_enable_all') || $this->request->is_set_post('extmgrplus_disable_all'))
@@ -146,6 +151,7 @@ class ext_mgr_plus
 			$this->config->set('extmgrplus_switch_migration_col'	, $this->request->variable('extmgrplus_switch_migration_col', 0));
 			$this->config->set('extmgrplus_switch_migrations'		, $this->request->variable('extmgrplus_switch_migrations', 0));
 
+			$this->template->assign_vars(['EXTMGRPLUS_LAST_EMP_ACTION' => 'trigger_error']);
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_SETTINGS_SAVED') . $this->extmgr_back_link(), E_USER_NOTICE);
 		}
 		else if ($this->request->is_set_post('extmgrplus_save_order_and_ignore') && $this->config['extmgrplus_switch_order_and_ignore'])
@@ -160,6 +166,7 @@ class ext_mgr_plus
 			$this->config_text_set('extmgrplus_list_order_and_ignore', 'order', count($order_list) ? $order_list : null);
 			$this->config_text_set('extmgrplus_list_order_and_ignore', 'ignore', count($ignore_list) ? $ignore_list : null);
 
+			$this->template->assign_vars(['EXTMGRPLUS_LAST_EMP_ACTION' => 'trigger_error']);
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED') . $this->extmgr_back_link(), E_USER_NOTICE);
 		}
 		else if ($this->request->is_set_post('extmgrplus_save_checkboxes') && $this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_LAST)
@@ -172,6 +179,7 @@ class ext_mgr_plus
 
 			$this->config_text_set('extmgrplus_list_selected', 'selected', count($ext_mark_list) ? $ext_mark_list : null);
 
+			$this->template->assign_vars(['EXTMGRPLUS_LAST_EMP_ACTION' => 'trigger_error']);
 			trigger_error($this->language->lang('EXTMGRPLUS_MSG_CHECKBOXES_SAVED') . $this->extmgr_back_link(), E_USER_NOTICE);
 		}
 	}
@@ -307,18 +315,16 @@ class ext_mgr_plus
 			'EXTMGRPLUS_COUNT_DISABLED'					=> $ext_count_disabled,
 			'EXTMGRPLUS_COUNT_DISABLED_CLEAN'			=> $ext_count_disabled_clean,
 			'EXTMGRPLUS_COUNT_NOT_INSTALLED'			=> $ext_count_available - $ext_count_configured,
-			'EXTMGRPLUS_EXT_NAME'						=> $ext_display_name,
-			'EXTMGRPLUS_EXT_VER'						=> $ext_ver,
 			'EXTMGRPLUS_NOTES'							=> $notes,
 			'CDB_EXT_VER'								=> vsprintf('%u.%u', explode('.', PHPBB_VERSION)),
 
 			'EXTMGRPLUS_SWITCH_LOG'						=> $this->config['extmgrplus_switch_log'],
 			'EXTMGRPLUS_SWITCH_CONFIRMATION'			=> $this->config['extmgrplus_switch_confirmation'],
 			'EXTMGRPLUS_SELECT_CHECKBOX_MODE'			=> $this->config['extmgrplus_select_checkbox_mode'],
-			'EXTMGRPLUS_SELECT_CHECKBOX_MODE_OPTIONS'	=> [
-														'0' => 'EXTMGRPLUS_CHECKBOX_MODE_OFF',
-														'1' => 'EXTMGRPLUS_CHECKBOX_MODE_ALL',
-														'2' => 'EXTMGRPLUS_CHECKBOX_MODE_LAST',
+			'EXTMGRPLUS_SELECT_CHECKBOX_MODE_OPTIONS' => [
+				'EXTMGRPLUS_CHECKBOX_MODE_OFF'			=> '0',
+				'EXTMGRPLUS_CHECKBOX_MODE_ALL'			=> '1',
+				'EXTMGRPLUS_CHECKBOX_MODE_LAST'			=> '2',
 			],
 			'EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE'		=> $this->config['extmgrplus_switch_order_and_ignore'],
 			'EXTMGRPLUS_SWITCH_SELF_DISABLE'			=> $this->config['extmgrplus_switch_self_disable'],
@@ -331,6 +337,12 @@ class ext_mgr_plus
 	{
 		$last_action = $this->template->retrieve_var('EXTMGRPLUS_LAST_EMP_ACTION');
 		if ($this->ext_manager->is_disabled('lukewcs/extmgrplus') || $last_action == '')
+		{
+			return;
+		}
+
+		$this->template->set_filenames(['body' => '@lukewcs_extmgrplus/acp_ext_mgr_plus_message_body.html']);
+		if ($last_action == 'trigger_error')
 		{
 			return;
 		}
@@ -364,14 +376,6 @@ class ext_mgr_plus
 
 	private function exts_switch_confirm(): void
 	{
-		if ($this->config['extmgrplus_switch_confirmation'])
-		{
-			$this->template->assign_vars([
-				'EXTMGRPLUS_EXT_NAME'	=> $this->metadata['extra']['display-name'],
-				'EXTMGRPLUS_EXT_VER'	=> $this->metadata['version'],
-			]);
-		}
-
 		$ext_mark_enabled = $this->request->variable('ext_mark_enabled', ['']);
 		$ext_mark_disabled = $this->request->variable('ext_mark_disabled', ['']);
 		if ($this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_LAST && !$this->request->is_set_post('confirm_uid'))
@@ -381,6 +385,7 @@ class ext_mgr_plus
 
 		if ($this->request->is_set_post('extmgrplus_disable_all'))
 		{
+			$this->template->assign_vars(['EXTMGRPLUS_ACTION_EXPLAIN' => $this->language->lang('EXTENSION_DISABLE_EXPLAIN')]);
 			if ($this->config['extmgrplus_switch_confirmation'])
 			{
 				if (confirm_box(true))
@@ -389,9 +394,6 @@ class ext_mgr_plus
 				}
 				else
 				{
-					$this->template->assign_vars([
-						'EXTMGRPLUS_ACTION_EXPLAIN' => $this->language->lang('EXTENSION_DISABLE_EXPLAIN'),
-					]);
 					confirm_box(
 						false,
 						$this->language->lang('EXTMGRPLUS_MSG_CONFIRM_DISABLE', $this->language->lang('EXTMGRPLUS_EXTENSION_PLURAL', count($ext_mark_enabled))) .
@@ -412,6 +414,7 @@ class ext_mgr_plus
 		}
 		else if ($this->request->is_set_post('extmgrplus_enable_all'))
 		{
+			$this->template->assign_vars(['EXTMGRPLUS_ACTION_EXPLAIN' => $this->language->lang('EXTENSION_ENABLE_EXPLAIN')]);
 			if ($this->config['extmgrplus_switch_confirmation'])
 			{
 				if (confirm_box(true))
@@ -420,9 +423,6 @@ class ext_mgr_plus
 				}
 				else
 				{
-					$this->template->assign_vars([
-						'EXTMGRPLUS_ACTION_EXPLAIN' => $this->language->lang('EXTENSION_ENABLE_EXPLAIN'),
-					]);
 					confirm_box(
 						false,
 						$this->language->lang('EXTMGRPLUS_MSG_CONFIRM_ENABLE', $this->language->lang('EXTMGRPLUS_EXTENSION_PLURAL', count($ext_mark_disabled))),
@@ -508,6 +508,7 @@ class ext_mgr_plus
 		{
 			$msg_failed = '<br><br><strong>' . $this->language->lang('EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED', $this->safe_time_limit) . '</strong>';
 		}
+		$this->template->assign_vars(['EXTMGRPLUS_LAST_EMP_ACTION' => 'trigger_error']);
 		trigger_error(sprintf('%1$s%2$s%3$s',
 				/* 1 */	$this->language->lang('EXTMGRPLUS_MSG_DEACTIVATION', $ext_count_success, $ext_count_enabled),
 				/* 2 */ $msg_failed ?? '',
@@ -635,7 +636,7 @@ class ext_mgr_plus
 				$msg_failed .= $get_failed_msg($vars['display_name'], $vars['ext_version'], $name, $vars['message']);
 			}
 		}
-
+		$this->template->assign_vars(['EXTMGRPLUS_LAST_EMP_ACTION' => 'trigger_error']);
 		trigger_error(sprintf('%1$s%2$s%3$s',
 				/* 1 */	$this->language->lang('EXTMGRPLUS_MSG_ACTIVATION', $ext_count_success, $ext_count_disabled),
 				/* 2 */ $msg_failed ?? '',
@@ -649,6 +650,7 @@ class ext_mgr_plus
 	{
 		if (!check_form_key('lukewcs_extmgrplus'))
 		{
+			$this->template->assign_vars(['EXTMGRPLUS_LAST_EMP_ACTION' => 'trigger_error']);
 			trigger_error($this->language->lang('FORM_INVALID') . $this->extmgr_back_link(), E_USER_WARNING);
 		}
 	}

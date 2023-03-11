@@ -1,7 +1,24 @@
 ### 1.1.1
 
+#### 1.1.1-b3
+* Core:
+  * Die Funktion zum Abfangen von `trigger_error` Meldungen so geändert, dass das Standard Template von phpBB durch ein EMP Template ersetzt wird.
+  * Alle `trigger_error` Aufrufe werden jetzt so vorbereitet, dass für die Meldung stets das neue EMP Template genutzt wird.
+  * Code so geändert, das Anzeigename und Version von EMP universell überall angezeigt werden können. Dadurch entfiel auch redundanter Code.
+  * Beim Select-Array für den Checkbox-Modus Wert und Sprachvariable getauscht.
+* ExtMgr Template:
+  * Beim Select-Array für den Checkbox-Modus Wert und Sprachvariable getauscht.
+  * Kleine Änderungen
+* TriggerError Template:
+  * Für `trigger_error` eigenes Template hinzugefügt. Das Template basiert auf dem Original von phpBB und wurde so erweitert, dass bei allen Meldungen der ExtMgr Titel, die ExtMgr Beschreibung, die jeweilige Aktions-Erklärung (sofern zutreffend) sowie der EMP Footer angezeigt wird. Damit verhält sich EMP auch bei Bestätigungen wie phpBB, da Meldungen stets in das ExtMgr Template Gerüst eingebettet sind.
+* Sprachdateien:
+  * In 6 Sprachvariablen den einleitenden Text "ExtMgrPlus:" für Meldungen entfernt, da dieser durch das neue TriggerError Template nicht mehr benötigt wird.
+  * 2 neue Sprachvariablen für die Überschriften von "Aktivierte" und "Deaktivierte" hinzugefügt, bei der die Anzahl jetzt per Platzhalter in der Sprachvariable eingefügt wird.
+  * 1 Sprachvariable für die Überschrift von "Nicht installierte" geändert, bei der die Anzahl jetzt per Platzhalter in der Sprachvariable eingefügt wird.
+  * Kleine Änderungen
+
 #### 1.1.1-b2
-* ConfirmBox-Template:
+* ConfirmBox Template:
   * HTML Tag Fehler in `acp_ext_mgr_plus_confirm_body.html` korrigiert. [Meldung von IMC]
   * Restliche veraltete Template Syntax durch Twig ersetzt.
 * Prüfung auf gültige Migration verbessert durch 2 neue Bedingungen:
@@ -12,7 +29,7 @@
 * `services.yml` erweitert.
 
 #### 1.1.1-b1
-* ACP-Template:
+* ExtMgr Template:
   * Icon von `fa-wifi` auf `fa-refresh` geändert. Während der Versionsprüfung wird dieses Icon jetzt animiert.
   * Die URL der Versionsprüfung wird nicht mehr direkt aufgerufen, sondern an eine neue JS Funktion übergeben.
 * JS:
@@ -36,7 +53,7 @@
   * Bei der Auswertung von `is_enableable` wird jetzt strikt nach phpBB Version unterschieden. Unverändert muss bei >=3.3.0 ein explizites `true` zurückgegeben werden, damit eine Erweiterung aktiviert werden kann. Bei <3.3.0 genügt jetzt auch ein implizites `true`.
   * Mehrere Template-Variablen umbenannt.
   * Code Optimierung.
-* ACP-Template:
+* ExtMgr Template:
   * An umbenannte Template-Variablen angepasst.
   * Twig optimiert.
   * Icons der Link-Leiste werden beim überfahren nicht mehr unterstrichen und verhalten sich damit wie die Icons der Schnellzugriff-Leiste. Ausserdem Icons etwas grösser definiert.
@@ -47,7 +64,7 @@
 * Core:
   * An umbenannte Config-Variablen angepasst.
   * Code Optimierung.
-* ACP-Template:
+* ExtMgr Template:
   * Die Link-Leiste so gestaltet wie die Schnellzugriff-Leiste im Forenindex mit individuellen Icons für jede Aktion.
   * An umbenannte Config-Variablen angepasst.
 * JS:
@@ -58,7 +75,7 @@
 
 #### 1.1.0-b9
 * Ist "Letzten Zustand merken" aktiv, kann jetzt jederzeit die aktuelle Checkbox-Auswahl gespeichert werden, unabhängig von Deaktivieren/Aktivieren.
-* ACP-Template:
+* ExtMgr Template:
   * Oben rechts ein Link eingefügt, mit dem die aktuelle Checkbox-Auswahl gespeichert werden kann. Der Zustand des Links ist von "Letzten Zustand merken" abhängig.
 * JS:
   * Neue Funktion für das Speichern der Checkboxen hinzugefügt. Damit wird ein spezifischer Submit-Button innerhalb eines Formulars simuliert, indem dynamisch eine `hidden` Eigenschaft zum DOM hinzugefügt wird. Dieser Kniff ist nötig, da sich das aufrufende Element ausserhalb des Formulars befindet und zudem ein normaler Link ist, kein Submit-Button.
@@ -67,7 +84,7 @@
  
 #### 1.1.0-b8
 * Neue Eigenschaft für Checkboxen: Letzten Zustand merken.
-* ACP-Template:
+* ExtMgr Template:
   * Schalter für Checkboxen durch Optionsliste ersetzt.
   * Neues Twig Makro `select` um simpel Optionslisten einfügen zu können.
   * Template an die Änderungen der Checkbox Handhabung angepasst.
@@ -82,14 +99,14 @@
 #### 1.1.0-b7
 * Core:
   * Variablen umbenannt.
-* ACP-Template: 
+* ExtMgr Template: 
   * Variablen umbenannt.
   * Twig Makro für FA Icons von `<span>` auf `<i>` geändert, was wieder phpBB Standard entspricht.
 * CSS:
   * Nicht mehr benötigtes CSS entfernt.
 
 #### 1.1.0-b6
-* Core und ACP-Template: Eine unnötige Template Variable entfernt, da hierfür bereits eine Config Template Variable existiert.
+* Core und ExtMgr Template: Eine unnötige Template Variable entfernt, da hierfür bereits eine Config Template Variable existiert.
 * Die maximale PHP Laufzeit wird nicht mehr direkt aus der PHP INI geladen, sondern aus dem Event Datenpaket ermittelt.
 * Reihenfolge & Ignorieren:
   * Die Beschreibungen von Reihenfolge und Ignorieren werden jetzt nebeneinander statt untereinander dargestellt. [Vorschlag von Kirk]
@@ -109,7 +126,8 @@
 * Versionsweiche beim Cache Workaround auf 3.3.8-rc1 präzisiert.
 
 #### 1.1.0-b4
-* Bei der Rückfrage wird jetzt ebenfalls der EMP Footer eingefügt.
+* ConfirmBox Template:
+  * Bei der Rückfrage wird jetzt ebenfalls der EMP Footer eingefügt.
   * Footer in ein extra Template ausgelagert.
 * Code Optimierung:
   * Code bei Migration 1.0.3 optimiert, wodurch 4 unnötige Funktionsaufrufe entfielen.
@@ -125,7 +143,7 @@
   * Kleine Verbesserungen.
 * Sprachdateien:
   * "Reihenfolge/Ignorieren" zu "Reihenfolge & Ignorieren" geändert.
-* ACP-Template:
+* ExtMgr Template:
   * Formale Fehler behoben.
 
 #### 1.1.0-b1
@@ -153,10 +171,11 @@
 
 #### 1.0.8
 * Release
-* Bei den Aktionen "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" wird jetzt oberhalb der Rückfrage der gleiche Hinweis angezeigt, den auch phpBB selbst bei der Rückfrage der Aktionen "Deaktivieren" und "Aktivieren" anzeigt.
+* ConfirmBox Template
+  * Bei den Aktionen "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" wird jetzt oberhalb der Rückfrage der gleiche Hinweis angezeigt, den auch phpBB selbst bei der Rückfrage der Aktionen "Deaktivieren" und "Aktivieren" anzeigt.
 * Sprachdateien:
   * Texte bezüglich "Migrationen erlauben" präzisiert.
-* ACP-Template:
+* ExtMgr Template:
   * Richtlinienfehler behoben. [Meldung von Kirk]
 * Code:
   * Funktion zum deaktivieren/aktivieren auf 2 Funktionen aufgeteilt.
@@ -170,7 +189,7 @@
 #### 1.0.8-b1
 * Die Funktion "Details" im ExtMgr wird jetzt ebenfalls für den Versions-Cache von EMP genutzt. Das betrifft die Info-Tabelle oberhalb der Erweiterungen-Liste sowie die Update-Indikatoren in der Liste.
 * Die Info-Tabelle oberhalb der Erweiterungen-Liste auf 3 Spalten erweitert. Datum und Anzahl Updates haben jetzt eigene Spalten.
-* ACP-Template:
+* ExtMgr Template:
   * Das `spaceless` Tag, welches seit Twig 2.7 als DEPRECATED eingestuft ist, wurde entfernt. Stattdessen wird mit `spaceless` Filter und Whitespace Modifier gearbeitet.
   * Beim Sicherheitsschalter "Erlaube Migrationen" bekommt der Browser jetzt vor der Rückfrage (`confirm()`) genug Zeit um den aktivierten Schalter darstellen zu können.
 * Code:
@@ -200,7 +219,8 @@
 #### 1.0.7-b7
 * Die Prüfung auf Überschreitung der maximalen Ausführungszeit findet nur noch statt, nachdem eine Ext geschaltet wurde. Bisher wurde auch innerhalb `enable_step()` geprüft.
 * Die Prüfung auf Überschreitung der maximalen Ausführungszeit findet nicht mehr vor dem Log Eintrag statt, sondern danach. So kann der Log Eintrag vor Abbruch noch aktualisiert werden.
-* Ist Eigendeaktivierung aktiviert und beim deaktivieren wurde auch EMP ausgewählt, wird in der Rückfrage darauf hingewiesen, dass auch EMP deaktiviert wird.
+* ConfirmBox Template:
+  * Ist Eigendeaktivierung aktiviert und beim deaktivieren wurde auch EMP ausgewählt, wird in der Rückfrage darauf hingewiesen, dass auch EMP deaktiviert wird.
   * Sprachvariable für den Hinweis hinzugefügt.
 * Mein Workaround bezüglich Twig Cache Problematik der schon bei ExtOnOff 2.0.0 in ähnlicher Form eingebaut wurde, wird ab phpBB 3.3.8 nicht mehr benötigt. Details im regulären Changelog.
 
@@ -213,11 +233,11 @@
   
 #### 1.0.7-b5
 * EC Fehler (PSSE) behoben.
-* ACP-Template:
+* ExtMgr Template:
   * Toggle CSS optimiert und in separate Datei ausgelagert.
 
 #### 1.0.7-b4
-* ACP-Template:
+* ExtMgr Template:
   * Wie andere Erweiterungen von mir, bietet jetzt auch EMP die Möglichkeit die Einstellungen auf Installation-Standard zurücksetzen zu können.
   * Eine `legend` Überschrift kann jetzt auch als Untergruppe eines `fieldset` Containers dargestellt werden. Bisher wurde eine solche Untergruppe nur per simplen `hr` dargestellt, dessen gestrichelte Linie nicht sonderlich schön aussah und auch mehr Platz benötigte, da die Linie in einer eigenen Zeile war.
   * "Absenden" und "Zurücksetzen" sind jetzt in einer eigenen Gruppe (`fieldset`), die auf dieselbe Weise dargestellt wird, wie bei ACP Seiten von phpBB.
@@ -241,7 +261,7 @@
   * Kleinere Änderungen.
 
 #### 1.0.7-b3
-* ACP-Template:
+* ExtMgr Template:
   * Neues Twig Makro für Ja/Nein Schalter 
   * Toggle Funktion in angepasster Form von "Style Changer" übernommen. (Danke an Kirk)
   * JS für Toggles angepasst.

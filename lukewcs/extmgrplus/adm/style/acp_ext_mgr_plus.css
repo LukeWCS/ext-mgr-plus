@@ -22,7 +22,7 @@ input[type="checkbox"]:disabled {
 
 .extmgrplus_link_icon {
 	display: inline-block;
-	margin-right: .3em;
+	margin: 0 .3em;
 	font-size: 12px;
 }
 

@@ -39,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, [
 	// language pack author
 	'EXTMGRPLUS_LANG_DESC'					=> 'Deutsch (Du)',
-	'EXTMGRPLUS_LANG_VER' 					=> '1.1.0',
+	'EXTMGRPLUS_LANG_VER' 					=> '1.1.1',
 	'EXTMGRPLUS_LANG_AUTHOR' 				=> 'LukeWCS',
 
 	// settings
@@ -86,7 +86,9 @@ $lang = array_merge($lang, [
 	// ext manager
 	'EXTMGRPLUS_ALL_DISABLE'				=> 'Ausgewählte deaktivieren',
 	'EXTMGRPLUS_ALL_ENABLE'					=> 'Ausgewählte aktivieren',
-	'EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED'	=> 'Nicht installierte Erweiterungen',
+	'EXTMGRPLUS_EXTENSIONS_ENABLED'			=> 'Aktivierte Erweiterungen: %u',
+	'EXTMGRPLUS_EXTENSIONS_DISABLED'		=> 'Deaktivierte Erweiterungen: %u',
+	'EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED'	=> 'Nicht installierte Erweiterungen: %u',
 
 	// tooltips
 	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'		=> 'Diese Erweiterung hat neue Migrationen, die beim aktivieren der Erweiterung übernommen werden.',
@@ -103,25 +105,27 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_COL_ORDER'					=> 'Reihenfolge',
 	'EXTMGRPLUS_COL_IGNORE'					=> 'Ignorieren',
 
-	// misc
+	// link bar
 	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'		=> 'Reihenfolge & Ignorieren',
 	'EXTMGRPLUS_LINK_SAVE_CHECKBOXES'		=> 'Speichern',
-	'EXTMGRPLUS_EXTENSION_PLURAL'			=> [
-											0 => '0 Erweiterungen',
-											1 => '1 Erweiterung',
-											2 => '%u Erweiterungen',
+
+	// misc
+	'EXTMGRPLUS_EXTENSION_PLURAL' => [
+		0									=> '0 Erweiterungen',
+		1									=> '1 Erweiterung',
+		2									=> '%u Erweiterungen',
 	],
 
 	// messages
 	'EXTMGRPLUS_MSG_CONFIRM_DISABLE'		=> 'Bist du dir sicher, dass du %s deaktivieren möchtest?',
 	'EXTMGRPLUS_MSG_CONFIRM_ENABLE'			=> 'Bist du dir sicher, dass du %s aktivieren möchtest?',
 	'EXTMGRPLUS_MSG_CONFIRM_MIGRATIONS'		=> 'Bist du dir sicher, dass du die Aktivierung von Erweiterungen mit neuen Migrationen erlauben möchtest?',
-	'EXTMGRPLUS_MSG_SETTINGS_SAVED'			=> 'ExtMgrPlus: Einstellungen erfolgreich gespeichert.',
-	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'	=> 'ExtMgrPlus: Spalten für Reihenfolge und Ignorieren erfolgreich gespeichert.',
-	'EXTMGRPLUS_MSG_CHECKBOXES_SAVED'		=> 'ExtMgrPlus: Auswahl der Kontrollkästchen erfolgreich gespeichert.',
-	'EXTMGRPLUS_MSG_PROCESS_ABORTED'		=> 'ExtMgrPlus: Der Vorgang „%s“ wurde von folgender Erweiterung unterbrochen:',
-	'EXTMGRPLUS_MSG_DEACTIVATION'			=> 'ExtMgrPlus: %1$u von %2$u aktivierten Erweiterungen wurden deaktiviert.',
-	'EXTMGRPLUS_MSG_ACTIVATION'				=> 'ExtMgrPlus: %1$u von %2$u deaktivierten Erweiterungen wurden aktiviert.',
+	'EXTMGRPLUS_MSG_SETTINGS_SAVED'			=> 'Einstellungen erfolgreich gespeichert.',
+	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'	=> 'Spalten für Reihenfolge und Ignorieren erfolgreich gespeichert.',
+	'EXTMGRPLUS_MSG_CHECKBOXES_SAVED'		=> 'Auswahl der Kontrollkästchen erfolgreich gespeichert.',
+	'EXTMGRPLUS_MSG_PROCESS_ABORTED'		=> 'Der Vorgang „%s“ wurde von folgender Erweiterung unterbrochen:',
+	'EXTMGRPLUS_MSG_DEACTIVATION'			=> '%1$u von %2$u aktivierten Erweiterungen wurden deaktiviert.',
+	'EXTMGRPLUS_MSG_ACTIVATION'				=> '%1$u von %2$u deaktivierten Erweiterungen wurden aktiviert.',
 	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'		=> 'Die folgenden Erweiterungen konnten nicht aktiviert werden:',
 	'EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED'		=> 'Der Toleranzbereich (%u Sekunden) der maximalen PHP Ausführungszeit wurde überschritten.',
 	'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED'	=> 'Hinweis: Das Sprachpaket der Erweiterung <strong>%1$s</strong> ist nicht mehr aktuell. (vorhanden: %2$s / benötigt: %3$s)',

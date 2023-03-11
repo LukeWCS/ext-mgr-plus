@@ -56,17 +56,17 @@
 <fieldset class="quick">
 	<span class="small">
 		<a href="https://www.phpbb.com/go/customise/extensions/{{ CDB_EXT_VER }}" target="_blank">{{ _self.icon('fa-database extmgrplus_link_icon') }}{{ lang('BROWSE_EXTENSIONS_DATABASE') }}</a>
-		&nbsp;<a href="javascript:ExtMgrPlus.VersionCheck('{{ U_VERSIONCHECK_FORCE }}');">{{ _self.icon('fa-refresh extmgrplus_link_icon') }}{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</a>
-		&nbsp;<a href="javascript:ExtMgrPlus.ShowHideSettings();">{{ _self.icon('fa-cogs extmgrplus_link_icon') }}{{ lang('SETTINGS') }}</a>
+		<a href="javascript:ExtMgrPlus.VersionCheck('{{ U_VERSIONCHECK_FORCE }}');">{{ _self.icon('fa-refresh extmgrplus_link_icon') }}{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</a>
+		<a href="javascript:ExtMgrPlus.ShowHideSettings();">{{ _self.icon('fa-cogs extmgrplus_link_icon') }}{{ lang('SETTINGS') }}</a>
 		{% if EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE -%}
-			&nbsp;<a href="javascript:ExtMgrPlus.ShowHideOrderIgnore();">{{ _self.icon('fa-sort extmgrplus_link_icon') }}{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</a>
+			<a href="javascript:ExtMgrPlus.ShowHideOrderIgnore();">{{ _self.icon('fa-sort extmgrplus_link_icon') }}{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</a>
 		{%- else -%}
-			&nbsp;<span class="disabled">{{ _self.icon('fa-sort extmgrplus_link_icon') }}{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</span>
+			<span class="disabled">{{ _self.icon('fa-sort extmgrplus_link_icon') }}{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</span>
 		{%- endif ~%}
 		{% if EXTMGRPLUS_SELECT_CHECKBOX_MODE == 2 -%}
-			&nbsp;<a href="javascript:ExtMgrPlus.SaveCheckboxes();" id="extmgrplus_save_checkboxes">{{ _self.icon('fa-check-square-o extmgrplus_link_icon') }}{{ lang('EXTMGRPLUS_LINK_SAVE_CHECKBOXES') }}</a>
+			<a href="javascript:ExtMgrPlus.SaveCheckboxes();" id="extmgrplus_save_checkboxes">{{ _self.icon('fa-check-square-o extmgrplus_link_icon') }}{{ lang('EXTMGRPLUS_LINK_SAVE_CHECKBOXES') }}</a>
 		{%- else -%}
-			&nbsp;<span class="disabled">{{ _self.icon('fa-check-square-o extmgrplus_link_icon') }}{{ lang('EXTMGRPLUS_LINK_SAVE_CHECKBOXES') }}</span>
+			<span class="disabled">{{ _self.icon('fa-check-square-o extmgrplus_link_icon') }}{{ lang('EXTMGRPLUS_LINK_SAVE_CHECKBOXES') }}</span>
 		{%- endif ~%}
 	</span>
 </fieldset>
@@ -253,7 +253,7 @@
 			{% if enabled|length %}
 				<tr>
 					<td class="row3" colspan="{{ EXTMGRPLUS_SWITCH_MIGRATION_COL ? '4' : '3' }}">
-						<strong>{{ lang('EXTENSIONS_ENABLED') ~ lang('COLON') ~ ' ' ~ EXTMGRPLUS_COUNT_ENABLED }}</strong>{% EVENT acp_ext_list_enabled_title_after %}
+						<strong>{{ lang('EXTMGRPLUS_EXTENSIONS_ENABLED', EXTMGRPLUS_COUNT_ENABLED) }}</strong>{% EVENT acp_ext_list_enabled_title_after %}
 					</td>
 					<td class="row3">
 						{{ _self.button(
@@ -322,7 +322,7 @@
 				{% if EXTMGRPLUS_COUNT_DISABLED %}
 					<tr>
 						<td class="row3" colspan="{{ EXTMGRPLUS_SWITCH_MIGRATION_COL ? '4' : '3' }}">
-							<strong>{{ lang('EXTENSIONS_DISABLED') ~ lang('COLON') ~ ' ' ~ EXTMGRPLUS_COUNT_DISABLED }}</strong>{% EVENT acp_ext_list_disabled_title_after %}
+							<strong>{{ lang('EXTMGRPLUS_EXTENSIONS_DISABLED', EXTMGRPLUS_COUNT_DISABLED) }}</strong>{% EVENT acp_ext_list_disabled_title_after %}
 						</td>
 						<td class="row3">
 							{{ _self.button(
@@ -348,7 +348,7 @@
 						{% set section_not_installed = true %}
 						<tr>
 							<td class="row3" colspan="{{ EXTMGRPLUS_SWITCH_MIGRATION_COL ? '4' : '3' }}">
-								<strong>{{ lang('EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED') }}{{ lang('COLON') ~ ' ' ~ EXTMGRPLUS_COUNT_NOT_INSTALLED }}</strong>
+								<strong>{{ lang('EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED', EXTMGRPLUS_COUNT_NOT_INSTALLED) }}</strong>
 							</td>
 							<td class="row3">
 							</td>
@@ -466,7 +466,7 @@
 
 {% macro select(name, value, options) -%}
 	<select name="{{ name }}">
-		{% for opt_value, opt_langvar in options %}
+		{% for opt_langvar, opt_value in options %}
 			<option value="{{ opt_value }}"{{ opt_value == value ? ' selected' }}>{{ lang(opt_langvar) }}</option>
 		{% endfor %}
 	</select>

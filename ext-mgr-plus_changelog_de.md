@@ -8,6 +8,8 @@ GH (2023--) / CDB (2023--)
 * Prüfung auf gültige Migrationsdateien und zählen neuer Migrationen verbessert:
   * Beim Zählen der neuen Migrationen wurden unter Umständen auch Dateien als Migrationen erkannt, die kein gültiges PHP Suffix hatten, zum Beispiel eine Sicherungsdatei (`.bak`) einer Migrationsdatei. Eine solche Datei kann zwar eine gültige Migration enthalten, wird aber von phpBB selber ignoriert. In einem Ext Release kommen solche Dateien nicht vor bzw. sollten nicht vorkommen. In einem Entwickler Board sieht das jedoch anders aus. Ist kein gültiges PHP Suffix vorhanden, wird die Datei nicht mehr als gültige Migration gezählt.
   * Es wird jetzt zusätzlich geprüft, ob in einer Migrationsdatei die Klassen-Deklaration den exakten Dateinamen als Klassennamen enthält. Trifft das nicht zu, wird die Datei nicht mehr als gültige Migration gezählt.
+* Für Bestätigungsmeldungen und Fehlermeldungen ein eigenes Template hinzugefügt. Das Template basiert auf dem Original von phpBB und wurde so erweitert, dass bei allen Meldungen stets der ExtensionManager Titel, die ExtensionManager Beschreibung und die jeweilige Aktions-Erklärung (sofern zutreffend) von phpBB angezeigt wird. Zusätzlich wird auch der EMP Footer angezeigt. Damit verhält sich EMP auch bei Bestätigungen und Fehlermeldungen wie phpBB, da Meldungen stets in das gewohnte ExtensionManager Template Gerüst eingebettet sind.
+* Die Überschriften für "Aktivierte/Deaktivierte/Nicht installierte Erweiterungen" stehen für Übersetzer jetzt als Sprachvariablen zur Verfügung, bei der die Anzahl per Platzhalter eingefügt wird.
 * Code Optimierung.
 
 ### 1.1.0
