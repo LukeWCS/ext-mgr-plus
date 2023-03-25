@@ -7,6 +7,11 @@
 *
 */
 
+if (typeof ExtMgrPlus == "undefined")
+{
+	ExtMgrPlus = {};
+}
+
 ExtMgrPlus.constants = Object.freeze({
 	CheckBoxModeOff		: '0',
 	CheckBoxModeAll		: '1',
@@ -38,22 +43,6 @@ ExtMgrPlus.SetInputBoxState = function (e) {
 	$('#extmgrplus_list input[name="ext_order[' + e.currentTarget.value + ']"]').css('opacity', (e.currentTarget.checked ? '.5' : '1'));
 };
 
-ExtMgrPlus.ShowHideSettings = function () {
-	'use strict';
-
-	var show = ($('.extmgrplus_settings').css('display') == 'none');
-
-	if (show) {
-		$('.extmgrplus_settings')							.show();
-	} else {
-		$('.extmgrplus_settings')							.hide();
-	}
-	$('.extmgrplus_order_and_ignore')						.hide();
-
-	ExtMgrPlus.ShowOrderIgnoreColumns(false);
-	ExtMgrPlus.ShowActionElements(!show);
-};
-
 ExtMgrPlus.ShowHideOrderIgnore = function () {
 	'use strict';
 
@@ -64,7 +53,6 @@ ExtMgrPlus.ShowHideOrderIgnore = function () {
 	} else {
 		$('.extmgrplus_order_and_ignore')					.hide();
 	}
-	$('.extmgrplus_settings')								.hide();
 
 	ExtMgrPlus.ShowOrderIgnoreColumns(show);
 	ExtMgrPlus.ShowActionElements(!show);
@@ -78,13 +66,15 @@ ExtMgrPlus.ShowActionElements = function (show) {
 		$('#extmgrplus_list input[name*="ext_mark_"]')		.show();
 		$('#extmgrplus_list a')								.show();
 		$('#extmgrplus_list td.row2 span')					.show();
-		$('#extmgrplus_save_checkboxes')					.removeClass('disabled');
+		$('#extmgrplus_link_version_check')					.removeClass('disabled');
+		$('#extmgrplus_link_save_checkboxes')				.removeClass('disabled');
 	} else {
 		$('#extmgrplus_list .table1 input[type="submit"]')	.hide();
 		$('#extmgrplus_list input[name*="ext_mark_"]')		.hide();
 		$('#extmgrplus_list a')								.hide();
 		$('#extmgrplus_list td.row2 span')					.hide();
-		$('#extmgrplus_save_checkboxes')					.addClass('disabled');
+		$('#extmgrplus_link_version_check')					.addClass('disabled');
+		$('#extmgrplus_link_save_checkboxes')				.addClass('disabled');
 	}
 };
 
@@ -108,14 +98,14 @@ ExtMgrPlus.ShowOrderIgnoreColumns = function (show) {
 	}
 };
 
-ExtMgrPlus.ConfirmMigrations = function () {
+ExtMgrPlus.ConfirmSwitch = function (e) {
 	'use strict';
 
-	if ($('input[name="extmgrplus_switch_migrations"]').prop('checked')) {
+	if ($('input[name="' + e.target.name + '"]').prop('checked')) {
 		requestAnimationFrame(function() {
 			setTimeout(function() {
-				if (!confirm(ExtMgrPlus.lang.MsgConfirmMigrations)) {
-					$('input[name="extmgrplus_switch_migrations"]').prop('checked', false)
+				if (!confirm(ExtMgrPlus.lang['dialog_title'] + ExtMgrPlus.lang[e.target.name])) {
+					$('input[name="' + e.target.name + '"]').prop('checked', false)
 				}
 			});
 		});
@@ -139,14 +129,18 @@ ExtMgrPlus.SetDefaults = function () {
 ExtMgrPlus.VersionCheck = function (VersionCheckURL) {
 	'use strict';
 
+	if (($('.extmgrplus_order_and_ignore').css('display') != 'none')) {
+		return;
+	}
+
 	$('.fa-refresh.extmgrplus_link_icon').addClass('fa-spin');
-	$(location).prop('href', VersionCheckURL);
+	$(location).prop('href', ExtMgrPlus.tpl['versioncheck_url']);
 };
 
 ExtMgrPlus.SaveCheckboxes = function () {
 	'use strict';
 
-	if (($('.extmgrplus_settings').css('display') != 'none') || ($('.extmgrplus_order_and_ignore').css('display') != 'none')) {
+	if (($('.extmgrplus_order_and_ignore').css('display') != 'none')) {
 		return;
 	}
 
@@ -164,8 +158,9 @@ $('#extmgrplus_list').keypress(function(e) {
 
 $(window).ready(function() {
 	'use strict';
-
-	$('input[name="extmgrplus_switch_migrations"]'	).on('change'	, ExtMgrPlus.ConfirmMigrations);
+// ExtMgrPlus.ShowHideOrderIgnore();
+	$('input[name="force_unstable"]'				).on('change'	, ExtMgrPlus.ConfirmSwitch);
+	$('input[name="extmgrplus_switch_migrations"]'	).on('change'	, ExtMgrPlus.ConfirmSwitch);
 	$('input[name="extmgrplus_defaults"]'			).on('click'	, ExtMgrPlus.SetDefaults);
 	$('input[name="ext_mark_all_enabled"]:enabled'	).on('change'	, {CheckBoxType: 'enabled'}, ExtMgrPlus.CheckUncheckAll);
 	$('input[name="ext_mark_all_disabled"]:enabled'	).on('change'	, {CheckBoxType: 'disabled'}, ExtMgrPlus.CheckUncheckAll);

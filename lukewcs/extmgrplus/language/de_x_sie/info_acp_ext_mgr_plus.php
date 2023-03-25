@@ -37,6 +37,11 @@ if (empty($lang) || !is_array($lang))
 // ’ « » “ ” … „ “
 
 $lang = array_merge($lang, [
+	// navigation
+	'EXTMGRPLUS_NAV_TITLE'				=> 'Extension Manager Plus',
+	'EXTMGRPLUS_NAV_CONFIG'				=> 'Erweiterungen verwalten - Einstellungen',
+
+	// log
 	'EXTMGRPLUS_LOG_EXT_DISABLE_ALL'	=> '<strong>Erweiterungen verwalten (Plus)</strong><br>» %1$u von %2$u Erweiterungen deaktiviert',
 	'EXTMGRPLUS_LOG_EXT_ENABLE_ALL'		=> '<strong>Erweiterungen verwalten (Plus)</strong><br>» %1$u von %2$u Erweiterungen aktiviert',
 ]);

@@ -1,5 +1,34 @@
 ### 1.1.1
 
+#### 1.1.1-b4
+* Für die Einstellungen gibt es jetzt ein eigenes ACP Modul.
+  * Moduldateien hinzugefügt.
+  * ACP Template hinzugefügt.
+  * Controller hinzugefügt.
+  * Die Rückfrage bez. instabiler Versionen wird jetzt ebenfalls mit JS geregelt.
+* ExtMgr Template:
+  * HTML, Twig und JS für die Einstellungen entfernt.
+  * Bei Reihenfolge & Ignorieren wird der Submit-Button jetzt per Makro erzeugt.
+* HTML:
+  * Der Footer wird nicht länger als HTML Datei inkludiert und wurde entfernt.
+* Twig:
+  * Allgemeine Funktionen werden jetzt über eine separate Makro Datei inkludiert. Wurde durch das neue ACP Template sinnvoll, um redundanten Twig Code zu vermeiden, der in beiden Templates benötigt wird.
+  * Makro für den Footer hinzugefügt.
+  * Code für die Link-Leiste kompakter gestaltet durch Ternary's.
+* Core:
+  * Neue Datei `ext_mgr_plus_func.php` angelegt, um redundanten PHP Code zu vermeiden, der sowohl im ExtMgr Core als auch im Settings Controller benötigt wird.
+* JS:
+  * Die Funktion für Ein/Ausblenden der Einstellungen entfernt.
+  * Die Funktion für Bestätigung eines Schalters ist jetzt universell gestaltet, wodurch die Funktion für beliebige Schalter genutzt werden kann.
+  * Wenn Reihenfolge & Ignorieren geöffnet ist, wird jetzt der Link für die Versionsprüfung ebenfalls deaktiviert.
+* Migration:
+  * Neue Migration für das Hinzufügen des ACP Moduls.
+* Sprachdateien:
+  * Variablen für ExtMgr und ACP Modul auf 2 Dateien aufgeteilt. Somit wird nur noch geladen, was auch jeweils benötigt wird.
+  * 2 neue Variablen für das ACP Modul hinzugefügt.
+  * 1 neue Datei hinzugefügt in der nur die Daten des Übersetzers definiert sind sowie die Meldung bezüglich veraltetem Sprachpaket.
+  * Kleine Änderungen.
+
 #### 1.1.1-b3
 * Core:
   * Die Funktion zum Abfangen von `trigger_error` Meldungen so geändert, dass das Standard Template von phpBB durch ein EMP Template ersetzt wird.

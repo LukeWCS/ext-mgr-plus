@@ -7,6 +7,8 @@
 *
 #}
 
+{% import '@lukewcs_extmgrplus/acp_ext_mgr_plus_macros.html' as common %}
+
 {% INCLUDE 'overall_header.html' %}
 
 <a id="maincontent"></a>
@@ -15,13 +17,7 @@
 
 <p>{{ lang('EXTENSIONS_EXPLAIN') }}</p>
 
-{% if EXTMGRPLUS_NOTES|length %}
-	<div class="errorbox notice">
-		{% for note in EXTMGRPLUS_NOTES %}
-			<p>{{ note }}</p>
-		{% endfor %}
-	</div>
-{% endif %}
+{{ common.notes(EXTMGRPLUS_NOTES) }}
 
 <table class="table1">
 	<col class="row2a"><col class="row2a"><col class="row2a">
@@ -55,146 +51,12 @@
 
 <fieldset class="quick">
 	<span class="small">
-		<a href="https://www.phpbb.com/go/customise/extensions/{{ CDB_EXT_VER }}" target="_blank">{{ _self.icon('fa-database extmgrplus_link_icon') }}{{ lang('BROWSE_EXTENSIONS_DATABASE') }}</a>
-		<a href="javascript:ExtMgrPlus.VersionCheck('{{ U_VERSIONCHECK_FORCE }}');">{{ _self.icon('fa-refresh extmgrplus_link_icon') }}{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</a>
-		<a href="javascript:ExtMgrPlus.ShowHideSettings();">{{ _self.icon('fa-cogs extmgrplus_link_icon') }}{{ lang('SETTINGS') }}</a>
-		{% if EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE -%}
-			<a href="javascript:ExtMgrPlus.ShowHideOrderIgnore();">{{ _self.icon('fa-sort extmgrplus_link_icon') }}{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</a>
-		{%- else -%}
-			<span class="disabled">{{ _self.icon('fa-sort extmgrplus_link_icon') }}{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</span>
-		{%- endif ~%}
-		{% if EXTMGRPLUS_SELECT_CHECKBOX_MODE == 2 -%}
-			<a href="javascript:ExtMgrPlus.SaveCheckboxes();" id="extmgrplus_save_checkboxes">{{ _self.icon('fa-check-square-o extmgrplus_link_icon') }}{{ lang('EXTMGRPLUS_LINK_SAVE_CHECKBOXES') }}</a>
-		{%- else -%}
-			<span class="disabled">{{ _self.icon('fa-check-square-o extmgrplus_link_icon') }}{{ lang('EXTMGRPLUS_LINK_SAVE_CHECKBOXES') }}</span>
-		{%- endif ~%}
+		<a href="https://www.phpbb.com/go/customise/extensions/{{ CDB_EXT_VER }}" target="_blank">{{ common.icon('fa-database extmgrplus_link_icon') }}{{ lang('BROWSE_EXTENSIONS_DATABASE') }}</a>
+		<a href="javascript:ExtMgrPlus.VersionCheck();" id="extmgrplus_link_version_check">{{ common.icon('fa-refresh extmgrplus_link_icon') }}{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</a>
+		<a {{ EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE ? 'href="javascript:ExtMgrPlus.ShowHideOrderIgnore();"' : 'class="disabled"'}}>{{ common.icon('fa-sort extmgrplus_link_icon') }}{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</a>
+		<a {{ EXTMGRPLUS_SELECT_CHECKBOX_MODE == 2 ? 'href="javascript:ExtMgrPlus.SaveCheckboxes();" id="extmgrplus_link_save_checkboxes"' : 'class="disabled"' }}>{{ common.icon('fa-check-square-o extmgrplus_link_icon') }}{{ lang('EXTMGRPLUS_LINK_SAVE_CHECKBOXES') }}</a>
 	</span>
 </fieldset>
-
-<form class="extmgrplus_settings" method="post" action="{{ U_ACTION }}" style="display: none;">
-	<fieldset>
-		<legend>{{ lang('EXTENSIONS_VERSION_CHECK_SETTINGS') }}</legend>
-
-		<dl>
-			<dt>
-				<label>{{ lang('FORCE_UNSTABLE') ~ lang('COLON') }}</label>
-			</dt>
-			<dd>
-				{{ _self.switch('force_unstable', FORCE_UNSTABLE) }}
-			</dd>
-		</dl>
-
-		<legend class="legend_sub">{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
-
-		<p class="submit-buttons">
-			<input class="button1" type="submit" name="update" value="{{ lang('SUBMIT') }}">&nbsp;
-			<input class="button2" type="reset" name="reset" value="{{ lang('RESET') }}">
-
-			<input type="hidden" name="action" value="set_config_version_check_force_unstable">
-		</p>
-	</fieldset>
-
-	{{ S_FORM_TOKEN }}
-</form>
-
-<form class="extmgrplus_settings" method="post" action="{{ U_ACTION }}" style="display: none;">
-	<fieldset>
-		<legend>{{ lang('EXTMGRPLUS_SECTION_SETTINGS') }}</legend>
-
-		<dl>
-			<dt>
-				<label>{{ lang('EXTMGRPLUS_LOG') ~ lang('COLON') }}</label><br>
-				<span>{{ lang('EXTMGRPLUS_LOG_EXPLAIN') }}</span>
-			</dt>
-			<dd>
-				{{ _self.switch('extmgrplus_switch_log', EXTMGRPLUS_SWITCH_LOG) }}
-			</dd>
-		</dl>
-
-		<dl>
-			<dt>
-				<label>{{ lang('EXTMGRPLUS_CONFIRMATION') ~ lang('COLON') }}</label><br>
-				<span>{{ lang('EXTMGRPLUS_CONFIRMATION_EXPLAIN') }}</span>
-			</dt>
-			<dd>
-				{{ _self.switch('extmgrplus_switch_confirmation', EXTMGRPLUS_SWITCH_CONFIRMATION) }}
-			</dd>
-		</dl>
-
-		<dl>
-			<dt>
-				<label>{{ lang('EXTMGRPLUS_CHECKBOX_MODE') ~ lang('COLON') }}</label><br>
-				<span>{{ lang('EXTMGRPLUS_CHECKBOX_MODE_EXPLAIN', _self.icon('fa-check-square-o')) }}</span>
-			</dt>
-			<dd>
-				{{ _self.select('extmgrplus_select_checkbox_mode', EXTMGRPLUS_SELECT_CHECKBOX_MODE, EXTMGRPLUS_SELECT_CHECKBOX_MODE_OPTIONS) }}
-			</dd>
-		</dl>
-
-		<dl>
-			<dt>
-				<label>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE') ~ lang('COLON') }}</label><br>
-				<span>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN') }}</span>
-			</dt>
-			<dd>
-				{{ _self.switch('extmgrplus_switch_order_and_ignore', EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE) }}
-			</dd>
-		</dl>
-
-		<dl>
-			<dt>
-				<label>{{ lang('EXTMGRPLUS_SELF_DISABLE') ~ lang('COLON') }}</label><br>
-				<span>{{ lang('EXTMGRPLUS_SELF_DISABLE_EXPLAIN') }}</span>
-			</dt>
-			<dd>
-				{{ _self.switch('extmgrplus_switch_self_disable', EXTMGRPLUS_SWITCH_SELF_DISABLE) }}
-			</dd>
-		</dl>
-
-		<legend class="legend_sub">{{ lang('EXTMGRPLUS_SECTION_EXPERT_SETTINGS') }}</legend>
-
-		<dl>
-			<dt>
-				<label>{{ lang('EXTMGRPLUS_MIGRATION_COL') ~ lang('COLON') }}</label><br>
-				<span>{{ lang('EXTMGRPLUS_MIGRATION_COL_EXPLAIN') }}</span>
-			</dt>
-			<dd>
-				{{ _self.switch('extmgrplus_switch_migration_col', EXTMGRPLUS_SWITCH_MIGRATION_COL) }}
-			</dd>
-		</dl>
-
-		<dl>
-			<dt>
-				<label>{{ lang('EXTMGRPLUS_MIGRATIONS') ~ lang('COLON') }}</label><br>
-				<span>{{ lang('EXTMGRPLUS_MIGRATIONS_EXPLAIN') }}</span>
-			</dt>
-			<dd>
-				{{ _self.switch('extmgrplus_switch_migrations', EXTMGRPLUS_SWITCH_MIGRATIONS) }}
-			</dd>
-		</dl>
-
-		<legend class="legend_sub">{{ lang('EXTMGRPLUS_SECTION_RESET') }}</legend>
-
-		<dl>
-			<dt>
-				<label>{{ lang('EXTMGRPLUS_DEFAULTS') ~ lang('COLON') }}</label><br>
-				<span>{{ lang('EXTMGRPLUS_DEFAULTS_EXP') }}</span>
-			</dt>
-			<dd>
-				<input class="button2" type="button" name="extmgrplus_defaults" value="{{ lang('EXTMGRPLUS_BUTTON_DEFAULTS') }}">
-			</dd>
-		</dl>
-
-		<legend class="legend_sub">{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
-
-		<p class="submit-buttons">
-			<input class="button1" type="submit" name="extmgrplus_save_settings" value="{{ lang('SUBMIT') }}">&nbsp;
-			<input class="button2" type="reset" name="reset" value="{{ lang('RESET') }}">
-		</p>
-	</fieldset>
-
-	{{ S_FORM_TOKEN }}
-</form>
 
 <form id="extmgrplus_list" method="post" action="{{ U_ACTION }}">
 	<fieldset class="extmgrplus_order_and_ignore" style="display: none;">
@@ -203,20 +65,16 @@
 		<dl>
 			<dt>
 				<label>{{ lang('EXTMGRPLUS_ORDER') ~ lang('COLON') }}</label><br>
-				<span>{{ lang('EXTMGRPLUS_ORDER_EXPLAIN', _self.icon('fa-sort')) }}</span>
+				<span>{{ lang('EXTMGRPLUS_ORDER_EXPLAIN', common.icon('fa-sort')) }}</span>
 			</dt>
 			<dd>
 				<label>{{ lang('EXTMGRPLUS_IGNORE') ~ lang('COLON') }}</label><br>
-				<span>{{ lang('EXTMGRPLUS_IGNORE_EXPLAIN', _self.icon('fa-ban')) }}</span>
+				<span>{{ lang('EXTMGRPLUS_IGNORE_EXPLAIN', common.icon('fa-ban')) }}</span>
 			</dd>
 		</dl>
-
-		<legend class="legend_sub">{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
-
-		<p class="submit-buttons">
-			<input class="button1" type="submit" name="extmgrplus_save_order_and_ignore" value="{{ lang('SUBMIT') }}">
-		</p>
 	</fieldset>
+
+	{{ _self.submit_buttons() }}
 
 	<table class="table1">
 		<col class="row1"><col class="row1"><col class="row1"><col class="row1"><col class="row2"><col class="row2"><col class="row2"><col class="row2">
@@ -229,7 +87,7 @@
 					{{ lang('CURRENT_VERSION') }}
 				</th>
 				<th{{ !EXTMGRPLUS_SWITCH_MIGRATION_COL ? ' style="display: none;"' }} title="{{ lang('EXTMGRPLUS_COL_MIGRATIONS') }}">
-					{{ _self.icon('fa-arrow-up') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_MIGRATIONS') }}</span>
+					{{ common.icon('fa-arrow-up') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_MIGRATIONS') }}</span>
 				</th>
 				<th>
 					{{ lang('EXTENSION_OPTIONS') }}
@@ -238,13 +96,13 @@
 					{{ lang('EXTENSION_ACTIONS') }}
 				</th>
 				<th title="{{ lang('EXTMGRPLUS_COL_SELECT') }}">
-					{{ _self.icon('fa-check') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_SELECT') }}</span>
+					{{ common.icon('fa-check') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_SELECT') }}</span>
 				</th>
 				<th style="display: none;" title="{{ lang('EXTMGRPLUS_COL_ORDER') }}">
-					{{ _self.icon('fa-sort') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_ORDER') }}</span>
+					{{ common.icon('fa-sort') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_ORDER') }}</span>
 				</th>
 				<th style="display: none;" title="{{ lang('EXTMGRPLUS_COL_IGNORE') }}">
-					{{ _self.icon('fa-ban') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_IGNORE') }}</span>
+					{{ common.icon('fa-ban') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_IGNORE') }}</span>
 				</th>
 			</tr>
 		</thead>
@@ -344,7 +202,7 @@
 					</tr>
 				{% endif %}
 				{% for ext_disabled in disabled %}
-					{% if ext_disabled.actions|length == 1 && !section_not_installed %}
+					{% if !section_not_installed && !('action=delete_data_pre' in ext_disabled.actions[1]) %}
 						{% set section_not_installed = true %}
 						<tr>
 							<td class="row3" colspan="{{ EXTMGRPLUS_SWITCH_MIGRATION_COL ? '4' : '3' }}">
@@ -406,13 +264,7 @@
 
 	</table>
 
-	<fieldset class="extmgrplus_order_and_ignore" style="display: none;">
-		<legend>{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
-
-		<p class="submit-buttons">
-			<input class="button1" type="submit" name="extmgrplus_save_order_and_ignore" value="{{ lang('SUBMIT') }}">
-		</p>
-	</fieldset>
+	{{ _self.submit_buttons() }}
 
 	{{ S_FORM_TOKEN }}
 </form>
@@ -440,37 +292,30 @@
 	</tbody>
 </table>
 
-{% INCLUDE '@lukewcs_extmgrplus/acp_ext_mgr_plus_footer.html' %}
+{{ common.footer(EXTMGRPLUS_METADATA) }}
 
 <script>
 	var ExtMgrPlus = {
-		lang: {
-			MsgConfirmMigrations: "{{ EXTMGRPLUS_EXT_NAME|e('js') }}" + " ({{ EXTMGRPLUS_EXT_VER|e('js') }})\n\n" + "{{ lang('EXTMGRPLUS_MSG_CONFIRM_MIGRATIONS')|e('js') }}"
+		tpl: {
+			'versioncheck_url': "{{ U_VERSIONCHECK_FORCE|replace({'&amp;': '&'}) }}"
 		}
 	};
 </script>
 
 {% INCLUDE 'overall_footer.html' %}
 
-{% INCLUDEJS '@lukewcs_extmgrplus/acp_ext_mgr_plus_helper.js' %}
+{% INCLUDEJS '@lukewcs_extmgrplus/acp_ext_mgr_plus.js' %}
 {% INCLUDECSS '@lukewcs_extmgrplus/acp_ext_mgr_plus.css' %}
-{% INCLUDECSS '@lukewcs_extmgrplus/acp_toggle.css' %}
 
-{% macro icon(classes, decorative = true) -%}
-	<i class="icon {{ classes }}"{{ decorative ? ' aria-hidden="true"' }}></i>
-{%- endmacro %}
+{% macro submit_buttons(ext_obj) %}
+	<fieldset class="extmgrplus_order_and_ignore" style="display: none;">
+		<legend>{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
 
-{% macro switch(name, checked = false) -%}
-	<input type="checkbox" class="toggle" name="{{ name }}" value="1"{{ checked ? ' checked' }}>
-{%- endmacro %}
-
-{% macro select(name, value, options) -%}
-	<select name="{{ name }}">
-		{% for opt_langvar, opt_value in options %}
-			<option value="{{ opt_value }}"{{ opt_value == value ? ' selected' }}>{{ lang(opt_langvar) }}</option>
-		{% endfor %}
-	</select>
-{%- endmacro %}
+		<p class="submit-buttons">
+			<input class="button1" type="submit" name="extmgrplus_save_order_and_ignore" value="{{ lang('SUBMIT') }}">
+		</p>
+	</fieldset>
+{% endmacro %}
 
 {% macro name(ext_obj) -%}
 	<strong title="{{ ext_obj.NAME }}">{{ ext_obj.META_DISPLAY_NAME }}</strong>
@@ -481,7 +326,7 @@
 	{% if ext_obj.S_VERSIONCHECK || vc_obj %}
 		<strong class="{{ ext_obj.S_UP_TO_DATE ? 'current-ext' : 'outdated-ext' }}">{{ ext_obj.META_VERSION }}</strong>
 		{% if not ext_obj.S_UP_TO_DATE %}
-			<span>&nbsp;</span>{{ _self.icon('fa-exclamation-circle outdated-ext') }}
+			<span>&nbsp;</span>{{ common.icon('fa-exclamation-circle outdated-ext') }}
 		{% endif %}
 		{% if vc_obj.CURRENT %}
 			<span>&nbsp;</span><strong class="current-ext">({{ vc_obj.CURRENT }})</strong>

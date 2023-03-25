@@ -1,3 +1,14 @@
+{#
+*
+* Extension Manager Plus. An extension for the phpBB Forum Software package.
+*
+* @copyright (c) 2022, LukeWCS, https://www.wcsaga.org
+* @license GNU General Public License, version 2 (GPL-2.0-only)
+*
+#}
+
+{% import '@lukewcs_extmgrplus/acp_ext_mgr_plus_macros.html' as common %}
+
 {% INCLUDE 'overall_header.html' %}
 
 <h1>{{ lang('EXTENSIONS_ADMIN') }}</h1>
@@ -13,7 +24,8 @@
 	<p>{{ MESSAGE_TEXT }}</p>
 </div>
 
-{% INCLUDE '@lukewcs_extmgrplus/acp_ext_mgr_plus_footer.html' %}
+{{ common.footer(EXTMGRPLUS_METADATA) }}
+
 {% INCLUDE 'overall_footer.html' %}
 
 {% INCLUDECSS '@lukewcs_extmgrplus/acp_ext_mgr_plus.css' %}

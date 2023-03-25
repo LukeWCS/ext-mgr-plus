@@ -1,7 +1,14 @@
 services:
+    lukewcs.extmgrplus.listener:
+        class: lukewcs\extmgrplus\event\listener
+        arguments:
+            - '@lukewcs.extmgrplus.core'
+        tags:
+            - { name: event.listener }
     lukewcs.extmgrplus.core:
         class: lukewcs\extmgrplus\core\ext_mgr_plus
         arguments:
+            - '@lukewcs.extmgrplus.core.common'
             - '@ext.manager' 
             - '@cache.driver'
             - '@request'
@@ -15,9 +22,18 @@ services:
             - '%core.table_prefix%'
             - '%core.root_path%'
             - '%core.php_ext%'
-    lukewcs.extmgrplus.listener:
-        class: lukewcs\extmgrplus\event\listener
+    lukewcs.extmgrplus.core.common:
+        class: lukewcs\extmgrplus\core\ext_mgr_plus_common
         arguments:
-            - '@lukewcs.extmgrplus.core'
-        tags:
-            - { name: event.listener }
+            - '@config_text'
+            - '@language'
+            - '@template'
+            - '@ext.manager' 
+    lukewcs.extmgrplus.controller.acp:
+        class: lukewcs\extmgrplus\controller\ext_mgr_plus_acp
+        arguments:
+            - '@lukewcs.extmgrplus.core.common'
+            - '@language'
+            - '@template'
+            - '@request'
+            - '@config'

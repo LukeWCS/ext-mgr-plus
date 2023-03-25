@@ -37,11 +37,11 @@ if (empty($lang) || !is_array($lang))
 // ’ « » “ ” … „ “
 
 $lang = array_merge($lang, [
-	// navigation
-	'EXTMGRPLUS_NAV_TITLE'				=> 'Extension Manager Plus',
-	'EXTMGRPLUS_NAV_CONFIG'				=> 'Erweiterungen verwalten - Einstellungen',
+	// language pack author
+	'EXTMGRPLUS_LANG_DESC'					=> 'English',
+	'EXTMGRPLUS_LANG_VER' 					=> '1.1.1',
+	'EXTMGRPLUS_LANG_AUTHOR'	 			=> 'LukeWCS',
 
-	// log
-	'EXTMGRPLUS_LOG_EXT_DISABLE_ALL'	=> '<strong>Erweiterungen verwalten (Plus)</strong><br>» %1$u von %2$u Erweiterungen deaktiviert',
-	'EXTMGRPLUS_LOG_EXT_ENABLE_ALL'		=> '<strong>Erweiterungen verwalten (Plus)</strong><br>» %1$u von %2$u Erweiterungen aktiviert',
+	// messages
+	'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED'	=> 'Note: The language pack for the extension <strong>%1$s</strong> is no longer up-to-date. (installed: %2$s / needed: %3$s)',
 ]);
