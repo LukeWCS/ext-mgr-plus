@@ -8,12 +8,15 @@
 
 .inactive,
 .disabled,
-input[type="submit"]:disabled {
+input[type="submit"]:disabled,
+input[type="button"]:disabled,
+input[type="checkbox"][class^="toggle"]:disabled {
 	opacity: .5;
 }
 
 .disabled,
 input[type="submit"]:disabled,
+input[type="button"]:disabled,
 input[type="checkbox"]:disabled {
 	cursor: not-allowed;
 }
@@ -78,6 +81,14 @@ fieldset.extmgrplus_order_and_ignore label {
 	color: #4A5A73;
 }
 
+div[id$="_confirmbox"] {
+    max-width: 450px;
+	border: 2px solid skyblue;
+    padding: .25em .5em;
+    margin: .75em .5em;
+    border-radius: 5px;
+}
+
 /* LIST */
 
 #extmgrplus_list input[name$="able_all"] {
@@ -134,6 +145,7 @@ fieldset.extmgrplus_order_and_ignore label {
 
 /* CONFIRM BOX */
 
+div[id$="_confirmbox"] h2,
 #confirm h2 {
 	margin-bottom: .25em;
 }

@@ -18,6 +18,8 @@ ExtMgrPlus.constants = Object.freeze({
 	CheckBoxModeLast	: '2',
 });
 
+// Extension Manager
+
 ExtMgrPlus.CheckUncheckAll = function (e) {
 	'use strict';
 
@@ -98,34 +100,6 @@ ExtMgrPlus.ShowOrderIgnoreColumns = function (show) {
 	}
 };
 
-ExtMgrPlus.ConfirmSwitch = function (e) {
-	'use strict';
-
-	if ($('input[name="' + e.target.name + '"]').prop('checked')) {
-		requestAnimationFrame(function() {
-			setTimeout(function() {
-				if (!confirm(ExtMgrPlus.lang['dialog_title'] + ExtMgrPlus.lang[e.target.name])) {
-					$('input[name="' + e.target.name + '"]').prop('checked', false)
-				}
-			});
-		});
-	}
-};
-
-ExtMgrPlus.SetDefaults = function () {
-	'use strict';
-
-	var c = ExtMgrPlus.constants;
-
-	$('input[name="extmgrplus_switch_log"]'					).prop('checked'	, true);
-	$('input[name="extmgrplus_switch_confirmation"]'		).prop('checked'	, true);
-	$('select[name="extmgrplus_select_checkbox_mode"]'		).prop('value'		, c.CheckBoxModeAll);
-	$('input[name="extmgrplus_switch_order_and_ignore"]'	).prop('checked'	, true);
-	$('input[name="extmgrplus_switch_self_disable"]'		).prop('checked'	, false);
-	$('input[name="extmgrplus_switch_migration_col"]'		).prop('checked'	, false);
-	$('input[name="extmgrplus_switch_migrations"]'			).prop('checked'	, false);
-};
-
 ExtMgrPlus.VersionCheck = function (VersionCheckURL) {
 	'use strict';
 
@@ -156,15 +130,93 @@ $('#extmgrplus_list').keypress(function(e) {
 	}
 });
 
+// Settings
+
+ExtMgrPlus.ConfirmBox = function (e) {
+	'use strict';
+
+var defaultState = Boolean($('div[id="' + e.target.name + '_confirmbox"]').attr('data-default'));
+
+	if ($('input[name="' + e.target.name + '"]').prop('checked') != defaultState) {
+		$('input[name="' + e.target.name + '"]').prop('disabled', true)
+		$('input[name="' + e.target.name + '"]').addClass('confirmbox_active');
+		$('div[id="' + e.target.name + '_confirmbox"]').show();
+		$('input[name="extmgrplus_form_submit"]').prop('disabled', true);
+	}
+};
+
+ExtMgrPlus.ConfirmBoxButton = function (e) {
+	'use strict';
+
+	var elementName = e.target.name.slice(0, e.target.name.indexOf('_confirm_'));
+	var defaultState = Boolean($('div[id="' + elementName + '_confirmbox"]').attr('data-default'));
+
+	if (e.target.name.endsWith('_no')) {
+		$('input[name="' + elementName + '"]').prop('checked', defaultState);
+	}
+
+	$('input[name="' + elementName + '"]').prop('disabled', false);
+	$('input[name="' + elementName + '"]').removeClass('confirmbox_active');
+	$('div[id="' + elementName + '_confirmbox"]').hide();
+	$('input[name="extmgrplus_form_submit"]').prop('disabled', $('input[class*="confirmbox_active"]').length);
+}
+
+ExtMgrPlus.ConfirmBoxHide = function () {
+	'use strict';
+
+	$('input[class*="confirmbox_active"]').prop('disabled', false);
+	$('input[class*="confirmbox_active"]').removeClass('confirmbox_active');
+	$('div[id$="_confirmbox"]').hide();
+	$('input[name="extmgrplus_form_submit"]').prop('disabled', false);
+};
+
+ExtMgrPlus.SetDefaults = function () {
+	'use strict';
+
+	var c = ExtMgrPlus.constants;
+
+	$('input[name="force_unstable"]'						).prop('checked'	, false);
+	$('input[name="extmgrplus_switch_log"]'					).prop('checked'	, true);
+	$('input[name="extmgrplus_switch_confirmation"]'		).prop('checked'	, true);
+	$('select[name="extmgrplus_select_checkbox_mode"]'		).prop('value'		, c.CheckBoxModeAll);
+	$('input[name="extmgrplus_switch_order_and_ignore"]'	).prop('checked'	, true);
+	$('input[name="extmgrplus_switch_self_disable"]'		).prop('checked'	, false);
+	$('input[name="extmgrplus_switch_migration_col"]'		).prop('checked'	, false);
+	$('input[name="extmgrplus_switch_migrations"]'			).prop('checked'	, false);
+	ExtMgrPlus.ConfirmBoxHide();
+};
+
+ExtMgrPlus.FormSubmit = function () {
+	'use strict';
+
+	$('#extmgrplus_settings').submit();
+};
+
+ExtMgrPlus.FormReset = function () {
+	'use strict';
+
+	$('#extmgrplus_settings').trigger("reset");
+	ExtMgrPlus.ConfirmBoxHide();
+};
+
+// Register onChange and onClick events
+
 $(window).ready(function() {
 	'use strict';
-// ExtMgrPlus.ShowHideOrderIgnore();
-	$('input[name="force_unstable"]'				).on('change'	, ExtMgrPlus.ConfirmSwitch);
-	$('input[name="extmgrplus_switch_migrations"]'	).on('change'	, ExtMgrPlus.ConfirmSwitch);
-	$('input[name="extmgrplus_defaults"]'			).on('click'	, ExtMgrPlus.SetDefaults);
+
 	$('input[name="ext_mark_all_enabled"]:enabled'	).on('change'	, {CheckBoxType: 'enabled'}, ExtMgrPlus.CheckUncheckAll);
 	$('input[name="ext_mark_all_disabled"]:enabled'	).on('change'	, {CheckBoxType: 'disabled'}, ExtMgrPlus.CheckUncheckAll);
 	$('input[name="ext_mark_enabled[]"]:enabled'	).on('change'	, {CheckBoxType: 'enabled'}, ExtMgrPlus.SetButtonState);
 	$('input[name="ext_mark_disabled[]"]:enabled'	).on('change'	, {CheckBoxType: 'disabled'}, ExtMgrPlus.SetButtonState);
 	$('input[name="ext_ignore[]"]'					).on('change'	, ExtMgrPlus.SetInputBoxState);
+	$('input[name="extmgrplus_defaults"]'			).on('click'	, ExtMgrPlus.SetDefaults);
+	$('input[name="extmgrplus_form_submit"]'		).on('click'	, ExtMgrPlus.FormSubmit);
+	$('input[name="extmgrplus_form_reset"]'			).on('click'	, ExtMgrPlus.FormReset);
+
+	$('div[id$="_confirmbox"]').each(function() {
+		var elementName = $(this)[0].id.replace('_confirmbox', '')
+
+		$('input[name="' + elementName + '"]').on('change', ExtMgrPlus.ConfirmBox);
+		$('input[name^="' + elementName + '_confirm_"]').on('click', ExtMgrPlus.ConfirmBoxButton);
+	});
 });

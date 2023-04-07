@@ -19,7 +19,7 @@
 
 {{ common.notes(EXTMGRPLUS_NOTES) }}
 
-<form class="extmgrplus_settings" method="post" action="{{ U_ACTION }}">
+<form id="extmgrplus_settings" method="post" action="{{ U_ACTION }}">
 	<fieldset>
 		<legend>{{ lang('EXTENSIONS_VERSION_CHECK_SETTINGS') }}</legend>
 
@@ -29,6 +29,7 @@
 			</dt>
 			<dd>
 				{{ _self.switch('force_unstable', FORCE_UNSTABLE) }}
+				{{ _self.confirmbox('force_unstable', lang('EXTENSION_FORCE_UNSTABLE_CONFIRM')) }}
 			</dd>
 		</dl>
 	</fieldset>
@@ -105,6 +106,7 @@
 			</dt>
 			<dd>
 				{{ _self.switch('extmgrplus_switch_migrations', EXTMGRPLUS_SWITCH_MIGRATIONS) }}
+				{{ _self.confirmbox('extmgrplus_switch_migrations', lang('EXTMGRPLUS_MSG_CONFIRM_MIGRATIONS')) }}
 			</dd>
 		</dl>
 
@@ -125,8 +127,9 @@
 		<legend>{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
 
 		<p class="submit-buttons">
-			<input class="button1" type="submit" name="extmgrplus_save_settings" value="{{ lang('SUBMIT') }}">&nbsp;
-			<input class="button2" type="reset" name="reset" value="{{ lang('RESET') }}">
+			<input type="hidden" name="extmgrplus_save_settings" value="1">&nbsp;
+			<input class="button1" type="button" name="extmgrplus_form_submit" value="{{ lang('SUBMIT') }}">&nbsp;
+			<input class="button2" type="button" name="extmgrplus_form_reset" value="{{ lang('RESET') }}">
 		</p>
 	</fieldset>
 
@@ -134,16 +137,6 @@
 </form>
 
 {{ common.footer(EXTMGRPLUS_METADATA) }}
-
-<script>
-	var ExtMgrPlus = {
-		lang: {
-			'dialog_title'					: "{{ EXTMGRPLUS_METADATA.EXT_NAME|e('js') }}" + " ({{ EXTMGRPLUS_METADATA.EXT_VER|e('js') }})\n\n",
-			'extmgrplus_switch_migrations'	: "{{ lang('EXTMGRPLUS_MSG_CONFIRM_MIGRATIONS')|e('js') }}",
-			'force_unstable'				: "{{ lang('EXTENSION_FORCE_UNSTABLE_CONFIRM')|e('js') }}",
-		}
-	};
-</script>
 
 {% INCLUDE 'overall_footer.html' %}
 
@@ -161,4 +154,16 @@
 			<option value="{{ opt_value }}"{{ opt_value == value ? ' selected' }}>{{ lang(opt_lang_var) }}</option>
 		{% endfor %}
 	</select>
+{%- endmacro %}
+
+{% macro confirmbox(name, message, default = false) -%}
+	<div id="{{ name }}_confirmbox" data-default="{{ default }}" style="display: none;">
+		<h2>{{ lang('CONFIRM') }}</h2>
+		<p>{{ message }}</p>
+
+		<p class="submit-buttons">
+			<input class="button2" type="button" name="{{ name }}_confirm_yes" value="{{ lang('YES') }}">&nbsp;
+			<input class="button2" type="button" name="{{ name }}_confirm_no" value="{{ lang('NO') }}">
+		</p>
+	</div>
 {%- endmacro %}

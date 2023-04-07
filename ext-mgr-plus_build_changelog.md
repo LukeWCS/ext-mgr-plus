@@ -1,5 +1,14 @@
 ### 1.1.1
 
+#### 1.1.1-b5
+* Settings Template:
+  * Der Schalter bez. instabiler Versionen wird jetzt ebenfalls von der Funktion zum Zurücksetzen auf Installation-Standard berücksichtigt.
+  * Die Rückfragen erfolgen nicht mehr per modalem Javascript Dialog `confirm()`, sondern per HTML und CSS. Dadurch wird Javascript nicht mehr angehalten und die Rückfrage öffnet und schliesst verzögerungsfrei. Dazu wird direkt unter dem betreffenden Schalter ein entsprechender Dialog eingeblendet. Die Dialog-Funktion wurde so konzipiert, dass für eine Rückfrage lediglich der entsprechende Makro-Aufruf im Template eingefügt werden muss. Um alles Weitere kümmert sich Javascript dann selbständig, zum Beispiel die Registrierung aller benötigten onChange und onClick Events.
+  * Nicht mehr benötigten Code für `confirm()` entfernt.
+* JS:
+  * Neue Funktionen für den Inline-Dialog hinzugefügt.
+  * Nicht mehr benötigten Code für `confirm()` entfernt.
+
 #### 1.1.1-b4
 * Für die Einstellungen gibt es jetzt ein eigenes ACP Modul.
   * Moduldateien hinzugefügt.
