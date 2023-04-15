@@ -135,7 +135,7 @@ $('#extmgrplus_list').keypress(function(e) {
 ExtMgrPlus.ConfirmBox = function (e) {
 	'use strict';
 
-var defaultState = Boolean($('div[id="' + e.target.name + '_confirmbox"]').attr('data-default'));
+	var defaultState = Boolean($('div[id="' + e.target.name + '_confirmbox"]').attr('data-default'));
 
 	if ($('input[name="' + e.target.name + '"]').prop('checked') != defaultState) {
 		$('input[name="' + e.target.name + '"]').prop('disabled', true)

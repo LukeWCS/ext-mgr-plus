@@ -24,6 +24,6 @@
 {% macro footer(metadata) %}
 	<p class="{{ metadata.CLASS  }}">
 		{{ metadata.EXT_NAME }} v{{ metadata.EXT_VER }} &copy; LukeWCS<br>
-		{{ lang(metadata.LANG_DESC)|e('html') }} v{{ lang(metadata.LANG_VER)|e('html') }} &bull; {{ lang(metadata.LANG_AUTHOR)|e('html') }}
+		{{ metadata.LANG_DESC|e('html') }} v{{ metadata.LANG_VER|e('html') }} &bull; {{ metadata.LANG_AUTHOR|e('html') }}
 	</p>
 {% endmacro %}

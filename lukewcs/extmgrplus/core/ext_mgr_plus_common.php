@@ -47,9 +47,9 @@ class ext_mgr_plus_common
 			$tpl_prefix . '_METADATA'	=> [
 				'EXT_NAME'		=> $this->metadata['extra']['display-name'],
 				'EXT_VER'		=> $this->metadata['version'],
-				'LANG_DESC'		=> $tpl_prefix . '_LANG_DESC',
-				'LANG_VER'		=> $tpl_prefix . '_LANG_VER',
-				'LANG_AUTHOR'	=> $tpl_prefix . '_LANG_AUTHOR',
+				'LANG_DESC'		=> $this->language->lang($tpl_prefix . '_LANG_DESC'),
+				'LANG_VER'		=> $this->language->lang($tpl_prefix . '_LANG_VER'),
+				'LANG_AUTHOR'	=> $this->language->lang($tpl_prefix . '_LANG_AUTHOR'),
 				'CLASS'			=> strtolower($tpl_prefix) . '_footer',
 			],
 		]);
@@ -75,7 +75,8 @@ class ext_mgr_plus_common
 	// Determine the version of the language pack with fallback to 0.0.0
 	public function get_lang_ver(string $lang_ext_ver): string
 	{
-		return ($this->language->is_set($lang_ext_ver) ? preg_replace('/[^0-9.]/', '', $this->language->lang($lang_ext_ver)) : '0.0.0');
+		preg_match('/^([0-9]+\.[0-9]+\.[0-9]+)/', $this->language->lang($lang_ext_ver), $matches);
+		return ($matches[1] ?? '0.0.0');
 	}
 
 	// Check the language pack version for the minimum version and generate notice if outdated

@@ -15,6 +15,9 @@ GH (2023--) / CDB (2023--)
   * Es wird zusätzlich geprüft, ob in einer Migrationsdatei die Klassen-Deklaration den exakten Dateinamen als Klassennamen enthält. Trifft das nicht zu, wird die Datei nicht mehr von EMP als gültige Migration gezählt, da sie auch von phpBB ignoriert wird.
 * Für Bestätigungsmeldungen und Fehlermeldungen ein eigenes Template hinzugefügt. Das Template basiert auf dem Original von phpBB und wurde so erweitert, dass bei allen Meldungen stets der ExtensionManager Titel, die ExtensionManager Beschreibung und die jeweilige Aktions-Erklärung (sofern zutreffend) von phpBB angezeigt wird. Zusätzlich wird auch der EMP Footer angezeigt. Damit verhält sich EMP jetzt auch bei Bestätigungen und Fehlermeldungen wie phpBB, da Meldungen stets in das ExtensionManager Template Gerüst eingebettet sind.
 * Die Überschriften für "Aktivierte/Deaktivierte/Nicht installierte Erweiterungen" stehen für Übersetzer jetzt als Sprachvariablen zur Verfügung, bei der die Anzahl per Platzhalter eingefügt wird.
+* Die Funktion zum ermitteln der Versionsnummer des Sprachpakets sowohl strikter als auch flexibler gestaltet.
+  * Strikter: Der Versions-String muss auf jeden Fall mit dem Muster x.y.z beginnen. Bisher wurde nicht geprüft, ob die Versionsnummer 3 Segmente hat.
+  * Flexibler: Hinter einer gültigen Version dürfen Zusätze verwendet werden, wie z.B. ein viertes Segment oder ein Suffix.
 * Code Optimierung.
 
 ### 1.1.0

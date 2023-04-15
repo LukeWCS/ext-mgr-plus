@@ -1,5 +1,12 @@
 ### 1.1.1
 
+#### 1.1.1-b6
+* Die Funktion zum ermitteln der Versionsnummer des Sprachpakets sowohl strikter als auch flexibler gestaltet.
+  * Strikter: Der Versions-String muss auf jeden Fall mit dem Muster x.y.z beginnen. Bisher wurde nicht geprüft, ob die Versionsnummer 3 Segmente hat.
+  * Flexibler: Hinter einer gültigen Version dürfen Zusätze verwendet werden, wie z.B. ein viertes Segment oder ein Suffix.
+* Settings Template:
+  * Kleine Änderungen.
+
 #### 1.1.1-b5
 * Settings Template:
   * Der Schalter bez. instabiler Versionen wird jetzt ebenfalls von der Funktion zum Zurücksetzen auf Installation-Standard berücksichtigt.
@@ -25,7 +32,7 @@
   * Makro für den Footer hinzugefügt.
   * Code für die Link-Leiste kompakter gestaltet durch Ternary's.
 * Core:
-  * Neue Datei `ext_mgr_plus_func.php` angelegt, um redundanten PHP Code zu vermeiden, der sowohl im ExtMgr Core als auch im Settings Controller benötigt wird.
+  * Neue Datei `ext_mgr_plus_common.php` angelegt, um redundanten PHP Code zu vermeiden, der sowohl im ExtMgr Core als auch im Settings Controller benötigt wird.
 * JS:
   * Die Funktion für Ein/Ausblenden der Einstellungen entfernt.
   * Die Funktion für Bestätigung eines Schalters ist jetzt universell gestaltet, wodurch die Funktion für beliebige Schalter genutzt werden kann.

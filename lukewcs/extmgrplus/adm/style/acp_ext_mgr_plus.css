@@ -82,11 +82,11 @@ fieldset.extmgrplus_order_and_ignore label {
 }
 
 div[id$="_confirmbox"] {
-    max-width: 450px;
+	max-width: 450px;
 	border: 2px solid skyblue;
-    padding: .25em .5em;
-    margin: .75em .5em;
-    border-radius: 5px;
+	padding: .25em .5em;
+	margin: .75em .5em;
+	border-radius: 5px;
 }
 
 /* LIST */
