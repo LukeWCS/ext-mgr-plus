@@ -326,7 +326,7 @@
 	{% if ext_obj.S_VERSIONCHECK || vc_obj %}
 		<strong class="{{ ext_obj.S_UP_TO_DATE ? 'current-ext' : 'outdated-ext' }}">{{ ext_obj.META_VERSION }}</strong>
 		{% if not ext_obj.S_UP_TO_DATE %}
-			<span>&nbsp;</span>{{ common.icon('fa-exclamation-circle outdated-ext') }}
+			<span>&nbsp;</span><i class="icon fa-exclamation-circle outdated-ext" aria-hidden="true"></i>
 		{% endif %}
 		{% if vc_obj.CURRENT %}
 			<span>&nbsp;</span><strong class="current-ext">({{ vc_obj.CURRENT }})</strong>

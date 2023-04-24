@@ -1,5 +1,8 @@
 ### 1.1.1
 
+#### 1.1.1-b7
+* Fix: Unter phpBB 3.2 wurde ab EMP 1.1.1-b4 bei veralteten Ext Versionen das FA Icon (Ausrufezeichen in rotem Kreis) nicht mehr angezeigt. Die Ursache liegt bei Twig 1: Makros sind nicht automatisch innerhalb Makros verfügbar und müssen umständlich importiert werden. Im Versions-Makro den Aufruf für das Icon-Makro entfernt und HTML direkt notiert.
+
 #### 1.1.1-b6
 * Die Funktion zum ermitteln der Versionsnummer des Sprachpakets sowohl strikter als auch flexibler gestaltet.
   * Strikter: Der Versions-String muss auf jeden Fall mit dem Muster x.y.z beginnen. Bisher wurde nicht geprüft, ob die Versionsnummer 3 Segmente hat.
