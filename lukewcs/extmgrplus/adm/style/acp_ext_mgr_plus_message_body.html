@@ -22,6 +22,10 @@
 <div class="{{ S_USER_NOTICE ? 'successbox' : 'errorbox' }}">
 	<h3>{{ MESSAGE_TITLE }}</h3>
 	<p>{{ MESSAGE_TEXT }}</p>
+	{% if EXTMGRPLUS_AUTO_REDIRECT %}
+		<br>
+		{{ common.icon('fa-spinner fa-pulse') }}
+	{% endif %}
 </div>
 
 {{ common.footer(EXTMGRPLUS_METADATA) }}

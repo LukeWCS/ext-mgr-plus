@@ -153,8 +153,7 @@ class ext_mgr_plus
 			$this->common->config_text_set('extmgrplus_list_order_and_ignore', 'order', count($order_list) ? $order_list : null);
 			$this->common->config_text_set('extmgrplus_list_order_and_ignore', 'ignore', count($ignore_list) ? $ignore_list : null);
 
-			$this->template->assign_vars(['EXTMGRPLUS_LAST_EMP_ACTION' => 'trigger_error']);
-			trigger_error($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED') . $this->common->back_link('RETURN_TO_EXTENSION_LIST'), E_USER_NOTICE);
+			$this->common->trigger_error_($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'), E_USER_NOTICE, 'RETURN_TO_EXTENSION_LIST');
 		}
 		else if ($this->request->is_set_post('extmgrplus_save_checkboxes') && $this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_LAST)
 		{
@@ -166,8 +165,7 @@ class ext_mgr_plus
 
 			$this->common->config_text_set('extmgrplus_list_selected', 'selected', count($ext_mark_list) ? $ext_mark_list : null);
 
-			$this->template->assign_vars(['EXTMGRPLUS_LAST_EMP_ACTION' => 'trigger_error']);
-			trigger_error($this->language->lang('EXTMGRPLUS_MSG_CHECKBOXES_SAVED') . $this->common->back_link('RETURN_TO_EXTENSION_LIST'), E_USER_NOTICE);
+			$this->common->trigger_error_($this->language->lang('EXTMGRPLUS_MSG_CHECKBOXES_SAVED'), E_USER_NOTICE, 'RETURN_TO_EXTENSION_LIST');
 		}
 	}
 
@@ -360,7 +358,7 @@ class ext_mgr_plus
 
 		if ($this->request->is_set_post('extmgrplus_disable_all'))
 		{
-			$this->template->assign_vars(['EXTMGRPLUS_ACTION_EXPLAIN' => $this->language->lang('EXTENSION_DISABLE_EXPLAIN')]);
+			$this->template->assign_var('EXTMGRPLUS_ACTION_EXPLAIN', $this->language->lang('EXTENSION_DISABLE_EXPLAIN'));
 			if ($this->config['extmgrplus_switch_confirmation'])
 			{
 				if (confirm_box(true))
@@ -389,7 +387,7 @@ class ext_mgr_plus
 		}
 		else if ($this->request->is_set_post('extmgrplus_enable_all'))
 		{
-			$this->template->assign_vars(['EXTMGRPLUS_ACTION_EXPLAIN' => $this->language->lang('EXTENSION_ENABLE_EXPLAIN')]);
+			$this->template->assign_var('EXTMGRPLUS_ACTION_EXPLAIN', $this->language->lang('EXTENSION_ENABLE_EXPLAIN'));
 			if ($this->config['extmgrplus_switch_confirmation'])
 			{
 				if (confirm_box(true))
@@ -483,13 +481,10 @@ class ext_mgr_plus
 		{
 			$msg_failed = '<br><br><strong>' . $this->language->lang('EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED', $this->safe_time_limit) . '</strong>';
 		}
-		$this->template->assign_vars(['EXTMGRPLUS_LAST_EMP_ACTION' => 'trigger_error']);
-		trigger_error(sprintf('%1$s%2$s%3$s',
-				/* 1 */	$this->language->lang('EXTMGRPLUS_MSG_DEACTIVATION', $ext_count_success, $ext_count_enabled),
-				/* 2 */ $msg_failed ?? '',
-				/* 3 */	$this->common->back_link('RETURN_TO_EXTENSION_LIST')
-			)
-			, (($ext_count_success != $ext_count_enabled || $safe_time_exceeded) ? E_USER_WARNING : E_USER_NOTICE)
+		$this->common->trigger_error_(
+			$this->language->lang('EXTMGRPLUS_MSG_DEACTIVATION', $ext_count_success, $ext_count_enabled) . ($msg_failed ?? ''),
+			(($ext_count_success != $ext_count_enabled || $safe_time_exceeded) ? E_USER_WARNING : E_USER_NOTICE),
+			'RETURN_TO_EXTENSION_LIST'
 		);
 	}
 
@@ -558,8 +553,10 @@ class ext_mgr_plus
 				catch (\phpbb\db\migration\exception $e)
 				{
 					$msg_failed = $get_failed_msg($ext_display_name, $ext_version, $ext_name, $e->getLocalisedMessage($this->user));
-					trigger_error($this->language->lang('EXTMGRPLUS_MSG_PROCESS_ABORTED', $this->language->lang('EXTMGRPLUS_ALL_ENABLE')) . $msg_failed . $this->common->back_link('RETURN_TO_EXTENSION_LIST')
-						, E_USER_WARNING
+					$this->common->trigger_error_(
+						$this->language->lang('EXTMGRPLUS_MSG_PROCESS_ABORTED', $this->language->lang('EXTMGRPLUS_ALL_ENABLE')) . $msg_failed,
+						E_USER_WARNING,
+						'RETURN_TO_EXTENSION_LIST'
 					);
 				}
 			}
@@ -611,13 +608,10 @@ class ext_mgr_plus
 				$msg_failed .= $get_failed_msg($vars['display_name'], $vars['ext_version'], $name, $vars['message']);
 			}
 		}
-		$this->template->assign_vars(['EXTMGRPLUS_LAST_EMP_ACTION' => 'trigger_error']);
-		trigger_error(sprintf('%1$s%2$s%3$s',
-				/* 1 */	$this->language->lang('EXTMGRPLUS_MSG_ACTIVATION', $ext_count_success, $ext_count_disabled),
-				/* 2 */ $msg_failed ?? '',
-				/* 3 */	$this->common->back_link('RETURN_TO_EXTENSION_LIST')
-			)
-			, (($ext_count_success != $ext_count_disabled || $safe_time_exceeded) ? E_USER_WARNING : E_USER_NOTICE)
+		$this->common->trigger_error_(
+			$this->language->lang('EXTMGRPLUS_MSG_ACTIVATION', $ext_count_success, $ext_count_disabled) . ($msg_failed ?? ''),
+			(($ext_count_success != $ext_count_disabled || $safe_time_exceeded) ? E_USER_WARNING : E_USER_NOTICE),
+			'RETURN_TO_EXTENSION_LIST'
 		);
 	}
 

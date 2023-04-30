@@ -1,5 +1,24 @@
 ### 1.1.1
 
+#### 1.1.1-b8
+* Mit einem neuen Schalter kann festgelegt werden, ob positive Meldungen automatisch bestätigt werden sollen. Dabei wird automatisch nach 1 Sekunde zum Link weitergeleitet, der unterhalb jeder Meldung anklickbar ist. Das genügt um die grüne Box als Rückmeldung wahrnehmen zu können. Fehlermeldungen sind von diesem Schalter nicht betroffen und müssen weiterhin manuell bestätigt werden.
+* Settings Template:
+  * Neuen Schalter "Meldungen automatisch bestätigen" hinzugefügt.
+* `trigger_error` Template:
+  * Ein animiertes FA Icon eingebaut das nur dann unterhalb einer Meldung angezeigt wird, wenn diese positiv ist und wenn die automatische Bestätigung aktiviert ist.
+* ExtMgr Template:
+  * Unnötige ID der Link Bar Icons entfernt.
+* Core:
+  * Wrapper Funktion für `trigger_error` eingebaut um redundanten Code im Core und Controller zu vermeiden. Ausserdem um die Generierung der Meldungen zentral an einer Stelle regeln zu können.
+* Migration:
+  * Neue Config-Variable `extmgrplus_switch_auto_redirect` hinzugefügt.
+* Sprachdateien:
+  * 2 neue Sprachvariablen für den neuen Schalter hinzugefügt.
+  * 1 Sprachvariable für den Schalter "Rückfrage" geändert.
+* CSS:
+  * Code für das Icon hinzugefügt.
+  * Code für die Link Bar Icons geändert.
+
 #### 1.1.1-b7
 * Fix: Unter phpBB 3.2 wurde ab EMP 1.1.1-b4 bei veralteten Ext Versionen das FA Icon (Ausrufezeichen in rotem Kreis) nicht mehr angezeigt. Die Ursache liegt bei Twig 1: Makros sind nicht automatisch innerhalb Makros verfügbar und müssen umständlich importiert werden. Im Versions-Makro den Aufruf für das Icon-Makro entfernt und HTML direkt notiert.
 

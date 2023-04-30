@@ -107,7 +107,7 @@ ExtMgrPlus.VersionCheck = function (VersionCheckURL) {
 		return;
 	}
 
-	$('.fa-refresh.extmgrplus_link_icon').addClass('fa-spin');
+	$('fieldset.quick a .fa-refresh').addClass('fa-spin');
 	$(location).prop('href', ExtMgrPlus.tpl['versioncheck_url']);
 };
 
@@ -178,6 +178,7 @@ ExtMgrPlus.SetDefaults = function () {
 	$('input[name="force_unstable"]'						).prop('checked'	, false);
 	$('input[name="extmgrplus_switch_log"]'					).prop('checked'	, true);
 	$('input[name="extmgrplus_switch_confirmation"]'		).prop('checked'	, true);
+	$('input[name="extmgrplus_switch_auto_redirect"]'		).prop('checked'	, false);
 	$('select[name="extmgrplus_select_checkbox_mode"]'		).prop('value'		, c.CheckBoxModeAll);
 	$('input[name="extmgrplus_switch_order_and_ignore"]'	).prop('checked'	, true);
 	$('input[name="extmgrplus_switch_self_disable"]'		).prop('checked'	, false);

@@ -12,6 +12,7 @@ namespace lukewcs\extmgrplus\core;
 
 class ext_mgr_plus_common
 {
+	protected $config;
 	protected $config_text;
 	protected $language;
 	protected $template;
@@ -20,12 +21,14 @@ class ext_mgr_plus_common
 	protected $u_action;
 
 	public function __construct(
+		\phpbb\config\config $config,
 		\phpbb\config\db_text $config_text,
 		\phpbb\language\language $language,
 		\phpbb\template\template $template,
 		\phpbb\extension\manager $ext_manager
 	)
 	{
+		$this->config		= $config;
 		$this->config_text	= $config_text;
 		$this->language		= $language;
 		$this->template		= $template;
@@ -59,16 +62,15 @@ class ext_mgr_plus_common
 	{
 		if (!check_form_key($key))
 		{
-			$this->template->assign_vars(['EXTMGRPLUS_LAST_EMP_ACTION' => 'trigger_error']);
-			trigger_error($this->language->lang('FORM_INVALID') . $this->back_link(), E_USER_WARNING);
+			$this->trigger_error_($this->language->lang('FORM_INVALID'), E_USER_WARNING);
 		}
 	}
 
-	public function back_link($langvar = null): string
+	public function back_link($lang_var = null): string
 	{
 		return sprintf('<br><br><a href="%1$s">%2$s</a>',
 			/* 1 */ $this->u_action,
-			/* 2 */ $this->language->lang($langvar ?? 'BACK_TO_PREV')
+			/* 2 */ $this->language->lang($lang_var ?? 'BACK_TO_PREV')
 		);
 	}
 
@@ -151,5 +153,17 @@ class ext_mgr_plus_common
 		{
 			return ($vars ?? null);
 		}
+	}
+
+	// Wrapper for trigger_error
+	public function trigger_error_(string $message, int $error_type, string $back_link_lang_var = null): void
+	{
+		$this->template->assign_var('EXTMGRPLUS_LAST_EMP_ACTION', 'trigger_error');
+		if ($error_type == E_USER_NOTICE && $this->config['extmgrplus_switch_auto_redirect'])
+		{
+			meta_refresh(1, $this->u_action);
+			$this->template->assign_var('EXTMGRPLUS_AUTO_REDIRECT', true);
+		}
+		trigger_error($message . $this->back_link($back_link_lang_var), $error_type);
 	}
 }

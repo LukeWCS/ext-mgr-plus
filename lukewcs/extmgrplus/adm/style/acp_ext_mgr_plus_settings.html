@@ -59,6 +59,16 @@
 
 		<dl>
 			<dt>
+				<label>{{ lang('EXTMGRPLUS_AUTO_REDIRECT') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('EXTMGRPLUS_AUTO_REDIRECT_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				{{ _self.switch('extmgrplus_switch_auto_redirect', EXTMGRPLUS_SWITCH_AUTO_REDIRECT) }}
+			</dd>
+		</dl>
+
+		<dl>
+			<dt>
 				<label>{{ lang('EXTMGRPLUS_CHECKBOX_MODE') ~ lang('COLON') }}</label><br>
 				<span>{{ lang('EXTMGRPLUS_CHECKBOX_MODE_EXPLAIN', common.icon('fa-check-square-o')) }}</span>
 			</dt>

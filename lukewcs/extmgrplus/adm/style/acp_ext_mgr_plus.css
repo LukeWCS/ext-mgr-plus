@@ -21,12 +21,25 @@ input[type="checkbox"]:disabled {
 	cursor: not-allowed;
 }
 
+/* CONFIRM BOX */
+
+div[id$="_confirmbox"] h2,
+#confirm h2 {
+	margin-bottom: .25em;
+}
+
 /* LINK BAR */
 
-.extmgrplus_link_icon {
+fieldset.quick a .icon {
 	display: inline-block;
 	margin: 0 .3em;
 	font-size: 12px;
+}
+
+/* MESSAGE BOX */
+
+div.successbox .icon {
+	display: inline-block;
 }
 
 /* SETTINGS */
@@ -141,13 +154,6 @@ div[id$="_confirmbox"] {
 	margin-top: 1em;
 	text-align: center;
 	font-size: .75em;
-}
-
-/* CONFIRM BOX */
-
-div[id$="_confirmbox"] h2,
-#confirm h2 {
-	margin-bottom: .25em;
 }
 
 /* RESPONSIVE */

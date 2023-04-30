@@ -62,14 +62,14 @@ class ext_mgr_plus_acp
 
 			$this->config->set('extmgrplus_switch_log'				, $this->request->variable('extmgrplus_switch_log', 0));
 			$this->config->set('extmgrplus_switch_confirmation'		, $this->request->variable('extmgrplus_switch_confirmation', 0));
+			$this->config->set('extmgrplus_switch_auto_redirect'	, $this->request->variable('extmgrplus_switch_auto_redirect', 0));
 			$this->config->set('extmgrplus_select_checkbox_mode'	, $this->request->variable('extmgrplus_select_checkbox_mode', 0));
 			$this->config->set('extmgrplus_switch_order_and_ignore'	, $this->request->variable('extmgrplus_switch_order_and_ignore', 0));
 			$this->config->set('extmgrplus_switch_self_disable'		, $this->request->variable('extmgrplus_switch_self_disable', 0));
 			$this->config->set('extmgrplus_switch_migration_col'	, $this->request->variable('extmgrplus_switch_migration_col', 0));
 			$this->config->set('extmgrplus_switch_migrations'		, $this->request->variable('extmgrplus_switch_migrations', 0));
 
-			$this->template->assign_vars(['EXTMGRPLUS_LAST_EMP_ACTION' => 'trigger_error']);
-			trigger_error($this->language->lang('EXTMGRPLUS_MSG_SETTINGS_SAVED') . $this->common->back_link(), E_USER_NOTICE);
+			$this->common->trigger_error_($this->language->lang('EXTMGRPLUS_MSG_SETTINGS_SAVED'), E_USER_NOTICE);
 		}
 
 		$this->template->assign_vars([
@@ -78,6 +78,7 @@ class ext_mgr_plus_acp
 			'FORCE_UNSTABLE'							=> $this->config['extension_force_unstable'],
 			'EXTMGRPLUS_SWITCH_LOG'						=> $this->config['extmgrplus_switch_log'],
 			'EXTMGRPLUS_SWITCH_CONFIRMATION'			=> $this->config['extmgrplus_switch_confirmation'],
+			'EXTMGRPLUS_SWITCH_AUTO_REDIRECT'			=> $this->config['extmgrplus_switch_auto_redirect'],
 			'EXTMGRPLUS_SELECT_CHECKBOX_MODE'			=> $this->config['extmgrplus_select_checkbox_mode'],
 			'EXTMGRPLUS_SELECT_CHECKBOX_MODE_OPTIONS' => [
 				'EXTMGRPLUS_CHECKBOX_MODE_OFF'			=> '0',

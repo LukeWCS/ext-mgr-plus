@@ -25,6 +25,7 @@ services:
     lukewcs.extmgrplus.core.common:
         class: lukewcs\extmgrplus\core\ext_mgr_plus_common
         arguments:
+            - '@config'
             - '@config_text'
             - '@language'
             - '@template'
