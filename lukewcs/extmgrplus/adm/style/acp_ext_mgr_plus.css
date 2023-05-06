@@ -169,7 +169,7 @@ div[id$="_confirmbox"] {
 	}
 
 	.extmgrplus_order_and_ignore dd,
-	.extmgrplus_settings dd {
+	#extmgrplus_settings dd {
 		margin-top: .5em;
 	}
 

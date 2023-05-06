@@ -1,20 +1,20 @@
 ### 1.1.1
 GH (2023--) / CDB (2023--)
 
-* Versionsprüfung:
-  * Icon von `fa-wifi` auf `fa-refresh` geändert.
-  * Während der Ausführung der Versionsprüfung wird das zugehörige Icon jetzt animiert. Das dient als kleiner Indikator für die laufende Versionsprüfung, da phpBB selbst keinen Indikator bietet.
-  * Nach der Ausführung der Versionsprüfung erfolgt ein Redirect auf die normale URL der "Erweiterungen verwalten" Seite. Dadurch wird verhindert, dass nach einer Versionsprüfung durch Neuladen der Seite erneut eine Versionsprüfung ausgeführt wird.
 * Einstellungen:
   * Um die Last weiter zu reduzieren und den Weg für künftige Änderungen zu ebnen, gibt es für die Einstellungen jetzt ein separates ACP Modul. Der Link befindet sich auf der linken Seite in der Nav-Bar und lautet "Erweiterungen verwalten - Einstellungen".
   * Der Schalter bez. instabiler Versionen wird jetzt ebenfalls von der Funktion zum Zurücksetzen auf Installation-Standard berücksichtigt.
   * Es gibt nur noch einen gemeinsamen Absenden-Button. Bisher gab es zwei separate, einmal für die Versionsprüfung von phpBB und einmal für die Einstellungen von EMP. Das hatte zwar technische Gründe, war aber aus Benutzersicht irritierend. EMP übernimmt nun auch beim phpBB Schalter die Rückfrage und Speicherung.
-  * Die Rückfragen erfolgen nicht mehr per modalem Javascript Dialog `confirm()`, sondern per HTML und CSS. Dadurch wird Javascript nicht mehr angehalten und die Rückfrage öffnet und schliesst verzögerungsfrei. Dazu wird direkt unter dem betreffenden Schalter ein entsprechender Dialog eingeblendet. Die Dialog-Funktion wurde so konzipiert, dass für eine Rückfrage lediglich der entsprechende Makro-Aufruf im Template eingefügt werden muss. Um alles Weitere kümmert sich Javascript dann selbständig, zum Beispiel die Registrierung aller benötigten onChange und onClick Events.
-  * Mit einem neuen Schalter kann festgelegt werden, ob positive Meldungen automatisch bestätigt werden sollen. Dabei wird automatisch nach 1 Sekunde zum Link weitergeleitet, der unterhalb jeder Meldung anklickbar ist. Das genügt um die grüne Box als Rückmeldung wahrnehmen zu können. Fehlermeldungen sind von diesem Schalter nicht betroffen und müssen weiterhin manuell bestätigt werden.
+  * Die Rückfragen erfolgen nicht mehr per modalem Javascript Dialog `confirm()`, sondern per HTML und CSS. Dadurch wird Javascript nicht mehr angehalten und die Rückfrage öffnet und schliesst verzögerungsfrei. Dazu wird direkt unter dem betreffenden Schalter ein entsprechender Dialog eingeblendet.
+  * Mit einem neuen Schalter kann festgelegt werden, ob positive Meldungen automatisch bestätigt werden sollen. Dabei wird nach 1 Sekunde zum Link weitergeleitet, der unterhalb jeder Meldung anklickbar ist. Das genügt um die grüne Box als Rückmeldung wahrnehmen zu können. Fehlermeldungen sind von diesem Schalter nicht betroffen und müssen weiterhin manuell bestätigt werden.
+* Versionsprüfung:
+  * Icon von `fa-wifi` auf `fa-refresh` geändert.
+  * Während der Ausführung der Versionsprüfung wird das zugehörige Icon jetzt animiert. Das dient als kleiner Indikator für die laufende Versionsprüfung, da phpBB selbst keinen Indikator bietet.
+  * Nach der Ausführung der Versionsprüfung erfolgt ein Redirect auf die normale URL der "Erweiterungen verwalten" Seite. Dadurch wird verhindert, dass nach einer Versionsprüfung durch Neuladen der Seite erneut eine Versionsprüfung ausgeführt wird.
+* Für Bestätigungsmeldungen und Fehlermeldungen ein eigenes Template hinzugefügt. Das Template basiert auf dem Original von phpBB und wurde so erweitert, dass bei allen Meldungen stets der ExtensionManager Titel, die ExtensionManager Beschreibung und die jeweilige Aktions-Erklärung (sofern zutreffend) von phpBB angezeigt wird. Zusätzlich wird auch der EMP Footer angezeigt. Damit verhält sich EMP jetzt auch bei Bestätigungen und Fehlermeldungen wie phpBB, da Meldungen stets in das ExtensionManager Template Gerüst eingebettet sind.
 * Prüfung auf gültige Migrationsdateien und zählen neuer Migrationen verbessert:
   * Beim Zählen der neuen Migrationen wurden unter Umständen auch Dateien als Migrationen erkannt, die kein gültiges PHP Suffix hatten, zum Beispiel eine Sicherungsdatei (`.bak`) einer Migrationsdatei. Eine solche Datei kann zwar eine gültige Migration enthalten, wird aber von phpBB selber ignoriert. In einem Ext Release kommen solche Dateien nicht vor bzw. sollten nicht vorkommen. In einem Entwickler Board sieht das jedoch anders aus. Ist kein gültiges PHP Suffix vorhanden, wird die Datei nicht mehr als gültige Migration gezählt.
   * Es wird zusätzlich geprüft, ob in einer Migrationsdatei die Klassen-Deklaration den exakten Dateinamen als Klassennamen enthält. Trifft das nicht zu, wird die Datei nicht mehr von EMP als gültige Migration gezählt, da sie auch von phpBB ignoriert wird.
-* Für Bestätigungsmeldungen und Fehlermeldungen ein eigenes Template hinzugefügt. Das Template basiert auf dem Original von phpBB und wurde so erweitert, dass bei allen Meldungen stets der ExtensionManager Titel, die ExtensionManager Beschreibung und die jeweilige Aktions-Erklärung (sofern zutreffend) von phpBB angezeigt wird. Zusätzlich wird auch der EMP Footer angezeigt. Damit verhält sich EMP jetzt auch bei Bestätigungen und Fehlermeldungen wie phpBB, da Meldungen stets in das ExtensionManager Template Gerüst eingebettet sind.
 * Die Überschriften für "Aktivierte/Deaktivierte/Nicht installierte Erweiterungen" stehen für Übersetzer jetzt als Sprachvariablen zur Verfügung, bei der die Anzahl per Platzhalter eingefügt wird.
 * Die Funktion zum ermitteln der Versionsnummer des Sprachpakets sowohl strikter als auch flexibler gestaltet.
   * Strikter: Der Versions-String muss auf jeden Fall mit dem Muster x.y.z beginnen. Bisher wurde nicht geprüft, ob die Versionsnummer 3 Segmente hat.
@@ -22,7 +22,7 @@ GH (2023--) / CDB (2023--)
 * Code Optimierung.
 
 ### 1.1.0
-GH (2023-02-24) / CDB (2023--)
+GH (2023-02-24) / CDB (2023-04-22)
 
 * Für die Handhabung der Auswahl-Kontrollkästchen steht eine neue Eigenschaft zur Verfügung, die es erlaubt, den letzten Zustand aller Kontrollkästchen speichern zu können. Das ist insbesondere bei phpBB Updates hilfreich, wenn man alle Erweiterungen deaktivieren will, aber auch Erweiterungen hat, die nur fallweise aktiviert werden sollen. Es werden automatisch alle Kontrollkästchen gespeichert, wenn die Aktion "Ausgewählte deaktivieren" oder "Ausgewählte aktivieren" ausgeführt wird. Zusätzlich kann auch in der Link-Leiste oberhalb der Erweiterungen-Liste mit der Aktion "Speichern" jederzeit die aktuelle Auswahl gespeichert werden.
 * Erweiterungen-Liste:

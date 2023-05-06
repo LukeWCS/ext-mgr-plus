@@ -1,5 +1,10 @@
 ### 1.1.1
 
+#### 1.1.1-b9
+* Fix: In 1.1.1-b5 hat sich ein Fehler im CSS eingeschlichen, durch den in der Responsive-Ansicht der Einstellungen zwischen Beschreibung und Konfig-Element kein Abstand mehr erzeugt wurde.
+* JS:
+  * Die Funktion zum Abblenden der Reihenfolge-Textfelder setzt nicht mehr direkt eine CSS Eigenschaft (`opacity`), sondern setzt/entfernt lediglich eine CSS Klasse. Damit verhält sich JS genauso wie PHP, da die Eigenschaft initial vom Core mittels CSS Klasse vorgegeben wird.
+
 #### 1.1.1-b8
 * Mit einem neuen Schalter kann festgelegt werden, ob positive Meldungen automatisch bestätigt werden sollen. Dabei wird automatisch nach 1 Sekunde zum Link weitergeleitet, der unterhalb jeder Meldung anklickbar ist. Das genügt um die grüne Box als Rückmeldung wahrnehmen zu können. Fehlermeldungen sind von diesem Schalter nicht betroffen und müssen weiterhin manuell bestätigt werden.
 * Settings Template:
@@ -14,9 +19,8 @@
   * Neue Config-Variable `extmgrplus_switch_auto_redirect` hinzugefügt.
 * Sprachdateien:
   * 2 neue Sprachvariablen für den neuen Schalter hinzugefügt.
-  * 1 Sprachvariable für den Schalter "Rückfrage" geändert.
 * CSS:
-  * Code für das Icon hinzugefügt.
+  * Code für das neue Icon hinzugefügt.
   * Code für die Link Bar Icons geändert.
 
 #### 1.1.1-b7
