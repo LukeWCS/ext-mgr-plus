@@ -109,18 +109,18 @@ ExtMgrPlus.ShowOrderIgnoreColumns = function (show) {
 ExtMgrPlus.VersionCheck = function (VersionCheckURL) {
 	'use strict';
 
-	if (($('.extmgrplus_order_and_ignore').css('display') != 'none')) {
+	if ($('#extmgrplus_link_version_check').hasClass('disabled')) {
 		return;
 	}
 
 	$('fieldset.quick a .fa-refresh')	.addClass('fa-spin');
-	$(location)							.prop('href', ExtMgrPlus.tpl['versioncheck_url']);
+	$(location)							.prop('href', VersionCheckURL);
 };
 
 ExtMgrPlus.SaveCheckboxes = function () {
 	'use strict';
 
-	if (($('.extmgrplus_order_and_ignore').css('display') != 'none')) {
+	if ($('#extmgrplus_link_save_checkboxes').hasClass('disabled')) {
 		return;
 	}
 
@@ -205,6 +205,8 @@ ExtMgrPlus.FormReset = function () {
 	$('#extmgrplus_settings').trigger("reset");
 	ExtMgrPlus.ConfirmBoxHide();
 };
+
+// Register onChange and onClick events
 
 $(window).ready(function() {
 	'use strict';

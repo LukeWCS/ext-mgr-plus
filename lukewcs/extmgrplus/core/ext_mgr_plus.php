@@ -190,7 +190,6 @@ class ext_mgr_plus
 			$this->versioncheck_save();
 			redirect($this->u_action);
 		}
-		$ext_list_versioncheck = $this->versioncheck_list();
 
 		$notes = [];
 
@@ -267,35 +266,30 @@ class ext_mgr_plus
 		}
 
 		$ext_count_available				= count($ext_list_available);
-		$ext_count_configured				= count($this->ext_manager->all_configured());
 		$ext_count_enabled					= count($ext_list_enabled);
-		$ext_count_enabled_clean			= $ext_count_enabled - count($ext_list_ignore_enabled);
 		$ext_count_disabled					= count($ext_list_disabled);
-		$ext_count_disabled_clean			= $ext_count_disabled - count($ext_list_ignore_disabled);
-		$ext_count_selected_enabled_clean	= count($ext_list_selected_enabled_clean);
-		$ext_count_selected_disabled_clean	= count($ext_list_selected_disabled_clean);
 
-		$lang_outdated_msg = $this->common->lang_ver_check_msg('EXTMGRPLUS_LANG_VER',	'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED');
+		$lang_outdated_msg = $this->common->lang_ver_check_msg('EXTMGRPLUS_LANG_VER', 'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED');
 		if ($lang_outdated_msg)
 		{
 			$notes[] = $lang_outdated_msg;
 		}
 
 		$this->template->assign_vars([
-			'CDB_EXT_VER'								=> vsprintf('%u.%u', explode('.', PHPBB_VERSION)),
+			'EXTMGRPLUS_CDB_VER'						=> vsprintf('%u.%u', explode('.', PHPBB_VERSION)),
 			'EXTMGRPLUS_LIST_ORDER'						=> $ext_list_order,
 			'EXTMGRPLUS_LIST_IGNORE'					=> $ext_list_ignore,
-			'EXTMGRPLUS_LIST_VERSIONCHECK'				=> $ext_list_versioncheck,
 			'EXTMGRPLUS_LIST_MIGRATIONS_INACTIVE'		=> $ext_list_migrations_inactive,
 			'EXTMGRPLUS_LIST_SELECTED'					=> $ext_list_selected,
-			'EXTMGRPLUS_COUNT_SELECTED_ENABLED_CLEAN'	=> $ext_count_selected_enabled_clean,
-			'EXTMGRPLUS_COUNT_SELECTED_DISABLED_CLEAN'	=> $ext_count_selected_disabled_clean,
+			'EXTMGRPLUS_LIST_VERSIONCHECK'				=> $this->versioncheck_list(),
 			'EXTMGRPLUS_COUNT_AVAILABLE'				=> $ext_count_available,
 			'EXTMGRPLUS_COUNT_ENABLED'					=> $ext_count_enabled,
-			'EXTMGRPLUS_COUNT_ENABLED_CLEAN'			=> $ext_count_enabled_clean,
 			'EXTMGRPLUS_COUNT_DISABLED'					=> $ext_count_disabled,
-			'EXTMGRPLUS_COUNT_DISABLED_CLEAN'			=> $ext_count_disabled_clean,
-			'EXTMGRPLUS_COUNT_NOT_INSTALLED'			=> $ext_count_available - $ext_count_configured,
+			'EXTMGRPLUS_COUNT_NOT_INSTALLED'			=> $ext_count_available - count($this->ext_manager->all_configured()),
+			'EXTMGRPLUS_COUNT_ENABLED_CLEAN'			=> $ext_count_enabled - count($ext_list_ignore_enabled),
+			'EXTMGRPLUS_COUNT_DISABLED_CLEAN'			=> $ext_count_disabled - count($ext_list_ignore_disabled),
+			'EXTMGRPLUS_COUNT_SELECTED_ENABLED_CLEAN'	=> count($ext_list_selected_enabled_clean),
+			'EXTMGRPLUS_COUNT_SELECTED_DISABLED_CLEAN'	=> count($ext_list_selected_disabled_clean),
 			'EXTMGRPLUS_NOTES'							=> $notes,
 
 			'EXTMGRPLUS_SELECT_CHECKBOX_MODE'			=> $this->config['extmgrplus_select_checkbox_mode'],
@@ -414,7 +408,7 @@ class ext_mgr_plus
 			}
 		}
 
-		redirect($this->request->variable('u_action', ''));
+		redirect($this->u_action);
 	}
 
 	private function exts_disable(): void
@@ -668,7 +662,7 @@ class ext_mgr_plus
 		return count($migration_classes_new);
 	}
 
-	// Check if file is a migration file
+	// Check if file is a valid migration file
 	private function is_migration(string $file): int
 	{
 		$file_info = pathinfo($file);
