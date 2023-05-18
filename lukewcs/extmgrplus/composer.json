@@ -3,8 +3,8 @@
 	"type": "phpbb-extension",
 	"description": "Extends the Extension Manager with the ability to disable and re-enable all installed extensions at once. An individual selection can also be made using checkboxes. Furthermore, sequence groups can be defined or extensions can be ignored. Additional information is also displayed in the Extension Manager.",
 	"homepage": "https://github.com/LukeWCS/ext-mgr-plus",
-	"version": "1.1.1-b10",
-	"time": "2023-05-13",
+	"version": "1.1.1",
+	"time": "2023-05-18",
 	"license": "GPL-2.0-only",
 	"authors": [
 		{
@@ -29,9 +29,9 @@
 			"phpbb/phpbb": ">=3.2.11,<3.4.0@dev"
 		},
 		"version-check": {
-			"host": "lukewcs.github.io",
-			"directory": "/ext-mgr-plus",
-			"filename": "version_check.json",
+			"host": "www.phpbb.com",
+			"directory": "/customise/db/extension/extension_manager_plus",
+			"filename": "version_check",
 			"ssl": true
 		}
 	}

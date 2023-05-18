@@ -1,5 +1,10 @@
 ### 1.1.1
 
+#### 1.1.1
+* Release (2023-05-18)
+* `composer.json`:
+  * EMP Versionsprüfung von github.io auf phpbb.com geändert.
+
 #### 1.1.1-b10
 * JS:
   * URL für Versionsprüfung wird jetzt direkt vom Template an die Funktion per Parameter übergeben.
@@ -121,7 +126,7 @@
   * Optimierung. 1) Mehrere Eigenschaften neu gruppiert. 2) Mehrere Selektoren anders definiert, um diese reduzieren zu können.
 
 #### 1.1.0
-* Release
+* Release (2023-02-24)
 * Core:
   * Bei der Prüfung der Bedingungen für die Speicherung der Checkboxen wird jetzt auch "Letzten Zustand merken" berücksichtigt.
 * Sprachdateien:
@@ -250,7 +255,7 @@
 ### 1.0.8
 
 #### 1.0.8
-* Release
+* Release (2023-02-01)
 * ConfirmBox Template
   * Bei den Aktionen "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" wird jetzt oberhalb der Rückfrage der gleiche Hinweis angezeigt, den auch phpBB selbst bei der Rückfrage der Aktionen "Deaktivieren" und "Aktivieren" anzeigt.
 * Sprachdateien:
@@ -288,7 +293,7 @@
 ### 1.0.7
 
 #### 1.0.7
-* Release
+* Release (2022-12-04)
 * Code Optimierung:
   * Die Funktion `catch_message()` wird jetzt frühzeitig abgebrochen, wenn sie nicht benötigt wird. Dadurch werden bei allen Seitenaufrufen im ACP 5 Funktionsaufrufe und 4 Bedingungen eingespart.
 
@@ -363,7 +368,7 @@
 ### 1.0.6
 
 #### 1.0.6
-* Release
+* Release (2022-11-05)
 * CSS:
   * Fix: Code für die 8te Spalte hat gefehlt.
 
@@ -410,7 +415,7 @@
 ### 1.0.5
 
 #### 1.0.5
-* Release
+* Release (2022-10-29)
 * Sprachdateien:
   * Kleine Textänderungen.
 
@@ -439,7 +444,7 @@
 ### 1.0.4
 
 #### 1.0.4
-* Release
+* Release (2023-08-10)
 
 #### 1.0.4-b1
 * Fix für "Berechtigungen des Benutzers testen".
@@ -447,7 +452,7 @@
 ### 1.0.3
 
 #### 1.0.3
-* Release
+* Release (2022-06-24)
 * Core:
   * Code Optimierungen.
 
@@ -474,7 +479,7 @@
 ### 1.0.2
 
 #### 1.0.2
-* Release
+* Release (2022-06-17)
 * ExtMgr Template:
   * Tooltips für die Icons der Spaltenüberschriften und Checkboxen hinzugefügt.
   * Mehrere Änderungen in HTML und JS damit bestimmte Elemente flexibler angesprochen werden können.
@@ -491,7 +496,7 @@
 ### 1.0.1
 
 #### 1.0.1
-* Release
+* Release (2023-06-12)
 
 #### 1.0.1-b2
 * Die Fehlerbehandlung bei fehlgeschlagener Migration musste angepasst werden. Sobald ein Migrationsfehler ausgelöst und abgefangen wurde, war es nicht mehr möglich, eine `trigger_error` Meldung abzufangen. Darum wird jetzt bei einem Migrationsfehler sofort der Vorgang abgebrochen und direkt eine Fehlermeldung ausgegeben. Nur so ist gewährleistet, dass in jedem Fehler-Szenario vollständige Informationen ausgegeben werden können.
@@ -521,7 +526,7 @@
 ### 1.0.0
 
 #### 1.0.0
-* Release
+* Release (2022-06-08)
 * Benachrichtigungssystem so geändert, dass es nicht nur für ein veraltetes Sprachpaket genutzt werden kann. So war es eigentlich auch gedacht.
 
 #### 1.0.0-b15

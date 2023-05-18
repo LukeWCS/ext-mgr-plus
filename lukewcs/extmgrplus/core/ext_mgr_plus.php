@@ -265,9 +265,9 @@ class ext_mgr_plus
 			$ext_list_selected_disabled_clean	= [];
 		}
 
-		$ext_count_available				= count($ext_list_available);
-		$ext_count_enabled					= count($ext_list_enabled);
-		$ext_count_disabled					= count($ext_list_disabled);
+		$ext_count_available	= count($ext_list_available);
+		$ext_count_enabled		= count($ext_list_enabled);
+		$ext_count_disabled		= count($ext_list_disabled);
 
 		$lang_outdated_msg = $this->common->lang_ver_check_msg('EXTMGRPLUS_LANG_VER', 'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED');
 		if ($lang_outdated_msg)
