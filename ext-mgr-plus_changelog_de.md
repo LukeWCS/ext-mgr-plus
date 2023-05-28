@@ -1,5 +1,5 @@
 ### 1.1.1
-(2023--)
+(2023-05-28)
 
 * Einstellungen:
   * Um die Last weiter zu reduzieren und den Weg für künftige Änderungen zu ebnen, gibt es für die Einstellungen jetzt ein separates ACP Modul. Der Link befindet sich auf der linken Seite in der Nav-Bar und lautet "Erweiterungen verwalten - Einstellungen".
