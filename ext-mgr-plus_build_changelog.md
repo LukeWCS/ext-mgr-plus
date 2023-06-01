@@ -1,3 +1,9 @@
+### 1.1.2
+
+#### 1.1.2-b1
+* Fix: Ursache für die Debug Warnung `Undefined array key` behoben, wenn Dateien im Ordner `mgrations` kein Suffix haben.
+* Fix: Debug Meldungen die während einer Versionsprüfung entstehen können, wurden durch eine Änderung in 1.1.1 unterdrückt.
+
 ### 1.1.1
 
 #### 1.1.1
@@ -104,7 +110,7 @@
 
 #### 1.1.1-b2
 * ConfirmBox Template:
-  * HTML Tag Fehler in `acp_ext_mgr_plus_confirm_body.html` korrigiert. [Meldung von IMC]
+  * HTML Tag Fehler in `acp_ext_mgr_plus_confirm_body.html` korrigiert. [Meldung von IMC (.de)]
   * Restliche veraltete Template Syntax durch Twig ersetzt.
 * Prüfung auf gültige Migration verbessert durch 2 neue Bedingungen:
   * Suffix der Datei muss dem Serverseitig eingestellten PHP Suffix entsprechen.
@@ -194,8 +200,8 @@
 * Core und ExtMgr Template: Eine unnötige Template Variable entfernt, da hierfür bereits eine Config Template Variable existiert.
 * Die maximale PHP Laufzeit wird nicht mehr direkt aus der PHP INI geladen, sondern aus dem Event Datenpaket ermittelt.
 * Reihenfolge & Ignorieren:
-  * Die Beschreibungen von Reihenfolge und Ignorieren werden jetzt nebeneinander statt untereinander dargestellt. [Vorschlag von Kirk]
-  * Unterhalb der Erweiterungen-Liste wird jetzt ebenfalls ein Absenden-Button eingefügt. [Vorschlag von Kirk]
+  * Die Beschreibungen von Reihenfolge und Ignorieren werden jetzt nebeneinander statt untereinander dargestellt. [Vorschlag von Kirk (.de)]
+  * Unterhalb der Erweiterungen-Liste wird jetzt ebenfalls ein Absenden-Button eingefügt. [Vorschlag von Kirk (.de)]
 * Sprachdateien:
   * Meldungen bezüglich Überschreitung der maximalen PHP Laufzeit vereinfacht.
   * Für "Reihenfolge & Ignorieren" 2 Variablen hinzugefügt und 2 Variablen geändert.
@@ -261,7 +267,7 @@
 * Sprachdateien:
   * Texte bezüglich "Migrationen erlauben" präzisiert.
 * ExtMgr Template:
-  * Richtlinienfehler behoben. [Meldung von Kirk]
+  * Richtlinienfehler behoben. [Meldung von Kirk (.de)]
 * Code:
   * Funktion zum deaktivieren/aktivieren auf 2 Funktionen aufgeteilt.
   * Optimierung.
@@ -491,7 +497,7 @@
   * Neue Sprachvariable für den Checkbox Tooltip.
 
 #### 1.0.2-b1
-* Bei der Prüfung ob eine Ext aktiviert werden kann mittels `is_enableable()` (`ext.php`), wird jetzt auch ein String und ein Array als möglicher Rückgabewert akzeptiert und entsprechend aufbereitet. Diese Methode der Fehlerbehandlung wurde erst in phpBB 3.3.0 eingeführt und kann `trigger_error` ersetzen. [Hinweis von IMC]
+* Bei der Prüfung ob eine Ext aktiviert werden kann mittels `is_enableable()` (`ext.php`), wird jetzt auch ein String und ein Array als möglicher Rückgabewert akzeptiert und entsprechend aufbereitet. Diese Methode der Fehlerbehandlung wurde erst in phpBB 3.3.0 eingeführt und kann `trigger_error` ersetzen. [Hinweis von IMC (.de)]
 
 ### 1.0.1
 
@@ -547,7 +553,7 @@
   * Sprachvariablen für die neue Option Reihenfolge/Ignorieren hinzugefügt.
 
 #### 1.0.0-b13
-* Fix: Wenn Migrationen deaktiviert sind und bei Exts mit neuen Migrationsdateien zusätzlich noch das Ignorieren-Merkmal gesetzt wird, dann konnte es vorkommen, das die Alle-Deaktivieren Checkbox deaktiviert wird, obwohl es noch schaltbare Exts gab. Der Grund lag in der falschen Berechnung der schaltbaren Exts. [Meldung von Kirk]
+* Fix: Wenn Migrationen deaktiviert sind und bei Exts mit neuen Migrationsdateien zusätzlich noch das Ignorieren-Merkmal gesetzt wird, dann konnte es vorkommen, das die Alle-Deaktivieren Checkbox deaktiviert wird, obwohl es noch schaltbare Exts gab. Der Grund lag in der falschen Berechnung der schaltbaren Exts. [Meldung von Kirk (.de)]
 
 #### 1.0.0-b12
 * Fix: Beim Aktivieren wurden auch diejenigen Exts mit aktiviert, bei denen eine Reihenfolge-Gruppe definiert war, obwohl diese gar nicht ausgewählt wurden.
@@ -567,7 +573,7 @@
 
 #### 1.0.0-b11
 * CSS:
-  * In der Responsive-Ansicht wird bei geöffneten Einstellungen der Button "Spalte speichern" zentriert, damit dieser optisch zu den anderen Buttons passt. [Vorschlag von Kirk]
+  * In der Responsive-Ansicht wird bei geöffneten Einstellungen der Button "Spalte speichern" zentriert, damit dieser optisch zu den anderen Buttons passt. [Vorschlag von Kirk (.de)]
   * In der Responsive-Ansicht wird bei geöffneten Einstellungen zwischen Erklärungen und Bedienelementen (Buttons, Radio Buttons) ein Abstand eingefügt.
   * Optimierungen.
   * Datei umstrukturiert.
@@ -580,7 +586,7 @@
 
 #### 1.0.0-b10
 * ExtMgr Template:
-  * Bei der Option "Erlaube Migrationen" erfolgt jetzt eine Rückfrage per JS Popup die mit OK bestätigt werden muss. Ansonsten wird die Option wieder auf "Nein" zurückgestellt. [Vorschlag von Scanialady, chris1278]
+  * Bei der Option "Erlaube Migrationen" erfolgt jetzt eine Rückfrage per JS Popup die mit OK bestätigt werden muss. Ansonsten wird die Option wieder auf "Nein" zurückgestellt. [Vorschlag von Scanialady (.de), chris1278 (.de)]
   * Die neue Migrations-Rückfrage mit der Methode von LFWWH realisiert.
 * Sprachdateien:
   * Neue Sprachvariablen für die Migrations-Rückfrage.
@@ -593,7 +599,7 @@
   * Funktion zum Anzeigen/Ausblenden der Einstellungen komplett geändert.
 
 #### 1.0.0-b8
-* Fix: In der Spalte für Reihenfolge/Ignorieren konnten keine 2-stelligen Werte eingetragen werden. Im HTML wurde schlicht das RegEx für die Eingabeprüfung falsch definiert. [Meldung von Kirk]
+* Fix: In der Spalte für Reihenfolge/Ignorieren konnten keine 2-stelligen Werte eingetragen werden. Im HTML wurde schlicht das RegEx für die Eingabeprüfung falsch definiert. [Meldung von Kirk (.de)]
 * In der Responsive-Ansicht werden nun auch bei den neuen EMP Spalten (neue Migrationsdateien, Auswählen, Reihenfolge/Ignorieren) einleitende Spaltenüberschriften angezeigt, wie das phpBB auch bei den Standard-Spalten macht. Bislang wurden gar keine Texte angezeigt, da die Spalten in der normalen Ansicht nur FA Icons enthalten.
 * ExtMgr Template:
   * Wenn die Einstellungen geöffnet werden, dann werden jetzt in der Erweiterungen-Liste auch alle Links für "Aktivieren", "Deaktivieren" und "Arbeitsdaten löschen" ausgeblendet. Somit gibt es bei geöffneten Einstellungen nur noch die Textfelder als aktive Elemente in der Erweiterungen-Liste.
@@ -627,9 +633,9 @@
 
 #### 1.0.0-b6
 * ExtMgr Template:
-  * Es gibt jetzt einen neuen Schalter mit dem man festlegen kann, ob die Checkboxen standardmässig alle gesetzt sind oder nicht. [Vorschlag von Kirk]
+  * Es gibt jetzt einen neuen Schalter mit dem man festlegen kann, ob die Checkboxen standardmässig alle gesetzt sind oder nicht. [Vorschlag von Kirk (.de)]
   * Etliche Anpassungen für die Checkbox Option.
-* Statt zwei Einstellungen-Links gibt es nur noch einen. Mit diesem Link werden also gleichzeitig beide Formulare von phpBB und ExtMgrPlus angezeigt oder ausgeblendet. [Vorschlag von Scanialady]
+* Statt zwei Einstellungen-Links gibt es nur noch einen. Mit diesem Link werden also gleichzeitig beide Formulare von phpBB und ExtMgrPlus angezeigt oder ausgeblendet. [Vorschlag von Scanialady (.de)]
   * JS Hilfsfunktion dafür eingebaut, mit der mehrere Elemente gleichzeitig ein/ausgeblendet werden können.
 * Sprachdateien:
   * Neue Sprachvariablen für die Checkbox Option.
@@ -654,7 +660,7 @@
   * Methode komplett geändert. Um auf das HTML Event verzichten zu können, eine eigene Funktion eingebaut, mit der eine ErrorBox Meldung abgefangen und manipuliert werden kann. Damit ist die Handhabung des Aktivierungsabbruchs kein Workaround mehr, sondern eine ordentliche Lösung.
   * HTML Event `acp_overall_header_body_before.html` entfernt.
   * Javascript `ext_mgr_errorbox.js` entfernt.
-* Durch die neue Methode der ErrorBox Handhabung, wurde es nun möglich, die Eigendeaktivierung als Option einzubauen. [Vorschlag von 69bruno]
+* Durch die neue Methode der ErrorBox Handhabung, wurde es nun möglich, die Eigendeaktivierung als Option einzubauen. [Vorschlag von 69bruno (.de)]
 * ExtMgr Template:
   * Security Token auch beim Listen-Formular (Buttons und Checkboxen) und beim Rückfrage-Formular hinzugefügt. Damit ist jetzt jede Aktion von EMP mit Token gesichert.
   * Neuer Schalter für die Eigendeaktivierung.

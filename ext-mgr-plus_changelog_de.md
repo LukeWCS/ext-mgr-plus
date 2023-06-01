@@ -1,3 +1,9 @@
+### 1.1.2
+(2023--)
+
+* Fix: Wenn bei einer Ext im Ordner `migrations` eine Datei ohne Suffix vorhanden war, wurde von EMP eine Debug Warnung ausgegeben: `Undefined array key "extension"`. [Meldung von Bruce Banner (.com)]
+* Fix: Wenn bei einer Versionsprüfung mittels "Alle Versionen erneut prüfen" wegen Fehler eine oder mehrere Debug Meldungen erzeugt wurden, dann wurden diese von EMP effektiv unterdrückt. Der Grund war eine Änderung bei 1.1.1 durch die nach einer Versionsprüfung die URL durch einen Redirect bereinigt wurde. Der Redirect wurde entfernt. [Meldung von Kirk (.de)]
+
 ### 1.1.1
 (2023-05-28)
 

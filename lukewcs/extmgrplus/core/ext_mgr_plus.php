@@ -188,7 +188,6 @@ class ext_mgr_plus
 		if ($this->request->variable('versioncheck_force', false))
 		{
 			$this->versioncheck_save();
-			redirect($this->u_action);
 		}
 
 		$notes = [];
@@ -666,7 +665,7 @@ class ext_mgr_plus
 	private function is_migration(string $file): int
 	{
 		$file_info = pathinfo($file);
-		if ($file_info['extension'] == $this->php_ext && file_exists($file))
+		if (($file_info['extension'] ?? '') == $this->php_ext && file_exists($file))
 		{
 			$file_content = file_get_contents($file);
 			if ($file_content !== false)
