@@ -625,10 +625,19 @@ class ext_mgr_plus
 		$this->load_migrations_db();
 
 		$ext_with_migrations_list = [];
+		if ($this->config['extmgrplus_switch_order_and_ignore'])
+		{
+			$ext_list_ignore = array_flip($this->common->config_text_get('extmgrplus_list_order_and_ignore', 'ignore') ?? []);
+		}
+
 		if (isset($this->migrations_db))
 		{
 			foreach ($ext_list as $ext_name => $ext_path)
 			{
+				if (isset($ext_list_ignore[$ext_name]))
+				{
+					continue;
+				}
 				$migration_files_count = $this->get_new_migrations_count($ext_name, $ext_path);
 				if ($migration_files_count)
 				{

@@ -1,7 +1,13 @@
 ### 1.1.2
 
+#### 1.1.2-b2
+* Ignorierte Exts sind jetzt auch bei der Migrationsprüfung ausgeschlossen. In dem Fall wird das Ignorieren-Icon angezeigt, statt der Migrationen.
+* Bei ignorierten Exts wird statt einer deaktivierten Checkbox jetzt ebenfalls das Ignorieren-Icon angezeigt.
+* Sprachdateien:
+ * 1 neue Sprachvariable für den Ignoriert-Tooltip.
+
 #### 1.1.2-b1
-* Fix: Ursache für die Debug Warnung `Undefined array key` behoben, wenn Dateien im Ordner `mgrations` kein Suffix haben.
+* Fix: Ursache für die Debug Warnung `Undefined array key` behoben, wenn Dateien im Ordner `migrations` kein Suffix haben.
 * Fix: Debug Meldungen die während einer Versionsprüfung entstehen können, wurden durch eine Änderung in 1.1.1 unterdrückt.
 
 ### 1.1.1

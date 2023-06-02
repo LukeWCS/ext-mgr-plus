@@ -152,7 +152,8 @@
 								'enabled',
 								ext_enabled.NAME,
 								(ext_enabled.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_SWITCH_SELF_DISABLE) && (EXTMGRPLUS_LIST_IGNORE[ext_enabled.NAME] is not defined || !EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE),
-								EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1 || EXTMGRPLUS_LIST_SELECTED[ext_enabled.NAME] is defined
+								EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1 || EXTMGRPLUS_LIST_SELECTED[ext_enabled.NAME] is defined,
+								EXTMGRPLUS_LIST_IGNORE[ext_enabled.NAME] is defined
 							) }}
 						</td>
 						<td style="display: none;">
@@ -226,7 +227,12 @@
 							{{ _self.version(ext_disabled, attribute(EXTMGRPLUS_LIST_VERSIONCHECK, ext_disabled.NAME)) }}
 						</td>
 						<td{{ !EXTMGRPLUS_SWITCH_MIGRATION_COL ? ' style="display: none;"' }}>
-							{{ EXTMGRPLUS_SWITCH_MIGRATION_COL ? _self.has_migration(EXTMGRPLUS_LIST_MIGRATIONS_INACTIVE[ext_disabled.NAME] ?? '') }}
+							{% if EXTMGRPLUS_SWITCH_MIGRATION_COL %}
+								{{ _self.has_migration(
+									EXTMGRPLUS_LIST_MIGRATIONS_INACTIVE[ext_disabled.NAME] ?? 0,
+									EXTMGRPLUS_LIST_IGNORE[ext_disabled.NAME] is defined
+								) }}
+							{% endif %}
 						</td>
 						<td>
 							{{ _self.details(ext_disabled) }}
@@ -240,7 +246,8 @@
 									'disabled',
 									ext_disabled.NAME,
 									(EXTMGRPLUS_LIST_MIGRATIONS_INACTIVE[ext_disabled.NAME] is not defined || EXTMGRPLUS_SWITCH_MIGRATIONS) && (EXTMGRPLUS_LIST_IGNORE[ext_disabled.NAME] is not defined || !EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE),
-									EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1 || EXTMGRPLUS_LIST_SELECTED[ext_disabled.NAME] is defined
+									EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1 || EXTMGRPLUS_LIST_SELECTED[ext_disabled.NAME] is defined,
+									EXTMGRPLUS_LIST_IGNORE[ext_disabled.NAME] is defined
 								) }}
 							{% endif %}
 						</td>
@@ -346,9 +353,11 @@
 {% endapply %}
 {% endmacro %}
 
-{% macro has_migration(migration_count) %}
+{% macro has_migration(migration_count, ignore) %}
 {% apply spaceless %}
-	{% if migration_count %}
+	{% if ignore %}
+		<span class="extmgrplus_migration_files" title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_IGNORED')|e('html') }}">{{ common.icon('fa-ban') }}</span>
+	{% elseif migration_count %}
 		<span class="extmgrplus_migration_files" title="{{ lang('EXTMGRPLUS_TOOLTIP_HAS_MIGRATION')|e('html') }}">{{ migration_count }}</span>
 	{% endif %}
 {% endapply %}
@@ -368,9 +377,15 @@
 	<input type="checkbox" class="radio" name="ext_mark_all_{{ section }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT_ALL') }}"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
 {%- endmacro %}
 
-{% macro checkbox_select(section, ext_name, enabled = true, checked = false) -%}
-	<input type="checkbox" class="radio" name="ext_mark_{{ section }}[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT') }}"{{ enabled ? ' value="' ~ ext_name ~ '"' }}{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
-{%- endmacro %}
+{% macro checkbox_select(section, ext_name, enabled = true, checked = false, ignore) %}
+{% apply spaceless %}
+	{% if ignore %}
+		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_IGNORED')|e('html') }}">{{ common.icon('fa-ban') }}
+	{% else %}
+		<input type="checkbox" class="radio" name="ext_mark_{{ section }}[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT') }}"{{ enabled ? ' value="' ~ ext_name ~ '"' }}{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
+	{% endif %}
+{% endapply %}
+{% endmacro %}
 
 {% macro checkbox_ignore(ext_name, checked = false) -%}
 	<input type="checkbox" class="radio" name="ext_ignore[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_IGNORE')|e('html') }}" value="{{ ext_name }}"{{ checked ? ' checked' }}>
