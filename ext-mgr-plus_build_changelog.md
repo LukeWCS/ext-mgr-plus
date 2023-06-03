@@ -1,5 +1,18 @@
 ### 1.1.2
 
+#### 1.1.2-b3
+* Validierungs-Kritik 1.1.1: 
+  * Bei Versions-Anzeigen kann das Präfix "v" jetzt per Sprachvariable global angepasst werden. Das betrifft auch das Makro Template mit dem Footer.
+* Das Ignoriert-Icon in der Auswählen-Spalte grösser definiert. [Vorschlag von Kirk (.de)]
+* In der Tabellen-Überschrift alle Icons etwas grösser definiert und den Standard `font-weight: bold;` entfernt, wodurch die Icons nicht länger unscharf wirken.
+* Sprachdateien:
+ * 1 neue Sprachvariable für den Versions-String.
+ * Sprach-Version erhöht.
+* CSS:
+  * Geänderten Code für die Icons.
+* `composer.json`:
+  * Sprach-Mindestversion erhöht.
+
 #### 1.1.2-b2
 * Ignorierte Exts sind jetzt auch bei der Migrationsprüfung ausgeschlossen. In dem Fall wird das Ignorieren-Icon angezeigt, statt der Migrationen.
 * Bei ignorierten Exts wird statt einer deaktivierten Checkbox jetzt ebenfalls das Ignorieren-Icon angezeigt.

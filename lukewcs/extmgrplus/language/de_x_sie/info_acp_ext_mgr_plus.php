@@ -44,4 +44,7 @@ $lang = array_merge($lang, [
 	// log
 	'EXTMGRPLUS_LOG_EXT_DISABLE_ALL'	=> '<strong>Erweiterungen verwalten (Plus)</strong><br>» %1$u von %2$u Erweiterungen deaktiviert',
 	'EXTMGRPLUS_LOG_EXT_ENABLE_ALL'		=> '<strong>Erweiterungen verwalten (Plus)</strong><br>» %1$u von %2$u Erweiterungen aktiviert',
+
+	// misc
+	'EXTMGRPLUS_VERSION_STRING'			=> 'v%s',
 ]);

@@ -326,10 +326,10 @@ class ext_mgr_plus
 		)
 		{
 			$this->template->assign_vars([
-				'MESSAGE_TEXT'		=>	sprintf('%1$s<br><br><strong>%2$s v%3$s (%4$s)</strong><br><br><em>%5$s</em>%6$s',
+				'MESSAGE_TEXT'		=>	sprintf('%1$s<br><br><strong>%2$s %3$s (%4$s)</strong><br><br><em>%5$s</em>%6$s',
 											/* 1 */	$this->language->lang('EXTMGRPLUS_MSG_PROCESS_ABORTED', $this->language->lang($last_action)),
 											/* 2 */	$ext_display_name,
-											/* 3 */	$ext_version,
+											/* 3 */	$this->language->lang('EXTMGRPLUS_VERSION_STRING', $ext_version),
 											/* 4 */	$ext_name,
 											/* 5 */	$message_text,
 											/* 6 */	$this->common->back_link('RETURN_TO_EXTENSION_LIST')
@@ -500,9 +500,9 @@ class ext_mgr_plus
 		$ext_list_failed_activation = [];
 		$get_failed_msg = function ($display_name, $ext_version, $ext_name, $message)
 		{
-			return sprintf('<br><br><strong>%1$s v%2$s (%3$s)</strong><br><br><em>%4$s</em>',
+			return sprintf('<br><br><strong>%1$s %2$s (%3$s)</strong><br><br><em>%4$s</em>',
 				/* 1 */	$display_name,
-				/* 2 */	$ext_version,
+				/* 2 */	$this->language->lang('EXTMGRPLUS_VERSION_STRING', $ext_version),
 				/* 3 */	$ext_name,
 				/* 4 */	$message
 			);

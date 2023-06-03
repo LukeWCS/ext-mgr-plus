@@ -28,17 +28,24 @@ div[id$="_confirmbox"] h2,
 	margin-bottom: .25em;
 }
 
-/* LINK BAR */
+/* ICONS */
 
-fieldset.quick a .icon {
+fieldset.quick a .icon {	/* link bar */
 	display: inline-block;
 	margin: 0 .3em;
-	font-size: 12px;
+	font-size: 1.1em;
 }
 
-/* MESSAGE BOX */
+thead th .icon {			/* table header */
+	font-size: 1.1em;
+	font-weight: normal;
+}
 
-div.successbox .icon {
+td:nth-of-type(6) .icon {	/* select */
+	font-size: 1.3em;
+}
+
+div.successbox .icon {		/* trigger_error */
 	display: inline-block;
 }
 
@@ -140,11 +147,11 @@ div[id$="_confirmbox"] {
 	width: 25%;
 }
 
-#extmgrplus_list th:nth-of-type(1n + 6) {	/* checkboxes(select)+  */
+#extmgrplus_list th:nth-of-type(1n + 6) {	/* select+  */
 	width: 1%;
 }
 
-#extmgrplus_list td:nth-of-type(1n + 6) {	/* checkboxes(select)+  */
+#extmgrplus_list td:nth-of-type(1n + 6) {	/* select+  */
 	padding: 0 4px;
 }
 

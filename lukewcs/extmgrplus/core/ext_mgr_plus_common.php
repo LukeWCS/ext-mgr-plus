@@ -49,9 +49,9 @@ class ext_mgr_plus_common
 		$this->template->assign_vars([
 			$tpl_prefix . '_METADATA'	=> [
 				'EXT_NAME'		=> $this->metadata['extra']['display-name'],
-				'EXT_VER'		=> $this->metadata['version'],
+				'EXT_VER'		=> $this->language->lang($tpl_prefix . '_VERSION_STRING', $this->metadata['version']),
 				'LANG_DESC'		=> $this->language->lang($tpl_prefix . '_LANG_DESC'),
-				'LANG_VER'		=> $this->language->lang($tpl_prefix . '_LANG_VER'),
+				'LANG_VER'		=> $this->language->lang($tpl_prefix . '_VERSION_STRING', $this->language->lang($tpl_prefix . '_LANG_VER')),
 				'LANG_AUTHOR'	=> $this->language->lang($tpl_prefix . '_LANG_AUTHOR'),
 				'CLASS'			=> strtolower($tpl_prefix) . '_footer',
 			],

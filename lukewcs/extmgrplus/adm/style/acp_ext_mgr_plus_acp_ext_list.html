@@ -353,7 +353,7 @@
 {% endapply %}
 {% endmacro %}
 
-{% macro has_migration(migration_count, ignore) %}
+{% macro has_migration(migration_count, ignore = false) %}
 {% apply spaceless %}
 	{% if ignore %}
 		<span class="extmgrplus_migration_files" title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_IGNORED')|e('html') }}">{{ common.icon('fa-ban') }}</span>
@@ -377,7 +377,7 @@
 	<input type="checkbox" class="radio" name="ext_mark_all_{{ section }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT_ALL') }}"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
 {%- endmacro %}
 
-{% macro checkbox_select(section, ext_name, enabled = true, checked = false, ignore) %}
+{% macro checkbox_select(section, ext_name, enabled = true, checked = false, ignore = false) %}
 {% apply spaceless %}
 	{% if ignore %}
 		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_IGNORED')|e('html') }}">{{ common.icon('fa-ban') }}

@@ -5,6 +5,8 @@
 * Fix: Wenn bei einer Versionsprüfung mittels "Alle Versionen erneut prüfen" wegen Fehler eine oder mehrere Debug Meldungen erzeugt wurden, dann wurden diese von EMP effektiv unterdrückt. Der Grund war eine Änderung bei 1.1.1 durch die nach einer Versionsprüfung die URL durch einen Redirect bereinigt wurde. Der Redirect wurde entfernt. [Meldung von Kirk (.de)]
 * Aufgrund der "Smilie Signs" Problematik wurde die Ignorieren-Funktion weiter ausgebaut. Wird bei einer Erweiterung das Ignorieren-Merkmal gesetzt, werden bei dieser Erweiterung keine neuen Migrationen ermittelt, da diese bei ignorierten Erweiterungen ohnehin bedeutungslos sind. Ist die Spalte "Neue Migrationen" aktiviert, wird bei ignorierten Erweiterungen das entsprechende Ignorieren-Icon angezeigt, statt der Anzahl der neuen Migrationen.
 * Ist bei einer Erweiterung das Ignorieren-Merkmal gesetzt, wird nicht mehr ein deaktiviertes Kontrollkästchen angezeigt, sondern das gleiche Ignorieren-Icon wie in der "Neue Migrationen" Spalte.
+* Validierungs-Kritik 1.1.1:
+  * Bei Versions-Anzeigen kann das Präfix "v" jetzt per Sprachvariable global angepasst werden.
 
 ### 1.1.1
 (2023-05-28)
