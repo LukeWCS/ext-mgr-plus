@@ -59,7 +59,7 @@ $lang = array_merge($lang, [
 
 	// tooltips
 	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'		=> 'Diese Erweiterung hat neue Migrationen, die beim aktivieren der Erweiterung übernommen werden.',
-	'EXTMGRPLUS_TOOLTIP_IS_IGNORED'			=> 'Diese Erweiterung wird ignoriert.',
+	'EXTMGRPLUS_TOOLTIP_IS_IGNORED'			=> 'Diese Erweiterung wird von „Extension Manager Plus“ ignoriert.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE'		=> 'Alle ausgewählten Erweiterungen deaktivieren.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'		=> 'Alle ausgewählten Erweiterungen aktivieren.',
 	'EXTMGRPLUS_TOOLTIP_ORDER'				=> 'Reihenfolge-Gruppe im Bereich 0-99.',

@@ -122,10 +122,6 @@ div[id$="_confirmbox"] {
 	background-color: #F9F9F9;
 }
 
-.extmgrplus_migration_files {
-	cursor: help;
-}
-
 #extmgrplus_list th:nth-of-type(1n + 2),	/* version+ */
 #extmgrplus_list td:nth-of-type(1n + 2) {
 	text-align: center;
@@ -137,6 +133,10 @@ div[id$="_confirmbox"] {
 
 #extmgrplus_list th:nth-of-type(3) {		/* migration files */
 	width: 1%;
+}
+
+#extmgrplus_list td:nth-of-type(3) span {	/* migration files */
+	cursor: help;
 }
 
 #extmgrplus_list th:nth-of-type(4) {		/* options */

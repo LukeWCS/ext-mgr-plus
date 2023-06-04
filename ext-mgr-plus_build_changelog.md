@@ -1,5 +1,14 @@
 ### 1.1.2
 
+#### 1.1.2-b4
+* Fix: Das neue Ignorieren-Icon wurde unter phpBB 3.2 nicht angezeigt, weil innerhalb Makros weitere Makros nur aufgerufen werden können, wenn diese vorher importiert wurden. Gleiches Problem wie bei 1.1.1-b7. Da aber jetzt das Icon in 3 Makros benötigt wird, musste eine andere Lösung gefunden werden.
+* ExtMgr Template:
+  * Eine unnötige Klasse in der Migrationen-Spalte entfernt. Die Elemente werden jetzt per direktem Spalten-Selektor angesprochen.
+* CSS:
+  * Code für Migrationen-Spalte hinzugefügt.
+* Sprachdateien:
+  * Kleine Änderung im Ignoriert-Tooltip, damit unmissverständlich klar ist, dass sich der Ignoriert-Status einer Ext nur auf EMP bezieht.
+  
 #### 1.1.2-b3
 * Validierungs-Kritik 1.1.1: 
   * Bei Versions-Anzeigen kann das Präfix "v" jetzt per Sprachvariable global angepasst werden. Das betrifft auch das Makro Template mit dem Footer.
