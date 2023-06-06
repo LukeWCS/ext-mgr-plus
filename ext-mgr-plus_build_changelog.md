@@ -1,7 +1,8 @@
 ### 1.1.2
+* Release (2023-06-06)
 
 #### 1.1.2-b4
-* Fix: Das neue Ignorieren-Icon wurde unter phpBB 3.2 nicht angezeigt, weil innerhalb Makros weitere Makros nur aufgerufen werden können, wenn diese vorher importiert wurden. Gleiches Problem wie bei 1.1.1-b7. Da aber jetzt das Icon in 3 Makros benötigt wird, musste eine andere Lösung gefunden werden.
+* Fix: Das neue Ignorieren-Icon wurde unter phpBB 3.2 nicht angezeigt, weil innerhalb Makros weitere Makros nur aufgerufen werden können, wenn diese vorher importiert wurden. Gleiches Problem wie bei 1.1.1-b7. Da aber jetzt in 3 Makros ein Icon benötigt wird, musste eine andere Lösung gefunden werden.
 * ExtMgr Template:
   * Eine unnötige Klasse in der Migrationen-Spalte entfernt. Die Elemente werden jetzt per direktem Spalten-Selektor angesprochen.
 * CSS:
@@ -15,8 +16,8 @@
 * Das Ignoriert-Icon in der Auswählen-Spalte grösser definiert. [Vorschlag von Kirk (.de)]
 * In der Tabellen-Überschrift alle Icons etwas grösser definiert und den Standard `font-weight: bold;` entfernt, wodurch die Icons nicht länger unscharf wirken.
 * Sprachdateien:
- * 1 neue Sprachvariable für den Versions-String.
- * Sprach-Version erhöht.
+  * 1 neue Sprachvariable für den Versions-String.
+  * Sprach-Version erhöht.
 * CSS:
   * Geänderten Code für die Icons.
 * `composer.json`:
@@ -33,8 +34,6 @@
 * Fix: Debug Meldungen die während einer Versionsprüfung entstehen können, wurden durch eine Änderung in 1.1.1 unterdrückt.
 
 ### 1.1.1
-
-#### 1.1.1
 * Release (2023-05-18)
 * `composer.json`:
   * EMP Versionsprüfung von github.io auf phpbb.com geändert.
@@ -159,7 +158,7 @@
   * Wenn der Speichern-Link für Checkboxen deaktiviert ist, verhält er sich jetzt vollständig wie ein deaktiviertes Element, hat also keinerlei Hover-Effekte mehr. Ebenso wird jetzt die Link-Farbe entfernt.
   * Optimierung. 1) Mehrere Eigenschaften neu gruppiert. 2) Mehrere Selektoren anders definiert, um diese reduzieren zu können.
 
-#### 1.1.0
+### 1.1.0
 * Release (2023-02-24)
 * Core:
   * Bei der Prüfung der Bedingungen für die Speicherung der Checkboxen wird jetzt auch "Letzten Zustand merken" berücksichtigt.
@@ -287,8 +286,6 @@
   * `ext.php` angepasst.
 
 ### 1.0.8
-
-#### 1.0.8
 * Release (2023-02-01)
 * ConfirmBox Template
   * Bei den Aktionen "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" wird jetzt oberhalb der Rückfrage der gleiche Hinweis angezeigt, den auch phpBB selbst bei der Rückfrage der Aktionen "Deaktivieren" und "Aktivieren" anzeigt.
@@ -325,8 +322,6 @@
   * Toggle Farben von Recent Topics übernommen.
 
 ### 1.0.7
-
-#### 1.0.7
 * Release (2022-12-04)
 * Code Optimierung:
   * Die Funktion `catch_message()` wird jetzt frühzeitig abgebrochen, wenn sie nicht benötigt wird. Dadurch werden bei allen Seitenaufrufen im ACP 5 Funktionsaufrufe und 4 Bedingungen eingespart.
@@ -400,8 +395,6 @@
   * Kleinere Änderungen.
 
 ### 1.0.6
-
-#### 1.0.6
 * Release (2022-11-05)
 * CSS:
   * Fix: Code für die 8te Spalte hat gefehlt.
@@ -447,8 +440,6 @@
 * Neue Migration.
 
 ### 1.0.5
-
-#### 1.0.5
 * Release (2022-10-29)
 * Sprachdateien:
   * Kleine Textänderungen.
@@ -476,16 +467,12 @@
   * Variable für Seitentitel entfernt.
 
 ### 1.0.4
-
-#### 1.0.4
 * Release (2023-08-10)
 
 #### 1.0.4-b1
 * Fix für "Berechtigungen des Benutzers testen".
 
 ### 1.0.3
-
-#### 1.0.3
 * Release (2022-06-24)
 * Core:
   * Code Optimierungen.
@@ -511,8 +498,6 @@
   * Mehrere kleine Änderungen.
   
 ### 1.0.2
-
-#### 1.0.2
 * Release (2022-06-17)
 * ExtMgr Template:
   * Tooltips für die Icons der Spaltenüberschriften und Checkboxen hinzugefügt.
@@ -528,8 +513,6 @@
 * Bei der Prüfung ob eine Ext aktiviert werden kann mittels `is_enableable()` (`ext.php`), wird jetzt auch ein String und ein Array als möglicher Rückgabewert akzeptiert und entsprechend aufbereitet. Diese Methode der Fehlerbehandlung wurde erst in phpBB 3.3.0 eingeführt und kann `trigger_error` ersetzen. [Hinweis von IMC (.de)]
 
 ### 1.0.1
-
-#### 1.0.1
 * Release (2023-06-12)
 
 #### 1.0.1-b2
@@ -558,8 +541,6 @@
   * Kleinere Änderungen.
 
 ### 1.0.0
-
-#### 1.0.0
 * Release (2022-06-08)
 * Benachrichtigungssystem so geändert, dass es nicht nur für ein veraltetes Sprachpaket genutzt werden kann. So war es eigentlich auch gedacht.
 
