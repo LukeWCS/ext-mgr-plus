@@ -1,3 +1,24 @@
+### 1.1.3-b1
+* Fix: Bei der Ermittlung neuer Migrationen verhinderte eine zu strikte Dateinamen-Prüfung eine korrekte Erkennung, wenn bei Dateinamen und Klassennamen abweichende Gross/Kleinschreibung verwendet wurde. Daraus ergaben sich 2 Fehler:
+  * Bei aktivierter Anzeige der Spalte für neue Migrationen wurde die Anzahl falsch berechnet.
+  * Bei deaktiviertem Sicherheitsschalter für neue Migrationen wurde die Auswahl-Checkbox der betroffenen Ext nicht gesperrt.
+* Reihenfolge&Ignorieren:
+  * Es werden jetzt diejenigen Spalten komplett ausgeblendet, die irrelevante interaktive Elemente enthalten, anstatt nur die Elemente auszublenden.
+  * Ist die Funktion deaktiviert, wird jetzt auch kein HTML mehr generiert für die Erklärungstexte, für den Absenden-Block sowie für die Inhalte der Spalten Reihenfolge und Ignorieren.
+* JS:
+  * An die Änderungen von Reihenfolge&Ignorieren angepasst.
+  * Die Funktion zum sperren der Enter-Taste wird nicht mehr separat registriert, sondern innerhalb der `ready()` Funktion per `on()` Event, wie alle anderen Ereignisse. Die jQuery Funktion `keypress()` ist ohnehin als DEPRECATED eingestuft.
+  * Bei den Tastendruck-Ereignissen ist die Eigenschaft `keyCode` (ebenfalls `which`) als DEPRECATED eingestuft und wurde auf das modernere `key` umgestellt.
+  * Die Enter-Taste wird innerhalb des `extmgrplus_list` Formulars nicht mehr generell gesperrt, sondern nur noch im Eingabefeld für die Reihenfolge-Gruppe. Das dient als Vorbereitung für zukünftige Funktionen.
+  * Code Optimierung.
+* ExtMgr Template:
+  * An die Änderungen von Reihenfolge&Ignorieren angepasst.
+  * Ein Makro für zukünftige Funktionen vorbereitet.
+* Sprachdateien:
+  * Durch eine Änderung in 1.0.7 wurde eine Sprachvariable obsolet, diese wurde jedoch bisher nicht entfernt.
+* `composer.json`:
+  * Von Tabs auf Spaces umgestellt.
+
 ### 1.1.2
 * Release (2023-06-06)
 
@@ -9,7 +30,7 @@
   * Code für Migrationen-Spalte hinzugefügt.
 * Sprachdateien:
   * Kleine Änderung im Ignoriert-Tooltip, damit unmissverständlich klar ist, dass sich der Ignoriert-Status einer Ext nur auf EMP bezieht.
-  
+
 #### 1.1.2-b3
 * Validierungs-Kritik 1.1.1: 
   * Bei Versions-Anzeigen kann das Präfix "v" jetzt per Sprachvariable global angepasst werden. Das betrifft auch das Makro Template mit dem Footer.

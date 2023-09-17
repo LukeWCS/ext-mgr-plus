@@ -122,8 +122,8 @@ div[id$="_confirmbox"] {
 	background-color: #F9F9F9;
 }
 
-#extmgrplus_list th:nth-of-type(1n + 2),	/* version+ */
-#extmgrplus_list td:nth-of-type(1n + 2) {
+#extmgrplus_list th:nth-of-type(1n+2),		/* version+ */
+#extmgrplus_list td:nth-of-type(1n+2) {
 	text-align: center;
 }
 
@@ -147,11 +147,11 @@ div[id$="_confirmbox"] {
 	width: 25%;
 }
 
-#extmgrplus_list th:nth-of-type(1n + 6) {	/* select+  */
+#extmgrplus_list th:nth-of-type(1n+6) {		/* select+  */
 	width: 1%;
 }
 
-#extmgrplus_list td:nth-of-type(1n + 6) {	/* select+  */
+#extmgrplus_list td:nth-of-type(1n+6) {		/* select+  */
 	padding: 0 4px;
 }
 

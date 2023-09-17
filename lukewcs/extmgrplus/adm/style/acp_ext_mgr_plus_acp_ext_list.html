@@ -59,22 +59,24 @@
 </fieldset>
 
 <form id="extmgrplus_list" method="post" action="{{ U_ACTION }}">
-	<fieldset class="extmgrplus_order_and_ignore" style="display: none;">
-		<legend>{{ lang('EXTMGRPLUS_SECTION_SETTINGS') }}</legend>
+	{% if EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE %}
+		<fieldset class="extmgrplus_order_and_ignore" style="display: none;">
+			<legend>{{ lang('EXTMGRPLUS_SECTION_SETTINGS') }}</legend>
 
-		<dl>
-			<dt>
-				<label>{{ lang('EXTMGRPLUS_ORDER') ~ lang('COLON') }}</label><br>
-				<span>{{ lang('EXTMGRPLUS_ORDER_EXPLAIN', common.icon('fa-sort')) }}</span>
-			</dt>
-			<dd>
-				<label>{{ lang('EXTMGRPLUS_IGNORE') ~ lang('COLON') }}</label><br>
-				<span>{{ lang('EXTMGRPLUS_IGNORE_EXPLAIN', common.icon('fa-ban')) }}</span>
-			</dd>
-		</dl>
-	</fieldset>
+			<dl>
+				<dt>
+					<label>{{ lang('EXTMGRPLUS_ORDER') ~ lang('COLON') }}</label><br>
+					<span>{{ lang('EXTMGRPLUS_ORDER_EXPLAIN', common.icon('fa-sort')) }}</span>
+				</dt>
+				<dd>
+					<label>{{ lang('EXTMGRPLUS_IGNORE') ~ lang('COLON') }}</label><br>
+					<span>{{ lang('EXTMGRPLUS_IGNORE_EXPLAIN', common.icon('fa-ban')) }}</span>
+				</dd>
+			</dl>
+		</fieldset>
 
-	{{ _self.submit_buttons() }}
+		{{ _self.submit_buttons('order_and_ignore') }}
+	{% endif %}
 
 	<table class="table1">
 		<col class="row1"><col class="row1"><col class="row1"><col class="row1"><col class="row2"><col class="row2"><col class="row2"><col class="row2">
@@ -110,8 +112,14 @@
 		<tbody>
 			{% if enabled|length %}
 				<tr>
-					<td class="row3" colspan="{{ EXTMGRPLUS_SWITCH_MIGRATION_COL ? '4' : '3' }}">
+					<td class="row3">
 						<strong>{{ lang('EXTMGRPLUS_EXTENSIONS_ENABLED', EXTMGRPLUS_COUNT_ENABLED) }}</strong>{% EVENT acp_ext_list_enabled_title_after %}
+					</td>
+					<td class="row3">
+					</td>
+					<td class="row3"{{ !EXTMGRPLUS_SWITCH_MIGRATION_COL ? ' style="display: none;"' }}>
+					</td>
+					<td class="row3">
 					</td>
 					<td class="row3">
 						{{ _self.button(
@@ -157,7 +165,7 @@
 							) }}
 						</td>
 						<td style="display: none;">
-							{% if ext_enabled.NAME != 'lukewcs/extmgrplus' %}
+							{% if ext_enabled.NAME != 'lukewcs/extmgrplus' && EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE %}
 								{{ _self.inputbox(
 									ext_enabled.NAME,
 									EXTMGRPLUS_LIST_ORDER[ext_enabled.NAME] ?? '',
@@ -166,7 +174,7 @@
 							{% endif %}
 						</td>
 						<td style="display: none;">
-							{% if ext_enabled.NAME != 'lukewcs/extmgrplus' %}
+							{% if ext_enabled.NAME != 'lukewcs/extmgrplus' && EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE %}
 								{{ _self.checkbox_ignore(
 									ext_enabled.NAME,
 									EXTMGRPLUS_LIST_IGNORE[ext_enabled.NAME] is defined
@@ -180,8 +188,14 @@
 			{% if disabled|length %}
 				{% if EXTMGRPLUS_COUNT_DISABLED %}
 					<tr>
-						<td class="row3" colspan="{{ EXTMGRPLUS_SWITCH_MIGRATION_COL ? '4' : '3' }}">
+						<td class="row3">
 							<strong>{{ lang('EXTMGRPLUS_EXTENSIONS_DISABLED', EXTMGRPLUS_COUNT_DISABLED) }}</strong>{% EVENT acp_ext_list_disabled_title_after %}
+						</td>
+						<td class="row3">
+						</td>
+						<td class="row3"{{ !EXTMGRPLUS_SWITCH_MIGRATION_COL ? ' style="display: none;"' }}>
+						</td>
+						<td class="row3">
 						</td>
 						<td class="row3">
 							{{ _self.button(
@@ -206,8 +220,14 @@
 					{% if !section_not_installed && !('action=delete_data_pre' in ext_disabled.actions[1]) %}
 						{% set section_not_installed = true %}
 						<tr>
-							<td class="row3" colspan="{{ EXTMGRPLUS_SWITCH_MIGRATION_COL ? '4' : '3' }}">
+							<td class="row3">
 								<strong>{{ lang('EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED', EXTMGRPLUS_COUNT_NOT_INSTALLED) }}</strong>
+							</td>
+							<td class="row3">
+							</td>
+							<td class="row3"{{ !EXTMGRPLUS_SWITCH_MIGRATION_COL ? ' style="display: none;"' }}>
+							</td>
+							<td class="row3">
 							</td>
 							<td class="row3">
 							</td>
@@ -252,17 +272,21 @@
 							{% endif %}
 						</td>
 						<td style="display: none;">
-							{{ _self.inputbox(
-								ext_disabled.NAME,
-								EXTMGRPLUS_LIST_ORDER[ext_disabled.NAME] ?? '',
-								EXTMGRPLUS_LIST_IGNORE[ext_disabled.NAME] is defined
-							) }}
+							{% if EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE %}
+								{{ _self.inputbox(
+									ext_disabled.NAME,
+									EXTMGRPLUS_LIST_ORDER[ext_disabled.NAME] ?? '',
+									EXTMGRPLUS_LIST_IGNORE[ext_disabled.NAME] is defined
+								) }}
+							{% endif %}
 						</td>
 						<td style="display: none;">
-							{{ _self.checkbox_ignore(
-								ext_disabled.NAME,
-								EXTMGRPLUS_LIST_IGNORE[ext_disabled.NAME] is defined
-							) }}
+							{% if EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE %}
+								{{ _self.checkbox_ignore(
+									ext_disabled.NAME,
+									EXTMGRPLUS_LIST_IGNORE[ext_disabled.NAME] is defined
+								) }}
+							{% endif %}
 						</td>
 					</tr>
 				{% endfor %}
@@ -271,7 +295,9 @@
 
 	</table>
 
-	{{ _self.submit_buttons() }}
+	{% if EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE %}
+		{{ _self.submit_buttons('order_and_ignore') }}
+	{% endif %}
 
 	{{ S_FORM_TOKEN }}
 </form>
@@ -306,14 +332,16 @@
 {% INCLUDEJS '@lukewcs_extmgrplus/acp_ext_mgr_plus.js' %}
 {% INCLUDECSS '@lukewcs_extmgrplus/acp_ext_mgr_plus.css' %}
 
-{% macro submit_buttons(ext_obj) %}
-	<fieldset class="extmgrplus_order_and_ignore" style="display: none;">
-		<legend>{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
+{% macro submit_buttons(mode) %}
+	{% if mode == 'order_and_ignore' %}
+		<fieldset class="extmgrplus_order_and_ignore" style="display: none;">
+			<legend>{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
 
-		<p class="submit-buttons">
-			<input class="button1" type="submit" name="extmgrplus_save_order_and_ignore" value="{{ lang('SUBMIT') }}">
-		</p>
-	</fieldset>
+			<p class="submit-buttons">
+				<input class="button1" type="submit" name="extmgrplus_save_order_and_ignore" value="{{ lang('SUBMIT') }}">
+			</p>
+		</fieldset>
+	{% endif %}
 {% endmacro %}
 
 {% macro name(ext_obj) -%}
@@ -328,10 +356,10 @@
 			{% if constant('PHPBB_VERSION') starts with '3.2.' %}
 				{% import '@lukewcs_extmgrplus/acp_ext_mgr_plus_macros.html' as common %}
 			{% endif %}
-			<span>&nbsp;</span>{{ common.icon('fa-exclamation-circle outdated-ext') }}
+			&nbsp;{{ common.icon('fa-exclamation-circle outdated-ext') }}
 		{% endif %}
 		{% if vc_obj.CURRENT %}
-			<span>&nbsp;</span><strong class="current-ext">({{ vc_obj.CURRENT }})</strong>
+			&nbsp;<strong class="current-ext">({{ vc_obj.CURRENT }})</strong>
 		{% endif %}
 	{% else %}
 		{{ ext_obj.META_VERSION }}
@@ -351,7 +379,7 @@
 {% apply spaceless %}
 	{% for actions in ext_obj.actions %}
 		<a href="{{ actions.U_ACTION }}"{{ actions.L_ACTION_EXPLAIN ? ' title="' ~ actions.L_ACTION_EXPLAIN ~ '"' }}>{{ actions.L_ACTION }}</a>
-		{{ !actions.S_LAST_ROW ? '<span>&nbsp;|&nbsp;</span>' }}
+		{{ !actions.S_LAST_ROW ? '&nbsp;|&nbsp;' }}
 	{% endfor %}
 {% endapply %}
 {% endmacro %}

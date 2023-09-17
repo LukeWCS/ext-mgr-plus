@@ -43,7 +43,6 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_ORDER_EXPLAIN'				=> '%s In dieser Spalte können Sie Reihenfolge-Gruppen im Bereich 0 bis 99 für die Aktion „Ausgewählte aktivieren“ definieren. Damit können Erweiterungen, von denen andere Erweiterungen abhängig sind, vor diesen aktiviert werden, um Fehlermeldungen zu vermeiden. Erweiterungen die zu einer solchen Gruppe gehören, werden zuerst aktiviert und zwar beginnend bei Gruppe 0, dann Gruppe 1 und so weiter. Erweiterungen ohne Gruppe werden als letztes aktiviert.',
 	'EXTMGRPLUS_IGNORE'						=> 'Ignorieren',
 	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> '%s In dieser Spalte können Sie festlegen, welche Erweiterungen bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ ignoriert werden sollen. Ignorierte Erweiterungen können in der Erweiterungen-Liste nicht mehr ausgewählt werden. Wenn bei einer ignorierten Erweiterung eine Reihenfolge-Gruppe definiert wurde, dann bleibt diese erhalten, sie hat jedoch keine Bedeutung mehr.',
-	'EXTMGRPLUS_ORDER_AND_IGNORE_SAVE'		=> 'Speichern',
 
 	// info table
 	'EXTMGRPLUS_AVAILABLE_EXTENSIONS'		=> 'Erweiterungen gesamt',

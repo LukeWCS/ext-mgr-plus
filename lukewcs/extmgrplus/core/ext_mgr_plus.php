@@ -678,7 +678,7 @@ class ext_mgr_plus
 			{
 				$check_migration = ((
 						preg_match('/function\s+?(?:depends_on|effectively_installed|update_schema|update_data|revert_data)\s*?\(/', $file_content)
-						&& preg_match('/^\s*?class\s+?' . $file_info['filename'] . '\s+/m', $file_content)
+						&& preg_match('/^\s*?class\s+?' . $file_info['filename'] . '\s+/mi', $file_content)
 					)
 					? 1
 					: 0

@@ -70,19 +70,17 @@ ExtMgrPlus.ShowActionElements = function (show) {
 	'use strict';
 
 	if (show) {
-		$('#extmgrplus_list .table1 input[type="submit"]')	.show();
-		$('#extmgrplus_list input[name*="ext_mark_"]')		.show();
-		$('#extmgrplus_list a')								.show();
-		$('#extmgrplus_list td.row2 span')					.show();
-		$('#extmgrplus_link_version_check')					.removeClass('disabled');
-		$('#extmgrplus_link_save_checkboxes')				.removeClass('disabled');
+		$('#extmgrplus_list th:nth-of-type(n+4):nth-of-type(-n+6)')			.show();
+		$('#extmgrplus_list td.row3:nth-of-type(n+4):nth-of-type(-n+6)')	.show();
+		$('#extmgrplus_list td:nth-of-type(n+4):nth-of-type(-n+6)')			.show();
+		$('#extmgrplus_link_version_check')									.removeClass('disabled');
+		$('#extmgrplus_link_save_checkboxes')								.removeClass('disabled');
 	} else {
-		$('#extmgrplus_list .table1 input[type="submit"]')	.hide();
-		$('#extmgrplus_list input[name*="ext_mark_"]')		.hide();
-		$('#extmgrplus_list a')								.hide();
-		$('#extmgrplus_list td.row2 span')					.hide();
-		$('#extmgrplus_link_version_check')					.addClass('disabled');
-		$('#extmgrplus_link_save_checkboxes')				.addClass('disabled');
+		$('#extmgrplus_list th:nth-of-type(n+4):nth-of-type(-n+6)')			.hide();
+		$('#extmgrplus_list td.row3:nth-of-type(n+4):nth-of-type(-n+6)')	.hide();
+		$('#extmgrplus_list td:nth-of-type(n+4):nth-of-type(-n+6)')			.hide();
+		$('#extmgrplus_link_version_check')									.addClass('disabled');
+		$('#extmgrplus_link_save_checkboxes')								.addClass('disabled');
 	}
 };
 
@@ -90,19 +88,13 @@ ExtMgrPlus.ShowOrderIgnoreColumns = function (show) {
 	'use strict';
 
 	if (show) {
-		$('#extmgrplus_list th:nth-of-type(7)')			.show();
-		$('#extmgrplus_list td.row3:nth-of-type(4)')	.show();
-		$('#extmgrplus_list td:nth-of-type(7)')			.show();
-		$('#extmgrplus_list th:nth-of-type(8)')			.show();
-		$('#extmgrplus_list td.row3:nth-of-type(5)')	.show();
-		$('#extmgrplus_list td:nth-of-type(8)')			.show();
+		$('#extmgrplus_list th:nth-of-type(n+7):nth-of-type(-n+8)')			.show();
+		$('#extmgrplus_list td.row3:nth-of-type(n+7):nth-of-type(-n+8)')	.show();
+		$('#extmgrplus_list td:nth-of-type(n+7):nth-of-type(-n+8)')			.show();
 	} else {
-		$('#extmgrplus_list th:nth-of-type(7)')			.hide();
-		$('#extmgrplus_list td.row3:nth-of-type(4)')	.hide();
-		$('#extmgrplus_list td:nth-of-type(7)')			.hide();
-		$('#extmgrplus_list th:nth-of-type(8)')			.hide();
-		$('#extmgrplus_list td.row3:nth-of-type(5)')	.hide();
-		$('#extmgrplus_list td:nth-of-type(8)')			.hide();
+		$('#extmgrplus_list th:nth-of-type(n+7):nth-of-type(-n+8)')			.hide();
+		$('#extmgrplus_list td.row3:nth-of-type(n+7):nth-of-type(-n+8)')	.hide();
+		$('#extmgrplus_list td:nth-of-type(n+7):nth-of-type(-n+8)')			.hide();
 	}
 };
 
@@ -127,16 +119,6 @@ ExtMgrPlus.SaveCheckboxes = function () {
 	$('#extmgrplus_list').append('<input type="hidden" name="extmgrplus_save_checkboxes" value="1">');
 	$('#extmgrplus_list').submit();
 };
-
-$('#extmgrplus_list').keypress(function(e) {
-	'use strict';
-
-	if (e.which == '13') {
-		e.preventDefault();
-	}
-});
-
-// Settings
 
 ExtMgrPlus.ConfirmBox = function (e) {
 	'use strict';
@@ -206,24 +188,33 @@ ExtMgrPlus.FormReset = function () {
 	ExtMgrPlus.ConfirmBoxHide();
 };
 
-// Register onChange and onClick events
+ExtMgrPlus.DisableEnter = function(e) {
+	'use strict';
+
+	if (e.key == 'Enter') {
+		return false;
+	}
+};
+
+// Register events
 
 $(window).ready(function() {
 	'use strict';
 
-	$('input[name="ext_mark_all_enabled"]:enabled')			.on('change', {CheckBoxType: 'enabled'}, ExtMgrPlus.CheckUncheckAll);
-	$('input[name="ext_mark_all_disabled"]:enabled')		.on('change', {CheckBoxType: 'disabled'}, ExtMgrPlus.CheckUncheckAll);
-	$('input[name="ext_mark_enabled[]"]:enabled')			.on('change', {CheckBoxType: 'enabled'}, ExtMgrPlus.SetButtonState);
-	$('input[name="ext_mark_disabled[]"]:enabled')			.on('change', {CheckBoxType: 'disabled'}, ExtMgrPlus.SetButtonState);
-	$('input[name="ext_ignore[]"]')							.on('change', ExtMgrPlus.SetInputBoxState);
-	$('input[name="extmgrplus_defaults"]')					.on('click'	, ExtMgrPlus.SetDefaults);
-	$('input[name="extmgrplus_form_submit"]')				.on('click'	, ExtMgrPlus.FormSubmit);
-	$('input[name="extmgrplus_form_reset"]')				.on('click'	, ExtMgrPlus.FormReset);
+	$('input[name="ext_mark_all_enabled"]:enabled')			.on('change'	, {CheckBoxType: 'enabled'}, ExtMgrPlus.CheckUncheckAll);
+	$('input[name="ext_mark_all_disabled"]:enabled')		.on('change'	, {CheckBoxType: 'disabled'}, ExtMgrPlus.CheckUncheckAll);
+	$('input[name="ext_mark_enabled[]"]:enabled')			.on('change'	, {CheckBoxType: 'enabled'}, ExtMgrPlus.SetButtonState);
+	$('input[name="ext_mark_disabled[]"]:enabled')			.on('change'	, {CheckBoxType: 'disabled'}, ExtMgrPlus.SetButtonState);
+	$('input[name="ext_ignore[]"]')							.on('change'	, ExtMgrPlus.SetInputBoxState);
+	$('input[name="extmgrplus_defaults"]')					.on('click'		, ExtMgrPlus.SetDefaults);
+	$('input[name="extmgrplus_form_submit"]')				.on('click'		, ExtMgrPlus.FormSubmit);
+	$('input[name="extmgrplus_form_reset"]')				.on('click'		, ExtMgrPlus.FormReset);
+	$('input[name*="ext_order"]')							.on('keypress'	, ExtMgrPlus.DisableEnter);
 
 	$('div[id$="_confirmbox"]').each(function() {
 		var elementName = $(this)[0].id.replace('_confirmbox', '')
 
-		$('input[name="' + elementName + '"]')				.on('change', ExtMgrPlus.ConfirmBox);
-		$('input[name^="' + elementName + '_confirm_"]')	.on('click', ExtMgrPlus.ConfirmBoxButton);
+		$('input[name="' + elementName + '"]')				.on('change'	, ExtMgrPlus.ConfirmBox);
+		$('input[name^="' + elementName + '_confirm_"]')	.on('click'		, ExtMgrPlus.ConfirmBoxButton);
 	});
 });
