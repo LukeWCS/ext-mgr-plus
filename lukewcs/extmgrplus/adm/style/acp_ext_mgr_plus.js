@@ -70,15 +70,15 @@ ExtMgrPlus.ShowActionElements = function (show) {
 	'use strict';
 
 	if (show) {
-		$('#extmgrplus_list th:nth-of-type(n+4):nth-of-type(-n+6)')			.show();
-		$('#extmgrplus_list td.row3:nth-of-type(n+4):nth-of-type(-n+6)')	.show();
-		$('#extmgrplus_list td:nth-of-type(n+4):nth-of-type(-n+6)')			.show();
+		$('#extmgrplus_list th:nth-of-type(1n+4):nth-of-type(-1n+6)')		.show();
+		$('#extmgrplus_list td.row3:nth-of-type(1n+4):nth-of-type(-1n+6)')	.show();
+		$('#extmgrplus_list td:nth-of-type(1n+4):nth-of-type(-1n+6)')		.show();
 		$('#extmgrplus_link_version_check')									.removeClass('disabled');
 		$('#extmgrplus_link_save_checkboxes')								.removeClass('disabled');
 	} else {
-		$('#extmgrplus_list th:nth-of-type(n+4):nth-of-type(-n+6)')			.hide();
-		$('#extmgrplus_list td.row3:nth-of-type(n+4):nth-of-type(-n+6)')	.hide();
-		$('#extmgrplus_list td:nth-of-type(n+4):nth-of-type(-n+6)')			.hide();
+		$('#extmgrplus_list th:nth-of-type(1n+4):nth-of-type(-1n+6)')		.hide();
+		$('#extmgrplus_list td.row3:nth-of-type(1n+4):nth-of-type(-1n+6)')	.hide();
+		$('#extmgrplus_list td:nth-of-type(1n+4):nth-of-type(-1n+6)')		.hide();
 		$('#extmgrplus_link_version_check')									.addClass('disabled');
 		$('#extmgrplus_link_save_checkboxes')								.addClass('disabled');
 	}

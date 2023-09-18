@@ -59,6 +59,7 @@ $lang = array_merge($lang, [
 	// tooltips
 	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'		=> 'This extension has new migrations that are applied when activating the extension.',
 	'EXTMGRPLUS_TOOLTIP_IS_IGNORED'			=> 'This extension is ignored by “Extension Manager Plus”.',
+	'EXTMGRPLUS_TOOLTIP_IS_LOCKED'			=> 'The selection of this extension is blocked by “Extension Manager Plus” due to new migrations.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE'		=> 'Disable all selected extensions.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'		=> 'Enable all selected extensions.',
 	'EXTMGRPLUS_TOOLTIP_ORDER'				=> 'Order group in the range 0-99.',

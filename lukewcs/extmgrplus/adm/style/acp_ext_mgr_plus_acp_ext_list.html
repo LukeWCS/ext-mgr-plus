@@ -156,13 +156,15 @@
 							{{ _self.actions(ext_enabled) }}
 						</td>
 						<td>
-							{{ _self.checkbox_select(
-								'enabled',
-								ext_enabled.NAME,
-								(ext_enabled.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_SWITCH_SELF_DISABLE) && (EXTMGRPLUS_LIST_IGNORE[ext_enabled.NAME] is not defined || !EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE),
-								EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1 || EXTMGRPLUS_LIST_SELECTED[ext_enabled.NAME] is defined,
-								EXTMGRPLUS_LIST_IGNORE[ext_enabled.NAME] is defined
-							) }}
+							{% if (ext_enabled.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_SWITCH_SELF_DISABLE) %}
+								{{ _self.checkbox_select(
+									'enabled',
+									ext_enabled.NAME,
+									EXTMGRPLUS_LIST_IGNORE[ext_enabled.NAME] is not defined || !EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE,
+									EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1 || EXTMGRPLUS_LIST_SELECTED[ext_enabled.NAME] is defined,
+									EXTMGRPLUS_LIST_IGNORE[ext_enabled.NAME] is defined
+								) }}
+							{% endif %}
 						</td>
 						<td style="display: none;">
 							{% if ext_enabled.NAME != 'lukewcs/extmgrplus' && EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE %}
@@ -408,7 +410,7 @@
 {% endmacro %}
 
 {% macro checkbox_all(section, enabled = true, checked = false) -%}
-	<input type="checkbox" class="radio" name="ext_mark_all_{{ section }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT_ALL') }}"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
+	<input type="checkbox" class="radio" name="ext_mark_all_{{ section }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT_ALL')|e('html') }}"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
 {%- endmacro %}
 
 {% macro checkbox_select(section, ext_name, enabled = true, checked = false, ignore = false) %}
@@ -418,8 +420,10 @@
 			{% import '@lukewcs_extmgrplus/acp_ext_mgr_plus_macros.html' as common %}
 		{% endif %}
 		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_IGNORED')|e('html') }}">{{ common.icon('fa-ban') }}
+	{% elseif !enabled %}
+		<input type="checkbox" class="radio" title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_LOCKED')|e('html') }}" disabled>
 	{% else %}
-		<input type="checkbox" class="radio" name="ext_mark_{{ section }}[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT') }}"{{ enabled ? ' value="' ~ ext_name ~ '"' }}{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
+		<input type="checkbox" class="radio" name="ext_mark_{{ section }}[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT')|e('html') }}" value="{{ ext_name }}"{{ checked ? ' checked' }}>
 	{% endif %}
 {% endapply %}
 {% endmacro %}
