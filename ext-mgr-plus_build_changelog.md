@@ -1,3 +1,14 @@
+### 1.1.3-b3
+* ExtMgr Template:
+  * Die Info-Tabelle oberhalb der Erweiterungen-Liste auf 4 Spalten erweitert. Neu ist jetzt die Anzahl der Erweiterungen mit eingerichteter Versionsprüfung.
+  * Bei Erweiterungen bei denen keine Versionsprüfung eingerichtet ist, wird jetzt ein blaues Info-Icon mit Tooltip hinter der Version angezeigt.
+* CSS:
+  * Hilfe-Cursor für das neue Info-Icon.
+* Sprachdateien:
+  * 1 neue Sprachvariable für die neue Spalte der Info-Tabelle.
+  * 1 neue Sprachvariable für den neuen Keine-Versionsprüfung-Tooltip.
+  * Kleine Änderungen.
+
 ### 1.1.3-b2
 * ExtMgr Template:
   * Wenn eine Ext neue Migrationen hat und die zugehörige Auswahl-Checkbox aufgrund der Einstellungen gesperrt wird, dann wird jetzt ein neuer Tooltip angezeigt, der erklärt, warum die Checkbox gesperrt ist.
@@ -15,7 +26,7 @@
 * JS:
   * An die Änderungen von Reihenfolge&Ignorieren angepasst.
   * Die Funktion zum sperren der Enter-Taste wird nicht mehr separat registriert, sondern innerhalb der `ready()` Funktion per `on()` Event, wie alle anderen Ereignisse. Die jQuery Funktion `keypress()` ist ohnehin als DEPRECATED eingestuft.
-  * Bei den Tastendruck-Ereignissen ist die Eigenschaft `keyCode` (ebenfalls `which`) als DEPRECATED eingestuft und wurde auf das modernere `key` umgestellt.
+  * Bei den Tastendruck-Ereignissen ist die Eigenschaft `keyCode` (ebenfalls `which`) als DEPRECATED eingestuft und wurde auf das neue `key` umgestellt.
   * Die Enter-Taste wird innerhalb des `extmgrplus_list` Formulars nicht mehr generell gesperrt, sondern nur noch im Eingabefeld für die Reihenfolge-Gruppe. Das dient als Vorbereitung für zukünftige Funktionen.
   * Code Optimierung.
 * ExtMgr Template:
@@ -24,7 +35,7 @@
 * Sprachdateien:
   * Durch eine Änderung in 1.0.7 wurde eine Sprachvariable obsolet, diese wurde jedoch bisher nicht entfernt.
 * `composer.json`:
-  * Von Tabs auf Spaces umgestellt.
+  * Von Tabs auf Spaces umgestellt. Basiert auf dem EditorConfig Standard v1.2 von phpBB.de.
 
 ### 1.1.2
 * Release (2023-06-06)

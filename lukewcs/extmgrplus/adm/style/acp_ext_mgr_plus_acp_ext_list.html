@@ -20,11 +20,14 @@
 {{ common.notes(EXTMGRPLUS_NOTES) }}
 
 <table class="table1">
-	<col class="row2a"><col class="row2a"><col class="row2a">
+	<col class="row2a"><col class="row2a"><col class="row2a"><col class="row2a">
 	<thead>
 		<tr>
 			<th>
 				{{ lang('EXTMGRPLUS_AVAILABLE_EXTENSIONS') }}
+			</th>
+			<th>
+				{{ lang('EXTMGRPLUS_WITH_VERSIONCHECK') }}
 			</th>
 			<th>
 				{{ lang('EXTMGRPLUS_LAST_VERSIONCHECK') }}
@@ -40,10 +43,13 @@
 				<strong>{{ EXTMGRPLUS_COUNT_AVAILABLE }}</strong>
 			</td>
 			<td>
-				<strong>{{ EXTMGRPLUS_LIST_VERSIONCHECK.data.LOCAL_DATE ?? '-' }}</strong>
+				<strong>{{ EXTMGRPLUS_LIST_VERSIONCHECK.data.COUNT_WITH_VC }}</strong>
 			</td>
 			<td>
-				<strong>{{ EXTMGRPLUS_LIST_VERSIONCHECK.data.COUNT ?? '0' }}</strong>
+				<strong>{{ EXTMGRPLUS_LIST_VERSIONCHECK.data.LOCAL_DATE }}</strong>
+			</td>
+			<td>
+				<strong>{{ EXTMGRPLUS_LIST_VERSIONCHECK.data.COUNT_UPDATE }}</strong>
 			</td>
 		</tr>
 	</tbody>
@@ -346,18 +352,32 @@
 	{% endif %}
 {% endmacro %}
 
+{% macro button(action, enabled = true) %}
+{% apply spaceless %}
+	{% if action == 'disable' %}
+		<input type="submit" class="button1" name="extmgrplus_disable_all" title="{{ lang('EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE')|e('html') }}" value="{{ lang('EXTMGRPLUS_ALL_DISABLE') }}"{{ !enabled ? ' disabled' }}>
+	{% elseif action == 'enable' %}
+		<input type="submit" class="button1" name="extmgrplus_enable_all" title="{{ lang('EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE')|e('html') }}" value="{{ lang('EXTMGRPLUS_ALL_ENABLE') }}"{{ !enabled ? ' disabled' }}>
+	{% endif %}
+{% endapply %}
+{% endmacro %}
+
+{% macro checkbox_all(section, enabled = true, checked = false) -%}
+	<input type="checkbox" class="radio" name="ext_mark_all_{{ section }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT_ALL')|e('html') }}"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
+{%- endmacro %}
+
 {% macro name(ext_obj) -%}
 	<strong title="{{ ext_obj.NAME }}">{{ ext_obj.META_DISPLAY_NAME }}</strong>
 {%- endmacro %}
 
 {% macro version(ext_obj, vc_obj) %}
 {% apply spaceless %}
-	{% if ext_obj.S_VERSIONCHECK || vc_obj %}
+	{% if constant('PHPBB_VERSION') starts with '3.2.' %}
+		{% import '@lukewcs_extmgrplus/acp_ext_mgr_plus_macros.html' as common %}
+	{% endif %}
+	{% if ext_obj.S_VERSIONCHECK || vc_obj.CURRENT %}
 		<strong class="{{ ext_obj.S_UP_TO_DATE ? 'current-ext' : 'outdated-ext' }}">{{ ext_obj.META_VERSION }}</strong>
 		{% if not ext_obj.S_UP_TO_DATE %}
-			{% if constant('PHPBB_VERSION') starts with '3.2.' %}
-				{% import '@lukewcs_extmgrplus/acp_ext_mgr_plus_macros.html' as common %}
-			{% endif %}
 			&nbsp;{{ common.icon('fa-exclamation-circle outdated-ext') }}
 		{% endif %}
 		{% if vc_obj.CURRENT %}
@@ -365,6 +385,22 @@
 		{% endif %}
 	{% else %}
 		{{ ext_obj.META_VERSION }}
+	{% endif %}
+	{% if vc_obj.NO_VC %}
+		&nbsp;<span title="{{ lang('EXTMGRPLUS_TOOLTIP_NO_VERSIONCHECK')|e('html') }}">{{ common.icon('fa-info-circle') }}</span>
+	{% endif %}
+{% endapply %}
+{% endmacro %}
+
+{% macro has_migration(migration_count, ignore = false) %}
+{% apply spaceless %}
+	{% if ignore %}
+		{% if constant('PHPBB_VERSION') starts with '3.2.' %}
+			{% import '@lukewcs_extmgrplus/acp_ext_mgr_plus_macros.html' as common %}
+		{% endif %}
+		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_IGNORED')|e('html') }}">{{ common.icon('fa-ban') }}</span>
+	{% elseif migration_count %}
+		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_HAS_MIGRATION')|e('html') }}">{{ migration_count }}</span>
 	{% endif %}
 {% endapply %}
 {% endmacro %}
@@ -385,33 +421,6 @@
 	{% endfor %}
 {% endapply %}
 {% endmacro %}
-
-{% macro has_migration(migration_count, ignore = false) %}
-{% apply spaceless %}
-	{% if ignore %}
-		{% if constant('PHPBB_VERSION') starts with '3.2.' %}
-			{% import '@lukewcs_extmgrplus/acp_ext_mgr_plus_macros.html' as common %}
-		{% endif %}
-		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_IGNORED')|e('html') }}">{{ common.icon('fa-ban') }}</span>
-	{% elseif migration_count %}
-		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_HAS_MIGRATION')|e('html') }}">{{ migration_count }}</span>
-	{% endif %}
-{% endapply %}
-{% endmacro %}
-
-{% macro button(action, enabled = true) %}
-{% apply spaceless %}
-	{% if action == 'disable' %}
-		<input type="submit" class="button1" name="extmgrplus_disable_all" title="{{ lang('EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE')|e('html') }}" value="{{ lang('EXTMGRPLUS_ALL_DISABLE') }}"{{ !enabled ? ' disabled' }}>
-	{% elseif action == 'enable' %}
-		<input type="submit" class="button1" name="extmgrplus_enable_all" title="{{ lang('EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE')|e('html') }}" value="{{ lang('EXTMGRPLUS_ALL_ENABLE') }}"{{ !enabled ? ' disabled' }}>
-	{% endif %}
-{% endapply %}
-{% endmacro %}
-
-{% macro checkbox_all(section, enabled = true, checked = false) -%}
-	<input type="checkbox" class="radio" name="ext_mark_all_{{ section }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT_ALL')|e('html') }}"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
-{%- endmacro %}
 
 {% macro checkbox_select(section, ext_name, enabled = true, checked = false, ignore = false) %}
 {% apply spaceless %}

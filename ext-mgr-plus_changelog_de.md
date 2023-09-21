@@ -1,3 +1,19 @@
+### 1.1.3
+(2023--)
+* Fix: Bei der Ermittlung neuer Migrationen verhinderte eine zu strikte Dateinamen-Prüfung eine korrekte Erkennung, wenn bei Dateinamen und Klassennamen abweichende Gross/Kleinschreibung verwendet wurde. Daraus ergaben sich 2 Fehler:
+  * Bei aktivierter Anzeige der Spalte für neue Migrationen wurde die Anzahl falsch berechnet.
+  * Bei deaktiviertem Sicherheitsschalter für neue Migrationen wurde die Auswahl-Checkbox der betroffenen Ext nicht gesperrt.
+* Da phpBB standardmässig nicht explizit darüber informiert, wenn eine Erweiterung keine Versionsprüfung bietet, füllt EMP nun diese Lücke:
+  * Die Info-Tabelle oberhalb der Erweiterungen-Liste auf 4 Spalten erweitert. Neu ist jetzt die Anzahl der Erweiterungen mit eingerichteter Versionsprüfung.
+  * Bei Erweiterungen bei denen keine Versionsprüfung eingerichtet ist, wird jetzt ein blaues Info-Icon mit Tooltip hinter der Version angezeigt.
+* Reihenfolge&Ignorieren:
+  * Beim Einblenden der Einstellungen werden jetzt diejenigen Spalten komplett ausgeblendet, die irrelevante interaktive Elemente enthalten, anstatt nur die Elemente auszublenden.
+  * Ist die Funktion deaktiviert, wird jetzt auch kein HTML mehr generiert für die Erklärungstexte, für den Absenden-Block sowie für die Inhalte der Spalten Reihenfolge und Ignorieren.
+* Code Optimierung bei Javascript:
+  * Unter anderem wurden bei Javascript und jQuery als DEPRECATED eingestufte Eigenschaften und Funktionen durch aktuelle Varianten ersetzt. Details siehe Build Changelog.
+* Sprachdateien:
+  * Durch eine Änderung in 1.0.7 wurde eine Sprachvariable obsolet, diese wurde jedoch bisher nicht entfernt. Entdeckt wurde das erst bei 1.1.2.
+
 ### 1.1.2
 (2023-08-20)
 

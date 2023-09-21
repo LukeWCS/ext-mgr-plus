@@ -46,6 +46,7 @@ $lang = array_merge($lang, [
 
 	// info table
 	'EXTMGRPLUS_AVAILABLE_EXTENSIONS'		=> 'Erweiterungen gesamt',
+	'EXTMGRPLUS_WITH_VERSIONCHECK'			=> 'Mit Versionsprüfung',
 	'EXTMGRPLUS_LAST_VERSIONCHECK'			=> 'Letzte Versionsprüfung',
 	'EXTMGRPLUS_AVAILABLE_UPDATES'			=> 'Verfügbare Updates',
 
@@ -58,8 +59,9 @@ $lang = array_merge($lang, [
 
 	// tooltips
 	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'		=> 'Diese Erweiterung hat neue Migrationen, die beim aktivieren der Erweiterung übernommen werden.',
+	'EXTMGRPLUS_TOOLTIP_NO_VERSIONCHECK'	=> 'Diese Erweiterung bietet keine Versionsprüfung.',
 	'EXTMGRPLUS_TOOLTIP_IS_IGNORED'			=> 'Diese Erweiterung wird von „Extension Manager Plus“ ignoriert.',
-	'EXTMGRPLUS_TOOLTIP_IS_LOCKED'			=> 'Die Auswahl dieser Erweiterung ist von „Extension Manager Plus“ wegen neuer Migrationen gesperrt.',
+	'EXTMGRPLUS_TOOLTIP_IS_LOCKED'			=> 'Die Auswahl dieser Erweiterung ist wegen neuer Migrationen gesperrt.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE'		=> 'Alle ausgewählten Erweiterungen deaktivieren.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'		=> 'Alle ausgewählten Erweiterungen aktivieren.',
 	'EXTMGRPLUS_TOOLTIP_ORDER'				=> 'Reihenfolge-Gruppe im Bereich 0-99.',

@@ -280,7 +280,7 @@ class ext_mgr_plus
 			'EXTMGRPLUS_LIST_IGNORE'					=> $ext_list_ignore,
 			'EXTMGRPLUS_LIST_MIGRATIONS_INACTIVE'		=> $ext_list_migrations_inactive,
 			'EXTMGRPLUS_LIST_SELECTED'					=> $ext_list_selected,
-			'EXTMGRPLUS_LIST_VERSIONCHECK'				=> $this->versioncheck_list(),
+			'EXTMGRPLUS_LIST_VERSIONCHECK'				=> $this->versioncheck_list($ext_list_available),
 			'EXTMGRPLUS_COUNT_AVAILABLE'				=> $ext_count_available,
 			'EXTMGRPLUS_COUNT_ENABLED'					=> $ext_count_enabled,
 			'EXTMGRPLUS_COUNT_DISABLED'					=> $ext_count_disabled,
@@ -785,12 +785,12 @@ class ext_mgr_plus
 	}
 
 	// Reads the version check data from the database and removes obsolete entries and generates a list for the template
-	private function versioncheck_list(): array
+	private function versioncheck_list(&$ext_list): array
 	{
 		$ext_list_db = $this->common->config_text_get('extmgrplus_list_version_check', 'updates');
 		if ($ext_list_db === null)
 		{
-			return [];
+			$ext_list_db = [];
 		}
 		$ext_list_db_update = false;
 		$ext_list_tpl = [];
@@ -823,9 +823,27 @@ class ext_mgr_plus
 			$this->common->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_db);
 		}
 
+		$count_no_vc = 0;
+		foreach ($ext_list as $ext_name => $value)
+		{
+			if (!isset($ext_list_tpl[$ext_name]))
+			{
+				$ext_metadata = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
+
+				if (!isset($ext_metadata['extra']['version-check']))
+				{
+					$ext_list_tpl[$ext_name] = [
+						'NO_VC' => true,
+					];
+					$count_no_vc++;
+				}
+			}
+		}
+
 		$ext_list_tpl['data'] = [
-			'LOCAL_DATE'	=> ($ext_list_db['data']['date'] !== null ? $this->user->format_date($ext_list_db['data']['date']) : null),
-			'COUNT'			=> count($ext_list_db) - 1,
+			'LOCAL_DATE'	=> (isset($ext_list_db['data']['date']) ? $this->user->format_date($ext_list_db['data']['date']) : '-'),
+			'COUNT_UPDATE'	=> (count($ext_list_db) > 0) ? count($ext_list_db) - 1 : 0,
+			'COUNT_WITH_VC'	=> count($ext_list) - $count_no_vc,
 		];
 
 		return $ext_list_tpl;
