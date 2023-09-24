@@ -49,9 +49,12 @@ div.successbox .icon {		/* trigger_error */
 	display: inline-block;
 }
 
+#extmgrplus_list td:nth-of-type(2) .icon {
+	cursor: help;
+}
+
 #extmgrplus_list td:nth-of-type(2) .fa-info-circle {
 	color: steelblue;
-	cursor: help;
 }
 
 /* SETTINGS */

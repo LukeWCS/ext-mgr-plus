@@ -1,3 +1,14 @@
+### 1.1.3-b4
+* ExtMgr Template:
+  * Bei veralteten Ext Versionen wird jetzt für das rote Ausrufezeichen-Icon ebenfalls ein Tooltip angezeigt.
+  * In der Versions-Spalte waren die Abstände zwischen Text und Icons zu gross. Ursache waren unerwünschte Whitespaces zwischen Text/Icon und HTML Tags. Jetzt sind alle Texte und Icons innerhalb HTML Container und so lassen sich Abstände präzise definieren.
+* JS:
+  * Die Initialisierung des `ExtMgrPlus` Objekts war nicht Strikt-kompatibel.
+* CSS:
+  * Hilfe-Cursor für das bestehende Ausrufezeichen-Icon.
+* Sprachdateien:
+  * 1 neue Sprachvariable für den neuen Veraltete-Version-Tooltip.
+
 ### 1.1.3-b3
 * ExtMgr Template:
   * Die Info-Tabelle oberhalb der Erweiterungen-Liste auf 4 Spalten erweitert. Neu ist jetzt die Anzahl der Erweiterungen mit eingerichteter Versionsprüfung.

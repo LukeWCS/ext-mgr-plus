@@ -9,7 +9,7 @@
 
 if (typeof ExtMgrPlus == "undefined")
 {
-	ExtMgrPlus = {};
+	var ExtMgrPlus = {};
 }
 
 ExtMgrPlus.constants = Object.freeze({
