@@ -46,7 +46,7 @@
 				<strong>{{ EXTMGRPLUS_LIST_VERSIONCHECK.data.COUNT_WITH_VC }}</strong>
 			</td>
 			<td>
-				<strong>{{ EXTMGRPLUS_LIST_VERSIONCHECK.data.LOCAL_DATE }}</strong>
+				<strong>{{ lang('EXTMGRPLUS_VERSIONCHECK_DATE', EXTMGRPLUS_LIST_VERSIONCHECK.data.LOCAL_DATE ?? '', EXTMGRPLUS_LIST_VERSIONCHECK.data.COUNT_ERROR) }}</strong>
 			</td>
 			<td>
 				<strong>{{ EXTMGRPLUS_LIST_VERSIONCHECK.data.COUNT_UPDATE }}</strong>
@@ -386,8 +386,10 @@
 	{% else %}
 		<span>{{ ext_obj.META_VERSION }}</span>
 	{% endif %}
-	{% if vc_obj.NO_VC %}
-		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_NO_VERSIONCHECK')|e('html') }}">&nbsp;{{ common.icon('fa-info-circle') }}</span>
+	{% if vc_obj.ERROR %}
+		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_VERSIONCHECK_ERROR')|e('html') }}">&nbsp;{{ common.icon('fa-exclamation-triangle') }}</span>
+	{% elseif vc_obj.NO_VC %}
+		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_NO_VERSIONCHECK')|e('html') }}">&nbsp;{{ common.icon('fa-chain-broken') }}</span>
 	{% endif %}
 {% endapply %}
 {% endmacro %}

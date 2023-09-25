@@ -49,6 +49,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_WITH_VERSIONCHECK'			=> 'Mit Versionsprüfung',
 	'EXTMGRPLUS_LAST_VERSIONCHECK'			=> 'Letzte Versionsprüfung',
 	'EXTMGRPLUS_AVAILABLE_UPDATES'			=> 'Verfügbare Updates',
+	'EXTMGRPLUS_VERSIONCHECK_DATE'			=> '%1$s (%2$s Fehler)',
 
 	// ext manager
 	'EXTMGRPLUS_ALL_DISABLE'				=> 'Ausgewählte deaktivieren',
@@ -60,6 +61,7 @@ $lang = array_merge($lang, [
 	// tooltips
 	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'		=> 'Diese Erweiterung hat neue Migrationen, die beim aktivieren der Erweiterung übernommen werden.',
 	'EXTMGRPLUS_TOOLTIP_OUTDATED'			=> 'Die installierte Version dieser Erweiterung ist veraltet.',
+	'EXTMGRPLUS_TOOLTIP_VERSIONCHECK_ERROR'	=> 'Bei der Versionsprüfung ist ein Fehler aufgetreten. Klicken Sie auf „Details“ um mehr zu erfahren.',
 	'EXTMGRPLUS_TOOLTIP_NO_VERSIONCHECK'	=> 'Diese Erweiterung bietet keine Versionsprüfung.',
 	'EXTMGRPLUS_TOOLTIP_IS_IGNORED'			=> 'Diese Erweiterung wird von „Extension Manager Plus“ ignoriert.',
 	'EXTMGRPLUS_TOOLTIP_IS_LOCKED'			=> 'Die Auswahl dieser Erweiterung ist wegen neuer Migrationen gesperrt.',

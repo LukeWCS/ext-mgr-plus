@@ -1,20 +1,35 @@
+### 1.1.3-b5
+* Konnte die Versionsprüfung einer Ext nicht erfolgreich ausgeführt werden, wird diese Information jetzt ebenfalls in der DB gespeichert. Das funktioniert sowohl bei der globalen VP (Alle Versionen erneut prüfen), als auch bei der lokalen VP (Details). Somit können nun alle möglichen Zustände (VP erfolgreich/VP fehlerhaft/keine VP eingerichtet) entsprechend signalisiert werden.
+* ExtMgr Template:
+  * In der Info-Tabelle wird jetzt hinter dem Datum der letzten Versionsprüfung die Anzahl Fehler angezeigt.
+  * Bei Erweiterungen bei denen es Fehler bei der Versionsprüfung gab, wird jetzt explizit ein orangefarbenes Warn-Icon mit Tooltip hinter der Version angezeigt.
+  * Das Info-Icon `fa-info-circle` für eine fehlende Versionsprüfung war zu allgemein und wurde deshalb zu `fa-chain-broken` geändert. Blaue Farbe wurde entfernt.
+* CSS:
+  * Farbe für das neue Warn-Icon hinzugefügt.
+  * Hilfe-Cursor für alle Icons in der Auswählen-Spalte hinzugefügt.
+  * Die Icons mit Tooltips wurden allgemein etwas grösser definiert, damit diese besser erkennbar sind und auch der Hover-Bereich für den Tooltip grösser wird.
+* Sprachdateien:
+  * 1 neue Sprachvariable für den neuen Fehlerhafte-Versionsprüfung-Tooltip.
+  * 1 neue Sprachvariable für die Anzeige von Datum und Anzahl Fehler der Versionsprüfung in der Info-Tabelle.
+
 ### 1.1.3-b4
 * ExtMgr Template:
-  * Bei veralteten Ext Versionen wird jetzt für das rote Ausrufezeichen-Icon ebenfalls ein Tooltip angezeigt.
+  * Bei veralteten Ext Versionen wird jetzt für das rote Veraltet-Icon ebenfalls ein Tooltip angezeigt.
   * In der Versions-Spalte waren die Abstände zwischen Text und Icons zu gross. Ursache waren unerwünschte Whitespaces zwischen Text/Icon und HTML Tags. Jetzt sind alle Texte und Icons innerhalb HTML Container und so lassen sich Abstände präzise definieren.
 * JS:
   * Die Initialisierung des `ExtMgrPlus` Objekts war nicht Strikt-kompatibel.
 * CSS:
-  * Hilfe-Cursor für das bestehende Ausrufezeichen-Icon.
+  * Hilfe-Cursor für alle Icons in der Version-Spalte hinzugefügt.
 * Sprachdateien:
   * 1 neue Sprachvariable für den neuen Veraltete-Version-Tooltip.
 
 ### 1.1.3-b3
+* Es wird jetzt bei jeder Ext ermittelt, ob diese eine Versionsprüfung bietet. Wenn nicht, wird das mit einem Indikator entsprechend signalisiert.
 * ExtMgr Template:
   * Die Info-Tabelle oberhalb der Erweiterungen-Liste auf 4 Spalten erweitert. Neu ist jetzt die Anzahl der Erweiterungen mit eingerichteter Versionsprüfung.
   * Bei Erweiterungen bei denen keine Versionsprüfung eingerichtet ist, wird jetzt ein blaues Info-Icon mit Tooltip hinter der Version angezeigt.
 * CSS:
-  * Hilfe-Cursor für das neue Info-Icon.
+  * Farbe und Hilfe-Cursor für das neue Info-Icon hinzugefügt.
 * Sprachdateien:
   * 1 neue Sprachvariable für die neue Spalte der Info-Tabelle.
   * 1 neue Sprachvariable für den neuen Keine-Versionsprüfung-Tooltip.
@@ -31,18 +46,16 @@
 * Fix: Bei der Ermittlung neuer Migrationen verhinderte eine zu strikte Dateinamen-Prüfung eine korrekte Erkennung, wenn bei Dateinamen und Klassennamen abweichende Gross/Kleinschreibung verwendet wurde. Daraus ergaben sich 2 Fehler:
   * Bei aktivierter Anzeige der Spalte für neue Migrationen wurde die Anzahl falsch berechnet.
   * Bei deaktiviertem Sicherheitsschalter für neue Migrationen wurde die Auswahl-Checkbox der betroffenen Ext nicht gesperrt.
-* Reihenfolge&Ignorieren:
-  * Beim Einblenden der Einstellungen werden jetzt diejenigen Spalten komplett ausgeblendet, die irrelevante interaktive Elemente enthalten, anstatt nur die Elemente auszublenden.
-  * Ist die Funktion deaktiviert, wird jetzt auch kein HTML mehr generiert für die Erklärungstexte, für den Absenden-Block sowie für die Inhalte der Spalten Reihenfolge und Ignorieren.
+* ExtMgr Template:
+  * Reihenfolge&Ignorieren: Beim Einblenden der Einstellungen werden jetzt diejenigen Spalten komplett ausgeblendet, die irrelevante interaktive Elemente enthalten, anstatt nur die Elemente auszublenden.
+  * Reihenfolge&Ignorieren: Ist die Funktion deaktiviert, wird jetzt auch kein HTML mehr generiert für die Erklärungstexte, für den Absenden-Block sowie für die Inhalte der Spalten Reihenfolge und Ignorieren.
+  * Ein Makro für zukünftige Funktionen vorbereitet.
 * JS:
   * An die Änderungen von Reihenfolge&Ignorieren angepasst.
   * Die Funktion zum sperren der Enter-Taste wird nicht mehr separat registriert, sondern innerhalb der `ready()` Funktion per `on()` Event, wie alle anderen Ereignisse. Die jQuery Funktion `keypress()` ist ohnehin als DEPRECATED eingestuft.
   * Bei den Tastendruck-Ereignissen ist die Eigenschaft `keyCode` (ebenfalls `which`) als DEPRECATED eingestuft und wurde auf das neue `key` umgestellt.
   * Die Enter-Taste wird innerhalb des `extmgrplus_list` Formulars nicht mehr generell gesperrt, sondern nur noch im Eingabefeld für die Reihenfolge-Gruppe. Das dient als Vorbereitung für zukünftige Funktionen.
   * Code Optimierung.
-* ExtMgr Template:
-  * An die Änderungen von Reihenfolge&Ignorieren angepasst.
-  * Ein Makro für zukünftige Funktionen vorbereitet.
 * Sprachdateien:
   * Durch eine Änderung in 1.0.7 wurde eine Sprachvariable obsolet, diese wurde jedoch bisher nicht entfernt.
 * `composer.json`:

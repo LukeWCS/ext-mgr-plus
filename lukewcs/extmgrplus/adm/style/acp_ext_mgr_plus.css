@@ -41,20 +41,26 @@ thead th .icon {			/* table header */
 	font-weight: normal;
 }
 
-td:nth-of-type(6) .icon {	/* select */
-	font-size: 1.3em;
-}
-
 div.successbox .icon {		/* trigger_error */
 	display: inline-block;
 }
 
-#extmgrplus_list td:nth-of-type(2) .icon {
-	cursor: help;
+#extmgrplus_list td:nth-of-type(2) .fa-exclamation-triangle {		/* version */
+	color: orange;
 }
 
-#extmgrplus_list td:nth-of-type(2) .fa-info-circle {
-	color: steelblue;
+#extmgrplus_list td:nth-of-type(2) .icon {							/* version */
+	cursor: help;
+	font-size: 1.2em;
+}
+
+#extmgrplus_list td:nth-of-type(3) .icon {							/* migrations */
+	font-size: 1.2em;
+}
+
+#extmgrplus_list td:nth-of-type(6) .icon {							/* select */
+	cursor: help;
+	font-size: 1.3em;
 }
 
 /* SETTINGS */
@@ -139,11 +145,11 @@ div[id$="_confirmbox"] {
 	width: 16%;
 }
 
-#extmgrplus_list th:nth-of-type(3) {		/* migration files */
+#extmgrplus_list th:nth-of-type(3) {		/* migrations */
 	width: 1%;
 }
 
-#extmgrplus_list td:nth-of-type(3) span {	/* migration files */
+#extmgrplus_list td:nth-of-type(3) span {	/* migrations */
 	cursor: help;
 }
 

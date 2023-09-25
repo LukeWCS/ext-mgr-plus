@@ -760,11 +760,16 @@ class ext_mgr_plus
 
 				if (isset($ext_metadata['extra']['version-check']))
 				{
+					if (($ext_list_db[$ext_name]['current'] ?? '') == 'ERROR')
+					{
+						unset($ext_list_db[$ext_name]);
+						$ext_list_db_update = true;
+					}
+
 					$vc_data = $this->ext_manager->version_check($md_manager, false, true);
 					if (!empty($vc_data))
 					{
-						$db_ver = $ext_list_db[$ext_name]['current'] ?? '0.0.0';
-						if (phpbb_version_compare($db_ver, $vc_data['current'], '<'))
+						if (phpbb_version_compare($ext_list_db[$ext_name]['current'] ?? '0.0.0', $vc_data['current'], '<'))
 						{
 							$ext_list_db[$ext_name] = [
 								'current' => $vc_data['current'],
@@ -776,6 +781,10 @@ class ext_mgr_plus
 			}
 			catch (exception_interface | \RuntimeException $e)
 			{
+				$ext_list_db[$ext_name] = [
+					'current' => 'ERROR',
+				];
+				$ext_list_db_update = true;
 			}
 		}
 		if ($ext_list_db_update)
@@ -795,6 +804,7 @@ class ext_mgr_plus
 		$ext_list_db_update = false;
 		$ext_list_tpl = [];
 
+		$count_updates = 0;
 		foreach ($ext_list_db as $ext_name => $ext_data)
 		{
 			if ($ext_name == 'data')
@@ -805,11 +815,12 @@ class ext_mgr_plus
 			{
 				$ext_metadata = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
 
-				if (phpbb_version_compare($ext_metadata['version'], $ext_data['current'], '<'))
+				if (phpbb_version_compare($ext_metadata['version'], $ext_data['current'], '<') || $ext_data['current'] == 'ERROR')
 				{
 					$ext_list_tpl[$ext_name]  = [
 						'CURRENT' => $ext_data['current'],
 					];
+					$count_updates += ($ext_data['current'] != 'ERROR') ? 1 : 0;
 				}
 			}
 			if (!isset($ext_list_tpl[$ext_name]))
@@ -824,6 +835,7 @@ class ext_mgr_plus
 		}
 
 		$count_no_vc = 0;
+		$count_errors = 0;
 		foreach ($ext_list as $ext_name => $value)
 		{
 			if (!isset($ext_list_tpl[$ext_name]))
@@ -838,12 +850,20 @@ class ext_mgr_plus
 					$count_no_vc++;
 				}
 			}
+			else if ($ext_list_tpl[$ext_name]['CURRENT'] == 'ERROR')
+			{
+				$ext_list_tpl[$ext_name] = [
+					'ERROR' => true,
+				];
+				$count_errors++;
+			}
 		}
 
 		$ext_list_tpl['data'] = [
-			'LOCAL_DATE'	=> (isset($ext_list_db['data']['date']) ? $this->user->format_date($ext_list_db['data']['date']) : '-'),
-			'COUNT_UPDATE'	=> (count($ext_list_db) > 0) ? count($ext_list_db) - 1 : 0,
+			'LOCAL_DATE'	=> (isset($ext_list_db['data']['date']) ? $this->user->format_date($ext_list_db['data']['date']) : null),
+			'COUNT_UPDATE'	=> $count_updates,
 			'COUNT_WITH_VC'	=> count($ext_list) - $count_no_vc,
+			'COUNT_ERROR'	=> $count_errors,
 		];
 
 		return $ext_list_tpl;
