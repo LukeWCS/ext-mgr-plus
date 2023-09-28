@@ -753,6 +753,7 @@ class ext_mgr_plus
 		foreach ($ext_list as $ext_name => $path)
 		{
 			$md_manager = $this->ext_manager->create_extension_metadata_manager($ext_name);
+			$ext_current = $ext_list_db[$ext_name]['current'] ?? null;
 
 			try
 			{
@@ -760,30 +761,40 @@ class ext_mgr_plus
 
 				if (isset($ext_metadata['extra']['version-check']))
 				{
-					if (($ext_list_db[$ext_name]['current'] ?? '') == 'ERROR')
-					{
-						unset($ext_list_db[$ext_name]);
-						$ext_list_db_update = true;
-					}
-
 					$vc_data = $this->ext_manager->version_check($md_manager, false, true);
 					if (!empty($vc_data))
 					{
-						if (phpbb_version_compare($ext_list_db[$ext_name]['current'] ?? '0.0.0', $vc_data['current'], '<'))
+						if ($ext_current == 'ERROR')
 						{
-							$ext_list_db[$ext_name] = [
-								'current' => $vc_data['current'],
-							];
-							$ext_list_db_update = true;
+							$ext_current = null;
 						}
+						if (phpbb_version_compare($ext_current ?? '0.0.0', $vc_data['current'], '<'))
+						{
+							$ext_current = $vc_data['current'];
+						}
+					}
+					else
+					{
+						$ext_current = null;
 					}
 				}
 			}
 			catch (exception_interface | \RuntimeException $e)
 			{
-				$ext_list_db[$ext_name] = [
-					'current' => 'ERROR',
-				];
+				$ext_current = 'ERROR';
+			}
+			if ($ext_current != ($ext_list_db[$ext_name]['current'] ?? null))
+			{
+				if ($ext_current != null)
+				{
+					$ext_list_db[$ext_name] = [
+						'current' => $ext_current,
+					];
+				}
+				else
+				{
+					unset($ext_list_db[$ext_name]);
+				}
 				$ext_list_db_update = true;
 			}
 		}
@@ -815,12 +826,15 @@ class ext_mgr_plus
 			{
 				$ext_metadata = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
 
-				if (phpbb_version_compare($ext_metadata['version'], $ext_data['current'], '<') || $ext_data['current'] == 'ERROR')
+				if ($ext_data['current'] == 'ERROR' || phpbb_version_compare($ext_metadata['version'], $ext_data['current'], '<'))
 				{
 					$ext_list_tpl[$ext_name]  = [
 						'CURRENT' => $ext_data['current'],
 					];
-					$count_updates += ($ext_data['current'] != 'ERROR') ? 1 : 0;
+					if ($ext_data['current'] != 'ERROR')
+					{
+						$count_updates++;
+					}
 				}
 			}
 			if (!isset($ext_list_tpl[$ext_name]))

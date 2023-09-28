@@ -1,3 +1,8 @@
+### 1.1.3-b6
+* Code Optimierung:
+  * Kleine Verbesserungen.
+  * Bei lokaler Versionsprüfung (Details) konnte es mehrere Situationen geben, bei denen unnötig der EMP Versions-Cache in der DB aktualisiert wurde. Grund ist die neue Funktion von 1.1.3-b5 zum signalisieren von VP Fehlern.
+
 ### 1.1.3-b5
 * Konnte die Versionsprüfung einer Ext nicht erfolgreich ausgeführt werden, wird diese Information jetzt ebenfalls in der DB gespeichert. Das funktioniert sowohl bei der globalen VP (Alle Versionen erneut prüfen), als auch bei der lokalen VP (Details). Somit können nun alle möglichen Zustände (VP erfolgreich/VP fehlerhaft/keine VP eingerichtet) entsprechend signalisiert werden.
 * ExtMgr Template:

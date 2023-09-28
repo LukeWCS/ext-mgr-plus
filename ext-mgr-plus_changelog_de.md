@@ -3,13 +3,13 @@
 * Fix: Bei der Ermittlung neuer Migrationen verhinderte eine zu strikte Dateinamen-Prüfung eine korrekte Erkennung, wenn bei Dateinamen und Klassennamen abweichende Gross/Kleinschreibung verwendet wurde. Daraus ergaben sich 2 Fehler:
   * Bei aktivierter Anzeige der Spalte für neue Migrationen wurde die Anzahl falsch berechnet.
   * Bei deaktiviertem Sicherheitsschalter für neue Migrationen wurde die Auswahl-Checkbox der betroffenen Ext nicht gesperrt.
-* Konnte die Versionsprüfung einer Ext nicht erfolgreich ausgeführt werden, wird diese Information jetzt ebenfalls gespeichert und ausgewertet. Das funktioniert sowohl bei der globalen VP (Alle Versionen erneut prüfen), als auch bei der lokalen VP (Details). Somit können nun alle möglichen Zustände (VP erfolgreich/VP fehlerhaft/keine VP eingerichtet) entsprechend signalisiert werden.
-  * In der Info-Tabelle wird jetzt hinter dem Datum der letzten Versionsprüfung die Anzahl Fehler angezeigt.
-  * Bei Erweiterungen bei denen es Fehler bei der Versionsprüfung gab, wird jetzt ein orangefarbenes Warn-Icon mit Tooltip hinter der Version angezeigt.
 * Da phpBB standardmässig nicht explizit darüber informiert, wenn eine Erweiterung keine Versionsprüfung bietet, füllt EMP nun auch diese Lücke.
   * Die Info-Tabelle oberhalb der Erweiterungen-Liste auf 4 Spalten erweitert. Neu ist jetzt die Anzahl der Erweiterungen mit eingerichteter Versionsprüfung.
   * Bei Erweiterungen bei denen keine Versionsprüfung eingerichtet ist, wird jetzt ein Icon (gebrochene Kette) mit Tooltip hinter der Version angezeigt.
-* Passend zum neuen Fehlende-Versionsprüfung-Icon, ist nun auch beim roten Ausrufezeichen-Icon (bei veralteten Versionen) ein Tooltip vorhanden.
+* Konnte die Versionsprüfung einer Ext nicht erfolgreich ausgeführt werden, wird diese Information jetzt ebenfalls gespeichert und ausgewertet. Das funktioniert sowohl bei der globalen VP (Alle Versionen erneut prüfen), als auch bei der lokalen VP (Details). Somit können nun alle möglichen Zustände (VP erfolgreich/VP fehlerhaft/keine VP eingerichtet) entsprechend signalisiert werden.
+  * In der Info-Tabelle wird jetzt hinter dem Datum der letzten Versionsprüfung die Anzahl Fehler angezeigt.
+  * Bei Erweiterungen bei denen es Fehler bei der Versionsprüfung gab, wird jetzt ein orangefarbenes Warn-Icon mit Tooltip hinter der Version angezeigt.
+* Beim roten Ausrufezeichen-Icon (bei veralteten Versionen) ist jetzt ebenfalls ein Tooltip vorhanden.
 * Reihenfolge&Ignorieren:
   * Beim Einblenden der Einstellungen werden jetzt diejenigen Spalten komplett ausgeblendet, die irrelevante interaktive Elemente enthalten, anstatt nur die Elemente auszublenden.
   * Ist die Funktion deaktiviert, wird jetzt auch kein HTML mehr generiert für die Erklärungstexte, für den Absenden-Block sowie für die Inhalte der Spalten Reihenfolge und Ignorieren.
