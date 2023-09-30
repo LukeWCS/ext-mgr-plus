@@ -764,11 +764,7 @@ class ext_mgr_plus
 					$vc_data = $this->ext_manager->version_check($md_manager, false, true);
 					if (!empty($vc_data))
 					{
-						if ($ext_current == 'ERROR')
-						{
-							$ext_current = null;
-						}
-						if (phpbb_version_compare($ext_current ?? '0.0.0', $vc_data['current'], '<'))
+						if ($ext_current == 'ERROR' || phpbb_version_compare($ext_current ?? '0.0.0', $vc_data['current'], '<'))
 						{
 							$ext_current = $vc_data['current'];
 						}

@@ -1,3 +1,9 @@
+### 1.1.3-b7
+* Fix: Fehler in `composer.json` behoben. In der VP war noch eine Debug Änderung vorhanden.
+* CSS:
+  * Von Udo die geänderte Farbe für das Warn-Icon übernommen.
+* Code Optimierung.
+
 ### 1.1.3-b6
 * Code Optimierung:
   * Kleine Verbesserungen.

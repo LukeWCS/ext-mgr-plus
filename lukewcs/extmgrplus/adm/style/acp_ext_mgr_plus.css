@@ -46,7 +46,7 @@ div.successbox .icon {		/* trigger_error */
 }
 
 #extmgrplus_list td:nth-of-type(2) .fa-exclamation-triangle {		/* version */
-	color: orange;
+	color: #DF950D;
 }
 
 #extmgrplus_list td:nth-of-type(2) .icon {							/* version */
