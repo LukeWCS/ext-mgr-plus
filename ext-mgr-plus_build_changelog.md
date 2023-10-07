@@ -1,3 +1,7 @@
+### 1.1.3-b8
+* JS:
+  * Die Strikt Direktive aus den 16 Funktionen entfernt und stattdessen einmal im globalen Namensraum am Anfang der Datei definiert.
+
 ### 1.1.3-b7
 * Fix: Fehler in `composer.json` behoben. In der VP war noch eine Debug Änderung vorhanden.
 * CSS:

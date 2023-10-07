@@ -7,6 +7,8 @@
 *
 */
 
+'use strict';
+
 if (typeof ExtMgrPlus == "undefined")
 {
 	var ExtMgrPlus = {};
@@ -21,15 +23,11 @@ ExtMgrPlus.constants = Object.freeze({
 // Extension Manager
 
 ExtMgrPlus.CheckUncheckAll = function (e) {
-	'use strict';
-
 	$('#extmgrplus_list input[name="ext_mark_' + e.data.CheckBoxType + '[]"]').filter(':enabled').prop('checked', e.currentTarget.checked)
 	ExtMgrPlus.SetButtonState({data: {CheckBoxType: e.data.CheckBoxType}});
 };
 
 ExtMgrPlus.SetButtonState = function (e) {
-	'use strict';
-
 	var CheckedCount = $('#extmgrplus_list input[name="ext_mark_' + e.data.CheckBoxType + '[]"]').filter(':checked').length;
 	var Button = {
 		'disabled': 'enable',
@@ -40,8 +38,6 @@ ExtMgrPlus.SetButtonState = function (e) {
 };
 
 ExtMgrPlus.SetInputBoxState = function (e) {
-	'use strict';
-
 	var $inputbox = $('#extmgrplus_list input[name="ext_order[' + e.currentTarget.value + ']"]');
 
 	if (e.currentTarget.checked) {
@@ -52,8 +48,6 @@ ExtMgrPlus.SetInputBoxState = function (e) {
 };
 
 ExtMgrPlus.ShowHideOrderIgnore = function () {
-	'use strict';
-
 	var show = ($('.extmgrplus_order_and_ignore').css('display') == 'none');
 
 	if (show) {
@@ -67,8 +61,6 @@ ExtMgrPlus.ShowHideOrderIgnore = function () {
 };
 
 ExtMgrPlus.ShowActionElements = function (show) {
-	'use strict';
-
 	if (show) {
 		$('#extmgrplus_list th:nth-of-type(1n+4):nth-of-type(-1n+6)')		.show();
 		$('#extmgrplus_list td.row3:nth-of-type(1n+4):nth-of-type(-1n+6)')	.show();
@@ -85,8 +77,6 @@ ExtMgrPlus.ShowActionElements = function (show) {
 };
 
 ExtMgrPlus.ShowOrderIgnoreColumns = function (show) {
-	'use strict';
-
 	if (show) {
 		$('#extmgrplus_list th:nth-of-type(n+7):nth-of-type(-n+8)')			.show();
 		$('#extmgrplus_list td.row3:nth-of-type(n+7):nth-of-type(-n+8)')	.show();
@@ -99,8 +89,6 @@ ExtMgrPlus.ShowOrderIgnoreColumns = function (show) {
 };
 
 ExtMgrPlus.VersionCheck = function (VersionCheckURL) {
-	'use strict';
-
 	if ($('#extmgrplus_link_version_check').hasClass('disabled')) {
 		return;
 	}
@@ -110,8 +98,6 @@ ExtMgrPlus.VersionCheck = function (VersionCheckURL) {
 };
 
 ExtMgrPlus.SaveCheckboxes = function () {
-	'use strict';
-
 	if ($('#extmgrplus_link_save_checkboxes').hasClass('disabled')) {
 		return;
 	}
@@ -121,8 +107,6 @@ ExtMgrPlus.SaveCheckboxes = function () {
 };
 
 ExtMgrPlus.ConfirmBox = function (e) {
-	'use strict';
-
 	var defaultState = Boolean($('div[id="' + e.target.name + '_confirmbox"]').attr('data-default'));
 
 	if ($('input[name="' + e.target.name + '"]').prop('checked') != defaultState) {
@@ -134,8 +118,6 @@ ExtMgrPlus.ConfirmBox = function (e) {
 };
 
 ExtMgrPlus.ConfirmBoxButton = function (e) {
-	'use strict';
-
 	var elementName = e.target.name.slice(0, e.target.name.indexOf('_confirm_'));
 	var defaultState = Boolean($('div[id="' + elementName + '_confirmbox"]').attr('data-default'));
 
@@ -150,8 +132,6 @@ ExtMgrPlus.ConfirmBoxButton = function (e) {
 }
 
 ExtMgrPlus.ConfirmBoxHide = function () {
-	'use strict';
-
 	$('input[class*="confirmbox_active"]')		.prop('disabled', false);
 	$('input[class*="confirmbox_active"]')		.removeClass('confirmbox_active');
 	$('div[id$="_confirmbox"]')					.hide();
@@ -159,8 +139,6 @@ ExtMgrPlus.ConfirmBoxHide = function () {
 };
 
 ExtMgrPlus.SetDefaults = function () {
-	'use strict';
-
 	var c = ExtMgrPlus.constants;
 
 	$('input[name="force_unstable"]')						.prop('checked'	, false);
@@ -176,21 +154,15 @@ ExtMgrPlus.SetDefaults = function () {
 };
 
 ExtMgrPlus.FormSubmit = function () {
-	'use strict';
-
 	$('#extmgrplus_settings').submit();
 };
 
 ExtMgrPlus.FormReset = function () {
-	'use strict';
-
 	$('#extmgrplus_settings').trigger("reset");
 	ExtMgrPlus.ConfirmBoxHide();
 };
 
 ExtMgrPlus.DisableEnter = function(e) {
-	'use strict';
-
 	if (e.key == 'Enter') {
 		return false;
 	}
@@ -199,8 +171,6 @@ ExtMgrPlus.DisableEnter = function(e) {
 // Register events
 
 $(window).ready(function() {
-	'use strict';
-
 	$('input[name="ext_mark_all_enabled"]:enabled')			.on('change'	, {CheckBoxType: 'enabled'}, ExtMgrPlus.CheckUncheckAll);
 	$('input[name="ext_mark_all_disabled"]:enabled')		.on('change'	, {CheckBoxType: 'disabled'}, ExtMgrPlus.CheckUncheckAll);
 	$('input[name="ext_mark_enabled[]"]:enabled')			.on('change'	, {CheckBoxType: 'enabled'}, ExtMgrPlus.SetButtonState);
