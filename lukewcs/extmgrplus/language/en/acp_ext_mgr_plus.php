@@ -37,6 +37,18 @@ if (empty($lang) || !is_array($lang))
 // ’ « » “ ” … „ “
 
 $lang = array_merge($lang, [
+	// info table
+	'EXTMGRPLUS_COL_AVAILABLE_EXTENSIONS'	=> 'Available extensions',
+	'EXTMGRPLUS_COL_WITH_VERSIONCHECK'		=> 'With version checking',
+	'EXTMGRPLUS_COL_LAST_VERSIONCHECK'		=> 'Last version check',
+	'EXTMGRPLUS_COL_AVAILABLE_UPDATES'		=> 'Available updates',
+	'EXTMGRPLUS_AVAILABLE_EXTENSIONS'		=> '%1$u (%2$u invalid)',
+	'EXTMGRPLUS_VERSIONCHECK_DATE'			=> '%1$s (%2$s errors)',
+
+	// link bar
+	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'		=> 'Order & Ignore',
+	'EXTMGRPLUS_LINK_SAVE_CHECKBOXES'		=> 'Save',
+
 	// settings order and ignore
 	'EXTMGRPLUS_SECTION_SETTINGS'			=> 'Settings (Plus)',
 	'EXTMGRPLUS_ORDER'						=> 'Order',
@@ -44,14 +56,11 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_IGNORE'						=> 'Ignore',
 	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> '%s This column allows you to specify which extensions should be ignored during the “Enable selected” and “Disable selected” actions. Ignored extensions can no longer be selected in the extensions list. If an order group was defined for an ignored extension, then this is retained, but it no longer has any meaning.',
 
-	// info table
-	'EXTMGRPLUS_AVAILABLE_EXTENSIONS'		=> 'Total extensions',
-	'EXTMGRPLUS_WITH_VERSIONCHECK'			=> 'With version checking',
-	'EXTMGRPLUS_LAST_VERSIONCHECK'			=> 'Last version check',
-	'EXTMGRPLUS_AVAILABLE_UPDATES'			=> 'Available updates',
-	'EXTMGRPLUS_VERSIONCHECK_DATE'			=> '%1$s (%2$s errors)',
-
 	// ext manager
+	'EXTMGRPLUS_COL_MIGRATIONS'				=> 'New migrations',
+	'EXTMGRPLUS_COL_SELECT'					=> 'Select',
+	'EXTMGRPLUS_COL_ORDER'					=> 'Order',
+	'EXTMGRPLUS_COL_IGNORE'					=> 'Ignore',
 	'EXTMGRPLUS_ALL_DISABLE'				=> 'Disable selected',
 	'EXTMGRPLUS_ALL_ENABLE'					=> 'Enable selected',
 	'EXTMGRPLUS_EXTENSIONS_ENABLED'			=> 'Enabled Extensions: %u',
@@ -71,16 +80,6 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_IGNORE'				=> 'Ignore extension.',
 	'EXTMGRPLUS_TOOLTIP_SELECT_ALL'			=> 'Select or deselect all extensions.',
 	'EXTMGRPLUS_TOOLTIP_SELECT'				=> 'Select extension.',
-
-	// columns
-	'EXTMGRPLUS_COL_MIGRATIONS'				=> 'New migrations',
-	'EXTMGRPLUS_COL_SELECT'					=> 'Select',
-	'EXTMGRPLUS_COL_ORDER'					=> 'Order',
-	'EXTMGRPLUS_COL_IGNORE'					=> 'Ignore',
-
-	// link bar
-	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'		=> 'Order & Ignore',
-	'EXTMGRPLUS_LINK_SAVE_CHECKBOXES'		=> 'Save',
 
 	// misc
 	'EXTMGRPLUS_EXTENSION_PLURAL' => [

@@ -37,6 +37,18 @@ if (empty($lang) || !is_array($lang))
 // ’ « » “ ” … „ “
 
 $lang = array_merge($lang, [
+	// info table
+	'EXTMGRPLUS_COL_AVAILABLE_EXTENSIONS'	=> 'Verfügbare Erweiterungen',
+	'EXTMGRPLUS_COL_WITH_VERSIONCHECK'		=> 'Mit Versionsprüfung',
+	'EXTMGRPLUS_COL_LAST_VERSIONCHECK'		=> 'Letzte Versionsprüfung',
+	'EXTMGRPLUS_COL_AVAILABLE_UPDATES'		=> 'Verfügbare Updates',
+	'EXTMGRPLUS_AVAILABLE_EXTENSIONS'		=> '%1$u (%2$u ungültige)',
+	'EXTMGRPLUS_VERSIONCHECK_DATE'			=> '%1$s (%2$u Fehler)',
+
+	// link bar
+	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'		=> 'Reihenfolge & Ignorieren',
+	'EXTMGRPLUS_LINK_SAVE_CHECKBOXES'		=> 'Speichern',
+
 	// settings order and ignore
 	'EXTMGRPLUS_SECTION_SETTINGS'			=> 'Einstellungen (Plus)',
 	'EXTMGRPLUS_ORDER'						=> 'Reihenfolge',
@@ -44,14 +56,11 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_IGNORE'						=> 'Ignorieren',
 	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> '%s In dieser Spalte kannst du festlegen, welche Erweiterungen bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ ignoriert werden sollen. Ignorierte Erweiterungen können in der Erweiterungen-Liste nicht mehr ausgewählt werden. Wenn bei einer ignorierten Erweiterung eine Reihenfolge-Gruppe definiert wurde, dann bleibt diese erhalten, sie hat jedoch keine Bedeutung mehr.',
 
-	// info table
-	'EXTMGRPLUS_AVAILABLE_EXTENSIONS'		=> 'Erweiterungen gesamt',
-	'EXTMGRPLUS_WITH_VERSIONCHECK'			=> 'Mit Versionsprüfung',
-	'EXTMGRPLUS_LAST_VERSIONCHECK'			=> 'Letzte Versionsprüfung',
-	'EXTMGRPLUS_AVAILABLE_UPDATES'			=> 'Verfügbare Updates',
-	'EXTMGRPLUS_VERSIONCHECK_DATE'			=> '%1$s (%2$s Fehler)',
-
 	// ext manager
+	'EXTMGRPLUS_COL_MIGRATIONS'				=> 'Neue Migrationen',
+	'EXTMGRPLUS_COL_SELECT'					=> 'Auswählen',
+	'EXTMGRPLUS_COL_ORDER'					=> 'Reihenfolge',
+	'EXTMGRPLUS_COL_IGNORE'					=> 'Ignorieren',
 	'EXTMGRPLUS_ALL_DISABLE'				=> 'Ausgewählte deaktivieren',
 	'EXTMGRPLUS_ALL_ENABLE'					=> 'Ausgewählte aktivieren',
 	'EXTMGRPLUS_EXTENSIONS_ENABLED'			=> 'Aktivierte Erweiterungen: %u',
@@ -71,16 +80,6 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_IGNORE'				=> 'Erweiterung ignorieren.',
 	'EXTMGRPLUS_TOOLTIP_SELECT_ALL'			=> 'Alle Erweiterungen auswählen oder abwählen.',
 	'EXTMGRPLUS_TOOLTIP_SELECT'				=> 'Erweiterung auswählen.',
-
-	// columns
-	'EXTMGRPLUS_COL_MIGRATIONS'				=> 'Neue Migrationen',
-	'EXTMGRPLUS_COL_SELECT'					=> 'Auswählen',
-	'EXTMGRPLUS_COL_ORDER'					=> 'Reihenfolge',
-	'EXTMGRPLUS_COL_IGNORE'					=> 'Ignorieren',
-
-	// link bar
-	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'		=> 'Reihenfolge & Ignorieren',
-	'EXTMGRPLUS_LINK_SAVE_CHECKBOXES'		=> 'Speichern',
 
 	// misc
 	'EXTMGRPLUS_EXTENSION_PLURAL' => [

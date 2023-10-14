@@ -3,18 +3,27 @@
 * Fix: Bei der Ermittlung neuer Migrationen verhinderte eine zu strikte Dateinamen-Prüfung eine korrekte Erkennung, wenn bei Dateinamen und Klassennamen abweichende Gross/Kleinschreibung verwendet wurde. Daraus ergaben sich 2 Fehler:
   * Bei aktivierter Anzeige der Spalte für neue Migrationen wurde die Anzahl falsch berechnet.
   * Bei deaktiviertem Sicherheitsschalter für neue Migrationen wurde die Auswahl-Checkbox der betroffenen Ext nicht gesperrt.
+* Fix: Beim Betatest von 1.1.3 zeigte sich, dass EMP nicht mit ungültigen Erweiterungen umgehen konnte, wodurch sich mehrere Probleme ergaben:
+  * In bestimmten Situationen konnte der Zähler für nicht-installierte Erweiterungen in den Minus-Bereich geraten. Da eine negative Anzahl nicht vorgesehen ist, wurde stattdessen die Zahl 18446744073709551615 angezeigt, da in der Sprachvariable ein anderer Variablentyp erwartet wurde. [Meldung von Kirk (.de)]
+  * Bei negativer Anzahl der nicht-installierten Erweiterungen wurden alle deaktivierten Erweiterungen in der Sektion für nicht-installierte Erweiterungen angezeigt. [Meldung von Kirk (.de)]
+  * Die Buttons "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" wurden je nach Situation fälschlicherweise aktiviert.
+  * Die Auswahlbox "Alle Erweiterungen auswählen" bei Aktivierte und Deaktivierte wurde je nach Situation fälschlicherweise aktiviert.
+  * Die Zähler bei "Aktivierte Erweiterungen" und "Deaktivierte Erweiterungen" wurden je nach Situation falsch berechnet.
+  * Bei Reihenfolge&Ignorieren wurden für ungültige Erweiterungen fälschlicherweise Eingabe-Elemente generiert, durch die beim Speichern falsche Daten in die DB geschrieben werden konnten.
 * Da phpBB standardmässig nicht explizit darüber informiert, wenn eine Erweiterung keine Versionsprüfung bietet, füllt EMP nun auch diese Lücke.
-  * Die Info-Tabelle oberhalb der Erweiterungen-Liste auf 4 Spalten erweitert. Neu ist jetzt die Anzahl der Erweiterungen mit eingerichteter Versionsprüfung.
-  * Bei Erweiterungen bei denen keine Versionsprüfung eingerichtet ist, wird jetzt ein Icon (gebrochene Kette) mit Tooltip hinter der Version angezeigt.
-* Konnte die Versionsprüfung einer Ext nicht erfolgreich ausgeführt werden, wird diese Information jetzt ebenfalls gespeichert und ausgewertet. Das funktioniert sowohl bei der globalen VP (Alle Versionen erneut prüfen), als auch bei der lokalen VP (Details). Somit können nun alle möglichen Zustände (VP erfolgreich/VP fehlerhaft/keine VP eingerichtet) entsprechend signalisiert werden.
-  * In der Info-Tabelle wird jetzt hinter dem Datum der letzten Versionsprüfung die Anzahl Fehler angezeigt.
-  * Bei Erweiterungen bei denen es Fehler bei der Versionsprüfung gab, wird jetzt ein orangefarbenes Warn-Icon mit Tooltip hinter der Version angezeigt.
+  * Die Info-Tabelle oberhalb der Erweiterungen-Liste auf 4 Spalten erweitert. Neu ist die Anzahl der Erweiterungen mit eingerichteter Versionsprüfung.
+  * Bei Erweiterungen bei denen keine Versionsprüfung eingerichtet ist, wird ein Icon (gebrochene Kette) mit Tooltip hinter der Version angezeigt.
+* Konnte die Versionsprüfung einer Ext nicht erfolgreich ausgeführt werden, wird diese Information ebenfalls gespeichert und ausgewertet. Das funktioniert sowohl bei der globalen VP (Alle Versionen erneut prüfen), als auch bei der lokalen VP (Details). Somit können nun alle möglichen Zustände (VP erfolgreich/VP fehlerhaft/keine VP eingerichtet) entsprechend signalisiert werden.
+  * In der Info-Tabelle wird hinter dem Datum der letzten Versionsprüfung die Anzahl Fehler angezeigt.
+  * Bei Erweiterungen bei denen es Fehler bei der Versionsprüfung gab, wird ein orangefarbenes Warn-Icon mit Tooltip hinter der Version angezeigt.
+* In der Info-Tabelle wird hinter der Anzahl der verfügbaren Erweiterungen in Klammern auch die Anzahl ungültiger Erweiterungen angezeigt.
 * Beim roten Ausrufezeichen-Icon (bei veralteten Versionen) ist jetzt ebenfalls ein Tooltip vorhanden.
 * Reihenfolge&Ignorieren:
-  * Beim Einblenden der Einstellungen werden jetzt diejenigen Spalten komplett ausgeblendet, die irrelevante interaktive Elemente enthalten, anstatt nur die Elemente auszublenden.
-  * Ist die Funktion deaktiviert, wird jetzt auch kein HTML mehr generiert für die Erklärungstexte, für den Absenden-Block sowie für die Inhalte der Spalten Reihenfolge und Ignorieren.
-* Code Optimierung bei Javascript:
+  * Beim Einblenden der Einstellungen werden diejenigen Spalten komplett ausgeblendet, die irrelevante interaktive Elemente enthalten, anstatt nur die Elemente auszublenden.
+  * Ist die Funktion deaktiviert, wird auch kein HTML mehr generiert für die Erklärungstexte, für den Absenden-Block sowie für die Inhalte der Spalten Reihenfolge und Ignorieren.
+* Code Optimierung:
   * Unter anderem wurden bei Javascript und jQuery als DEPRECATED eingestufte Eigenschaften und Funktionen durch aktuelle Varianten ersetzt. Details siehe Build Changelog.
+  * Core.
 * Sprachdateien:
   * Durch eine Änderung in 1.0.7 wurde eine Sprachvariable obsolet, diese wurde jedoch bisher nicht entfernt.
 

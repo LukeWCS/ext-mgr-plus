@@ -1,6 +1,24 @@
+### 1.1.3-b9
+* Fix: Beim Betatest von 1.1.3 zeigte sich, dass EMP nicht mit ungültigen Erweiterungen umgehen konnte, wodurch sich mehrere Probleme ergaben:
+  * In bestimmten Situationen konnte der Zähler für nicht-installierte Erweiterungen in den Minus-Bereich geraten. Da eine negative Anzahl nicht vorgesehen ist, wurde stattdessen die Zahl 18446744073709551615 angezeigt, da in der Sprachvariable ein anderer Variablentyp erwartet wurde. [Meldung von Kirk (.de)]
+  * Bei negativer Anzahl der nicht-installierten Erweiterungen wurden alle deaktivierten Erweiterungen in der Sektion für nicht-installierte Erweiterungen angezeigt. [Meldung von Kirk (.de)]
+  * Die Buttons "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" wurden je nach Situation fälschlicherweise aktiviert.
+  * Die Auswahlbox "Alle Erweiterungen auswählen" bei Aktivierte und Deaktivierte wurde je nach Situation fälschlicherweise aktiviert.
+  * Die Zähler bei "Aktivierte Erweiterungen" und "Deaktivierte Erweiterungen" wurden je nach Situation falsch berechnet.
+  * Bei Reihenfolge&Ignorieren wurden für ungültige Erweiterungen fälschlicherweise Eingabe-Elemente generiert, durch die beim Speichern falsche Daten in die DB geschrieben werden konnten.
+* ExtMgr Template:
+  * Die Erkennung der nicht-installierten Erweiterungen für die Generierung der Nicht-Installiert-Sektion musste geändert werden, da diese auch auf ungültige Erweiterungen reagiert hat.
+  * In der Info-Tabelle wird hinter der Anzahlt der verfügbaren Erweiterungen in Klammern auch die Anzahl ungültiger Erweiterungen angezeigt.
+  * Bei ungültigen Erweiterungen werden in Reihenfolge&Ignorieren keine Eingabe-Elemente mehr erzeugt.
+* Code Optimierung.
+* Sprachdateien:
+  * 1 neue Sprachvariable für die gemeinsame Anzeige der Anzahl verfügbarer Erweiterungen sowie ungültiger Erweiterungen in der Info-Tabelle.
+  * 4 Variablen umbenannt.
+  * Kleine Änderungen.
+
 ### 1.1.3-b8
 * JS:
-  * Die Strikt Direktive aus den 16 Funktionen entfernt und stattdessen einmal im globalen Namensraum am Anfang der Datei definiert.
+  * Die Strikt-Direktive aus den 16 Funktionen entfernt und stattdessen einmal im globalen Namensraum am Anfang der Datei definiert.
 
 ### 1.1.3-b7
 * Fix: Fehler in `composer.json` behoben. In der VP war noch eine Debug Änderung vorhanden.

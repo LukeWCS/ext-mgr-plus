@@ -24,29 +24,35 @@
 	<thead>
 		<tr>
 			<th>
-				{{ lang('EXTMGRPLUS_AVAILABLE_EXTENSIONS') }}
+				{{ lang('EXTMGRPLUS_COL_AVAILABLE_EXTENSIONS') }}
 			</th>
 			<th>
-				{{ lang('EXTMGRPLUS_WITH_VERSIONCHECK') }}
+				{{ lang('EXTMGRPLUS_COL_WITH_VERSIONCHECK') }}
 			</th>
 			<th>
-				{{ lang('EXTMGRPLUS_LAST_VERSIONCHECK') }}
+				{{ lang('EXTMGRPLUS_COL_LAST_VERSIONCHECK') }}
 			</th>
 			<th>
-				{{ lang('EXTMGRPLUS_AVAILABLE_UPDATES') }}
+				{{ lang('EXTMGRPLUS_COL_AVAILABLE_UPDATES') }}
 			</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
 			<td>
-				<strong>{{ EXTMGRPLUS_COUNT_AVAILABLE }}</strong>
+				<strong>{{ lang('EXTMGRPLUS_AVAILABLE_EXTENSIONS',
+					EXTMGRPLUS_COUNT_AVAILABLE,
+					EXTMGRPLUS_COUNT_INVALID
+				) }}</strong>
 			</td>
 			<td>
 				<strong>{{ EXTMGRPLUS_LIST_VERSIONCHECK.data.COUNT_WITH_VC }}</strong>
 			</td>
 			<td>
-				<strong>{{ lang('EXTMGRPLUS_VERSIONCHECK_DATE', EXTMGRPLUS_LIST_VERSIONCHECK.data.LOCAL_DATE ?? '', EXTMGRPLUS_LIST_VERSIONCHECK.data.COUNT_ERROR) }}</strong>
+				<strong>{{ lang('EXTMGRPLUS_VERSIONCHECK_DATE',
+					EXTMGRPLUS_LIST_VERSIONCHECK.data.LOCAL_DATE ?? '',
+					EXTMGRPLUS_LIST_VERSIONCHECK.data.COUNT_ERROR
+				) }}</strong>
 			</td>
 			<td>
 				<strong>{{ EXTMGRPLUS_LIST_VERSIONCHECK.data.COUNT_UPDATE }}</strong>
@@ -130,13 +136,13 @@
 					<td class="row3">
 						{{ _self.button(
 							'disable',
-							(EXTMGRPLUS_COUNT_ENABLED_CLEAN > 0 && EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1) || EXTMGRPLUS_COUNT_SELECTED_ENABLED_CLEAN > 0
+							(EXTMGRPLUS_COUNT_ENABLED_SELECTABLE > 0 && EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1) || EXTMGRPLUS_COUNT_ENABLED_SELECTED > 0
 						) }}
 					</td>
 					<td class="row3">
 						{{ _self.checkbox_all(
 							'enabled',
-							EXTMGRPLUS_COUNT_ENABLED_CLEAN > 0,
+							EXTMGRPLUS_COUNT_ENABLED_SELECTABLE > 0,
 							EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1
 						) }}
 					</td>
@@ -208,13 +214,13 @@
 						<td class="row3">
 							{{ _self.button(
 								'enable',
-								(EXTMGRPLUS_COUNT_DISABLED_CLEAN > 0 && EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1) || EXTMGRPLUS_COUNT_SELECTED_DISABLED_CLEAN > 0
+								(EXTMGRPLUS_COUNT_DISABLED_SELECTABLE > 0 && EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1) || EXTMGRPLUS_COUNT_DISABLED_SELECTED > 0
 							) }}
 						</td>
 						<td class="row3">
 							{{ _self.checkbox_all(
 								'disabled',
-								EXTMGRPLUS_COUNT_DISABLED_CLEAN > 0,
+								EXTMGRPLUS_COUNT_DISABLED_SELECTABLE > 0,
 								EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1
 							) }}
 						</td>
@@ -225,8 +231,7 @@
 					</tr>
 				{% endif %}
 				{% for ext_disabled in disabled %}
-					{% if !section_not_installed && !('action=delete_data_pre' in ext_disabled.actions[1]) %}
-						{% set section_not_installed = true %}
+					{% if loop.index == EXTMGRPLUS_COUNT_DISABLED + 1 %}
 						<tr>
 							<td class="row3">
 								<strong>{{ lang('EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED', EXTMGRPLUS_COUNT_NOT_INSTALLED) }}</strong>
@@ -280,7 +285,7 @@
 							{% endif %}
 						</td>
 						<td style="display: none;">
-							{% if EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE %}
+							{% if EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE && ext_disabled.NAME is defined %}
 								{{ _self.inputbox(
 									ext_disabled.NAME,
 									EXTMGRPLUS_LIST_ORDER[ext_disabled.NAME] ?? '',
@@ -289,7 +294,7 @@
 							{% endif %}
 						</td>
 						<td style="display: none;">
-							{% if EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE %}
+							{% if EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE && ext_disabled.NAME is defined %}
 								{{ _self.checkbox_ignore(
 									ext_disabled.NAME,
 									EXTMGRPLUS_LIST_IGNORE[ext_disabled.NAME] is defined
@@ -439,10 +444,10 @@
 {% endapply %}
 {% endmacro %}
 
-{% macro checkbox_ignore(ext_name, checked = false) -%}
-	<input type="checkbox" class="radio" name="ext_ignore[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_IGNORE')|e('html') }}" value="{{ ext_name }}"{{ checked ? ' checked' }}>
-{%- endmacro %}
-
 {% macro inputbox(ext_name, value, inactive = false) -%}
 	<input type="text" size="1" maxlength="2"{{ inactive ? ' class="inactive"' }} name="ext_order[{{ ext_name }}]" title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER')|e('html') }}" value="{{ value }}" pattern="^[0-9]{1,2}$">
+{%- endmacro %}
+
+{% macro checkbox_ignore(ext_name, checked = false) -%}
+	<input type="checkbox" class="radio" name="ext_ignore[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_IGNORE')|e('html') }}" value="{{ ext_name }}"{{ checked ? ' checked' }}>
 {%- endmacro %}
