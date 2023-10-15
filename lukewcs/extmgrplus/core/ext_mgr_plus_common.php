@@ -18,6 +18,7 @@ class ext_mgr_plus_common
 	protected $template;
 	protected $ext_manager;
 
+	protected $metadata;
 	protected $u_action;
 
 	public function __construct(
@@ -161,9 +162,20 @@ class ext_mgr_plus_common
 		$this->template->assign_var('EXTMGRPLUS_LAST_EMP_ACTION', 'trigger_error');
 		if ($error_type == E_USER_NOTICE && $this->config['extmgrplus_switch_auto_redirect'])
 		{
-			meta_refresh(1, $this->u_action);
+			meta_refresh(1, $this->rotate_get_params($this->u_action));
 			$this->template->assign_var('EXTMGRPLUS_AUTO_REDIRECT', true);
 		}
 		trigger_error($message . $this->back_link($back_link_lang_var), $error_type);
+	}
+
+	// Rotates the GET parameters (Firefox F5-form-resend-workaround)
+	public function rotate_get_params(string $url_full): string
+	{
+		$separator	= (strpos($url_full, '&amp;') ? '&amp;' : '&');
+		$get_params	= preg_split('/\?|' . $separator . '/', $url_full);
+		$url		= array_shift($get_params);
+		array_push($get_params, array_shift($get_params));
+
+		return $url . '?' . implode($separator, $get_params);
 	}
 }
