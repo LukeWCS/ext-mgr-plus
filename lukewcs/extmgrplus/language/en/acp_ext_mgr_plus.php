@@ -42,8 +42,14 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_COL_WITH_VERSIONCHECK'		=> 'With version checking',
 	'EXTMGRPLUS_COL_LAST_VERSIONCHECK'		=> 'Last version check',
 	'EXTMGRPLUS_COL_AVAILABLE_UPDATES'		=> 'Available updates',
-	'EXTMGRPLUS_AVAILABLE_EXTENSIONS'		=> '%1$u (%2$u invalid)',
-	'EXTMGRPLUS_VERSIONCHECK_DATE'			=> '%1$s (%2$u errors)',
+	'EXTMGRPLUS_AVAILABLE_EXTENSIONS' => [
+		0									=> '%2$u',
+		1									=> '%2$u (%1$u invalid)',
+	],
+	'EXTMGRPLUS_VERSIONCHECK_DATE' => [
+		0									=> '%2$s',
+		1									=> '%2$s (%1$u errors)',
+	],
 
 	// link bar
 	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'		=> 'Order & Ignore',

@@ -1,6 +1,12 @@
+### 1.1.3-b11
+* ExtMgr Template:
+  * In der Info-Tabelle werden die neuen Anzeigen "(x ungültige)" von b9 in der ersten Spalte und "(x Fehler)" von b5 in der dritten Spalte nur noch dann angezeigt, wenn "x" mindestens 1 beträgt. Dazu wurden pro Spalte 2 Variablen-Positionen innerhalb `lang()` getauscht.
+* Sprachdateien:
+  * Die bestehenden 2 Sprachvariablen für "Verfügbare Erweiterungen" und "Letzte Versionsprüfung" zu Plural Arrays umgebaut.
+
 ### 1.1.3-b10
-* Fix: Wenn bei deaktivierter Rückfrage und aktivierter automatischer Bestätigung Erweiterungen geschaltet werden und dann die ExtMgr Seite manuell neu geladen wird (z.B. mit F5), dann führt das beim Firefox dazu, dass fälschlicherweise die Rückfrage zum erneuten Senden der Formulardaten erscheint. Wird diese Rückfrage positiv bestätigt, dann wird von EMP die letzte Aktion erneut ausgeführt. Das wiederum kann zu Fehlern führen, wenn in der Zwischenzeit Änderungen im Dateisystem vorgenommen wurden, durch die Erweiterungen ungültig werden, zum Beispiel Strukturfehler in `composer.json`. Eine neue Funktion rotiert jetzt die GET Parameter der URL bei einer automatischen Weiterleitung, was beim Firefox dazu führt, dass keine Rückfrage mehr bezüglich Formulardaten ausgelöst wird. [Meldung von Kirk (.de)]
-* Fix: Das Problem mit dem erneuten Senden der Formulardaten hat einen Fehler von EMP aufgedeckt, der dann auftreten kann, wenn Erweiterungen geschaltet werden, ohne die ExtMgr Seite vorher neu zu laden. Wenn zwischen zwei Schaltvorgängen eine Ext ungültig wurde, also die Metadaten der Ext nicht mehr gelesen werden können, dann führte das unweigerlich zu einem FATAL der nicht abgefangen wurde.
+* Fix: Wenn bei deaktivierter Rückfrage und aktivierter automatischer Bestätigung Erweiterungen geschaltet wurden und dann die ExtMgr Seite manuell neu geladen wurde (z.B. mit F5), dann führte das beim Firefox dazu, dass fälschlicherweise eine Rückfrage zum erneuten Senden der Formulardaten erschien. Wurde diese Rückfrage positiv bestätigt, dann wurde von EMP die letzte Aktion erneut ausgeführt. Das wiederum konnte zu Fehlern führen, wenn in der Zwischenzeit Änderungen im Dateisystem vorgenommen wurden, durch die Erweiterungen ungültig werden, zum Beispiel Strukturfehler in `composer.json`. Eine neue Funktion rotiert jetzt die GET Parameter der URL bei einer automatischen Weiterleitung, was beim Firefox dazu führt, dass keine Rückfrage mehr bezüglich Formulardaten ausgelöst wird. [Meldung von Kirk (.de)]
+* Fix: Das Problem mit dem erneuten Senden der Formulardaten beim Firefox hatte einen Fehler von EMP aufgedeckt, der dann auftreten konnte, wenn Erweiterungen geschaltet wurden, ohne die ExtMgr Seite vorher neu zu laden. Wenn zwischen zwei Schaltvorgängen eine Erweiterung ungültig wurde, also die Metadaten der Erweiterung nicht mehr gelesen werden konnten, dann führte das zu einem FATAL der nicht abgefangen wurde. [Meldung von Kirk (.de)]
 
 ### 1.1.3-b9
 * Fix: Beim Betatest von 1.1.3 zeigte sich, dass EMP nicht mit ungültigen Erweiterungen umgehen konnte, wodurch sich mehrere Probleme ergaben:
@@ -36,7 +42,7 @@
   * Bei lokaler Versionsprüfung (Details) konnte es mehrere Situationen geben, bei denen unnötig der EMP Versions-Cache in der DB aktualisiert wurde. Grund ist die neue Funktion von 1.1.3-b5 zum signalisieren von VP Fehlern.
 
 ### 1.1.3-b5
-* Konnte die Versionsprüfung einer Ext nicht erfolgreich ausgeführt werden, wird diese Information jetzt ebenfalls in der DB gespeichert. Das funktioniert sowohl bei der globalen VP (Alle Versionen erneut prüfen), als auch bei der lokalen VP (Details). Somit können nun alle möglichen Zustände (VP erfolgreich/VP fehlerhaft/keine VP eingerichtet) entsprechend signalisiert werden.
+* Konnte die Versionsprüfung einer Erweiterung nicht erfolgreich ausgeführt werden, wird diese Information jetzt ebenfalls in der DB gespeichert. Das funktioniert sowohl bei der globalen VP (Alle Versionen erneut prüfen), als auch bei der lokalen VP (Details). Somit können nun alle möglichen Zustände (VP erfolgreich/VP fehlerhaft/keine VP eingerichtet) entsprechend signalisiert werden.
 * ExtMgr Template:
   * In der Info-Tabelle wird jetzt hinter dem Datum der letzten Versionsprüfung die Anzahl Fehler angezeigt.
   * Bei Erweiterungen bei denen es Fehler bei der Versionsprüfung gab, wird jetzt explizit ein orangefarbenes Warn-Icon mit Tooltip hinter der Version angezeigt.
@@ -51,7 +57,7 @@
 
 ### 1.1.3-b4
 * ExtMgr Template:
-  * Bei veralteten Ext Versionen wird jetzt für das rote Veraltet-Icon ebenfalls ein Tooltip angezeigt.
+  * Bei veralteten Erweiterung-Versionen wird jetzt für das rote Veraltet-Icon ebenfalls ein Tooltip angezeigt.
   * In der Versions-Spalte waren die Abstände zwischen Text und Icons zu gross. Ursache waren unerwünschte Whitespaces zwischen Text/Icon und HTML Tags. Jetzt sind alle Texte und Icons innerhalb HTML Container und so lassen sich Abstände präzise definieren.
 * JS:
   * Die Initialisierung des `ExtMgrPlus` Objekts war nicht Strikt-kompatibel.
@@ -61,7 +67,7 @@
   * 1 neue Sprachvariable für den neuen Veraltete-Version-Tooltip.
 
 ### 1.1.3-b3
-* Es wird jetzt bei jeder Ext ermittelt, ob diese eine Versionsprüfung bietet. Wenn nicht, wird das mit einem Indikator entsprechend signalisiert.
+* Es wird jetzt bei jeder Erweiterung ermittelt, ob diese eine Versionsprüfung bietet. Wenn nicht, wird das mit einem Indikator entsprechend signalisiert.
 * ExtMgr Template:
   * Die Info-Tabelle oberhalb der Erweiterungen-Liste auf 4 Spalten erweitert. Neu ist jetzt die Anzahl der Erweiterungen mit eingerichteter Versionsprüfung.
   * Bei Erweiterungen bei denen keine Versionsprüfung eingerichtet ist, wird jetzt ein blaues Info-Icon mit Tooltip hinter der Version angezeigt.
@@ -74,7 +80,7 @@
 
 ### 1.1.3-b2
 * ExtMgr Template:
-  * Wenn eine Ext neue Migrationen hat und die zugehörige Auswahl-Checkbox aufgrund der Einstellungen gesperrt wird, dann wird jetzt ein neuer Tooltip angezeigt, der erklärt, warum die Checkbox gesperrt ist.
+  * Wenn eine Erweiterung neue Migrationen hat und die zugehörige Auswahl-Checkbox aufgrund der Einstellungen gesperrt wird, dann wird jetzt ein neuer Tooltip angezeigt, der erklärt, warum die Checkbox gesperrt ist.
   * Um den neuen Tooltip zu ermöglichen ohne zuviel umbauen zu müssen, wird die EMP Auswahl-Checkbox - abhängig von den Einstellungen - ab sofort nicht mehr deaktiviert, sondern gar nicht erst erzeugt. Damit verhält sich die EMP Auswahl-Checkbox genauso wie bei Reihenfolge&Ignorieren, wo für EMP ebenfalls keine Eingabe-Elemente erzeugt werden.
 * Sprachdateien:
   * 1 neue Sprachvariable für den neuen Gesperrt-Tooltip.
@@ -82,7 +88,7 @@
 ### 1.1.3-b1
 * Fix: Bei der Ermittlung neuer Migrationen verhinderte eine zu strikte Dateinamen-Prüfung eine korrekte Erkennung, wenn bei Dateinamen und Klassennamen abweichende Gross/Kleinschreibung verwendet wurde. Daraus ergaben sich 2 Fehler:
   * Bei aktivierter Anzeige der Spalte für neue Migrationen wurde die Anzahl falsch berechnet.
-  * Bei deaktiviertem Sicherheitsschalter für neue Migrationen wurde die Auswahl-Checkbox der betroffenen Ext nicht gesperrt.
+  * Bei deaktiviertem Sicherheitsschalter für neue Migrationen wurde die Auswahl-Checkbox der betroffenen Erweiterung nicht gesperrt.
 * ExtMgr Template:
   * Reihenfolge&Ignorieren: Beim Einblenden der Einstellungen werden jetzt diejenigen Spalten komplett ausgeblendet, die irrelevante interaktive Elemente enthalten, anstatt nur die Elemente auszublenden.
   * Reihenfolge&Ignorieren: Ist die Funktion deaktiviert, wird jetzt auch kein HTML mehr generiert für die Erklärungstexte, für den Absenden-Block sowie für die Inhalte der Spalten Reihenfolge und Ignorieren.
@@ -108,7 +114,7 @@
 * CSS:
   * Code für Migrationen-Spalte hinzugefügt.
 * Sprachdateien:
-  * Kleine Änderung im Ignoriert-Tooltip, damit unmissverständlich klar ist, dass sich der Ignoriert-Status einer Ext nur auf EMP bezieht.
+  * Kleine Änderung im Ignoriert-Tooltip, damit unmissverständlich klar ist, dass sich der Ignoriert-Status einer Erweiterung nur auf EMP bezieht.
 
 #### 1.1.2-b3
 * Validierungs-Kritik 1.1.1: 
@@ -171,7 +177,7 @@
   * Code für die Link Bar Icons geändert.
 
 #### 1.1.1-b7
-* Fix: Unter phpBB 3.2 wurde ab EMP 1.1.1-b4 bei veralteten Ext Versionen das FA Icon (Ausrufezeichen in rotem Kreis) nicht mehr angezeigt. Die Ursache liegt bei Twig 1: Makros sind nicht automatisch innerhalb Makros verfügbar und müssen umständlich importiert werden. Im Versions-Makro den Aufruf für das Icon-Makro entfernt und HTML direkt notiert.
+* Fix: Unter phpBB 3.2 wurde ab EMP 1.1.1-b4 bei veralteten Erweiterung-Versionen das FA Icon (Ausrufezeichen in rotem Kreis) nicht mehr angezeigt. Die Ursache liegt bei Twig 1: Makros sind nicht automatisch innerhalb Makros verfügbar und müssen umständlich importiert werden. Im Versions-Makro den Aufruf für das Icon-Makro entfernt und HTML direkt notiert.
 
 #### 1.1.1-b6
 * Die Funktion zum ermitteln der Versionsnummer des Sprachpakets sowohl strikter als auch flexibler gestaltet.
@@ -369,7 +375,7 @@
   * Die Anzahl wird jetzt auch bei nicht installierten Erweiterungen angezeigt.
   * Die Spalte "Neue Migrationsdateien" kann jetzt ein/ausgeschaltet werden. Standard ist ausgeschaltet.
 * Zum ermitteln der neuen Migrationsdateien wird nicht mehr die Migrator Klasse verwendet, sondern eigene Funktionen.
-* In Fehlermeldungen wird jetzt zusätzlich die Version der betreffenden Ext angezeigt.
+* In Fehlermeldungen wird jetzt zusätzlich die Version der betreffenden Erweiterung angezeigt.
 * Überschrift "Deaktivierte Erweiterungen":
   * Den Zusatz "(neue Migrationen: x)" entfernt.
 * Sprachdateien:
@@ -431,7 +437,7 @@
   * CSS der Blind-Tabelle entfernt.
 
 #### 1.0.7-b7
-* Die Prüfung auf Überschreitung der maximalen Ausführungszeit findet nur noch statt, nachdem eine Ext geschaltet wurde. Bisher wurde auch innerhalb `enable_step()` geprüft.
+* Die Prüfung auf Überschreitung der maximalen Ausführungszeit findet nur noch statt, nachdem eine Erweiterung geschaltet wurde. Bisher wurde auch innerhalb `enable_step()` geprüft.
 * Die Prüfung auf Überschreitung der maximalen Ausführungszeit findet nicht mehr vor dem Log Eintrag statt, sondern danach. So kann der Log Eintrag vor Abbruch noch aktualisiert werden.
 * ConfirmBox Template:
   * Ist Eigendeaktivierung aktiviert und beim deaktivieren wurde auch EMP ausgewählt, wird in der Rückfrage darauf hingewiesen, dass auch EMP deaktiviert wird.
@@ -610,7 +616,7 @@
   * Neue Sprachvariable für den Checkbox Tooltip.
 
 #### 1.0.2-b1
-* Bei der Prüfung ob eine Ext aktiviert werden kann mittels `is_enableable()` (`ext.php`), wird jetzt auch ein String und ein Array als möglicher Rückgabewert akzeptiert und entsprechend aufbereitet. Diese Methode der Fehlerbehandlung wurde erst in phpBB 3.3.0 eingeführt und kann `trigger_error` ersetzen. [Hinweis von IMC (.de)]
+* Bei der Prüfung ob eine Erweiterung aktiviert werden kann mittels `is_enableable()` (`ext.php`), wird jetzt auch ein String und ein Array als möglicher Rückgabewert akzeptiert und entsprechend aufbereitet. Diese Methode der Fehlerbehandlung wurde erst in phpBB 3.3.0 eingeführt und kann `trigger_error` ersetzen. [Hinweis von IMC (.de)]
 
 ### 1.0.1
 * Release (2023-06-12)
@@ -786,7 +792,7 @@
 
 #### 1.0.0-b2
 * ExtMgr Template:
-  * Die Anzahl der neuen Migrationsdateien wird jetzt nicht mehr in der Spalte der Ext Namen angezeigt, sondern in einer neuen Spalte.
+  * Die Anzahl der neuen Migrationsdateien wird jetzt nicht mehr in der Spalte der Erweiterung-Namen angezeigt, sondern in einer neuen Spalte.
   * HTML besser strukturiert.
   * Einrückungen korrigiert.
   * Ein Twig Makro entfernt und Variablen direkt eingebaut.
