@@ -95,7 +95,7 @@
 		<thead>
 			<tr>
 				<th>
-					<span class="extmgrplus_non_responsive">{{ lang('EXTENSION_NAME') }}</span>
+					{{ lang('EXTENSION_NAME') }}
 				</th>
 				<th>
 					{{ lang('CURRENT_VERSION') }}
@@ -136,7 +136,7 @@
 					<td class="row3">
 						{{ _self.button(
 							'disable',
-							(EXTMGRPLUS_COUNT_ENABLED_SELECTABLE > 0 && EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1) || EXTMGRPLUS_COUNT_ENABLED_SELECTED > 0
+							EXTMGRPLUS_COUNT_ENABLED_SELECTED > 0
 						) }}
 					</td>
 					<td class="row3">
@@ -172,8 +172,8 @@
 								{{ _self.checkbox_select(
 									'enabled',
 									ext_enabled.NAME,
-									EXTMGRPLUS_LIST_IGNORE[ext_enabled.NAME] is not defined || !EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE,
-									EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1 || EXTMGRPLUS_LIST_SELECTED[ext_enabled.NAME] is defined,
+									EXTMGRPLUS_LIST_IGNORE[ext_enabled.NAME] is not defined,
+									EXTMGRPLUS_LIST_SELECTED[ext_enabled.NAME] is defined,
 									EXTMGRPLUS_LIST_IGNORE[ext_enabled.NAME] is defined
 								) }}
 							{% endif %}
@@ -214,7 +214,7 @@
 						<td class="row3">
 							{{ _self.button(
 								'enable',
-								(EXTMGRPLUS_COUNT_DISABLED_SELECTABLE > 0 && EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1) || EXTMGRPLUS_COUNT_DISABLED_SELECTED > 0
+								EXTMGRPLUS_COUNT_DISABLED_SELECTED > 0
 							) }}
 						</td>
 						<td class="row3">
@@ -261,7 +261,7 @@
 						</td>
 						<td{{ !EXTMGRPLUS_SWITCH_MIGRATION_COL ? ' style="display: none;"' }}>
 							{% if EXTMGRPLUS_SWITCH_MIGRATION_COL %}
-								{{ _self.has_migration(
+								{{ _self.migrations(
 									EXTMGRPLUS_LIST_MIGRATIONS_INACTIVE[ext_disabled.NAME] ?? 0,
 									EXTMGRPLUS_LIST_IGNORE[ext_disabled.NAME] is defined
 								) }}
@@ -278,8 +278,8 @@
 								{{ _self.checkbox_select(
 									'disabled',
 									ext_disabled.NAME,
-									(EXTMGRPLUS_LIST_MIGRATIONS_INACTIVE[ext_disabled.NAME] is not defined || EXTMGRPLUS_SWITCH_MIGRATIONS) && (EXTMGRPLUS_LIST_IGNORE[ext_disabled.NAME] is not defined || !EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE),
-									EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1 || EXTMGRPLUS_LIST_SELECTED[ext_disabled.NAME] is defined,
+									EXTMGRPLUS_LIST_MIGRATIONS_INACTIVE[ext_disabled.NAME] is not defined || EXTMGRPLUS_SWITCH_MIGRATIONS,
+									EXTMGRPLUS_LIST_SELECTED[ext_disabled.NAME] is defined,
 									EXTMGRPLUS_LIST_IGNORE[ext_disabled.NAME] is defined
 								) }}
 							{% endif %}
@@ -399,7 +399,7 @@
 {% endapply %}
 {% endmacro %}
 
-{% macro has_migration(migration_count, ignore = false) %}
+{% macro migrations(migration_count, ignore = false) %}
 {% apply spaceless %}
 	{% if ignore %}
 		{% if constant('PHPBB_VERSION') starts with '3.2.' %}
@@ -422,9 +422,9 @@
 
 {% macro actions(ext_obj) %}
 {% apply spaceless %}
-	{% for actions in ext_obj.actions %}
-		<a href="{{ actions.U_ACTION }}"{{ actions.L_ACTION_EXPLAIN ? ' title="' ~ actions.L_ACTION_EXPLAIN ~ '"' }}>{{ actions.L_ACTION }}</a>
-		{{ !actions.S_LAST_ROW ? '&nbsp;|&nbsp;' }}
+	{% for action in ext_obj.actions %}
+		<a href="{{ action.U_ACTION }}"{{ action.L_ACTION_EXPLAIN ? ' title="' ~ action.L_ACTION_EXPLAIN ~ '"' }}>{{ action.L_ACTION }}</a>
+		{{ !action.S_LAST_ROW ? '<span>&nbsp;|&nbsp;</span>' }}
 	{% endfor %}
 {% endapply %}
 {% endmacro %}

@@ -1,6 +1,11 @@
+### 1.1.3-b12
+* ExtMgr Template:
+  * Durch die Änderungen von 1.1.3-b9 waren kleine Optimierungen bei Twig möglich, wodurch nicht mehr benötigte Bedingungen entfernt werden konnten.
+  * In der Spalten-Überschrift "Name der Erweiterung" war ein unnötiger `<span>` Container sowie eine unbenutzte CSS Klasse definiert. Ursache liegt bei 1.0.0-b8.
+
 ### 1.1.3-b11
 * ExtMgr Template:
-  * In der Info-Tabelle werden die neuen Anzeigen "(x ungültige)" von b9 in der ersten Spalte und "(x Fehler)" von b5 in der dritten Spalte nur noch dann angezeigt, wenn "x" mindestens 1 beträgt. Dazu wurden pro Spalte 2 Variablen-Positionen innerhalb `lang()` getauscht.
+  * In der Info-Tabelle werden die neuen Anzeigen "(x ungültige)" von 1.1.3-b9 in der ersten Spalte und "(x Fehler)" von 1.1.3-b5 in der dritten Spalte nur noch dann generiert, wenn "x" mindestens 1 beträgt. Dazu wurden pro Spalte 2 Variablen-Positionen innerhalb `lang()` getauscht.
 * Sprachdateien:
   * Die bestehenden 2 Sprachvariablen für "Verfügbare Erweiterungen" und "Letzte Versionsprüfung" zu Plural Arrays umgebaut.
 
@@ -18,7 +23,7 @@
   * Bei Reihenfolge&Ignorieren wurden für ungültige Erweiterungen fälschlicherweise Eingabe-Elemente generiert, durch die beim Speichern falsche Daten in die DB geschrieben werden konnten.
 * ExtMgr Template:
   * Die Erkennung der nicht-installierten Erweiterungen für die Generierung der Nicht-Installiert-Sektion musste geändert werden, da diese auch auf ungültige Erweiterungen reagiert hat.
-  * In der Info-Tabelle wird hinter der Anzahlt der verfügbaren Erweiterungen in Klammern auch die Anzahl ungültiger Erweiterungen angezeigt.
+  * In der Info-Tabelle wird hinter der Anzahl der verfügbaren Erweiterungen in Klammern auch die Anzahl ungültiger Erweiterungen angezeigt.
   * Bei ungültigen Erweiterungen werden in Reihenfolge&Ignorieren keine Eingabe-Elemente mehr erzeugt.
 * Code Optimierung.
 * Sprachdateien:

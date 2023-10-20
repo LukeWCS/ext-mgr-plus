@@ -215,11 +215,10 @@ class ext_mgr_plus
 		{
 			$config_text		= $this->common->config_text_get('extmgrplus_list_order_and_ignore');
 			$ext_list_order		= $config_text['order'] ?? [];
-			$ext_list_ignore	= $config_text['ignore'] ?? [];
+			$ext_list_ignore	= array_flip($config_text['ignore'] ?? []);
 		}
 		if (count($ext_list_ignore))
 		{
-			$ext_list_ignore			= array_flip($ext_list_ignore);
 			$ext_list_enabled_ignored	= array_intersect_key($ext_list_ignore, $ext_list_enabled);
 			$ext_list_disabled_ignored	= array_intersect_key($ext_list_ignore, $ext_list_disabled);
 		}
@@ -244,21 +243,24 @@ class ext_mgr_plus
 			$ext_list_disabled_ignored = array_merge($ext_list_disabled_ignored, $ext_list_migrations_disabled);
 		}
 
-		if ($this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_LAST)
+		$ext_list_enabled_selectable	= array_diff_key($ext_list_enabled, $ext_list_enabled_ignored, $ext_list_enabled_invalid);
+		$ext_list_disabled_selectable	= array_diff_key($ext_list_disabled, $ext_list_disabled_ignored, $ext_list_disabled_invalid);
+
+		if ($this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_ALL)
 		{
-			$ext_list_selected = $this->common->config_text_get('extmgrplus_list_selected', 'selected') ?? [];
+			$ext_list_selected = array_merge($ext_list_enabled_selectable, $ext_list_disabled_selectable);
+		}
+		else if ($this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_LAST)
+		{
+			$ext_list_selected = array_flip($this->common->config_text_get('extmgrplus_list_selected', 'selected') ?? []);
 		}
 		if (count($ext_list_selected))
 		{
-			$ext_list_selected						= array_flip($ext_list_selected);
 			$ext_list_enabled_selected				= array_intersect_key($ext_list_selected, $ext_list_enabled);
 			$ext_list_disabled_selected				= array_intersect_key($ext_list_selected, $ext_list_disabled);
 			$ext_list_enabled_selected_effective	= array_diff_key($ext_list_enabled_selected, $ext_list_enabled_ignored, $ext_list_enabled_invalid);
 			$ext_list_disabled_selected_effective	= array_diff_key($ext_list_disabled_selected, $ext_list_disabled_ignored, $ext_list_disabled_invalid);
 		}
-
-		$ext_list_enabled_selectable	= array_diff_key($ext_list_enabled, $ext_list_enabled_ignored, $ext_list_enabled_invalid);
-		$ext_list_disabled_selectable	= array_diff_key($ext_list_disabled, $ext_list_disabled_ignored, $ext_list_disabled_invalid);
 
 		$lang_outdated_msg = $this->common->lang_ver_check_msg('EXTMGRPLUS_LANG_VER', 'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED');
 		if ($lang_outdated_msg)
