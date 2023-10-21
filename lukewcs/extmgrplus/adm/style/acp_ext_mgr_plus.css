@@ -79,6 +79,11 @@ legend {
 	top: 0;
 }
 
+dt label,
+dd label {
+	cursor: inherit;
+}
+
 legend.legend_sub {
 	border: 0;
 	margin: 1em 0;
@@ -108,11 +113,13 @@ fieldset.extmgrplus_order_and_ignore dd {
 	color: inherit;
 }
 
-fieldset.extmgrplus_order_and_ignore label {
-	font-size: 1em;
+fieldset.extmgrplus_order_and_ignore dd label {
 	text-align: left;
 	font-weight: bold;
-	color: #4A5A73;
+}
+
+fieldset.extmgrplus_order_and_ignore dd label:hover {
+	color: inherit;
 }
 
 div[id$="_confirmbox"] {
@@ -165,10 +172,6 @@ div[id$="_confirmbox"] {
 	width: 1%;
 }
 
-#extmgrplus_list td:nth-of-type(1n+6) {		/* select+  */
-	padding: 0 4px;
-}
-
 /* FOOTER */
 
 .extmgrplus_footer {
@@ -189,9 +192,8 @@ div[id$="_confirmbox"] {
 		padding: 2px 5px;
 	}
 
-	.extmgrplus_order_and_ignore dd,
 	#extmgrplus_settings dd {
-		margin-top: .5em;
+		margin: .5em 0 0 0;
 	}
 
 	fieldset.extmgrplus_order_and_ignore dt {
@@ -199,7 +201,8 @@ div[id$="_confirmbox"] {
 	}
 
 	fieldset.extmgrplus_order_and_ignore dd {
-		margin-left: 0;
-		padding-left: 0;
+		margin: .5em 0 0 0;
+		padding: .5em 0 0 0;
+		border-top: 1px solid #CCCCCC;
 	}
 }

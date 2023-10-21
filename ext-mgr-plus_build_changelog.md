@@ -1,3 +1,11 @@
+### 1.1.3-b13
+* CSS; mehrere Kritikpunkte und Vorschläge von Udo berücksichtigt:
+  * Für `dd label` waren bei Reihenfolge&Ignorieren unnötige CSS Anweisungen definiert.
+  * Für `label` wird jetzt in den Einstellungen und in Reihenfolge&Ignorieren der Pointer-Cursor entfernt, da dieser wegen Toggles keine Relevanz mehr hat.
+  * Bei `dd label` wird jetzt beim Hover-Effekt die Textfarbe nicht mehr auf rot geändert.
+  * Bei Responsive-Ansicht wird bei Reihenfolge&Ignorieren zwischen beiden Erklärungen eine Trennlinie eingefügt.
+  * Die Definition für den vertikalen Abstand oberhalb und unterhalb der Auswählen-Checkboxen entfernt, wodurch das primär bei Responsive-Ansicht ordentlicher aussieht.
+
 ### 1.1.3-b12
 * ExtMgr Template:
   * Durch die Änderungen von 1.1.3-b9 waren kleine Optimierungen bei Twig möglich, wodurch nicht mehr benötigte Bedingungen entfernt werden konnten.

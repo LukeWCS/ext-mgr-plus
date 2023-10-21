@@ -106,6 +106,8 @@ ExtMgrPlus.SaveCheckboxes = function () {
 	$('#extmgrplus_list').submit();
 };
 
+// Settings
+
 ExtMgrPlus.ConfirmBox = function (e) {
 	var defaultState = Boolean($('div[id="' + e.target.name + '_confirmbox"]').attr('data-default'));
 
@@ -162,26 +164,27 @@ ExtMgrPlus.FormReset = function () {
 	ExtMgrPlus.ConfirmBoxHide();
 };
 
-ExtMgrPlus.DisableEnter = function(e) {
+ExtMgrPlus.DisableEnter = function (e) {
 	if (e.key == 'Enter') {
 		return false;
 	}
 };
 
-// Register events
+// Event registration
 
-$(window).ready(function() {
+$(window).ready(function () {
+	// Extension Manager
 	$('input[name="ext_mark_all_enabled"]:enabled')			.on('change'	, {CheckBoxType: 'enabled'}, ExtMgrPlus.CheckUncheckAll);
 	$('input[name="ext_mark_all_disabled"]:enabled')		.on('change'	, {CheckBoxType: 'disabled'}, ExtMgrPlus.CheckUncheckAll);
 	$('input[name="ext_mark_enabled[]"]:enabled')			.on('change'	, {CheckBoxType: 'enabled'}, ExtMgrPlus.SetButtonState);
 	$('input[name="ext_mark_disabled[]"]:enabled')			.on('change'	, {CheckBoxType: 'disabled'}, ExtMgrPlus.SetButtonState);
 	$('input[name="ext_ignore[]"]')							.on('change'	, ExtMgrPlus.SetInputBoxState);
+	$('input[name*="ext_order"]')							.on('keypress'	, ExtMgrPlus.DisableEnter);
+	// Settings
 	$('input[name="extmgrplus_defaults"]')					.on('click'		, ExtMgrPlus.SetDefaults);
 	$('input[name="extmgrplus_form_submit"]')				.on('click'		, ExtMgrPlus.FormSubmit);
 	$('input[name="extmgrplus_form_reset"]')				.on('click'		, ExtMgrPlus.FormReset);
-	$('input[name*="ext_order"]')							.on('keypress'	, ExtMgrPlus.DisableEnter);
-
-	$('div[id$="_confirmbox"]').each(function() {
+	$('div[id$="_confirmbox"]').each(function () {
 		var elementName = $(this)[0].id.replace('_confirmbox', '')
 
 		$('input[name="' + elementName + '"]')				.on('change'	, ExtMgrPlus.ConfirmBox);
