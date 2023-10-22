@@ -341,10 +341,6 @@ class ext_mgr_plus
 	{
 		$ext_mark_enabled = $this->request->variable('ext_mark_enabled', ['']);
 		$ext_mark_disabled = $this->request->variable('ext_mark_disabled', ['']);
-		if ($this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_LAST && !$this->request->is_set_post('confirm_uid'))
-		{
-			$this->common->config_text_set('extmgrplus_list_selected', 'selected', array_merge($ext_mark_enabled, $ext_mark_disabled));
-		}
 
 		if ($this->request->is_set_post('extmgrplus_disable_all'))
 		{
@@ -364,6 +360,7 @@ class ext_mgr_plus
 						build_hidden_fields([
 							'extmgrplus_disable_all'	=> '1',
 							'ext_mark_enabled'			=> $ext_mark_enabled,
+							'ext_mark_disabled'			=> $ext_mark_disabled,
 							'u_action'					=> $this->u_action
 						]),
 						'@lukewcs_extmgrplus/acp_ext_mgr_plus_confirm_body.html'
@@ -392,6 +389,7 @@ class ext_mgr_plus
 						build_hidden_fields([
 							'extmgrplus_enable_all'		=> '1',
 							'ext_mark_disabled'			=> $ext_mark_disabled,
+							'ext_mark_enabled'			=> $ext_mark_enabled,
 							'u_action'					=> $this->u_action
 						]),
 						'@lukewcs_extmgrplus/acp_ext_mgr_plus_confirm_body.html'
@@ -416,6 +414,13 @@ class ext_mgr_plus
 		$ext_list_enabled = array_flip($ext_mark_enabled);
 		$ext_count_enabled = count($ext_list_enabled);
 		$ext_count_success = 0;
+
+		if ($this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_LAST)
+		{
+			$ext_mark_disabled = $this->request->variable('ext_mark_disabled', ['']);
+			$ext_list_disabled = array_flip($ext_mark_disabled);
+			$this->common->config_text_set('extmgrplus_list_selected', 'selected', array_merge($ext_mark_enabled, $ext_mark_disabled));
+		}
 
 		$this->config->set('extmgrplus_exec_todo', 1);
 		if (phpbb_version_compare(PHPBB_VERSION, '3.3.8-rc1', '<'))
@@ -499,6 +504,13 @@ class ext_mgr_plus
 		$ext_list_disabled = array_flip($ext_mark_disabled);
 		$ext_count_disabled = count($ext_list_disabled);
 		$ext_count_success = 0;
+
+		if ($this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_LAST)
+		{
+			$ext_mark_enabled = $this->request->variable('ext_mark_enabled', ['']);
+			$ext_list_enabled = array_flip($ext_mark_enabled);
+			$this->common->config_text_set('extmgrplus_list_selected', 'selected', array_merge($ext_mark_enabled, $ext_mark_disabled));
+		}
 
 		$this->config->set('extmgrplus_exec_todo', 1);
 		if (phpbb_version_compare(PHPBB_VERSION, '3.3.8-rc1', '<'))

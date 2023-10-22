@@ -21,11 +21,43 @@ input[type="checkbox"]:disabled {
 	cursor: not-allowed;
 }
 
-/* CONFIRM BOX */
+fieldset {
+	border-radius: 5px;
+}
+
+fieldset p.submit-buttons {
+	margin-top: 0;
+	padding: 0 4px 4px 4px;
+}
+
+legend {
+	background: inherit;
+	margin: 2px 0 0 -11px;
+	border-top: inherit;
+	border-left: inherit;
+	border-radius: 5px 5px 0 0;
+	padding: 2px 10px;
+	top: 0;
+}
+
+dt label,
+dd label {
+	cursor: inherit;
+}
+
+/* CONFIRM */
 
 div[id$="_confirmbox"] h2,
 #confirm h2 {
 	margin-bottom: .25em;
+}
+
+div[id$="_confirmbox"] {
+	max-width: 450px;
+	border: 2px solid skyblue;
+	padding: .25em .5em;
+	margin: .75em .5em;
+	border-radius: 5px;
 }
 
 /* ICONS */
@@ -65,25 +97,6 @@ div.successbox .icon {		/* trigger_error */
 
 /* SETTINGS */
 
-fieldset {
-	border-radius: 5px;
-}
-
-legend {
-	background: inherit;
-	margin: 2px 0 0 -11px;
-	border-top: inherit;
-	border-left: inherit;
-	border-radius: 5px 5px 0 0;
-	padding: 2px 10px;
-	top: 0;
-}
-
-dt label,
-dd label {
-	cursor: inherit;
-}
-
 legend.legend_sub {
 	border: 0;
 	margin: 1em 0;
@@ -94,7 +107,7 @@ legend.legend_sub {
 
 legend.legend_sub:after {
 	content: "";
-	border-bottom: 1px solid #cccccc;
+	border-bottom: 1px solid #CCCCCC;
 	width: 100%;
 	margin: 0 0 .5em 1em;
 }
@@ -103,6 +116,8 @@ input[name^="extmgrplus_"].button2,
 .submit-buttons input[class^="button"] {
 	padding: 3px 4px;
 }
+
+/* EXTENSION MANAGER */
 
 fieldset.extmgrplus_order_and_ignore dt {
 	width: 50%;
@@ -121,16 +136,6 @@ fieldset.extmgrplus_order_and_ignore dd label {
 fieldset.extmgrplus_order_and_ignore dd label:hover {
 	color: inherit;
 }
-
-div[id$="_confirmbox"] {
-	max-width: 450px;
-	border: 2px solid skyblue;
-	padding: .25em .5em;
-	margin: .75em .5em;
-	border-radius: 5px;
-}
-
-/* LIST */
 
 #extmgrplus_list input[name$="able_all"] {
 	padding: 1px 5px;

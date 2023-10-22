@@ -1,3 +1,9 @@
+### 1.1.3-b14
+* Die Auswahl der Kontrollkästchen wird bei aktivierter Rückfrage nur noch dann gespeichert, wenn die Rückfrage mit "Ja" bestätigt wird. Bei "Nein" wird die zuletzt gespeicherte Auswahl wiederhergestellt.
+* CSS:
+  * In der Gruppe mit dem Absenden-Button den zu grossen Abstand zwischen Buttons und oberem Rand der Gruppe verkleinert. [Vorschlag von Kirk (.de)]
+  * Datei neu strukturiert.
+
 ### 1.1.3-b13
 * CSS; mehrere Kritikpunkte und Vorschläge von Udo berücksichtigt:
   * Für `dd label` waren bei Reihenfolge&Ignorieren unnötige CSS Anweisungen definiert.
