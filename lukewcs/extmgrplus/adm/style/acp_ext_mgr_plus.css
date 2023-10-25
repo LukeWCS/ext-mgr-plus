@@ -1,20 +1,19 @@
-/* GENERAL */
+/* General */
 
-.disabled,
-.disabled:hover {
+a.disabled,
+a.disabled:hover {
 	color: inherit !important;
 	text-decoration: none;
 }
 
-.inactive,
-.disabled,
+a.disabled,
+input[type="text"].inactive,
 input[type="submit"]:disabled,
-input[type="button"]:disabled,
-input[type="checkbox"][class^="toggle"]:disabled {
+input[type="button"]:disabled {
 	opacity: .5;
 }
 
-.disabled,
+a.disabled,
 input[type="submit"]:disabled,
 input[type="button"]:disabled,
 input[type="checkbox"]:disabled {
@@ -40,17 +39,13 @@ legend {
 	top: 0;
 }
 
-dt label,
-dd label {
-	cursor: inherit;
-}
+/* confirm_box (phpBB)*/
 
-/* CONFIRM */
-
-div[id$="_confirmbox"] h2,
 #confirm h2 {
 	margin-bottom: .25em;
 }
+
+/* ConfirmBox (JS) */
 
 div[id$="_confirmbox"] {
 	max-width: 450px;
@@ -58,9 +53,24 @@ div[id$="_confirmbox"] {
 	padding: .25em .5em;
 	margin: .75em .5em;
 	border-radius: 5px;
+	-webkit-box-shadow: 2px 2px 10px 1px rgba(121, 162, 179, 0.5);
+	box-shadow: 2px 2px 10px 1px rgba(121, 162, 179, 0.5);
 }
 
-/* ICONS */
+div[id$="_confirmbox"] h2 {
+	margin-bottom: .25em;
+}
+
+div[id$="_confirmbox"] input[type="button"] {
+	padding: 3px 4px;
+}
+
+input[class*="confirmbox_active"]:disabled {
+	opacity: .5;
+	cursor: not-allowed;
+}
+
+/* Icons */
 
 fieldset.quick a .icon {	/* link bar */
 	display: inline-block;
@@ -95,7 +105,7 @@ div.successbox .icon {		/* trigger_error */
 	font-size: 1.3em;
 }
 
-/* SETTINGS */
+/* Settings */
 
 legend.legend_sub {
 	border: 0;
@@ -112,12 +122,61 @@ legend.legend_sub:after {
 	margin: 0 0 .5em 1em;
 }
 
-input[name^="extmgrplus_"].button2,
-.submit-buttons input[class^="button"] {
+input[type="submit"][name^="extmgrplus_"],
+input[type="button"][name^="extmgrplus_"] {
 	padding: 3px 4px;
 }
 
-/* EXTENSION MANAGER */
+/**
+* phpBB ACP Toggles - A CSS class that makes it easy to display checkboxes as toggles.
+* Source     : https://danklammer.com/articles/simple-css-toggle-switch/
+* Revision by: Kirk (customization and optimization), LukeWCS (optimization)
+*/
+
+.toggle {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	width: 38px;
+	height: 17px;
+	position: relative;
+	border-radius: 50px;
+	cursor: pointer;
+	font-family: FontAwesome;
+}
+
+.toggle:before {
+	position: absolute;
+	width: 14px;
+	height: 13px;
+	background-color: #ffffff;
+	top: 2px;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	left: 22px;
+	content: "\f00d";
+}
+
+.toggle,
+.toggle:hover,
+.toggle:focus {
+	background-color: #cccccc;
+	border: none;
+	color: #000000;
+}
+
+.toggle:checked {
+	background-color: #3b87ab;
+}
+
+.toggle:checked:before {
+	left: 2px;
+	content: "\f00c";
+}
+
+/* Extension Manager */
 
 fieldset.extmgrplus_order_and_ignore dt {
 	width: 50%;
@@ -126,6 +185,11 @@ fieldset.extmgrplus_order_and_ignore dt {
 fieldset.extmgrplus_order_and_ignore dd {
 	margin-left: 50%;
 	color: inherit;
+}
+
+fieldset.extmgrplus_order_and_ignore dt label,
+fieldset.extmgrplus_order_and_ignore dd label {
+	cursor: inherit;
 }
 
 fieldset.extmgrplus_order_and_ignore dd label {
@@ -177,7 +241,7 @@ fieldset.extmgrplus_order_and_ignore dd label:hover {
 	width: 1%;
 }
 
-/* FOOTER */
+/* Footer */
 
 .extmgrplus_footer {
 	margin-top: 1em;
@@ -185,7 +249,7 @@ fieldset.extmgrplus_order_and_ignore dd label:hover {
 	font-size: .75em;
 }
 
-/* RESPONSIVE */
+/* Responsive */
 
 .extmgrplus_responsive {
 	display: none;

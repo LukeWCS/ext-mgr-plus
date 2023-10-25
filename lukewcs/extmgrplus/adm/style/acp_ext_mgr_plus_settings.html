@@ -128,7 +128,7 @@
 				<span>{{ lang('EXTMGRPLUS_DEFAULTS_EXP') }}</span>
 			</dt>
 			<dd>
-				<input class="button2" type="button" name="extmgrplus_defaults" value="{{ lang('EXTMGRPLUS_BUTTON_DEFAULTS') }}">
+				<input type="button" class="button2" name="extmgrplus_defaults" value="{{ lang('EXTMGRPLUS_BUTTON_DEFAULTS') }}">
 			</dd>
 		</dl>
 	</fieldset>
@@ -152,7 +152,6 @@
 
 {% INCLUDEJS '@lukewcs_extmgrplus/acp_ext_mgr_plus.js' %}
 {% INCLUDECSS '@lukewcs_extmgrplus/acp_ext_mgr_plus.css' %}
-{% INCLUDECSS '@lukewcs_extmgrplus/acp_common_toggle.css' %}
 
 {% macro switch(name, checked = false) -%}
 	<input type="checkbox" class="toggle" name="{{ name }}" value="1"{{ checked ? ' checked' }}>

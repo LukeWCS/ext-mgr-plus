@@ -1,7 +1,16 @@
-### 1.1.3-b14
-* Die Auswahl der Kontrollkästchen wird bei aktivierter Rückfrage nur noch dann gespeichert, wenn die Rückfrage mit "Ja" bestätigt wird. Bei "Nein" wird die zuletzt gespeicherte Auswahl wiederhergestellt.
+### 1.1.3-b15
+* JS:
+  * Die Inline-ConfirmBox bestehend aus 3 separaten Funktionen und 1 separate Event-Registrierung (für je 3 Controls pro Schalter) zu einer Klasse zusammengefasst. Damit reduziert sich die Projekt-spezifische Integration auf eine einzige Zeile JS Code, bei der die Klasse mittels `new` eingebunden werden kann. Ausserdem ist so der Selector für den Absenden-Button nicht mehr hardcoded auf 3 Funktionen verteilt, sondern nur noch einmal als Klassen-Parameter.
+  * Das komplette EMP JS befindet sich jetzt innerhalb einer selbst ausführenden anonymen Funktion (IIFE) um vollständige Kapselung zu erreichen. So ist im DOM nur noch das benötige EMP Objekt vorhanden.
 * CSS:
-  * In der Gruppe mit dem Absenden-Button den zu grossen Abstand zwischen Buttons und oberem Rand der Gruppe verkleinert. [Vorschlag von Kirk (.de)]
+  * Um die JS Inline-ConfirmBox als eigenständiges Modul gestalten zu können, musste das CSS für EMP strikter definiert werden, damit das CSS für die ConfirmBox isoliert notiert werden konnte.
+  * Für die Inline-ConfirmBox die CSS Definition von Thorsten übernommen, die er bei RT eingebaut hat und die für einen dezenten 3D Effekt (Schatten) sorgt.
+  * Das Toggle-CSS in das EMP-CSS integriert und die separate Datei entfernt.
+
+### 1.1.3-b14
+* Bei aktivierter Option "Letzten Zustand merken" wird die Auswahl der Kontrollkästchen bei aktivierter Rückfrage nur noch dann gespeichert, wenn die Rückfrage mit "Ja" bestätigt wird. Bei "Nein" wird die zuletzt gespeicherte Auswahl wiederhergestellt.
+* CSS:
+  * In der Gruppe mit dem Absenden-Button den zu grossen Abstand zwischen Buttons und oberem Rand der Gruppe verkleinert. [Vorschlag von Kirk (phpBB.de)]
   * Datei neu strukturiert.
 
 ### 1.1.3-b13
@@ -10,7 +19,7 @@
   * Für `label` wird jetzt in den Einstellungen und in Reihenfolge&Ignorieren der Pointer-Cursor entfernt, da dieser wegen Toggles keine Relevanz mehr hat.
   * Bei `dd label` wird jetzt beim Hover-Effekt die Textfarbe nicht mehr auf rot geändert.
   * Bei Responsive-Ansicht wird bei Reihenfolge&Ignorieren zwischen beiden Erklärungen eine Trennlinie eingefügt.
-  * Die Definition für den vertikalen Abstand oberhalb und unterhalb der Auswählen-Checkboxen entfernt, wodurch das primär bei Responsive-Ansicht ordentlicher aussieht.
+  * Die EMP Definition für das Padding bei den Auswählen-Checkboxen entfernt, wodurch wieder die phpBB Definition in Kraft tritt. Dadurch sieht das primär bei Responsive-Ansicht ordentlicher aus.
 
 ### 1.1.3-b12
 * ExtMgr Template:
@@ -24,13 +33,13 @@
   * Die bestehenden 2 Sprachvariablen für "Verfügbare Erweiterungen" und "Letzte Versionsprüfung" zu Plural Arrays umgebaut.
 
 ### 1.1.3-b10
-* Fix: Wenn bei deaktivierter Rückfrage und aktivierter automatischer Bestätigung Erweiterungen geschaltet wurden und dann die ExtMgr Seite manuell neu geladen wurde (z.B. mit F5), dann führte das beim Firefox dazu, dass fälschlicherweise eine Rückfrage zum erneuten Senden der Formulardaten erschien. Wurde diese Rückfrage positiv bestätigt, dann wurde von EMP die letzte Aktion erneut ausgeführt. Das wiederum konnte zu Fehlern führen, wenn in der Zwischenzeit Änderungen im Dateisystem vorgenommen wurden, durch die Erweiterungen ungültig werden, zum Beispiel Strukturfehler in `composer.json`. Eine neue Funktion rotiert jetzt die GET Parameter der URL bei einer automatischen Weiterleitung, was beim Firefox dazu führt, dass keine Rückfrage mehr bezüglich Formulardaten ausgelöst wird. [Meldung von Kirk (.de)]
-* Fix: Das Problem mit dem erneuten Senden der Formulardaten beim Firefox hatte einen Fehler von EMP aufgedeckt, der dann auftreten konnte, wenn Erweiterungen geschaltet wurden, ohne die ExtMgr Seite vorher neu zu laden. Wenn zwischen zwei Schaltvorgängen eine Erweiterung ungültig wurde, also die Metadaten der Erweiterung nicht mehr gelesen werden konnten, dann führte das zu einem FATAL der nicht abgefangen wurde. [Meldung von Kirk (.de)]
+* Fix: Wenn bei deaktivierter Rückfrage und aktivierter automatischer Bestätigung Erweiterungen geschaltet wurden und dann die ExtMgr Seite manuell neu geladen wurde (z.B. mit F5), dann führte das beim Firefox dazu, dass fälschlicherweise eine Rückfrage zum erneuten Senden der Formulardaten erschien. Wurde diese Rückfrage positiv bestätigt, dann wurde von EMP die letzte Aktion erneut ausgeführt. Das wiederum konnte zu Fehlern führen, wenn in der Zwischenzeit Änderungen im Dateisystem vorgenommen wurden, durch die Erweiterungen ungültig werden, zum Beispiel Strukturfehler in `composer.json`. Eine neue Funktion rotiert jetzt die GET Parameter der URL bei einer automatischen Weiterleitung, was beim Firefox dazu führt, dass keine Rückfrage mehr bezüglich Formulardaten ausgelöst wird. [Meldung von Kirk (phpBB.de)]
+* Fix: Das Problem mit dem erneuten Senden der Formulardaten beim Firefox hatte einen Fehler von EMP aufgedeckt, der dann auftreten konnte, wenn Erweiterungen geschaltet wurden, ohne die ExtMgr Seite vorher neu zu laden. Wenn zwischen zwei Schaltvorgängen eine Erweiterung ungültig wurde, also die Metadaten der Erweiterung nicht mehr gelesen werden konnten, dann führte das zu einem FATAL der nicht abgefangen wurde. [Meldung von Kirk (phpBB.de)]
 
 ### 1.1.3-b9
 * Fix: Beim Betatest von 1.1.3 zeigte sich, dass EMP nicht mit ungültigen Erweiterungen umgehen konnte, wodurch sich mehrere Probleme ergaben:
-  * In bestimmten Situationen konnte der Zähler für nicht-installierte Erweiterungen in den Minus-Bereich geraten. Da eine negative Anzahl nicht vorgesehen ist, wurde stattdessen die Zahl 18446744073709551615 angezeigt, da in der Sprachvariable ein anderer Variablentyp erwartet wurde. [Meldung von Kirk (.de)]
-  * Bei negativer Anzahl der nicht-installierten Erweiterungen wurden alle deaktivierten Erweiterungen in der Sektion für nicht-installierte Erweiterungen angezeigt. [Meldung von Kirk (.de)]
+  * In bestimmten Situationen konnte der Zähler für nicht-installierte Erweiterungen in den Minus-Bereich geraten. Da eine negative Anzahl nicht vorgesehen ist, wurde stattdessen die Zahl 18446744073709551615 angezeigt, da in der Sprachvariable ein anderer Variablentyp erwartet wurde. [Meldung von Kirk (phpBB.de)]
+  * Bei negativer Anzahl der nicht-installierten Erweiterungen wurden alle deaktivierten Erweiterungen in der Sektion für nicht-installierte Erweiterungen angezeigt. [Meldung von Kirk (phpBB.de)]
   * Die Buttons "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" wurden je nach Situation fälschlicherweise aktiviert.
   * Die Auswahlbox "Alle Erweiterungen auswählen" bei Aktivierte und Deaktivierte wurde je nach Situation fälschlicherweise aktiviert.
   * Die Zähler bei "Aktivierte Erweiterungen" und "Deaktivierte Erweiterungen" wurden je nach Situation falsch berechnet.
@@ -138,7 +147,7 @@
 #### 1.1.2-b3
 * Validierungs-Kritik 1.1.1: 
   * Bei Versions-Anzeigen kann das Präfix "v" jetzt per Sprachvariable global angepasst werden. Das betrifft auch das Makro Template mit dem Footer.
-* Das Ignoriert-Icon in der Auswählen-Spalte grösser definiert. [Vorschlag von Kirk (.de)]
+* Das Ignoriert-Icon in der Auswählen-Spalte grösser definiert. [Vorschlag von Kirk (phpBB.de)]
 * In der Tabellen-Überschrift alle Icons etwas grösser definiert und den Standard `font-weight: bold;` entfernt, wodurch die Icons nicht länger unscharf wirken.
 * Sprachdateien:
   * 1 neue Sprachvariable für den Versions-String.
@@ -262,7 +271,7 @@
 
 #### 1.1.1-b2
 * ConfirmBox Template:
-  * HTML Tag Fehler in `acp_ext_mgr_plus_confirm_body.html` korrigiert. [Meldung von IMC (.de)]
+  * HTML Tag Fehler in `acp_ext_mgr_plus_confirm_body.html` korrigiert. [Meldung von IMC (phpBB.de)]
   * Restliche veraltete Template Syntax durch Twig ersetzt.
 * Prüfung auf gültige Migration verbessert durch 2 neue Bedingungen:
   * Suffix der Datei muss dem Serverseitig eingestellten PHP Suffix entsprechen.
@@ -352,8 +361,8 @@
 * Core und ExtMgr Template: Eine unnötige Template Variable entfernt, da hierfür bereits eine Config Template Variable existiert.
 * Die maximale PHP Laufzeit wird nicht mehr direkt aus der PHP INI geladen, sondern aus dem Event Datenpaket ermittelt.
 * Reihenfolge & Ignorieren:
-  * Die Beschreibungen von Reihenfolge und Ignorieren werden jetzt nebeneinander statt untereinander dargestellt. [Vorschlag von Kirk (.de)]
-  * Unterhalb der Erweiterungen-Liste wird jetzt ebenfalls ein Absenden-Button eingefügt. [Vorschlag von Kirk (.de)]
+  * Die Beschreibungen von Reihenfolge und Ignorieren werden jetzt nebeneinander statt untereinander dargestellt. [Vorschlag von Kirk (phpBB.de)]
+  * Unterhalb der Erweiterungen-Liste wird jetzt ebenfalls ein Absenden-Button eingefügt. [Vorschlag von Kirk (phpBB.de)]
 * Sprachdateien:
   * Meldungen bezüglich Überschreitung der maximalen PHP Laufzeit vereinfacht.
   * Für "Reihenfolge & Ignorieren" 2 Variablen hinzugefügt und 2 Variablen geändert.
@@ -417,7 +426,7 @@
 * Sprachdateien:
   * Texte bezüglich "Migrationen erlauben" präzisiert.
 * ExtMgr Template:
-  * Richtlinienfehler behoben. [Meldung von Kirk (.de)]
+  * Richtlinienfehler behoben. [Meldung von Kirk (phpBB.de)]
 * Code:
   * Funktion zum deaktivieren/aktivieren auf 2 Funktionen aufgeteilt.
   * Optimierung.
@@ -635,7 +644,7 @@
   * Neue Sprachvariable für den Checkbox Tooltip.
 
 #### 1.0.2-b1
-* Bei der Prüfung ob eine Erweiterung aktiviert werden kann mittels `is_enableable()` (`ext.php`), wird jetzt auch ein String und ein Array als möglicher Rückgabewert akzeptiert und entsprechend aufbereitet. Diese Methode der Fehlerbehandlung wurde erst in phpBB 3.3.0 eingeführt und kann `trigger_error` ersetzen. [Hinweis von IMC (.de)]
+* Bei der Prüfung ob eine Erweiterung aktiviert werden kann mittels `is_enableable()` (`ext.php`), wird jetzt auch ein String und ein Array als möglicher Rückgabewert akzeptiert und entsprechend aufbereitet. Diese Methode der Fehlerbehandlung wurde erst in phpBB 3.3.0 eingeführt und kann `trigger_error` ersetzen. [Hinweis von IMC (phpBB.de)]
 
 ### 1.0.1
 * Release (2023-06-12)
@@ -687,7 +696,7 @@
   * Sprachvariablen für die neue Option Reihenfolge/Ignorieren hinzugefügt.
 
 #### 1.0.0-b13
-* Fix: Wenn Migrationen deaktiviert sind und bei Exts mit neuen Migrationsdateien zusätzlich noch das Ignorieren-Merkmal gesetzt wird, dann konnte es vorkommen, das die Alle-Deaktivieren Checkbox deaktiviert wird, obwohl es noch schaltbare Exts gab. Der Grund lag in der falschen Berechnung der schaltbaren Exts. [Meldung von Kirk (.de)]
+* Fix: Wenn Migrationen deaktiviert sind und bei Exts mit neuen Migrationsdateien zusätzlich noch das Ignorieren-Merkmal gesetzt wird, dann konnte es vorkommen, das die Alle-Deaktivieren Checkbox deaktiviert wird, obwohl es noch schaltbare Exts gab. Der Grund lag in der falschen Berechnung der schaltbaren Exts. [Meldung von Kirk (phpBB.de)]
 
 #### 1.0.0-b12
 * Fix: Beim Aktivieren wurden auch diejenigen Exts mit aktiviert, bei denen eine Reihenfolge-Gruppe definiert war, obwohl diese gar nicht ausgewählt wurden.
@@ -707,7 +716,7 @@
 
 #### 1.0.0-b11
 * CSS:
-  * In der Responsive-Ansicht wird bei geöffneten Einstellungen der Button "Spalte speichern" zentriert, damit dieser optisch zu den anderen Buttons passt. [Vorschlag von Kirk (.de)]
+  * In der Responsive-Ansicht wird bei geöffneten Einstellungen der Button "Spalte speichern" zentriert, damit dieser optisch zu den anderen Buttons passt. [Vorschlag von Kirk (phpBB.de)]
   * In der Responsive-Ansicht wird bei geöffneten Einstellungen zwischen Erklärungen und Bedienelementen (Buttons, Radio Buttons) ein Abstand eingefügt.
   * Optimierungen.
   * Datei umstrukturiert.
@@ -720,7 +729,7 @@
 
 #### 1.0.0-b10
 * ExtMgr Template:
-  * Bei der Option "Erlaube Migrationen" erfolgt jetzt eine Rückfrage per JS Popup die mit OK bestätigt werden muss. Ansonsten wird die Option wieder auf "Nein" zurückgestellt. [Vorschlag von Scanialady (.de), chris1278 (.de)]
+  * Bei der Option "Erlaube Migrationen" erfolgt jetzt eine Rückfrage per JS Popup die mit OK bestätigt werden muss. Ansonsten wird die Option wieder auf "Nein" zurückgestellt. [Vorschlag von Scanialady (phpBB.de), chris1278 (phpBB.de)]
   * Die neue Migrations-Rückfrage mit der Methode von LFWWH realisiert.
 * Sprachdateien:
   * Neue Sprachvariablen für die Migrations-Rückfrage.
@@ -733,7 +742,7 @@
   * Funktion zum Anzeigen/Ausblenden der Einstellungen komplett geändert.
 
 #### 1.0.0-b8
-* Fix: In der Spalte für Reihenfolge/Ignorieren konnten keine 2-stelligen Werte eingetragen werden. Im HTML wurde schlicht das RegEx für die Eingabeprüfung falsch definiert. [Meldung von Kirk (.de)]
+* Fix: In der Spalte für Reihenfolge/Ignorieren konnten keine 2-stelligen Werte eingetragen werden. Im HTML wurde schlicht das RegEx für die Eingabeprüfung falsch definiert. [Meldung von Kirk (phpBB.de)]
 * In der Responsive-Ansicht werden nun auch bei den neuen EMP Spalten (neue Migrationsdateien, Auswählen, Reihenfolge/Ignorieren) einleitende Spaltenüberschriften angezeigt, wie das phpBB auch bei den Standard-Spalten macht. Bislang wurden gar keine Texte angezeigt, da die Spalten in der normalen Ansicht nur FA Icons enthalten.
 * ExtMgr Template:
   * Wenn die Einstellungen geöffnet werden, dann werden jetzt in der Erweiterungen-Liste auch alle Links für "Aktivieren", "Deaktivieren" und "Arbeitsdaten löschen" ausgeblendet. Somit gibt es bei geöffneten Einstellungen nur noch die Textfelder als aktive Elemente in der Erweiterungen-Liste.
@@ -767,9 +776,9 @@
 
 #### 1.0.0-b6
 * ExtMgr Template:
-  * Es gibt jetzt einen neuen Schalter mit dem man festlegen kann, ob die Checkboxen standardmässig alle gesetzt sind oder nicht. [Vorschlag von Kirk (.de)]
+  * Es gibt jetzt einen neuen Schalter mit dem man festlegen kann, ob die Checkboxen standardmässig alle gesetzt sind oder nicht. [Vorschlag von Kirk (phpBB.de)]
   * Etliche Anpassungen für die Checkbox Option.
-* Statt zwei Einstellungen-Links gibt es nur noch einen. Mit diesem Link werden also gleichzeitig beide Formulare von phpBB und ExtMgrPlus angezeigt oder ausgeblendet. [Vorschlag von Scanialady (.de)]
+* Statt zwei Einstellungen-Links gibt es nur noch einen. Mit diesem Link werden also gleichzeitig beide Formulare von phpBB und ExtMgrPlus angezeigt oder ausgeblendet. [Vorschlag von Scanialady (phpBB.de)]
   * JS Hilfsfunktion dafür eingebaut, mit der mehrere Elemente gleichzeitig ein/ausgeblendet werden können.
 * Sprachdateien:
   * Neue Sprachvariablen für die Checkbox Option.
@@ -794,7 +803,7 @@
   * Methode komplett geändert. Um auf das HTML Event verzichten zu können, eine eigene Funktion eingebaut, mit der eine ErrorBox Meldung abgefangen und manipuliert werden kann. Damit ist die Handhabung des Aktivierungsabbruchs kein Workaround mehr, sondern eine ordentliche Lösung.
   * HTML Event `acp_overall_header_body_before.html` entfernt.
   * Javascript `ext_mgr_errorbox.js` entfernt.
-* Durch die neue Methode der ErrorBox Handhabung, wurde es nun möglich, die Eigendeaktivierung als Option einzubauen. [Vorschlag von 69bruno (.de)]
+* Durch die neue Methode der ErrorBox Handhabung, wurde es nun möglich, die Eigendeaktivierung als Option einzubauen. [Vorschlag von 69bruno (phpBB.de)]
 * ExtMgr Template:
   * Security Token auch beim Listen-Formular (Buttons und Checkboxen) und beim Rückfrage-Formular hinzugefügt. Damit ist jetzt jede Aktion von EMP mit Token gesichert.
   * Neuer Schalter für die Eigendeaktivierung.
