@@ -64,9 +64,9 @@
 <fieldset class="quick">
 	<span class="small">
 		<a href="https://www.phpbb.com/go/customise/extensions/{{ EXTMGRPLUS_CDB_VER }}" target="_blank">{{ common.icon('fa-database') }}{{ lang('BROWSE_EXTENSIONS_DATABASE') }}</a>
-		<a href="javascript:ExtMgrPlus.VersionCheck('{{ U_VERSIONCHECK_FORCE }}');" id="extmgrplus_link_version_check">{{ common.icon('fa-refresh') }}{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</a>
-		<a {{ EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE ? 'href="javascript:ExtMgrPlus.ShowHideOrderIgnore();"' : 'class="disabled"'}}>{{ common.icon('fa-sort') }}{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</a>
-		<a {{ EXTMGRPLUS_SELECT_CHECKBOX_MODE == 2 ? 'href="javascript:ExtMgrPlus.SaveCheckboxes();" id="extmgrplus_link_save_checkboxes"' : 'class="disabled"' }}>{{ common.icon('fa-check-square-o') }}{{ lang('EXTMGRPLUS_LINK_SAVE_CHECKBOXES') }}</a>
+		<span class="js_link" id="extmgrplus_link_version_check" data-url="{{ U_VERSIONCHECK_FORCE }}">{{ common.icon('fa-refresh') }}{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</span>
+		<span class="js_link{{ !EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE ? ' disabled"' : '" id="extmgrplus_link_order_ignore"' }}>{{ common.icon('fa-sort') }}{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</span>
+		<span class="js_link{{ EXTMGRPLUS_SELECT_CHECKBOX_MODE != 2 ? ' disabled"' : '" id="extmgrplus_link_save_checkboxes"' }}>{{ common.icon('fa-check-square-o') }}{{ lang('EXTMGRPLUS_LINK_SAVE_CHECKBOXES') }}</span>
 	</span>
 </fieldset>
 

@@ -1,19 +1,11 @@
-/* General */
+/* GENERAL */
 
-a.disabled,
-a.disabled:hover {
-	color: inherit !important;
-	text-decoration: none;
-}
-
-a.disabled,
 input[type="text"].inactive,
 input[type="submit"]:disabled,
 input[type="button"]:disabled {
 	opacity: .5;
 }
 
-a.disabled,
 input[type="submit"]:disabled,
 input[type="button"]:disabled,
 input[type="checkbox"]:disabled {
@@ -70,42 +62,7 @@ input[class*="confirmbox_active"]:disabled {
 	cursor: not-allowed;
 }
 
-/* Icons */
-
-fieldset.quick a .icon {	/* link bar */
-	display: inline-block;
-	margin: 0 .3em;
-	font-size: 1.1em;
-}
-
-thead th .icon {			/* table header */
-	font-size: 1.1em;
-	font-weight: normal;
-}
-
-div.successbox .icon {		/* trigger_error */
-	display: inline-block;
-}
-
-#extmgrplus_list td:nth-of-type(2) .fa-exclamation-triangle {		/* version */
-	color: #DF950D;
-}
-
-#extmgrplus_list td:nth-of-type(2) .icon {							/* version */
-	cursor: help;
-	font-size: 1.2em;
-}
-
-#extmgrplus_list td:nth-of-type(3) .icon {							/* migrations */
-	font-size: 1.2em;
-}
-
-#extmgrplus_list td:nth-of-type(6) .icon {							/* select */
-	cursor: help;
-	font-size: 1.3em;
-}
-
-/* Settings */
+/* SETTINGS */
 
 legend.legend_sub {
 	border: 0;
@@ -176,7 +133,59 @@ input[type="button"][name^="extmgrplus_"] {
 	content: "\f00c";
 }
 
-/* Extension Manager */
+/* EXTENSION MANAGER */
+
+.js_link {
+	color: #105289;
+}
+
+.js_link:hover {
+    color: #BC2A4D;
+    text-decoration: underline;
+	cursor: pointer;
+}
+
+.js_link.disabled,
+.js_link.disabled:hover {
+	color: #536482;
+	text-decoration: none;
+	cursor: not-allowed;
+	opacity: .5;
+}
+
+fieldset.quick a i.icon,
+.js_link i.icon {			/* link bar */
+	display: inline-block;
+	margin: 0 .3em;
+	font-size: 1.1em;
+}
+
+thead th i.icon {			/* table header */
+	font-size: 1.1em;
+	font-weight: normal;
+}
+
+div.successbox i.icon {		/* trigger_error */
+	display: inline-block;
+}
+
+#extmgrplus_list td:nth-of-type(2) i.fa-exclamation-triangle {		/* version */
+	color: #DF950D;
+}
+
+#extmgrplus_list td:nth-of-type(2) i.icon {							/* version */
+	cursor: help;
+	font-size: 1.2em;
+}
+
+#extmgrplus_list td:nth-of-type(3) i.icon {							/* migrations */
+	font-size: 1.2em;
+}
+
+#extmgrplus_list td:nth-of-type(6) i.icon {							/* select */
+	cursor: help;
+	font-size: 1.3em;
+}
 
 fieldset.extmgrplus_order_and_ignore dt {
 	width: 50%;

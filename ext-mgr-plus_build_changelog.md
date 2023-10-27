@@ -1,7 +1,17 @@
+### 1.1.3-b16
+* ExtMgr Template:
+  * Die restlichen JS Aufrufe im Template entfernt; Versionsprüfung, Reihenfolge&Ignorieren und Checkbox-Save.
+* JS:
+  * Die im Template entfernten JS Links als Klick-Events hinzugefügt. Somit werden nun konsequent alle interaktiven Elemente per JS registriert.
+  * Bei einer Versionsprüfung werden jetzt alle Funktionen in der Link-Leiste gesperrt und die Erweiterungen-Liste ausgeblendet, um versehentliche Aktionen zu vermeiden.
+  * Code der ConfirmBox Klasse optimiert.
+* CSS:
+  * Code für die neuen JS-Links in der Link-Leiste hinzugefügt.
+
 ### 1.1.3-b15
 * JS:
-  * Die Inline-ConfirmBox bestehend aus 3 separaten Funktionen und 1 separate Event-Registrierung (für je 3 Controls pro Schalter) zu einer Klasse zusammengefasst. Damit reduziert sich die Projekt-spezifische Integration auf eine einzige Zeile JS Code, bei der die Klasse mittels `new` eingebunden werden kann. Ausserdem ist so der Selector für den Absenden-Button nicht mehr hardcoded auf 3 Funktionen verteilt, sondern nur noch einmal als Klassen-Parameter.
-  * Das komplette EMP JS befindet sich jetzt innerhalb einer selbst ausführenden anonymen Funktion (IIFE) um vollständige Kapselung zu erreichen. So ist im DOM nur noch das benötige EMP Objekt vorhanden.
+  * Die Inline-ConfirmBox bestehend aus 3 separaten Funktionen und 1 separate Event-Registrierung (für je 3 Controls pro Schalter) zu einer Klasse zusammengefasst. Damit reduziert sich die Projekt-spezifische Integration auf eine einzige Zeile JS Code, bei der die Klasse mittels `new` eingebunden werden kann. Ausserdem ist so der Selektor für den Absenden-Button nicht mehr hardcoded auf 3 Funktionen verteilt, sondern wird nur noch einmal als Klassen-Parameter definiert.
+  * Das EMP JS befindet sich jetzt innerhalb einer IIFE Struktur um eine bessere Kapselung zu erreichen.
 * CSS:
   * Um die JS Inline-ConfirmBox als eigenständiges Modul gestalten zu können, musste das CSS für EMP strikter definiert werden, damit das CSS für die ConfirmBox isoliert notiert werden konnte.
   * Für die Inline-ConfirmBox die CSS Definition von Thorsten übernommen, die er bei RT eingebaut hat und die für einen dezenten 3D Effekt (Schatten) sorgt.
@@ -193,7 +203,7 @@
 * `trigger_error` Template:
   * Ein animiertes FA Icon eingebaut das nur dann unterhalb einer Meldung angezeigt wird, wenn diese positiv ist und wenn die automatische Bestätigung aktiviert ist.
 * ExtMgr Template:
-  * Unnötige ID der Link Bar Icons entfernt.
+  * Unnötige ID der Link-Leiste Icons entfernt.
 * Core:
   * Wrapper Funktion für `trigger_error` eingebaut um redundanten Code im Core und Controller zu vermeiden. Ausserdem um die Generierung der Meldungen zentral an einer Stelle regeln zu können.
 * Migration:
@@ -202,7 +212,7 @@
   * 2 neue Sprachvariablen für den neuen Schalter hinzugefügt.
 * CSS:
   * Code für das neue Icon hinzugefügt.
-  * Code für die Link Bar Icons geändert.
+  * Code für die Link-Leiste Icons geändert.
 
 #### 1.1.1-b7
 * Fix: Unter phpBB 3.2 wurde ab EMP 1.1.1-b4 bei veralteten Erweiterung-Versionen das FA Icon (Ausrufezeichen in rotem Kreis) nicht mehr angezeigt. Die Ursache liegt bei Twig 1: Makros sind nicht automatisch innerhalb Makros verfügbar und müssen umständlich importiert werden. Im Versions-Makro den Aufruf für das Icon-Makro entfernt und HTML direkt notiert.
