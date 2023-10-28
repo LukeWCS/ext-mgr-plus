@@ -19,7 +19,10 @@
 * Konnte die Versionsprüfung einer Erweiterung nicht erfolgreich ausgeführt werden, wird diese Information ebenfalls gespeichert und ausgewertet. Das funktioniert sowohl bei der globalen VP (Alle Versionen erneut prüfen), als auch bei der lokalen VP (Details). Somit können nun alle möglichen Zustände (VP erfolgreich/VP fehlerhaft/keine VP eingerichtet) entsprechend signalisiert werden.
   * In der Info-Tabelle wird hinter dem Datum der letzten Versionsprüfung die Anzahl Fehler angezeigt.
   * Bei Erweiterungen bei denen es Fehler bei der Versionsprüfung gab, wird ein orangefarbenes Warn-Icon mit Tooltip hinter der Version angezeigt.
-* Bei einer Versionsprüfung werden jetzt alle Funktionen in der Link-Leiste gesperrt und die Erweiterungen-Liste ausgeblendet, um versehentliche Aktionen zu vermeiden.
+* Weitere Änderungen bei der Versionsprüfung:
+  * Bei einer Versionsprüfung werden jetzt alle Funktionen in der Link-Leiste gesperrt, die den Vorgang stören können.
+  * Weiterhin werden die interaktiven Elemente in der Erweiterungen-Liste ausgeblendet, um versehentliche Aktionen zu verhindern. [Vorschlag von chris1278 (phpBB.de)]
+  * Zusätzlich informiert eine blaue Info-Box über den Vorgang. [Vorschlag von chris1278 (phpBB.de)]
 * Bei aktivierter Option "Letzten Zustand merken" wird die Auswahl der Kontrollkästchen bei aktivierter Rückfrage nur noch dann gespeichert, wenn die Rückfrage mit "Ja" bestätigt wird. Bei "Nein" wird die zuletzt gespeicherte Auswahl wiederhergestellt.
 * Beim roten Ausrufezeichen-Icon (bei veralteten Versionen) ist jetzt ebenfalls ein Tooltip vorhanden.
 * Reihenfolge&Ignorieren:

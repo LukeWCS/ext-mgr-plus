@@ -1,3 +1,15 @@
+### 1.1.3-b17
+* JS:
+  * Bei einer Versionsprüfung wird nicht mehr die ganze Erweiterungen-Liste ausgeblendet, sondern nur noch die interaktiven Elemente. [Vorschlag von chris1278 (phpBB.de)]
+  * Bei Reihenfolge&Ignorieren werden nicht mehr die Spalten mit Aktionen ausgeblendet (siehe 1.1.3-b1), sondern wieder wie früher lediglich die interaktiven Elemente selbst.
+  * Code Optimierung.
+* ExtMgr Template:
+  * Eine Info-Box eingefügt, die darüber informiert, das die Versionsprüfung ausgeführt wird. [Vorschlag von chris1278 (phpBB.de)]
+* CSS:
+  * Blaue Info-Boxen haben jetzt abgerundete Ecken.
+* Sprachdateien:
+  * 1 neue Sprachvariable für die neue Info-Box bezüglich Versionsprüfung.
+
 ### 1.1.3-b16
 * ExtMgr Template:
   * Die restlichen JS Aufrufe im Template entfernt; Versionsprüfung, Reihenfolge&Ignorieren und Checkbox-Save.

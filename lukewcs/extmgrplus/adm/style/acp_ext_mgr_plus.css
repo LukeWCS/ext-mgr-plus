@@ -12,6 +12,7 @@ input[type="checkbox"]:disabled {
 	cursor: not-allowed;
 }
 
+div .successbox.notice,
 fieldset {
 	border-radius: 5px;
 }

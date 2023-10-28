@@ -90,10 +90,11 @@ ExtMgrPlus.VersionCheck = function () {
 
 	var vcURL = $('#extmgrplus_link_version_check').attr('data-url');
 
-	$('span[id^="extmgrplus_link_"]')	.addClass('disabled');
-	$('#extmgrplus_list')				.hide();
+	ExtMgrPlus.ShowHideActionElements(false);
 
 	$('#extmgrplus_link_version_check i.icon')	.addClass('fa-spin');
+	$('span[id^="extmgrplus_link_"]')			.addClass('disabled');
+	$('#extmgrplus_versioncheck_notice')		.show();
 	$(location)									.prop('href', vcURL);
 };
 
@@ -104,14 +105,11 @@ ExtMgrPlus.ShowHideOrderIgnore = function () {
 
 	var show = ($('.extmgrplus_order_and_ignore').css('display') == 'none');
 
-	if (show) {
-		$('.extmgrplus_order_and_ignore').show();
-	} else {
-		$('.extmgrplus_order_and_ignore').hide();
-	}
+	ExtMgrPlus.ShowHideActionElements(!show);
 
-	ExtMgrPlus.ShowOrderIgnoreColumns(show);
-	ExtMgrPlus.ShowActionElements(!show);
+	$('.extmgrplus_order_and_ignore')							.toggle(show);
+	$('#extmgrplus_list th:nth-of-type(n+7):nth-of-type(-n+8)')	.toggle(show);
+	$('#extmgrplus_list td:nth-of-type(n+7):nth-of-type(-n+8)')	.toggle(show);
 };
 
 ExtMgrPlus.SaveCheckboxes = function () {
@@ -154,31 +152,15 @@ ExtMgrPlus.DisableEnter = function (e) {
 	}
 };
 
-ExtMgrPlus.ShowActionElements = function (show) {
-	if (show) {
-		$('#extmgrplus_list th:nth-of-type(1n+4):nth-of-type(-1n+6)')		.show();
-		$('#extmgrplus_list td.row3:nth-of-type(1n+4):nth-of-type(-1n+6)')	.show();
-		$('#extmgrplus_list td:nth-of-type(1n+4):nth-of-type(-1n+6)')		.show();
-		$('#extmgrplus_link_version_check')									.removeClass('disabled');
-		$('#extmgrplus_link_save_checkboxes')								.removeClass('disabled');
-	} else {
-		$('#extmgrplus_list th:nth-of-type(1n+4):nth-of-type(-1n+6)')		.hide();
-		$('#extmgrplus_list td.row3:nth-of-type(1n+4):nth-of-type(-1n+6)')	.hide();
-		$('#extmgrplus_list td:nth-of-type(1n+4):nth-of-type(-1n+6)')		.hide();
-		$('#extmgrplus_link_version_check')									.addClass('disabled');
-		$('#extmgrplus_link_save_checkboxes')								.addClass('disabled');
-	}
-};
+ExtMgrPlus.ShowHideActionElements = function (show) {
+	$('#extmgrplus_list td:nth-of-type(1n+4):nth-of-type(-1n+6) *:not(dfn)')	.toggle(show);
 
-ExtMgrPlus.ShowOrderIgnoreColumns = function (show) {
 	if (show) {
-		$('#extmgrplus_list th:nth-of-type(n+7):nth-of-type(-n+8)')			.show();
-		$('#extmgrplus_list td.row3:nth-of-type(n+7):nth-of-type(-n+8)')	.show();
-		$('#extmgrplus_list td:nth-of-type(n+7):nth-of-type(-n+8)')			.show();
+		$('#extmgrplus_link_version_check')										.removeClass('disabled');
+		$('#extmgrplus_link_save_checkboxes')									.removeClass('disabled');
 	} else {
-		$('#extmgrplus_list th:nth-of-type(n+7):nth-of-type(-n+8)')			.hide();
-		$('#extmgrplus_list td.row3:nth-of-type(n+7):nth-of-type(-n+8)')	.hide();
-		$('#extmgrplus_list td:nth-of-type(n+7):nth-of-type(-n+8)')			.hide();
+		$('#extmgrplus_link_version_check')										.addClass('disabled');
+		$('#extmgrplus_link_save_checkboxes')									.addClass('disabled');
 	}
 };
 

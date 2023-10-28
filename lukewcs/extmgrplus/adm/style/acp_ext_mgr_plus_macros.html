@@ -9,7 +9,7 @@
 
 {% macro notes(notes) %}
 	{% if notes|length %}
-		<div class="errorbox notice">
+		<div class="successbox notice">
 			{% for note in notes %}
 				<p>{{ note }}</p>
 			{% endfor %}
