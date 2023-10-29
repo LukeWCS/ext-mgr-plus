@@ -1,3 +1,14 @@
+### 1.1.3-b18
+* ExtMgr Template:
+  * In der Info-Box für die Versionsprüfung wird jetzt hinter dem Text das gleiche animierte Icon angezeigt, wie bei den automatischen Bestätigungen. [Vorschlag von Kirk (phpBB.de)] 
+* CSS:
+  * An das neue Icon angepasst.
+* JS:
+  * Das Icon für die Versionsprüfung in der Link-Leiste wird nicht mehr animiert.
+  * Version der Klasse LukeWCSphpBBConfirmBox auf 1.0.0 gesetzt. Diese Version wird dann auch bei RT und WWH integriert.
+* Sprachdateien:
+  * Sprachvariable für das neue Icon angepasst.
+
 ### 1.1.3-b17
 * JS:
   * Bei einer Versionsprüfung wird nicht mehr die ganze Erweiterungen-Liste ausgeblendet, sondern nur noch die interaktiven Elemente. [Vorschlag von chris1278 (phpBB.de)]

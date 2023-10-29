@@ -1,18 +1,5 @@
 /* GENERAL */
 
-input[type="text"].inactive,
-input[type="submit"]:disabled,
-input[type="button"]:disabled {
-	opacity: .5;
-}
-
-input[type="submit"]:disabled,
-input[type="button"]:disabled,
-input[type="checkbox"]:disabled {
-	cursor: not-allowed;
-}
-
-div .successbox.notice,
 fieldset {
 	border-radius: 5px;
 }
@@ -58,6 +45,8 @@ div[id$="_confirmbox"] input[type="button"] {
 	padding: 3px 4px;
 }
 
+input[type="submit"]:disabled,
+input[type="button"]:disabled,
 input[class*="confirmbox_active"]:disabled {
 	opacity: .5;
 	cursor: not-allowed;
@@ -155,35 +144,44 @@ input[type="button"][name^="extmgrplus_"] {
 }
 
 fieldset.quick a i.icon,
-.js_link i.icon {			/* link bar */
-	display: inline-block;
+.js_link i.icon {
 	margin: 0 .3em;
 	font-size: 1.1em;
 }
 
-thead th i.icon {			/* table header */
+div.successbox i.icon,
+fieldset.quick a i.icon,
+.js_link i.icon {
+ 	display: inline-block;
+}
+
+div.successbox.notice {
+	border-radius: 5px;
+}
+
+div.successbox.notice i.icon {
+	font-size: 1.2em;
+}
+
+thead th i.icon {
 	font-size: 1.1em;
 	font-weight: normal;
 }
 
-div.successbox i.icon {		/* trigger_error */
-	display: inline-block;
-}
-
-#extmgrplus_list td:nth-of-type(2) i.fa-exclamation-triangle {		/* version */
+#extmgrplus_list td:nth-of-type(2) i.fa-exclamation-triangle {
 	color: #DF950D;
 }
 
-#extmgrplus_list td:nth-of-type(2) i.icon {							/* version */
+#extmgrplus_list td:nth-of-type(2) i.icon {
 	cursor: help;
 	font-size: 1.2em;
 }
 
-#extmgrplus_list td:nth-of-type(3) i.icon {							/* migrations */
+#extmgrplus_list td:nth-of-type(3) i.icon {
 	font-size: 1.2em;
 }
 
-#extmgrplus_list td:nth-of-type(6) i.icon {							/* select */
+#extmgrplus_list td:nth-of-type(6) i.icon {
 	cursor: help;
 	font-size: 1.3em;
 }
@@ -220,6 +218,14 @@ fieldset.extmgrplus_order_and_ignore dd label:hover {
 	padding: 0 2px;
 	margin: 0 2px;
 	background-color: #F9F9F9;
+}
+
+input[type="text"].inactive {
+	opacity: .5;
+}
+
+input[type="checkbox"]:disabled {
+	cursor: not-allowed;
 }
 
 #extmgrplus_list th:nth-of-type(1n+2),		/* version+ */

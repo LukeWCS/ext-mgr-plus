@@ -28,7 +28,7 @@ ExtMgrPlus.constants = Object.freeze({
 
 class LukeWCSphpBBConfirmBox {
 /*
-* phpBB ConfirmBox class for Checkboxes - v0.5.1
+* phpBB ConfirmBox class for Checkboxes - v1.0.0
 * @copyright (c) 2023, LukeWCS, https://www.wcsaga.org
 * @license GNU General Public License, version 2 (GPL-2.0-only)
 */
@@ -92,10 +92,9 @@ ExtMgrPlus.VersionCheck = function () {
 
 	ExtMgrPlus.ShowHideActionElements(false);
 
-	$('#extmgrplus_link_version_check i.icon')	.addClass('fa-spin');
-	$('span[id^="extmgrplus_link_"]')			.addClass('disabled');
-	$('#extmgrplus_versioncheck_notice')		.show();
-	$(location)									.prop('href', vcURL);
+	$('span[id^="extmgrplus_link_"]')		.addClass('disabled');
+	$('#extmgrplus_versioncheck_notice')	.show();
+	$(location)								.prop('href', vcURL);
 };
 
 ExtMgrPlus.ShowHideOrderIgnore = function () {
