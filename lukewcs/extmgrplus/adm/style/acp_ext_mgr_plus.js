@@ -9,10 +9,7 @@
 
 // Initialization
 
-if (typeof ExtMgrPlus == "undefined")
-{
-	var ExtMgrPlus = {};
-}
+var ExtMgrPlus = {};
 
 (function () {	// IIFE start
 
@@ -28,12 +25,12 @@ ExtMgrPlus.constants = Object.freeze({
 
 class LukeWCSphpBBConfirmBox {
 /*
-* phpBB ConfirmBox class for Checkboxes - v1.0.0
+* phpBB ConfirmBox class for checkboxes - v1.1.0
 * @copyright (c) 2023, LukeWCS, https://www.wcsaga.org
 * @license GNU General Public License, version 2 (GPL-2.0-only)
 */
 	constructor(submitSelector) {
-		this.$submitSelector = $(submitSelector);
+		this.$submitObject = $(submitSelector);
 		var _this = this;
 
 		$('div[id$="_confirmbox"]').each(function () {
@@ -42,42 +39,43 @@ class LukeWCSphpBBConfirmBox {
 			$('input[name="' + elementName + '"]')				.on('change'	, _this.Show);
 			$('input[name^="' + elementName + '_confirm_"]')	.on('click'		, _this.Button);
 		});
+		this.$submitObject.parents('form')						.on('reset'		, this.HideAll);
 	}
 
 	Show = (e) => {
-		var defaultState = Boolean($('div[id="' + e.target.name + '_confirmbox"]').attr('data-default'));
-		var $element = $('input[name="' + e.target.name + '"]');
+		var elementDefault = $('div[id="' + e.target.name + '_confirmbox"]').attr('data-default') == 1;
+		var $elementObject = $('input[name="' + e.target.name + '"]');
 
-		if ($element.prop('checked') != defaultState) {
-			$element										.prop('disabled', true)
-			$element										.addClass('confirmbox_active');
+		if ($elementObject.prop('checked') != elementDefault) {
+			$elementObject									.prop('disabled', true)
+			$elementObject									.addClass('confirmbox_active');
 			$('div[id="' + e.target.name + '_confirmbox"]')	.show();
-			this.$submitSelector							.prop('disabled', true);
+			this.$submitObject								.prop('disabled', true);
 		}
 	}
 
 	Button = (e) => {
-		var elementName = e.target.name.slice(0, e.target.name.indexOf('_confirm_'));
-		var defaultState = Boolean($('div[id="' + elementName + '_confirmbox"]').attr('data-default'));
-		var $element = $('input[name="' + elementName + '"]');
+		var elementName = e.target.name.replace(/_confirm_.*/, '');
+		var elementDefault = $('div[id="' + elementName + '_confirmbox"]').attr('data-default') == 1;
+		var $elementObject = $('input[name="' + elementName + '"]');
 
-		if (e.target.name.endsWith('confirm_no')) {
-			$element.prop('checked', defaultState);
+		if (e.target.name.endsWith('_confirm_no')) {
+			$elementObject.prop('checked', elementDefault);
 		}
 
-		$element										.prop('disabled', false);
-		$element										.removeClass('confirmbox_active');
+		$elementObject									.prop('disabled', false);
+		$elementObject									.removeClass('confirmbox_active');
 		$('div[id="' + elementName + '_confirmbox"]')	.hide();
-		this.$submitSelector							.prop('disabled', $('input[class*="confirmbox_active"]').length);
+		this.$submitObject								.prop('disabled', $('input[class*="confirmbox_active"]').length);
 	}
 
 	HideAll = () => {
-		var $element = $('input[class*="confirmbox_active"]');
+		var $elementObject = $('input[class*="confirmbox_active"]');
 
-		$element					.prop('disabled', false);
-		$element					.removeClass('confirmbox_active');
+		$elementObject				.prop('disabled', false);
+		$elementObject				.removeClass('confirmbox_active');
 		$('div[id$="_confirmbox"]')	.hide();
-		this.$submitSelector		.prop('disabled', false);
+		this.$submitObject			.prop('disabled', false);
 	}
 }
 
@@ -145,12 +143,6 @@ ExtMgrPlus.SetInputBoxState = function (e) {
 	}
 };
 
-ExtMgrPlus.DisableEnter = function (e) {
-	if (e.key == 'Enter') {
-		return false;
-	}
-};
-
 ExtMgrPlus.ShowHideActionElements = function (show) {
 	$('#extmgrplus_list td:nth-of-type(1n+4):nth-of-type(-1n+6) *:not(dfn)')	.toggle(show);
 
@@ -184,9 +176,12 @@ ExtMgrPlus.FormSubmit = function () {
 	$('#extmgrplus_settings').submit();
 };
 
-ExtMgrPlus.FormReset = function () {
-	$('#extmgrplus_settings').trigger("reset");
-	ExtMgrPlus.ConfirmBox.HideAll();
+// General
+
+ExtMgrPlus.DisableEnter = function (e) {
+	if (e.key == 'Enter' && e.target.type != 'textarea') {
+		return false;
+	}
 };
 
 // Event registration
@@ -201,14 +196,13 @@ $(window).ready(function () {
 	$('input[name="ext_mark_enabled[]"]:enabled')		.on('change'	, {CheckBoxType: 'enabled'}, ExtMgrPlus.SetButtonState);
 	$('input[name="ext_mark_disabled[]"]:enabled')		.on('change'	, {CheckBoxType: 'disabled'}, ExtMgrPlus.SetButtonState);
 	$('input[name="ext_ignore[]"]')						.on('change'	, ExtMgrPlus.SetInputBoxState);
-	$('input[name*="ext_order"]')						.on('keypress'	, ExtMgrPlus.DisableEnter);
+	$('#extmgrplus_list,#extmgrplus_settings')			.on('keypress'	, ExtMgrPlus.DisableEnter);
 
 	// Settings
 	$('input[name="extmgrplus_defaults"]')				.on('click'		, ExtMgrPlus.SetDefaults);
-	$('input[name="extmgrplus_form_submit"]')			.on('click'		, ExtMgrPlus.FormSubmit);
-	$('input[name="extmgrplus_form_reset"]')			.on('click'		, ExtMgrPlus.FormReset);
+	$('input[name="extmgrplus_submit"]')				.on('click'		, ExtMgrPlus.FormSubmit);
 
-	ExtMgrPlus.ConfirmBox = new LukeWCSphpBBConfirmBox('input[name="extmgrplus_form_submit"]');
+	ExtMgrPlus.ConfirmBox = new LukeWCSphpBBConfirmBox('[name="extmgrplus_submit"]');
 });
 
 })();	// IIFE end

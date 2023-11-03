@@ -1,8 +1,8 @@
-### 1.1.3
+### 1.2.0
 (2023--)
 * Fix: Bei der Ermittlung neuer Migrationen verhinderte eine zu strikte Dateinamen-Prüfung eine korrekte Erkennung, wenn bei Dateinamen und Klassennamen abweichende Gross/Kleinschreibung verwendet wurde. Daraus ergaben sich 2 Fehler:
   * Bei aktivierter Anzeige der Spalte für neue Migrationen wurde die Anzahl falsch berechnet.
-  * Bei deaktiviertem Sicherheitsschalter für neue Migrationen wurde die Auswahl-Checkbox der betroffenen Erweiterung nicht gesperrt.
+  * Ist die Aktivierung von Erweiterungen mit neuen Migrationen nicht erlaubt, wurde die Auswahl-Checkbox der betroffenen Erweiterung nicht gesperrt.
 * Fix: Beim Betatest von 1.1.3 zeigte sich, dass EMP nicht mit ungültigen Erweiterungen umgehen konnte, wodurch sich mehrere Probleme ergaben:
   * In bestimmten Situationen konnte der Zähler für nicht-installierte Erweiterungen in den Minus-Bereich geraten. Da eine negative Anzahl nicht vorgesehen ist, wurde stattdessen die Zahl 18446744073709551615 angezeigt, da in der Sprachvariable ein anderer Variablentyp erwartet wurde. [Meldung von Kirk (phpBB.de)]
   * Bei negativer Anzahl der nicht-installierten Erweiterungen wurden alle deaktivierten Erweiterungen in der Sektion für nicht-installierte Erweiterungen angezeigt. [Meldung von Kirk (phpBB.de)]
@@ -10,7 +10,7 @@
   * Die Auswahlbox "Alle Erweiterungen auswählen" bei Aktivierte und Deaktivierte wurde je nach Situation fälschlicherweise aktiviert.
   * Die Zähler bei "Aktivierte Erweiterungen" und "Deaktivierte Erweiterungen" wurden je nach Situation falsch berechnet.
   * Bei Reihenfolge&Ignorieren wurden für ungültige Erweiterungen fälschlicherweise Eingabe-Elemente generiert, durch die beim Speichern falsche Daten in die DB geschrieben werden konnten.
-* Fix: Wenn bei deaktivierter Rückfrage und aktivierter automatischer Bestätigung Erweiterungen geschaltet wurden und dann die ExtMgr Seite manuell neu geladen wurde (z.B. mit F5), dann führte das beim Firefox dazu, dass fälschlicherweise eine Rückfrage zum erneuten Senden der Formulardaten erschien. Wurde diese Rückfrage positiv bestätigt, dann wurde von EMP die letzte Aktion erneut ausgeführt. Das wiederum konnte zu Fehlern führen, wenn in der Zwischenzeit Änderungen im Dateisystem vorgenommen wurden, durch die Erweiterungen ungültig werden, zum Beispiel Strukturfehler in `composer.json`. Eine neue Funktion rotiert jetzt die GET Parameter der URL bei einer automatischen Weiterleitung, was beim Firefox dazu führt, dass keine Rückfrage mehr bezüglich Formulardaten ausgelöst wird. [Meldung von Kirk (phpBB.de)]
+* Fix: Wenn bei deaktivierter Rückfrage und aktivierter automatischer Bestätigung Erweiterungen geschaltet wurden und dann die ExtMgr Seite manuell neu geladen wurde (z.B. mit F5), dann führte das beim Firefox dazu, dass fälschlicherweise eine Rückfrage zum erneuten Senden der Formulardaten erschien. Wurde diese Rückfrage positiv bestätigt, dann wurde von EMP die letzte Aktion erneut ausgeführt. Das konnte zu weiteren Fehlern führen. Eine neue Funktion rotiert jetzt die GET Parameter der URL bei einer automatischen Weiterleitung, was beim Firefox dazu führt, dass keine unnötige Rückfrage mehr bezüglich Formulardaten ausgelöst wird. [Meldung von Kirk (phpBB.de)]
 * Fix: Das Problem mit dem erneuten Senden der Formulardaten beim Firefox hatte einen Fehler von EMP aufgedeckt, der dann auftreten konnte, wenn Erweiterungen geschaltet wurden, ohne die ExtMgr Seite vorher neu zu laden. Wenn zwischen zwei Schaltvorgängen eine Erweiterung ungültig wurde, also die Metadaten der Erweiterung nicht mehr gelesen werden konnten, dann führte das zu einem FATAL der nicht abgefangen wurde. [Meldung von Kirk (phpBB.de)]
 * In der Info-Tabelle wird hinter der Anzahl der verfügbaren Erweiterungen in Klammern auch die Anzahl ungültiger Erweiterungen angezeigt.
 * Da phpBB standardmässig nicht explizit darüber informiert, wenn eine Erweiterung keine Versionsprüfung bietet, füllt EMP nun auch diese Lücke.
@@ -21,17 +21,16 @@
   * Bei Erweiterungen bei denen es Fehler bei der Versionsprüfung gab, wird ein orangefarbenes Warn-Icon mit Tooltip hinter der Version angezeigt.
 * Weitere Änderungen bei der Versionsprüfung:
   * Bei einer Versionsprüfung werden jetzt alle Funktionen in der Link-Leiste gesperrt, die den Vorgang stören können.
-  * Weiterhin werden die interaktiven Elemente in der Erweiterungen-Liste ausgeblendet, um versehentliche Aktionen zu verhindern. [Vorschlag von chris1278 (phpBB.de)]
-  * Zusätzlich informiert eine blaue Info-Box über den Vorgang. [Vorschlag von chris1278 (phpBB.de)]
+  * Weiterhin werden die interaktiven Elemente in der Erweiterungen-Liste ausgeblendet, um versehentliche Aktionen zu verhindern, die den Vorgang stören können. [Vorschlag von chris1278 (phpBB.de)]
+  * Zusätzlich informiert eine blaue Info-Box mit Hinweis über den Vorgang. [Vorschlag von chris1278 (phpBB.de)]
 * Bei aktivierter Option "Letzten Zustand merken" wird die Auswahl der Kontrollkästchen bei aktivierter Rückfrage nur noch dann gespeichert, wenn die Rückfrage mit "Ja" bestätigt wird. Bei "Nein" wird die zuletzt gespeicherte Auswahl wiederhergestellt.
 * Beim roten Ausrufezeichen-Icon (bei veralteten Versionen) ist jetzt ebenfalls ein Tooltip vorhanden.
-* Reihenfolge&Ignorieren:
-  * Beim Einblenden der Einstellungen werden diejenigen Spalten komplett ausgeblendet, die interaktive Elemente enthalten, anstatt nur die Elemente selber auszublenden.
-  * Ist die Funktion deaktiviert, wird auch kein HTML mehr generiert für die Erklärungstexte, für den Absenden-Block sowie für die Inhalte der Spalten Reihenfolge und Ignorieren.
-* Mehrere Kritikpunkte und Vorschläge von Kirk (phpBB.de) bezüglich CSS berücksichtigt.
+* Ist die Funktion "Reihenfolge&Ignorieren" deaktiviert, wird auch kein unnötiges HTML mehr generiert für die Erklärungstexte, für den Absenden-Block sowie für die Inhalte der Spalten "Reihenfolge" und "Ignorieren".
+* Mehrere Kritikpunkte und Vorschläge bezüglich CSS berücksichtigt. [Vorschlag von Kirk (phpBB.de)]
 * Code Optimierung:
   * Unter anderem wurden bei Javascript und jQuery als DEPRECATED eingestufte Eigenschaften und Funktionen durch aktuelle Varianten ersetzt. Details siehe Build Changelog.
   * Die Inline-ConfirmBox von EMP für die Generierung von Rückfragen in den Einstellungen, wurde zur Javascript Klasse `LukeWCSphpBBConfirmBox` umgebaut, die sämtliche Funktionen und Eigenschaften in einem einzigen Objekt zusammenfasst. Dadurch kann die ConfirmBox-Funktionalität sehr einfach in andere Erweiterungen integriert werden.
+  * Javascript.
   * Core.
 * Sprachdateien:
   * Durch eine Änderung in 1.0.7 wurde eine Sprachvariable obsolet, diese wurde jedoch bisher nicht entfernt.

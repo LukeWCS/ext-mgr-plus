@@ -138,8 +138,8 @@
 
 		<p class="submit-buttons">
 			<input type="hidden" name="extmgrplus_save_settings" value="1">&nbsp;
-			<input type="button" class="button1" name="extmgrplus_form_submit" value="{{ lang('SUBMIT') }}">&nbsp;
-			<input type="button" class="button2" name="extmgrplus_form_reset" value="{{ lang('RESET') }}">
+			<input type="button" class="button1" name="extmgrplus_submit" value="{{ lang('SUBMIT') }}">&nbsp;
+			<input type="reset" class="button2" name="extmgrplus_reset" value="{{ lang('RESET') }}">
 		</p>
 	</fieldset>
 
@@ -166,10 +166,10 @@
 {%- endmacro %}
 
 {% macro confirmbox(name, message, default = false) -%}
-	<div id="{{ name }}_confirmbox" data-default="{{ default }}" style="display: none;">
+	<div id="{{ name }}_confirmbox" data-default="{{ default ? 1 : 0 }}" style="display: none;">
 		<h2>{{ lang('CONFIRM') }}</h2>
 		<p>{{ message }}</p>
-		<p class="submit-buttons">
+		<p>
 			<input type="button" class="button1" name="{{ name }}_confirm_yes" value="{{ lang('YES') }}">&nbsp;
 			<input type="button" class="button2" name="{{ name }}_confirm_no" value="{{ lang('NO') }}">
 		</p>

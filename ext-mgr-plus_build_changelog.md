@@ -1,3 +1,13 @@
+### 1.1.3-b19
+* Fix: Die Enter Taste wird jetzt in den Formularen vom ExtMgr und Einstellungen komplett gesperrt. Bisher wurde die Enter Taste nur in der Spalte Reihenfolge gesperrt, was an mehreren Stellen unterschiedliche Auswirkungen haben konnte:
+  * Ist Reihenfolge&Ignorieren aktiviert und man ändert im ExtMgr eine Auswählen-Checkbox und drückt direkt danach Enter, wird die Funktion zum Speichern von Reihenfolge&Ignorieren ausgeführt. Dasselbe gilt auch bei den Checkboxen der Ignorieren-Spalte.
+  * Ist Reihenfolge&Ignorieren deaktiviert und man ändert im ExtMgr eine Auswählen-Checkbox und drückt direkt danach Enter, wird die Funktion zum deaktivieren aller Exts ausgeführt, unabhängig davon welche Checkbox zuvor geändert wurde.
+* Fix: Regression. Bei b13 wurde der Pointer-Cursor entfernt, aber bei b15 wurde die Änderung unwirksam, weil auf Reihenfolge&Ignorieren begrenzt.
+* LukeWCSphpBBConfirmBox 1.1.0
+  * Die Klasse reagiert jetzt direkt auf ein Formular-Reset und schliesst alle geöffneten ConfirmBox-Fenster. Diese Funktionalität muss also nicht mehr separat definiert werden.
+  * CSS Code weiter von EMP isoliert.
+  * Code optimiert.
+ 
 ### 1.1.3-b18
 * ExtMgr Template:
   * In der Info-Box für die Versionsprüfung wird jetzt hinter dem Text das gleiche animierte Icon angezeigt, wie bei den automatischen Bestätigungen. [Vorschlag von Kirk (phpBB.de)] 
