@@ -138,8 +138,8 @@
 					<td class="row3">
 					</td>
 					<td class="row3">
-						{{ _self.button(
-							'disable',
+						{{ _self.submit_buttons(
+							'disable_all',
 							EXTMGRPLUS_COUNT_ENABLED_SELECTED > 0
 						) }}
 					</td>
@@ -216,8 +216,8 @@
 						<td class="row3">
 						</td>
 						<td class="row3">
-							{{ _self.button(
-								'enable',
+							{{ _self.submit_buttons(
+								'enable_all',
 								EXTMGRPLUS_COUNT_DISABLED_SELECTED > 0
 							) }}
 						</td>
@@ -316,6 +316,10 @@
 		{{ _self.submit_buttons('order_and_ignore') }}
 	{% endif %}
 
+	{% if EXTMGRPLUS_SELECT_CHECKBOX_MODE == 2 %}
+		{{ _self.submit_buttons('save_checkboxes') }}
+	{% endif %}
+
 	{{ S_FORM_TOKEN }}
 </form>
 
@@ -349,30 +353,26 @@
 {% INCLUDEJS '@lukewcs_extmgrplus/acp_ext_mgr_plus.js' %}
 {% INCLUDECSS '@lukewcs_extmgrplus/acp_ext_mgr_plus.css' %}
 
-{% macro submit_buttons(mode) %}
-	{% if mode == 'order_and_ignore' %}
+{% macro submit_buttons(type, enabled = true) %}
+	{% if type == 'order_and_ignore' %}
 		<fieldset class="extmgrplus_order_and_ignore" style="display: none;">
 			<legend>{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
 
 			<p class="submit-buttons">
-				<input type="submit" class="button1" name="extmgrplus_save_order_and_ignore" value="{{ lang('SUBMIT') }}">
+				<input type="submit" name="extmgrplus_save_order_and_ignore" class="button1" value="{{ lang('SUBMIT') }}">
 			</p>
 		</fieldset>
+	{% elseif type == 'save_checkboxes' %}
+		<input type="submit" name="extmgrplus_save_checkboxes" value="save_checkboxes" hidden>
+	{% elseif type == 'disable_all' %}
+		<input type="submit" name="extmgrplus_disable_all" class="button1" title="{{ lang('EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE')|e('html') }}" value="{{ lang('EXTMGRPLUS_ALL_DISABLE') }}"{{ !enabled ? ' disabled' }}>
+	{% elseif type == 'enable_all' %}
+		<input type="submit" name="extmgrplus_enable_all" class="button1" title="{{ lang('EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE')|e('html') }}" value="{{ lang('EXTMGRPLUS_ALL_ENABLE') }}"{{ !enabled ? ' disabled' }}>
 	{% endif %}
-{% endmacro %}
-
-{% macro button(action, enabled = true) %}
-{% apply spaceless %}
-	{% if action == 'disable' %}
-		<input type="submit" class="button1" name="extmgrplus_disable_all" title="{{ lang('EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE')|e('html') }}" value="{{ lang('EXTMGRPLUS_ALL_DISABLE') }}"{{ !enabled ? ' disabled' }}>
-	{% elseif action == 'enable' %}
-		<input type="submit" class="button1" name="extmgrplus_enable_all" title="{{ lang('EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE')|e('html') }}" value="{{ lang('EXTMGRPLUS_ALL_ENABLE') }}"{{ !enabled ? ' disabled' }}>
-	{% endif %}
-{% endapply %}
 {% endmacro %}
 
 {% macro checkbox_all(section, enabled = true, checked = false) -%}
-	<input type="checkbox" class="radio" name="ext_mark_all_{{ section }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT_ALL')|e('html') }}"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
+	<input type="checkbox" name="ext_mark_all_{{ section }}" class="radio" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT_ALL')|e('html') }}"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
 {%- endmacro %}
 
 {% macro name(ext_obj) -%}
@@ -441,17 +441,17 @@
 		{% endif %}
 		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_IGNORED')|e('html') }}">{{ common.icon('fa-ban') }}
 	{% elseif !enabled %}
-		<input type="checkbox" class="radio" name="ext_mark_{{ section }}[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_LOCKED')|e('html') }}" disabled>
+		<input type="checkbox" name="ext_mark_{{ section }}[]" class="radio" title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_LOCKED')|e('html') }}" disabled>
 	{% else %}
-		<input type="checkbox" class="radio" name="ext_mark_{{ section }}[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT')|e('html') }}" value="{{ ext_name }}"{{ checked ? ' checked' }}>
+		<input type="checkbox" name="ext_mark_{{ section }}[]" class="radio" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT')|e('html') }}" value="{{ ext_name }}"{{ checked ? ' checked' }}>
 	{% endif %}
 {% endapply %}
 {% endmacro %}
 
 {% macro inputbox(ext_name, value, inactive = false) -%}
-	<input type="text" size="1" maxlength="2"{{ inactive ? ' class="inactive"' }} name="ext_order[{{ ext_name }}]" title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER')|e('html') }}" value="{{ value }}" pattern="^[0-9]{1,2}$">
+	<input type="text" name="ext_order[{{ ext_name }}]" size="1" maxlength="2"{{ inactive ? ' class="inactive"' }} title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER')|e('html') }}" value="{{ value }}" pattern="^[0-9]{1,2}$">
 {%- endmacro %}
 
 {% macro checkbox_ignore(ext_name, checked = false) -%}
-	<input type="checkbox" class="radio" name="ext_ignore[]" title="{{ lang('EXTMGRPLUS_TOOLTIP_IGNORE')|e('html') }}" value="{{ ext_name }}"{{ checked ? ' checked' }}>
+	<input type="checkbox" name="ext_ignore[]" class="radio" title="{{ lang('EXTMGRPLUS_TOOLTIP_IGNORE')|e('html') }}" value="{{ ext_name }}"{{ checked ? ' checked' }}>
 {%- endmacro %}

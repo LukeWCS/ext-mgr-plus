@@ -24,13 +24,19 @@ legend {
 	top: 0;
 }
 
+input[type="submit"][name="confirm"],
+input[type="submit"][name^="extmgrplus_"],
+input[type="button"][name^="extmgrplus_"] {
+	padding: 3px 4px;
+}
+
 /* confirm_box (phpBB)*/
 
 #confirm h2 {
 	margin-bottom: .25em;
 }
 
-/* ACP ConfirmBox (JS) */
+/* LukeWCSphpBBConfirmBox */
 
 div[id$="_confirmbox"] {
 	max-width: 450px;
@@ -78,11 +84,6 @@ legend.legend_sub:after {
 	border-bottom: 1px solid #CCCCCC;
 	width: 100%;
 	margin: 0 0 .5em 1em;
-}
-
-input[type="submit"][name^="extmgrplus_"],
-input[type="button"][name^="extmgrplus_"] {
-	padding: 3px 4px;
 }
 
 /*

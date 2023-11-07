@@ -1,3 +1,13 @@
+### 1.1.3-b20
+* Ist Eigendeaktivierung aktiv und es wird beim Deaktivieren der Exts auch EMP mit ausgewählt, dann wird der Workaround bezüglich Cache-löschen nur noch dann ausgeführt, wenn phpBB <3.3.8 vorhanden ist.
+* ExtMgr Template: Alle Submit Elemente mit denen das Formular abgeschickt werden kann, befinden sich jetzt gesammelt in einem einzigen Makro.
+  * Twig Makro `button()` in `submit_buttons()` integriert.
+  * HTML der JS Funktion `ExtMgrPlus.SaveCheckboxes` in `submit_buttons()` integriert.
+* JS:
+  * HTML für `SaveCheckboxes entfernt und Code daran angepasst.
+* CSS:
+  * Kleine Korrekturen.
+
 ### 1.1.3-b19
 * Fix: Die Enter Taste wird jetzt in den Formularen vom ExtMgr und Einstellungen komplett gesperrt. Bisher wurde die Enter Taste nur in der Spalte Reihenfolge gesperrt, was an mehreren Stellen unterschiedliche Auswirkungen haben konnte:
   * Ist Reihenfolge&Ignorieren aktiviert und man ändert im ExtMgr eine Auswählen-Checkbox und drückt direkt danach Enter, wird die Funktion zum Speichern von Reihenfolge&Ignorieren ausgeführt. Dasselbe gilt auch bei den Checkboxen der Ignorieren-Spalte.

@@ -299,7 +299,7 @@ class ext_mgr_plus
 	public function catch_message(): void
 	{
 		$last_action = $this->template->retrieve_var('EXTMGRPLUS_LAST_EMP_ACTION');
-		if ($this->ext_manager->is_disabled('lukewcs/extmgrplus') || $last_action == '')
+		if ($last_action == '')
 		{
 			return;
 		}
@@ -448,13 +448,13 @@ class ext_mgr_plus
 
 				if ($this->ext_manager->is_enabled($ext_name))
 				{
-					if ($ext_name != 'lukewcs/extmgrplus')
+					if ($ext_name != 'lukewcs/extmgrplus' || !phpbb_version_compare(PHPBB_VERSION, '3.3.8-rc1', '<'))
 					{
 						while ($this->ext_manager->disable_step($ext_name))
 						{
 						}
 					}
-					else if ($this->config['extmgrplus_switch_self_disable'])
+					else
 					{
 						$this->common->config_text_set('extmgrplus_todo', 'self_disable', true);
 						$ext_count_success++;
@@ -483,6 +483,11 @@ class ext_mgr_plus
 			}
 		}
 		$this->set_last_ext_template_vars('');
+
+		if (!phpbb_version_compare(PHPBB_VERSION, '3.3.8-rc1', '<'))
+		{
+			$this->todo();
+		}
 
 		if ($safe_time_exceeded)
 		{
@@ -617,6 +622,11 @@ class ext_mgr_plus
 		}
 
 		$this->set_last_ext_template_vars('');
+
+		if (!phpbb_version_compare(PHPBB_VERSION, '3.3.8-rc1', '<'))
+		{
+			$this->todo();
+		}
 
 		if ($safe_time_exceeded)
 		{

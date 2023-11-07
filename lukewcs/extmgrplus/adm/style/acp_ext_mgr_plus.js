@@ -114,8 +114,7 @@ ExtMgrPlus.SaveCheckboxes = function () {
 		return;
 	}
 
-	$('#extmgrplus_list').append('<input type="hidden" name="extmgrplus_save_checkboxes" value="1">');
-	$('#extmgrplus_list').submit();
+	$('input[name="extmgrplus_save_checkboxes"]').click();
 };
 
 ExtMgrPlus.CheckUncheckAll = function (e) {

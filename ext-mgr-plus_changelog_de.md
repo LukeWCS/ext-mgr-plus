@@ -26,6 +26,7 @@
 * Bei aktivierter Option "Letzten Zustand merken" wird die Auswahl der Kontrollkästchen bei aktivierter Rückfrage nur noch dann gespeichert, wenn die Rückfrage mit "Ja" bestätigt wird. Bei "Nein" wird die zuletzt gespeicherte Auswahl wiederhergestellt.
 * Beim roten Ausrufezeichen-Icon (bei veralteten Versionen) ist jetzt ebenfalls ein Tooltip vorhanden.
 * Ist die Funktion "Reihenfolge&Ignorieren" deaktiviert, wird auch kein unnötiges HTML mehr generiert für die Erklärungstexte, für den Absenden-Block sowie für die Inhalte der Spalten "Reihenfolge" und "Ignorieren".
+* Ist Eigendeaktivierung aktiv und es wird beim Deaktivieren der Exts auch EMP mit ausgewählt, dann wird der Workaround bezüglich Cache-löschen nur noch dann ausgeführt, wenn phpBB <3.3.8 vorhanden ist. Dadurch gibt es keine Verzögerung mehr bei den nächsten beiden Seitenaufrufen, sondern nur noch einmal.
 * Mehrere Kritikpunkte und Vorschläge bezüglich CSS berücksichtigt. [Vorschlag von Kirk (phpBB.de)]
 * Code Optimierung:
   * Unter anderem wurden bei Javascript und jQuery als DEPRECATED eingestufte Eigenschaften und Funktionen durch aktuelle Varianten ersetzt. Details siehe Build Changelog.
