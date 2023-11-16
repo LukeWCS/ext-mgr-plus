@@ -1,4 +1,15 @@
-### 1.1.3-b20
+#### 1.1.3-b21
+* JS:
+  * Das JS für ExtMgr und Settings separiert und die Dateien passend zum Template benannt.
+  * Da der Schalter "Immer auf instabile Entwicklungs-Versionen prüfen:" in den Einstellungen nicht zu EMP gehört, wird dieser beim Zurücksetzen auf Standard-Einstellungen nicht mehr berücksichtigt.
+* LukeWCSphpBBConfirmBox 1.2.0:
+  * Wenn die Klasse mehr als einem Formular pro Template zugeordnet wurde, ergaben sich mehrere Probleme, da die Klasse bisher nicht für mehrere Instanzen ausgelegt war:
+    * Fix: Wurde in einem der Formulare eine ConfirmBox geöffnet, dann wurde bei allen Formularen der Absenden-Button deaktiviert.
+    * Fix: Wurde in mehreren Formularen eine ConfirmBox geöffnet, dann blieben beim Schliessen eines der ConfirmBox-Fenster die Absenden-Buttons aller Formulare deaktiviert, bis alle ConfirmBox-Fenster in allen Formularen geschlossen wurden.
+    * Fix: Wurde in mehreren Formularen eine ConfirmBox geöffnet und dann in einem Formular ein Reset ausgelöst, wurden auch in den anderen Formularen die ConfirmBox-Fenster geschlossen. Der Absenden-Button der anderen Formulare blieb deaktiviert und zwangsläufig wurden auch die geänderten Schalter nicht zurückgesetzt.
+* Von EC gemeldete Fehler bei PPSSE und VA behoben.
+
+#### 1.1.3-b20
 * Ist Eigendeaktivierung aktiv und es wird beim Deaktivieren der Exts auch EMP mit ausgewählt, dann wird der Workaround bezüglich Cache-löschen nur noch dann ausgeführt, wenn phpBB <3.3.8 vorhanden ist.
 * ExtMgr Template: Alle Submit Elemente mit denen das Formular abgeschickt werden kann, befinden sich jetzt gesammelt in einem einzigen Makro.
   * Twig Makro `button()` in `submit_buttons()` integriert.
@@ -8,7 +19,7 @@
 * CSS:
   * Kleine Korrekturen.
 
-### 1.1.3-b19
+#### 1.1.3-b19
 * Fix: Die Enter Taste wird jetzt in den Formularen vom ExtMgr und Einstellungen komplett gesperrt. Bisher wurde die Enter Taste nur in der Spalte Reihenfolge gesperrt, was an mehreren Stellen unterschiedliche Auswirkungen haben konnte:
   * Ist Reihenfolge&Ignorieren aktiviert und man ändert im ExtMgr eine Auswählen-Checkbox und drückt direkt danach Enter, wird die Funktion zum Speichern von Reihenfolge&Ignorieren ausgeführt. Dasselbe gilt auch bei den Checkboxen der Ignorieren-Spalte.
   * Ist Reihenfolge&Ignorieren deaktiviert und man ändert im ExtMgr eine Auswählen-Checkbox und drückt direkt danach Enter, wird die Funktion zum deaktivieren aller Exts ausgeführt, unabhängig davon welche Checkbox zuvor geändert wurde.
@@ -18,7 +29,7 @@
   * CSS Code weiter von EMP isoliert.
   * Code optimiert.
  
-### 1.1.3-b18
+#### 1.1.3-b18
 * ExtMgr Template:
   * In der Info-Box für die Versionsprüfung wird jetzt hinter dem Text das gleiche animierte Icon angezeigt, wie bei den automatischen Bestätigungen. [Vorschlag von Kirk (phpBB.de)] 
 * CSS:
@@ -29,7 +40,7 @@
 * Sprachdateien:
   * Sprachvariable für das neue Icon angepasst.
 
-### 1.1.3-b17
+#### 1.1.3-b17
 * JS:
   * Bei einer Versionsprüfung wird nicht mehr die ganze Erweiterungen-Liste ausgeblendet, sondern nur noch die interaktiven Elemente. [Vorschlag von chris1278 (phpBB.de)]
   * Bei Reihenfolge&Ignorieren werden nicht mehr die Spalten mit Aktionen ausgeblendet (siehe 1.1.3-b1), sondern wieder wie früher lediglich die interaktiven Elemente selbst.
@@ -41,7 +52,7 @@
 * Sprachdateien:
   * 1 neue Sprachvariable für die neue Info-Box bezüglich Versionsprüfung.
 
-### 1.1.3-b16
+#### 1.1.3-b16
 * ExtMgr Template:
   * Die restlichen JS Aufrufe im Template entfernt; Versionsprüfung, Reihenfolge&Ignorieren und Checkbox-Save.
 * JS:
@@ -51,7 +62,7 @@
 * CSS:
   * Code für die neuen JS-Links in der Link-Leiste hinzugefügt.
 
-### 1.1.3-b15
+#### 1.1.3-b15
 * JS:
   * Die Inline-ConfirmBox bestehend aus 3 separaten Funktionen und 1 separate Event-Registrierung (für je 3 Controls pro Schalter) zu einer Klasse zusammengefasst. Damit reduziert sich die Projekt-spezifische Integration auf eine einzige Zeile JS Code, bei der die Klasse mittels `new` eingebunden werden kann. Ausserdem ist so der Selektor für den Absenden-Button nicht mehr hardcoded auf 3 Funktionen verteilt, sondern wird nur noch einmal als Klassen-Parameter definiert.
   * Das EMP JS befindet sich jetzt innerhalb einer IIFE Struktur um eine bessere Kapselung zu erreichen.
@@ -60,13 +71,13 @@
   * Für die Inline-ConfirmBox die CSS Definition von Thorsten übernommen, die er bei RT eingebaut hat und die für einen dezenten 3D Effekt (Schatten) sorgt.
   * Das Toggle-CSS in das EMP-CSS integriert und die separate Datei entfernt.
 
-### 1.1.3-b14
+#### 1.1.3-b14
 * Bei aktivierter Option "Letzten Zustand merken" wird die Auswahl der Kontrollkästchen bei aktivierter Rückfrage nur noch dann gespeichert, wenn die Rückfrage mit "Ja" bestätigt wird. Bei "Nein" wird die zuletzt gespeicherte Auswahl wiederhergestellt.
 * CSS:
   * In der Gruppe mit dem Absenden-Button den zu grossen Abstand zwischen Buttons und oberem Rand der Gruppe verkleinert. [Vorschlag von Kirk (phpBB.de)]
   * Datei neu strukturiert.
 
-### 1.1.3-b13
+#### 1.1.3-b13
 * CSS; mehrere Kritikpunkte und Vorschläge von Udo berücksichtigt:
   * Für `dd label` waren bei Reihenfolge&Ignorieren unnötige CSS Anweisungen definiert.
   * Für `label` wird jetzt in den Einstellungen und in Reihenfolge&Ignorieren der Pointer-Cursor entfernt, da dieser wegen Toggles keine Relevanz mehr hat.
@@ -74,22 +85,22 @@
   * Bei Responsive-Ansicht wird bei Reihenfolge&Ignorieren zwischen beiden Erklärungen eine Trennlinie eingefügt.
   * Die EMP Definition für das Padding bei den Auswählen-Checkboxen entfernt, wodurch wieder die phpBB Definition in Kraft tritt. Dadurch sieht das primär bei Responsive-Ansicht ordentlicher aus.
 
-### 1.1.3-b12
+#### 1.1.3-b12
 * ExtMgr Template:
   * Durch die Änderungen von 1.1.3-b9 waren kleine Optimierungen bei Twig möglich, wodurch nicht mehr benötigte Bedingungen entfernt werden konnten.
   * In der Spalten-Überschrift "Name der Erweiterung" war ein unnötiger `<span>` Container sowie eine unbenutzte CSS Klasse definiert. Ursache liegt bei 1.0.0-b8.
 
-### 1.1.3-b11
+#### 1.1.3-b11
 * ExtMgr Template:
   * In der Info-Tabelle werden die neuen Anzeigen "(x ungültige)" von 1.1.3-b9 in der ersten Spalte und "(x Fehler)" von 1.1.3-b5 in der dritten Spalte nur noch dann generiert, wenn "x" mindestens 1 beträgt. Dazu wurden pro Spalte 2 Variablen-Positionen innerhalb `lang()` getauscht.
 * Sprachdateien:
   * Die bestehenden 2 Sprachvariablen für "Verfügbare Erweiterungen" und "Letzte Versionsprüfung" zu Plural Arrays umgebaut.
 
-### 1.1.3-b10
+#### 1.1.3-b10
 * Fix: Wenn bei deaktivierter Rückfrage und aktivierter automatischer Bestätigung Erweiterungen geschaltet wurden und dann die ExtMgr Seite manuell neu geladen wurde (z.B. mit F5), dann führte das beim Firefox dazu, dass fälschlicherweise eine Rückfrage zum erneuten Senden der Formulardaten erschien. Wurde diese Rückfrage positiv bestätigt, dann wurde von EMP die letzte Aktion erneut ausgeführt. Das wiederum konnte zu Fehlern führen, wenn in der Zwischenzeit Änderungen im Dateisystem vorgenommen wurden, durch die Erweiterungen ungültig werden, zum Beispiel Strukturfehler in `composer.json`. Eine neue Funktion rotiert jetzt die GET Parameter der URL bei einer automatischen Weiterleitung, was beim Firefox dazu führt, dass keine Rückfrage mehr bezüglich Formulardaten ausgelöst wird. [Meldung von Kirk (phpBB.de)]
 * Fix: Das Problem mit dem erneuten Senden der Formulardaten beim Firefox hatte einen Fehler von EMP aufgedeckt, der dann auftreten konnte, wenn Erweiterungen geschaltet wurden, ohne die ExtMgr Seite vorher neu zu laden. Wenn zwischen zwei Schaltvorgängen eine Erweiterung ungültig wurde, also die Metadaten der Erweiterung nicht mehr gelesen werden konnten, dann führte das zu einem FATAL der nicht abgefangen wurde. [Meldung von Kirk (phpBB.de)]
 
-### 1.1.3-b9
+#### 1.1.3-b9
 * Fix: Beim Betatest von 1.1.3 zeigte sich, dass EMP nicht mit ungültigen Erweiterungen umgehen konnte, wodurch sich mehrere Probleme ergaben:
   * In bestimmten Situationen konnte der Zähler für nicht-installierte Erweiterungen in den Minus-Bereich geraten. Da eine negative Anzahl nicht vorgesehen ist, wurde stattdessen die Zahl 18446744073709551615 angezeigt, da in der Sprachvariable ein anderer Variablentyp erwartet wurde. [Meldung von Kirk (phpBB.de)]
   * Bei negativer Anzahl der nicht-installierten Erweiterungen wurden alle deaktivierten Erweiterungen in der Sektion für nicht-installierte Erweiterungen angezeigt. [Meldung von Kirk (phpBB.de)]
@@ -107,22 +118,22 @@
   * 4 Variablen umbenannt.
   * Kleine Änderungen.
 
-### 1.1.3-b8
+#### 1.1.3-b8
 * JS:
   * Die Strikt-Direktive aus den 16 Funktionen entfernt und stattdessen einmal im globalen Namensraum am Anfang der Datei definiert.
 
-### 1.1.3-b7
+#### 1.1.3-b7
 * Fix: Fehler in `composer.json` behoben. In der VP war noch eine Debug Änderung vorhanden.
 * CSS:
   * Von Udo die geänderte Farbe für das Warn-Icon übernommen.
 * Code Optimierung.
 
-### 1.1.3-b6
+#### 1.1.3-b6
 * Code Optimierung:
   * Kleine Verbesserungen.
   * Bei lokaler Versionsprüfung (Details) konnte es mehrere Situationen geben, bei denen unnötig der EMP Versions-Cache in der DB aktualisiert wurde. Grund ist die neue Funktion von 1.1.3-b5 zum signalisieren von VP Fehlern.
 
-### 1.1.3-b5
+#### 1.1.3-b5
 * Konnte die Versionsprüfung einer Erweiterung nicht erfolgreich ausgeführt werden, wird diese Information jetzt ebenfalls in der DB gespeichert. Das funktioniert sowohl bei der globalen VP (Alle Versionen erneut prüfen), als auch bei der lokalen VP (Details). Somit können nun alle möglichen Zustände (VP erfolgreich/VP fehlerhaft/keine VP eingerichtet) entsprechend signalisiert werden.
 * ExtMgr Template:
   * In der Info-Tabelle wird jetzt hinter dem Datum der letzten Versionsprüfung die Anzahl Fehler angezeigt.
@@ -136,7 +147,7 @@
   * 1 neue Sprachvariable für den neuen Fehlerhafte-Versionsprüfung-Tooltip.
   * 1 neue Sprachvariable für die Anzeige von Datum und Anzahl Fehler der Versionsprüfung in der Info-Tabelle.
 
-### 1.1.3-b4
+#### 1.1.3-b4
 * ExtMgr Template:
   * Bei veralteten Erweiterung-Versionen wird jetzt für das rote Veraltet-Icon ebenfalls ein Tooltip angezeigt.
   * In der Versions-Spalte waren die Abstände zwischen Text und Icons zu gross. Ursache waren unerwünschte Whitespaces zwischen Text/Icon und HTML Tags. Jetzt sind alle Texte und Icons innerhalb HTML Container und so lassen sich Abstände präzise definieren.
@@ -147,7 +158,7 @@
 * Sprachdateien:
   * 1 neue Sprachvariable für den neuen Veraltete-Version-Tooltip.
 
-### 1.1.3-b3
+#### 1.1.3-b3
 * Es wird jetzt bei jeder Erweiterung ermittelt, ob diese eine Versionsprüfung bietet. Wenn nicht, wird das mit einem Indikator entsprechend signalisiert.
 * ExtMgr Template:
   * Die Info-Tabelle oberhalb der Erweiterungen-Liste auf 4 Spalten erweitert. Neu ist jetzt die Anzahl der Erweiterungen mit eingerichteter Versionsprüfung.
@@ -159,14 +170,14 @@
   * 1 neue Sprachvariable für den neuen Keine-Versionsprüfung-Tooltip.
   * Kleine Änderungen.
 
-### 1.1.3-b2
+#### 1.1.3-b2
 * ExtMgr Template:
   * Wenn eine Erweiterung neue Migrationen hat und die zugehörige Auswahl-Checkbox aufgrund der Einstellungen gesperrt wird, dann wird jetzt ein neuer Tooltip angezeigt, der erklärt, warum die Checkbox gesperrt ist.
   * Um den neuen Tooltip zu ermöglichen ohne zuviel umbauen zu müssen, wird die EMP Auswahl-Checkbox - abhängig von den Einstellungen - ab sofort nicht mehr deaktiviert, sondern gar nicht erst erzeugt. Damit verhält sich die EMP Auswahl-Checkbox genauso wie bei Reihenfolge&Ignorieren, wo für EMP ebenfalls keine Eingabe-Elemente erzeugt werden.
 * Sprachdateien:
   * 1 neue Sprachvariable für den neuen Gesperrt-Tooltip.
 
-### 1.1.3-b1
+#### 1.1.3-b1
 * Fix: Bei der Ermittlung neuer Migrationen verhinderte eine zu strikte Dateinamen-Prüfung eine korrekte Erkennung, wenn bei Dateinamen und Klassennamen abweichende Gross/Kleinschreibung verwendet wurde. Daraus ergaben sich 2 Fehler:
   * Bei aktivierter Anzeige der Spalte für neue Migrationen wurde die Anzahl falsch berechnet.
   * Bei deaktiviertem Sicherheitsschalter für neue Migrationen wurde die Auswahl-Checkbox der betroffenen Erweiterung nicht gesperrt.

@@ -142,8 +142,8 @@ legend.legend_sub:after {
 }
 
 .js_link:hover {
-    color: #BC2A4D;
-    text-decoration: underline;
+	color: #BC2A4D;
+	text-decoration: underline;
 	cursor: pointer;
 }
 
@@ -164,7 +164,7 @@ fieldset.quick a i.icon,
 div.successbox i.icon,
 fieldset.quick a i.icon,
 .js_link i.icon {
- 	display: inline-block;
+	display: inline-block;
 }
 
 div.successbox.notice {

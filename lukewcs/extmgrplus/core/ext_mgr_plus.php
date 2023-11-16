@@ -418,7 +418,6 @@ class ext_mgr_plus
 		if ($this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_LAST)
 		{
 			$ext_mark_disabled = $this->request->variable('ext_mark_disabled', ['']);
-			$ext_list_disabled = array_flip($ext_mark_disabled);
 			$this->common->config_text_set('extmgrplus_list_selected', 'selected', array_merge($ext_mark_enabled, $ext_mark_disabled));
 		}
 
@@ -513,7 +512,6 @@ class ext_mgr_plus
 		if ($this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_LAST)
 		{
 			$ext_mark_enabled = $this->request->variable('ext_mark_enabled', ['']);
-			$ext_list_enabled = array_flip($ext_mark_enabled);
 			$this->common->config_text_set('extmgrplus_list_selected', 'selected', array_merge($ext_mark_enabled, $ext_mark_disabled));
 		}
 
