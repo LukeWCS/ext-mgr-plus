@@ -1,3 +1,16 @@
+#### 1.1.3-b22
+* LukeWCSphpBBConfirmBox 1.3.0:
+  * Redundanten Code zu einer Methode zusammengefasst.
+  * Methoden die nur innerhalb der Klasse verwendet werden (für Events), sind jetzt als privat definiert.
+  * Optional kann das Öffnen/Schliessen der ConfirmBox-Fenster jetzt als Animation ausgeführt werden. Dazu unterstützt die Klasse einen zweiten Parameter, mit dem die Animation aktiviert und die Geschwindigkeit geregelt werden kann: 400 = Standard, 0 = Aus. [Vorschlag von IMC (phpBB.de)] 
+  * Code Optimierung.
+* Bei EMP ist die Animation für die ConfirmBox ab sofort aktiviert, mit dem Wert 300.
+* Settings Template:
+  * Kleine Änderung beim ConfirmBox Makro. Die HTML Pendants für `true` und `false` sind jetzt wieder `"1"` und `""`, da dies im JS direkt ohne Konvertierung ausgewertet werden kann.
+* JS:
+  * Code Optimierung.
+* Freigegeben für PHP 8.3.
+
 #### 1.1.3-b21
 * JS:
   * Das JS für ExtMgr und Settings separiert und die Dateien passend zum Template benannt.

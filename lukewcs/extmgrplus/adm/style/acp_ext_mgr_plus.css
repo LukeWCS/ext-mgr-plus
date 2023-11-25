@@ -30,6 +30,14 @@ input[type="button"][name^="extmgrplus_"] {
 	padding: 3px 4px;
 }
 
+/* Footer */
+
+.extmgrplus_footer {
+	margin-top: 1em;
+	text-align: center;
+	font-size: .75em;
+}
+
 /* confirm_box (phpBB)*/
 
 #confirm h2 {
@@ -64,7 +72,7 @@ div[id$="_confirmbox"] input[type="button"] {
 
 input[type="submit"]:disabled,
 input[type="button"]:disabled,
-input[class*="confirmbox_active"]:disabled {
+input.confirmbox_active {
 	opacity: .5;
 	cursor: not-allowed;
 }
@@ -264,15 +272,7 @@ input[type="checkbox"]:disabled {
 	width: 1%;
 }
 
-/* Footer */
-
-.extmgrplus_footer {
-	margin-top: 1em;
-	text-align: center;
-	font-size: .75em;
-}
-
-/* Responsive */
+/* RESPONSIVE */
 
 .extmgrplus_responsive {
 	display: none;

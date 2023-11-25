@@ -17,58 +17,58 @@ var ExtMgrPlus = {};
 
 class LukeWCSphpBBConfirmBox {
 /*
-* phpBB ConfirmBox class for checkboxes - v1.2.0
+* phpBB ConfirmBox class for checkboxes - v1.3.0
 * @copyright (c) 2023, LukeWCS, https://www.wcsaga.org
 * @license GNU General Public License, version 2 (GPL-2.0-only)
 */
-	constructor(submitSelector) {
+	constructor(submitSelector, animDuration = 0) {
 		this.$submitObject = $(submitSelector);
 		this.$formObject = this.$submitObject.parents('form');
+		this.animDuration = animDuration;
 		var _this = this;
 
 		this.$formObject.find('div[id$="_confirmbox"]').each(function () {
-			var elementName = this.id.replace('_confirmbox', '')
+			var elementName = this.id.replace('_confirmbox', '');
 
-			$('input[name="' + elementName + '"]')				.on('change'	, _this.Show);
-			$('input[name^="' + elementName + '_confirm_"]')	.on('click'		, _this.Button);
+			$('input[name="' + elementName + '"]')				.on('change'	, _this.#Show);
+			$('input[name^="' + elementName + '_confirm_"]')	.on('click'		, _this.#Button);
 		});
 		this.$formObject										.on('reset'		, _this.HideAll);
 	}
 
-	Show = (e) => {
-		var elementDefault = $('div[id="' + e.target.name + '_confirmbox"]').attr('data-default') == 1;
-		var $elementObject = $('input[name="' + e.target.name + '"]');
+	#Show = (e) => {
+		var $elementObject		= $('input[name="' + e.target.name + '"]');
+		var $confirmBoxObject	= $('div[id="' + e.target.name + '_confirmbox"]');
 
-		if ($elementObject.prop('checked') != elementDefault) {
-			$elementObject									.prop('disabled', true)
-			$elementObject									.addClass('confirmbox_active');
-			$('div[id="' + e.target.name + '_confirmbox"]')	.show();
-			this.$submitObject								.prop('disabled', true);
+		if ($elementObject.prop('checked') != $confirmBoxObject.attr('data-default')) {
+			this.#changeBoxState($elementObject, $confirmBoxObject, true);
 		}
 	}
 
-	Button = (e) => {
-		var elementName = e.target.name.replace(/_confirm_.*/, '');
-		var elementDefault = $('div[id="' + elementName + '_confirmbox"]').attr('data-default') == 1;
-		var $elementObject = $('input[name="' + elementName + '"]');
+	#Button = (e) => {
+		var elementName			= e.target.name.replace(/_confirm_.*/, '');
+		var $elementObject		= $('input[name="' + elementName + '"]');
+		var $confirmBoxObject	= $('div[id="' + elementName + '_confirmbox"]');
 
 		if (e.target.name.endsWith('_confirm_no')) {
-			$elementObject.prop('checked', elementDefault);
+			$elementObject.prop('checked', $confirmBoxObject.attr('data-default'));
 		}
 
-		$elementObject									.prop('disabled', false);
-		$elementObject									.removeClass('confirmbox_active');
-		$('div[id="' + elementName + '_confirmbox"]')	.hide();
-		this.$submitObject								.prop('disabled', this.$formObject.find('input[class*="confirmbox_active"]').length);
+		this.#changeBoxState($elementObject, $confirmBoxObject, null);
 	}
 
 	HideAll = () => {
-		var $elementObject = this.$formObject.find('input[class*="confirmbox_active"]');
+		var $elementObject		= this.$formObject.find('input.confirmbox_active');
+		var $confirmBoxObject	= this.$formObject.find('div[id$="_confirmbox"]');
 
-		$elementObject									.prop('disabled', false);
-		$elementObject									.removeClass('confirmbox_active');
-		this.$formObject.find('div[id$="_confirmbox"]')	.hide();
-		this.$submitObject								.prop('disabled', false);
+		this.#changeBoxState($elementObject, $confirmBoxObject, false);
+	}
+
+	#changeBoxState = ($elementObject, $confirmBoxObject, showBox) => {
+		$elementObject		.prop('disabled', !!showBox);
+		$elementObject		.toggleClass('confirmbox_active', !!showBox);
+		$confirmBoxObject	[!!showBox ? 'show' : 'hide'](this.animDuration);
+		this.$submitObject	.prop('disabled', showBox ?? this.$formObject.find('input.confirmbox_active').length);
 	}
 }
 
@@ -115,8 +115,7 @@ $(window).ready(function () {
 	$('input[name="extmgrplus_defaults"]')	.on('click'		, ExtMgrPlus.SetDefaults);
 	$('input[name="extmgrplus_submit"]')	.on('click'		, ExtMgrPlus.FormSubmit);
 
-	ExtMgrPlus.ConfirmBox = new LukeWCSphpBBConfirmBox('[name="extmgrplus_submit"]');
-	ExtMgrPlus.ConfirmBox2 = new LukeWCSphpBBConfirmBox('[name="extmgrplus_submit2"]');
+	ExtMgrPlus.ConfirmBox = new LukeWCSphpBBConfirmBox('[name="extmgrplus_submit"]', 300);
 });
 
 })();	// IIFE end

@@ -166,7 +166,7 @@
 {%- endmacro %}
 
 {% macro confirmbox(name, message, default = false) -%}
-	<div id="{{ name }}_confirmbox" data-default="{{ default ? 1 : 0 }}" style="display: none;">
+	<div id="{{ name }}_confirmbox" data-default="{{ default }}" style="display: none;">
 		<h2>{{ lang('CONFIRM') }}</h2>
 		<p>{{ message }}</p>
 		<p>
