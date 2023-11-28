@@ -22,9 +22,9 @@ class LukeWCSphpBBConfirmBox {
 * @license GNU General Public License, version 2 (GPL-2.0-only)
 */
 	constructor(submitSelector, animDuration = 0) {
-		this.$submitObject = $(submitSelector);
-		this.$formObject = this.$submitObject.parents('form');
-		this.animDuration = animDuration;
+		this.$submitObject	= $(submitSelector);
+		this.$formObject	= this.$submitObject.parents('form');
+		this.animDuration	= animDuration;
 		var _this = this;
 
 		this.$formObject.find('div[id$="_confirmbox"]').each(function () {
@@ -67,7 +67,7 @@ class LukeWCSphpBBConfirmBox {
 	#changeBoxState = ($elementObject, $confirmBoxObject, showBox) => {
 		$elementObject		.prop('disabled', !!showBox);
 		$elementObject		.toggleClass('confirmbox_active', !!showBox);
-		$confirmBoxObject	[!!showBox ? 'show' : 'hide'](this.animDuration);
+		$confirmBoxObject	[showBox ? 'show' : 'hide'](this.animDuration);
 		this.$submitObject	.prop('disabled', showBox ?? this.$formObject.find('input.confirmbox_active').length);
 	}
 }

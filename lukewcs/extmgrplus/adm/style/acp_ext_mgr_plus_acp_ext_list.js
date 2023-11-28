@@ -48,6 +48,10 @@ ExtMgrPlus.SaveCheckboxes = function () {
 	$('input[name="extmgrplus_save_checkboxes"]').click();
 };
 
+ExtMgrPlus.ShowHideActionElements = function (show) {
+	$('#extmgrplus_list td:nth-of-type(1n+4):nth-of-type(-1n+6) *:not(dfn)').toggle(show);
+};
+
 ExtMgrPlus.CheckUncheckAll = function (e) {
 	$('#extmgrplus_list input[name="ext_mark_' + e.data.checkboxType + '[]"]:enabled').prop('checked', e.currentTarget.checked)
 	ExtMgrPlus.SetButtonState({data: {checkboxType: e.data.checkboxType}});
@@ -55,20 +59,13 @@ ExtMgrPlus.CheckUncheckAll = function (e) {
 
 ExtMgrPlus.SetButtonState = function (e) {
 	var checkedCount = $('#extmgrplus_list input[name="ext_mark_' + e.data.checkboxType + '[]"]:checked').length;
-	var button = {
-		'disabled': 'enable',
-		'enabled': 'disable',
-	};
+	var buttonType = e.data.checkboxType == 'enabled' ? 'disable' : 'enable';
 
-	$('#extmgrplus_list input[name="extmgrplus_' + button[e.data.checkboxType] + '_all').prop('disabled', checkedCount == 0);
+	$('#extmgrplus_list input[name="extmgrplus_' + buttonType + '_all').prop('disabled', checkedCount == 0);
 };
 
 ExtMgrPlus.SetInputBoxState = function (e) {
 	$('#extmgrplus_list input[name="ext_order[' + e.currentTarget.value + ']"]').toggleClass('inactive', e.currentTarget.checked);
-};
-
-ExtMgrPlus.ShowHideActionElements = function (show) {
-	$('#extmgrplus_list td:nth-of-type(1n+4):nth-of-type(-1n+6) *:not(dfn)')	.toggle(show);
 };
 
 // Common

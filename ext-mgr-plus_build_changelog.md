@@ -1,3 +1,9 @@
+#### 1.1.3-b23
+* CSS:
+  * Bei Toggles wird jetzt eine Animation beim Slider verwendet, sowie eine Farb-Animation (Übergang) bei der HG Farbe. [Vorschlag von Kirk (phpBB.de)]  
+* JS:
+  * Code Optimierung.
+
 #### 1.1.3-b22
 * LukeWCSphpBBConfirmBox 1.3.0:
   * Redundanten Code zu einer Methode zusammengefasst.
