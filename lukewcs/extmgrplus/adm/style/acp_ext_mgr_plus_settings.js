@@ -17,7 +17,7 @@ var ExtMgrPlus = {};
 
 class LukeWCSphpBBConfirmBox {
 /*
-* phpBB ConfirmBox class for checkboxes - v1.3.0
+* phpBB ConfirmBox class for checkboxes and yes/no radio buttons - v1.4.0
 * @copyright (c) 2023, LukeWCS, https://www.wcsaga.org
 * @license GNU General Public License, version 2 (GPL-2.0-only)
 */
@@ -51,7 +51,11 @@ class LukeWCSphpBBConfirmBox {
 		var $confirmBoxObject	= $('div[id="' + elementName + '_confirmbox"]');
 
 		if (e.target.name.endsWith('_confirm_no')) {
-			$elementObject.prop('checked', $confirmBoxObject.attr('data-default'));
+			if ($elementObject.get(0).type == 'checkbox') {
+				$elementObject.prop('checked', $confirmBoxObject.attr('data-default'));
+			} else if ($elementObject.get(0).type == 'radio') {
+				$elementObject.filter('[value="' + ($confirmBoxObject.attr('data-default') ? '1' : '0') + '"]').prop('checked', true);
+			}
 		}
 
 		this.#changeBoxState($elementObject, $confirmBoxObject, null);
@@ -85,14 +89,23 @@ ExtMgrPlus.constants = Object.freeze({
 ExtMgrPlus.SetDefaults = function () {
 	var c = ExtMgrPlus.constants;
 
-	$('input[name="extmgrplus_switch_log"]')				.prop('checked'	, true);
-	$('input[name="extmgrplus_switch_confirmation"]')		.prop('checked'	, true);
-	$('input[name="extmgrplus_switch_auto_redirect"]')		.prop('checked'	, false);
-	$('select[name="extmgrplus_select_checkbox_mode"]')		.prop('value'	, c.CheckBoxModeAll);
-	$('input[name="extmgrplus_switch_order_and_ignore"]')	.prop('checked'	, true);
-	$('input[name="extmgrplus_switch_self_disable"]')		.prop('checked'	, false);
-	$('input[name="extmgrplus_switch_migration_col"]')		.prop('checked'	, false);
-	$('input[name="extmgrplus_switch_migrations"]')			.prop('checked'	, false);
+	$.fn.changeSwitch = function (checked) {
+		if (this.get(0).type == 'checkbox') {
+			this.prop('checked', checked);
+		} else if (this.get(0).type == 'radio') {
+			$('input[name="' + this[0].name + '"][value="' + (checked ? 1 : 0) + '"]').prop('checked', true);
+		}
+	};
+
+	$('input[name="extmgrplus_switch_log"]')				.changeSwitch(	true);
+	$('input[name="extmgrplus_switch_confirmation"]')		.changeSwitch(	true);
+	$('input[name="extmgrplus_switch_auto_redirect"]')		.changeSwitch(	false);
+	$('select[name="extmgrplus_select_checkbox_mode"]')		.prop('value',	c.CheckBoxModeAll);
+	$('input[name="extmgrplus_switch_order_and_ignore"]')	.changeSwitch(	true);
+	$('input[name="extmgrplus_switch_self_disable"]')		.changeSwitch(	false);
+	$('input[name="extmgrplus_switch_migration_col"]')		.changeSwitch(	false);
+	$('input[name="extmgrplus_switch_migrations"]')			.changeSwitch(	false);
+
 	ExtMgrPlus.ConfirmBox.HideAll();
 };
 

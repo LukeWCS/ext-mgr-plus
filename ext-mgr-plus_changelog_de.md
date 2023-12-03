@@ -32,7 +32,8 @@
 * Inline-ConfirmBox (jQuery)
   * Die Inline-ConfirmBox von EMP für die Generierung von Rückfragen in den Einstellungen, wurde zur Javascript Klasse `LukeWCSphpBBConfirmBox` umgebaut, die sämtliche Funktionen und Eigenschaften in einem einzigen Objekt zusammenfasst. Dadurch kann die ConfirmBox-Funktionalität sehr einfach in andere Erweiterungen integriert werden. Die Klasse bietet optional auch eine Animation (jQuery Standard), deren Geschwindigkeit per Klassen-Parameter definiert werden kann.
   * Ein- und Ausblenden wird jetzt mit Animation ausgeführt. [Vorschlag von IMC (phpBB.de)]
-* Bei Toggles wird jetzt eine Bewegungs-Animation beim Slider verwendet, sowie eine Farb-Animation (Übergang) bei der Hintergrundfarbe. [Vorschlag von Kirk (phpBB.de)]  
+* Bei Toggles wird jetzt eine Bewegungs-Animation beim Slider verwendet, sowie eine Farb-Animation (Übergang) bei der Hintergrundfarbe. [Vorschlag von Kirk (phpBB.de)]
+* EMP ist jetzt kompatibel mit Toggle Control. Somit können Administratoren zentral an einer Stelle entscheiden, ob für Ja/Nein Schalter Radio Buttons, Checkboxen oder Toggles verwendet werden sollen.
 * Code Optimierung:
   * JS:
     * BeiJavascript und jQuery wurden als DEPRECATED eingestufte Eigenschaften und Funktionen durch aktuelle Varianten ersetzt. Details siehe Build Changelog.

@@ -1,3 +1,14 @@
+#### 1.1.3-b24
+* EMP ist jetzt kompatibel mit Toggle Control. Somit können Administratoren zentral an einer Stelle entscheiden, ob für Ja/Nein Schalter Radio Buttons, Checkboxen oder Toggles verwendet werden sollen.
+* JS: 
+  * LukeWCSphpBBConfirmBox 1.4.0:
+    * Die Klasse kann jetzt auch mit Radio-Buttons umgehen. Eine manuelle Anpassung ist dabei nicht notwendig, es wird automatisch erkannt welcher Typ (Checkbox oder Radio) bei einem Schalter verwendet wurde. Notwendig für die TC Kompatibilität.
+  * Zurücksetzen auf Installationsstandard musste für Radio Buttons erweitert werden. Notwendig für die TC Kompatibilität.
+* Settings Template:
+  * Das `switch()` Makro wurde erweitert, um auch Checkboxen und Radio Buttons generieren zu können. Notwendig für die TC Kompatibilität.
+* CSS:
+  * Den Code für die Toggle-Animation auf das Nötigste reduziert.
+
 #### 1.1.3-b23
 * CSS:
   * Bei Toggles wird jetzt eine Animation beim Slider verwendet, sowie eine Farb-Animation (Übergang) bei der HG Farbe. [Vorschlag von Kirk (phpBB.de)]  
@@ -5,16 +16,16 @@
   * Code Optimierung.
 
 #### 1.1.3-b22
-* LukeWCSphpBBConfirmBox 1.3.0:
-  * Redundanten Code zu einer Methode zusammengefasst.
-  * Methoden die nur innerhalb der Klasse verwendet werden (für Events), sind jetzt als privat definiert.
-  * Optional kann das Öffnen/Schliessen der ConfirmBox-Fenster jetzt als Animation ausgeführt werden. Dazu unterstützt die Klasse einen zweiten Parameter, mit dem die Animation aktiviert und die Geschwindigkeit geregelt werden kann: 400 = Standard, 0 = Aus. [Vorschlag von IMC (phpBB.de)] 
-  * Code Optimierung.
 * Bei EMP ist die Animation für die ConfirmBox ab sofort aktiviert, mit dem Wert 300.
 * Settings Template:
   * Kleine Änderung beim ConfirmBox Makro. Die HTML Pendants für `true` und `false` sind jetzt wieder `"1"` und `""`, da dies im JS direkt ohne Konvertierung ausgewertet werden kann.
 * JS:
-  * Code Optimierung.
+  * LukeWCSphpBBConfirmBox 1.3.0:
+    * Redundanten Code zu einer Methode zusammengefasst.
+    * Methoden die nur innerhalb der Klasse verwendet werden (für Events), sind jetzt als privat definiert.
+    * Optional kann das Öffnen/Schliessen der ConfirmBox-Fenster jetzt als Animation ausgeführt werden. Dazu unterstützt die Klasse einen zweiten Parameter, mit dem die Animation aktiviert und die Geschwindigkeit geregelt werden kann: 400 = Standard, 0 = Aus. [Vorschlag von IMC (phpBB.de)] 
+    * Code Optimierung.
+    * Code Optimierung.
 * Freigegeben für PHP 8.3.
 
 #### 1.1.3-b21

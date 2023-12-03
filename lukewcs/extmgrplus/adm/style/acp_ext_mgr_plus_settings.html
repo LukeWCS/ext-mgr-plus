@@ -11,6 +11,8 @@
 
 {% INCLUDE 'overall_header.html' %}
 
+{% set switch_type = TOGGLECTRL_TYPE ?? 'toggle' %}
+
 <a id="maincontent"></a>
 
 <h1>{{ lang('EXTENSIONS_ADMIN') }}</h1>
@@ -28,7 +30,7 @@
 				<label>{{ lang('FORCE_UNSTABLE') ~ lang('COLON') }}</label>
 			</dt>
 			<dd>
-				{{ _self.switch('force_unstable', FORCE_UNSTABLE) }}
+				{{ _self.switch('force_unstable', FORCE_UNSTABLE, switch_type) }}
 				{{ _self.confirmbox('force_unstable', lang('EXTENSION_FORCE_UNSTABLE_CONFIRM')) }}
 			</dd>
 		</dl>
@@ -43,7 +45,7 @@
 				<span>{{ lang('EXTMGRPLUS_LOG_EXPLAIN') }}</span>
 			</dt>
 			<dd>
-				{{ _self.switch('extmgrplus_switch_log', EXTMGRPLUS_SWITCH_LOG) }}
+				{{ _self.switch('extmgrplus_switch_log', EXTMGRPLUS_SWITCH_LOG, switch_type) }}
 			</dd>
 		</dl>
 
@@ -53,7 +55,7 @@
 				<span>{{ lang('EXTMGRPLUS_CONFIRMATION_EXPLAIN') }}</span>
 			</dt>
 			<dd>
-				{{ _self.switch('extmgrplus_switch_confirmation', EXTMGRPLUS_SWITCH_CONFIRMATION) }}
+				{{ _self.switch('extmgrplus_switch_confirmation', EXTMGRPLUS_SWITCH_CONFIRMATION, switch_type) }}
 			</dd>
 		</dl>
 
@@ -63,7 +65,7 @@
 				<span>{{ lang('EXTMGRPLUS_AUTO_REDIRECT_EXPLAIN') }}</span>
 			</dt>
 			<dd>
-				{{ _self.switch('extmgrplus_switch_auto_redirect', EXTMGRPLUS_SWITCH_AUTO_REDIRECT) }}
+				{{ _self.switch('extmgrplus_switch_auto_redirect', EXTMGRPLUS_SWITCH_AUTO_REDIRECT, switch_type) }}
 			</dd>
 		</dl>
 
@@ -83,7 +85,7 @@
 				<span>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN') }}</span>
 			</dt>
 			<dd>
-				{{ _self.switch('extmgrplus_switch_order_and_ignore', EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE) }}
+				{{ _self.switch('extmgrplus_switch_order_and_ignore', EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE, switch_type) }}
 			</dd>
 		</dl>
 
@@ -93,7 +95,7 @@
 				<span>{{ lang('EXTMGRPLUS_SELF_DISABLE_EXPLAIN') }}</span>
 			</dt>
 			<dd>
-				{{ _self.switch('extmgrplus_switch_self_disable', EXTMGRPLUS_SWITCH_SELF_DISABLE) }}
+				{{ _self.switch('extmgrplus_switch_self_disable', EXTMGRPLUS_SWITCH_SELF_DISABLE, switch_type) }}
 			</dd>
 		</dl>
 
@@ -105,7 +107,7 @@
 				<span>{{ lang('EXTMGRPLUS_MIGRATION_COL_EXPLAIN') }}</span>
 			</dt>
 			<dd>
-				{{ _self.switch('extmgrplus_switch_migration_col', EXTMGRPLUS_SWITCH_MIGRATION_COL) }}
+				{{ _self.switch('extmgrplus_switch_migration_col', EXTMGRPLUS_SWITCH_MIGRATION_COL, switch_type) }}
 			</dd>
 		</dl>
 
@@ -115,7 +117,7 @@
 				<span>{{ lang('EXTMGRPLUS_MIGRATIONS_EXPLAIN') }}</span>
 			</dt>
 			<dd>
-				{{ _self.switch('extmgrplus_switch_migrations', EXTMGRPLUS_SWITCH_MIGRATIONS) }}
+				{{ _self.switch('extmgrplus_switch_migrations', EXTMGRPLUS_SWITCH_MIGRATIONS, switch_type) }}
 				{{ _self.confirmbox('extmgrplus_switch_migrations', lang('EXTMGRPLUS_MSG_CONFIRM_MIGRATIONS')) }}
 			</dd>
 		</dl>
@@ -153,8 +155,13 @@
 {% INCLUDEJS '@lukewcs_extmgrplus/acp_ext_mgr_plus_settings.js' %}
 {% INCLUDECSS '@lukewcs_extmgrplus/acp_ext_mgr_plus.css' %}
 
-{% macro switch(name, checked = false) -%}
-	<input type="checkbox" class="toggle" name="{{ name }}" value="1"{{ checked ? ' checked' }}>
+{% macro switch(name, checked = false, type = 'toggle') -%}
+	{% if type == 'toggle' || type == 'checkbox' -%}
+		<input type="checkbox"{{ type == 'toggle' ? ' class="toggle"' }} name="{{ name }}" value="1"{{ checked ? ' checked' }}>
+	{%- elseif type == 'radio' -%}
+		<label><input type="radio" class="radio" name="{{ name }}" value="1"{{ checked ? ' checked' }}> {{ lang('YES') }}</label>
+		<label><input type="radio" class="radio" name="{{ name }}" value="0"{{ !checked ? ' checked' }}> {{ lang('NO') }}</label>
+	{%- endif %}
 {%- endmacro %}
 
 {% macro select(name, value, options) -%}

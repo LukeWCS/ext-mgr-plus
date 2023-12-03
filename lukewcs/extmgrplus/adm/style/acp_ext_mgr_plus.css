@@ -110,7 +110,7 @@ legend.legend_sub:after {
 	border-radius: 50px;
 	cursor: pointer;
 	font-family: FontAwesome;
-	transition: background-color ease 0.2s;
+	transition: background-color 0.2s;
 }
 
 .toggle:before {
@@ -125,7 +125,7 @@ legend.legend_sub:after {
 	align-items: center;
 	left: 22px;
 	content: "\f00d";
-	transition: all cubic-bezier(0.3, 1, 0.7, 1) 0.2s;
+	transition: 0.2s;
 }
 
 .toggle,
