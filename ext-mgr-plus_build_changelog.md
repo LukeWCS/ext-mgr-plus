@@ -1,4 +1,13 @@
+#### 1.1.3-b25
+* PHP:
+  * Anpassungen für phpBB 3.2 entfernt.
+* Twig:
+  * Anpassungen für phpBB 3.2 entfernt.
+* CSS:
+  * Da jetzt Schalter auch als Radio-Buttons dargestellt werden können, musste der Pointer für `dd label` wieder aktiviert werden. Das betrifft nicht Reihenfolge&Ignorieren.
+
 #### 1.1.3-b24
+* Letzte Version für phpBB 3.2.
 * EMP ist jetzt kompatibel mit Toggle Control. Somit können Administratoren zentral an einer Stelle entscheiden, ob für Ja/Nein Schalter Radio Buttons, Checkboxen oder Toggles verwendet werden sollen.
 * JS: 
   * LukeWCSphpBBConfirmBox 1.4.0:

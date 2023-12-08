@@ -1,6 +1,8 @@
-### 1.2.0
+### 2.0.0
 (2023--)
 
+* Die Unterstützung für phpBB 3.2 wurde aufgegeben und sämtliche Anpassungen wurden entfernt. Minimum ist jetzt phpBB 3.3.0, optimal ist 3.3.8+.
+* Freigegeben für PHP 8.3.
 * Fix: Bei der Ermittlung neuer Migrationen verhinderte eine zu strikte Dateinamen-Prüfung eine korrekte Erkennung, wenn bei Dateinamen und Klassennamen abweichende Gross/Kleinschreibung verwendet wurde. Daraus ergaben sich 2 Fehler:
   * Bei aktivierter Anzeige der Spalte für neue Migrationen wurde die Anzahl falsch berechnet.
   * Ist die Aktivierung von Erweiterungen mit neuen Migrationen nicht erlaubt, wurde die Auswahl-Checkbox der betroffenen Erweiterung nicht gesperrt.
@@ -36,13 +38,12 @@
 * EMP ist jetzt kompatibel mit Toggle Control. Somit können Administratoren zentral an einer Stelle entscheiden, ob für Ja/Nein Schalter Radio Buttons, Checkboxen oder Toggles verwendet werden sollen.
 * Code Optimierung:
   * JS:
-    * BeiJavascript und jQuery wurden als DEPRECATED eingestufte Eigenschaften und Funktionen durch aktuelle Varianten ersetzt. Details siehe Build Changelog.
+    * Bei Javascript und jQuery wurden als DEPRECATED eingestufte Eigenschaften und Funktionen durch aktuelle Varianten ersetzt. Details siehe Build Changelog.
     * Umfangreiche Verbesserungen in Bezug auf Redundanz und unnötig umständlichen Code.
   * PHP
 * Mehrere Kritikpunkte und Vorschläge bezüglich CSS berücksichtigt. [Vorschlag von Kirk (phpBB.de)]
 * Sprachdateien:
   * Durch eine Änderung in 1.0.7 wurde eine Sprachvariable obsolet, diese wurde jedoch bisher nicht entfernt.
-* Freigegeben für PHP 8.3.
 
 ### 1.1.2
 (2023-08-20)

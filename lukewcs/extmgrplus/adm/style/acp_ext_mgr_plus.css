@@ -10,7 +10,7 @@ fieldset p.submit-buttons {
 }
 
 fieldset dt label,
-fieldset dd label {
+fieldset.extmgrplus_order_and_ignore dd label {
 	cursor: inherit;
 }
 

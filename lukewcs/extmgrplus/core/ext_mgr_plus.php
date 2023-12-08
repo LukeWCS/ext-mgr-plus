@@ -566,10 +566,7 @@ class ext_mgr_plus
 				$this->set_last_ext_template_vars('EXTMGRPLUS_ALL_ENABLE', $ext_name, $ext_display_name, $ext_version);
 
 				$is_enableable = $this->ext_manager->get_extension($ext_name)->is_enableable();
-				$is_enableable_condition = (phpbb_version_compare(PHPBB_VERSION, '3.3.0-dev', '<')
-					? $is_enableable == true
-					: $is_enableable === true
-				);
+				$is_enableable_condition = $is_enableable === true;
 				if ($this->ext_manager->is_disabled($ext_name) && $is_enableable_condition)
 				{
 					try

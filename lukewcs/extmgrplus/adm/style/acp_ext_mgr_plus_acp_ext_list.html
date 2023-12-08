@@ -381,9 +381,6 @@
 
 {% macro version(ext_obj, vc_obj) %}
 {% apply spaceless %}
-	{% if constant('PHPBB_VERSION') starts with '3.2.' %}
-		{% import '@lukewcs_extmgrplus/acp_ext_mgr_plus_macros.html' as common %}
-	{% endif %}
 	{% if ext_obj.S_VERSIONCHECK || vc_obj.CURRENT %}
 		<strong class="{{ ext_obj.S_UP_TO_DATE ? 'current-ext' : 'outdated-ext' }}">{{ ext_obj.META_VERSION }}</strong>
 		{% if not ext_obj.S_UP_TO_DATE %}
@@ -406,9 +403,6 @@
 {% macro migrations(migration_count, ignore = false) %}
 {% apply spaceless %}
 	{% if ignore %}
-		{% if constant('PHPBB_VERSION') starts with '3.2.' %}
-			{% import '@lukewcs_extmgrplus/acp_ext_mgr_plus_macros.html' as common %}
-		{% endif %}
 		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_IGNORED')|e('html') }}">{{ common.icon('fa-ban') }}</span>
 	{% elseif migration_count %}
 		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_HAS_MIGRATION')|e('html') }}">{{ migration_count }}</span>
@@ -436,9 +430,6 @@
 {% macro checkbox_select(section, ext_name, enabled = true, checked = false, ignore = false) %}
 {% apply spaceless %}
 	{% if ignore %}
-		{% if constant('PHPBB_VERSION') starts with '3.2.' %}
-			{% import '@lukewcs_extmgrplus/acp_ext_mgr_plus_macros.html' as common %}
-		{% endif %}
 		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_IGNORED')|e('html') }}">{{ common.icon('fa-ban') }}
 	{% elseif !enabled %}
 		<input type="checkbox" name="ext_mark_{{ section }}[]" class="radio" title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_LOCKED')|e('html') }}" disabled>
