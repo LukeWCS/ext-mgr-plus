@@ -1,3 +1,12 @@
+#### 1.1.3-b26
+* Settings Template:
+  * Button für Installationsstandard durch `button()` Makro ersetzt.
+* JS:
+  * Globales Objekt `ExtMgrPlus` entfernt, da durch IIFE nicht mehr benötigt. Stattdessen alle Objekt-Funktionen als normale Funktionen deklariert.
+  * Beim JS der Einstellungen mein jQuery Plugin `changeSwitch` durch eine normale Funktion ersetzt, da Plugins global zu jQuery hinzugefügt werden.
+* CSS:
+  * Durch eine Änderung bei 1.1.3-b19 musste der Reset Button berücksichtigt werden.
+
 #### 1.1.3-b25
 * PHP:
   * Anpassungen für phpBB 3.2 entfernt.
@@ -63,6 +72,8 @@
   * Ist Reihenfolge&Ignorieren aktiviert und man ändert im ExtMgr eine Auswählen-Checkbox und drückt direkt danach Enter, wird die Funktion zum Speichern von Reihenfolge&Ignorieren ausgeführt. Dasselbe gilt auch bei den Checkboxen der Ignorieren-Spalte.
   * Ist Reihenfolge&Ignorieren deaktiviert und man ändert im ExtMgr eine Auswählen-Checkbox und drückt direkt danach Enter, wird die Funktion zum deaktivieren aller Exts ausgeführt, unabhängig davon welche Checkbox zuvor geändert wurde.
 * Fix: Regression. Bei b13 wurde der Pointer-Cursor entfernt, aber bei b15 wurde die Änderung unwirksam, weil auf Reihenfolge&Ignorieren begrenzt.
+* Settings Template:
+  * Der Reset Button hat jetzt wieder seine ursprüngliche, original Reset Funktion.
 * LukeWCSphpBBConfirmBox 1.1.0
   * Die Klasse reagiert jetzt direkt auf ein Formular-Reset und schliesst alle geöffneten ConfirmBox-Fenster. Diese Funktionalität muss also nicht mehr separat definiert werden.
   * CSS Code weiter von EMP isoliert.

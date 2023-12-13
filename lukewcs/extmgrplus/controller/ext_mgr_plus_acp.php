@@ -52,8 +52,6 @@ class ext_mgr_plus_acp
 			$notes[] = $lang_outdated_msg;
 		}
 
-		add_form_key('lukewcs_extmgrplus');
-
 		if ($this->request->is_set_post('extmgrplus_save_settings'))
 		{
 			$this->common->check_form_key_error('lukewcs_extmgrplus');
@@ -90,6 +88,8 @@ class ext_mgr_plus_acp
 			'EXTMGRPLUS_SWITCH_MIGRATION_COL'			=> $this->config['extmgrplus_switch_migration_col'],
 			'EXTMGRPLUS_SWITCH_MIGRATIONS'				=> $this->config['extmgrplus_switch_migrations'],
 		]);
+
+		add_form_key('lukewcs_extmgrplus');
 	}
 
 	public function set_page_url($u_action): void

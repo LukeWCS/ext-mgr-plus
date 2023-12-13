@@ -130,7 +130,7 @@
 				<span>{{ lang('EXTMGRPLUS_DEFAULTS_EXP') }}</span>
 			</dt>
 			<dd>
-				<input type="button" class="button2" name="extmgrplus_defaults" value="{{ lang('EXTMGRPLUS_BUTTON_DEFAULTS') }}">
+				{{ _self.button('extmgrplus_defaults', 'EXTMGRPLUS_BUTTON_DEFAULTS') }}
 			</dd>
 		</dl>
 	</fieldset>
@@ -170,6 +170,10 @@
 			<option value="{{ opt_value }}"{{ opt_value == value ? ' selected' }}>{{ lang(opt_lang_var) }}</option>
 		{% endfor %}
 	</select>
+{%- endmacro %}
+
+{% macro button(name, lang_var) -%}
+	<input type="button" class="button2" name="{{ name }}" value="{{ lang(lang_var) }}">
 {%- endmacro %}
 
 {% macro confirmbox(name, message, default = false) -%}

@@ -7,40 +7,38 @@
 *
 */
 
-var ExtMgrPlus = {};
-
 (function () {	// IIFE start
 
 'use strict';
 
 // Extension Manager
 
-ExtMgrPlus.VersionCheck = function () {
+function versionCheck() {
 	if ($('#extmgrplus_link_version_check').hasClass('disabled')) {
 		return;
 	}
 
-	ExtMgrPlus.ShowHideActionElements(false);
+	showHideActionElements(false);
 	$('[id^="extmgrplus_link_"]')			.addClass('disabled');
 	$('#extmgrplus_versioncheck_notice')	.show();
 	$(location)								.prop('href', $('#extmgrplus_link_version_check').attr('data-url'));
 };
 
-ExtMgrPlus.ShowHideOrderIgnore = function () {
+function showHideOrderIgnore() {
 	if ($('#extmgrplus_link_order_ignore').hasClass('disabled')) {
 		return;
 	}
 
 	var show = !$('.extmgrplus_order_and_ignore').is(":visible");
 
-	ExtMgrPlus.ShowHideActionElements(!show);
+	showHideActionElements(!show);
 	$('[id^="extmgrplus_link_"]:not([id$="_order_ignore"])')		.toggleClass('disabled', show);
 	$('.extmgrplus_order_and_ignore')								.toggle(show);
 	$('#extmgrplus_list th:nth-of-type(1n+7):nth-of-type(-1n+8)')	.toggle(show);
 	$('#extmgrplus_list td:nth-of-type(1n+7):nth-of-type(-1n+8)')	.toggle(show);
 };
 
-ExtMgrPlus.SaveCheckboxes = function () {
+function saveCheckboxes() {
 	if ($('#extmgrplus_link_save_checkboxes').hasClass('disabled')) {
 		return;
 	}
@@ -48,29 +46,31 @@ ExtMgrPlus.SaveCheckboxes = function () {
 	$('input[name="extmgrplus_save_checkboxes"]').click();
 };
 
-ExtMgrPlus.ShowHideActionElements = function (show) {
+function showHideActionElements(show) {
 	$('#extmgrplus_list td:nth-of-type(1n+4):nth-of-type(-1n+6) *:not(dfn)').toggle(show);
 };
 
-ExtMgrPlus.CheckUncheckAll = function (e) {
+function checkUncheckAll(e) {
 	$('#extmgrplus_list input[name="ext_mark_' + e.data.checkboxType + '[]"]:enabled').prop('checked', e.currentTarget.checked)
-	ExtMgrPlus.SetButtonState({data: {checkboxType: e.data.checkboxType}});
+	setButtonState({data: {checkboxType: e.data.checkboxType}});
 };
 
-ExtMgrPlus.SetButtonState = function (e) {
+function setButtonState(e) {
 	var checkedCount = $('#extmgrplus_list input[name="ext_mark_' + e.data.checkboxType + '[]"]:checked').length;
 	var buttonType = e.data.checkboxType == 'enabled' ? 'disable' : 'enable';
 
 	$('#extmgrplus_list input[name="extmgrplus_' + buttonType + '_all').prop('disabled', checkedCount == 0);
 };
 
-ExtMgrPlus.SetInputBoxState = function (e) {
+// Order & Ignore
+
+function setInputBoxState(e) {
 	$('#extmgrplus_list input[name="ext_order[' + e.currentTarget.value + ']"]').toggleClass('inactive', e.currentTarget.checked);
 };
 
 // Common
 
-ExtMgrPlus.DisableEnter = function (e) {
+function disableEnter(e) {
 	if (e.key == 'Enter' && e.target.type != 'textarea') {
 		return false;
 	}
@@ -79,15 +79,15 @@ ExtMgrPlus.DisableEnter = function (e) {
 // Event registration
 
 $(window).ready(function () {
-	$('#extmgrplus_list')								.on('keypress'	, ExtMgrPlus.DisableEnter);
-	$('#extmgrplus_link_version_check')					.on('click'		, ExtMgrPlus.VersionCheck);
-	$('#extmgrplus_link_order_ignore')					.on('click'		, ExtMgrPlus.ShowHideOrderIgnore);
-	$('#extmgrplus_link_save_checkboxes')				.on('click'		, ExtMgrPlus.SaveCheckboxes);
-	$('input[name="ext_mark_all_enabled"]:enabled')		.on('change'	, {checkboxType: 'enabled'}, ExtMgrPlus.CheckUncheckAll);
-	$('input[name="ext_mark_all_disabled"]:enabled')	.on('change'	, {checkboxType: 'disabled'}, ExtMgrPlus.CheckUncheckAll);
-	$('input[name="ext_mark_enabled[]"]:enabled')		.on('change'	, {checkboxType: 'enabled'}, ExtMgrPlus.SetButtonState);
-	$('input[name="ext_mark_disabled[]"]:enabled')		.on('change'	, {checkboxType: 'disabled'}, ExtMgrPlus.SetButtonState);
-	$('input[name="ext_ignore[]"]')						.on('change'	, ExtMgrPlus.SetInputBoxState);
+	$('#extmgrplus_list')						.on('keypress'	, disableEnter);
+	$('#extmgrplus_link_version_check')			.on('click'		, versionCheck);
+	$('#extmgrplus_link_order_ignore')			.on('click'		, showHideOrderIgnore);
+	$('#extmgrplus_link_save_checkboxes')		.on('click'		, saveCheckboxes);
+	$('[name="ext_mark_all_enabled"]:enabled')	.on('change'	, {checkboxType: 'enabled'}, checkUncheckAll);
+	$('[name="ext_mark_all_disabled"]:enabled')	.on('change'	, {checkboxType: 'disabled'}, checkUncheckAll);
+	$('[name="ext_mark_enabled[]"]:enabled')	.on('change'	, {checkboxType: 'enabled'}, setButtonState);
+	$('[name="ext_mark_disabled[]"]:enabled')	.on('change'	, {checkboxType: 'disabled'}, setButtonState);
+	$('[name="ext_ignore[]"]')					.on('change'	, setInputBoxState);
 });
 
 })();	// IIFE end

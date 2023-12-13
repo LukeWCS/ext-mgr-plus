@@ -7,8 +7,6 @@
 *
 */
 
-var ExtMgrPlus = {};
-
 (function () {	// IIFE start
 
 'use strict';
@@ -76,46 +74,49 @@ class LukeWCSphpBBConfirmBox {
 	}
 }
 
-// Constants
+// Variables declaration
 
-ExtMgrPlus.constants = Object.freeze({
-	CheckBoxModeOff		: '0',
-	CheckBoxModeAll		: '1',
-	CheckBoxModeLast	: '2',
+var constants = Object.freeze({
+	CheckBoxModeOff:	'0',
+	CheckBoxModeAll:	'1',
+	CheckBoxModeLast:	'2',
 });
+var ConfirmBox;
 
-// Settings
+// Settings form
 
-ExtMgrPlus.SetDefaults = function () {
-	var c = ExtMgrPlus.constants;
+function setDefaults() {
+	var c = constants;
 
-	$.fn.changeSwitch = function (checked) {
-		if (this.get(0).type == 'checkbox') {
-			this.prop('checked', checked);
-		} else if (this.get(0).type == 'radio') {
-			$('input[name="' + this[0].name + '"][value="' + (checked ? 1 : 0) + '"]').prop('checked', true);
-		}
-	};
+	setSwitch('[name="extmgrplus_switch_log"]',							true);
+	setSwitch('[name="extmgrplus_switch_confirmation"]',				true);
+	setSwitch('[name="extmgrplus_switch_auto_redirect"]',				false);
+	$(        '[name="extmgrplus_select_checkbox_mode"]').prop('value',	c.CheckBoxModeAll);
+	setSwitch('[name="extmgrplus_switch_order_and_ignore"]',			true);
+	setSwitch('[name="extmgrplus_switch_self_disable"]',				false);
+	setSwitch('[name="extmgrplus_switch_migration_col"]',				false);
+	setSwitch('[name="extmgrplus_switch_migrations"]',					false);
 
-	$('input[name="extmgrplus_switch_log"]')				.changeSwitch(	true);
-	$('input[name="extmgrplus_switch_confirmation"]')		.changeSwitch(	true);
-	$('input[name="extmgrplus_switch_auto_redirect"]')		.changeSwitch(	false);
-	$('select[name="extmgrplus_select_checkbox_mode"]')		.prop('value',	c.CheckBoxModeAll);
-	$('input[name="extmgrplus_switch_order_and_ignore"]')	.changeSwitch(	true);
-	$('input[name="extmgrplus_switch_self_disable"]')		.changeSwitch(	false);
-	$('input[name="extmgrplus_switch_migration_col"]')		.changeSwitch(	false);
-	$('input[name="extmgrplus_switch_migrations"]')			.changeSwitch(	false);
-
-	ExtMgrPlus.ConfirmBox.HideAll();
+	ConfirmBox.HideAll();
 };
 
-ExtMgrPlus.FormSubmit = function () {
+function setSwitch(selector, checked) {
+	var $elementObject = $(selector);
+
+	if ($elementObject.get(0).type == 'checkbox') {
+		$elementObject.prop('checked', checked);
+	} else if ($elementObject.get(0).type == 'radio') {
+		$('[name="' + $elementObject[0].name + '"][value="' + (checked ? 1 : 0) + '"]').prop('checked', true);
+	}
+};
+
+function formSubmit() {
 	$('#extmgrplus_settings').submit();
 };
 
 // Common
 
-ExtMgrPlus.DisableEnter = function (e) {
+function disableEnter(e) {
 	if (e.key == 'Enter' && e.target.type != 'textarea') {
 		return false;
 	}
@@ -124,11 +125,11 @@ ExtMgrPlus.DisableEnter = function (e) {
 // Event registration
 
 $(window).ready(function () {
-	$('#extmgrplus_settings')				.on('keypress'	, ExtMgrPlus.DisableEnter);
-	$('input[name="extmgrplus_defaults"]')	.on('click'		, ExtMgrPlus.SetDefaults);
-	$('input[name="extmgrplus_submit"]')	.on('click'		, ExtMgrPlus.FormSubmit);
+	$('#extmgrplus_settings')			.on('keypress'	, disableEnter);
+	$('[name="extmgrplus_defaults"]')	.on('click'		, setDefaults);
+	$('[name="extmgrplus_submit"]')		.on('click'		, formSubmit);
 
-	ExtMgrPlus.ConfirmBox = new LukeWCSphpBBConfirmBox('[name="extmgrplus_submit"]', 300);
+	ConfirmBox = new LukeWCSphpBBConfirmBox('[name="extmgrplus_submit"]', 300);
 });
 
 })();	// IIFE end
