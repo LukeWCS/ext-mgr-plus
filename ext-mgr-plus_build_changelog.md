@@ -1,3 +1,9 @@
+#### 2.0.0-b1
+* Um den Versionswechsel auf 2.0 konsistent halten zu können, führe ich die Betas ab sofort mit 2.0.0 weiter und setze den Beta Zähler auf 1 zurück. Das betrifft ebenfalls die Repo Commits.
+  * Alle betroffenen Dateien auf 2.0 angepasst.
+* Settings Template:
+  * Den kleinen Fehler im `switch()` Makro bezüglich Checkboxen und CSS-Klasse korrigiert. Siehe Toggle Control Thema auf phpBB.de.
+
 #### 1.1.3-b26
 * Settings Template:
   * Button für Installationsstandard durch `button()` Makro ersetzt.

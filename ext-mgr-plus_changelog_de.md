@@ -1,7 +1,7 @@
 ### 2.0.0
-(2023--)
+(2023-12-)
 
-* Die Unterstützung für phpBB 3.2 wurde aufgegeben und sämtliche Anpassungen wurden entfernt. Minimum ist jetzt phpBB 3.3.0, optimal ist 3.3.8+.
+* Die Unterstützung für phpBB 3.2 wurde aufgegeben und sämtliche Sonderanpassungen wurden entfernt. Minimum ist jetzt phpBB 3.3.0, optimal ist 3.3.8+.
 * Freigegeben für PHP 8.3.
 * Fix: Bei der Ermittlung neuer Migrationen verhinderte eine zu strikte Dateinamen-Prüfung eine korrekte Erkennung, wenn bei Dateinamen und Klassennamen abweichende Gross/Kleinschreibung verwendet wurde. Daraus ergaben sich 2 Fehler:
   * Bei aktivierter Anzeige der Spalte für neue Migrationen wurde die Anzahl falsch berechnet.
@@ -31,7 +31,7 @@
 * Ist die Funktion "Reihenfolge&Ignorieren" deaktiviert, wird auch kein unnötiges HTML mehr generiert für die Erklärungstexte, für den Absenden-Block sowie für die Inhalte der Spalten "Reihenfolge" und "Ignorieren".
 * Ist Eigendeaktivierung aktiv und es wird beim Deaktivieren der Exts auch EMP mit ausgewählt, dann wird der Workaround bezüglich Cache-löschen nur noch dann ausgeführt, wenn phpBB <3.3.8 vorhanden ist. Dadurch gibt es keine Verzögerung mehr bei den nächsten beiden Seitenaufrufen, sondern nur noch einmal. Siehe auch "Mein Workaround" bei 1.0.7.
 * Da der Schalter "Immer auf instabile Entwicklungs-Versionen prüfen:" in den Einstellungen nicht zu EMP gehört, wird dieser beim Zurücksetzen auf EMP Standard-Einstellungen nicht mehr berücksichtigt.
-* Inline-ConfirmBox (jQuery)
+* Inline-ConfirmBox
   * Die Inline-ConfirmBox von EMP für die Generierung von Rückfragen in den Einstellungen, wurde zur Javascript Klasse `LukeWCSphpBBConfirmBox` umgebaut, die sämtliche Funktionen und Eigenschaften in einem einzigen Objekt zusammenfasst. Dadurch kann die ConfirmBox-Funktionalität sehr einfach in andere Erweiterungen integriert werden. Die Klasse bietet optional auch eine Animation (jQuery Standard), deren Geschwindigkeit per Klassen-Parameter definiert werden kann.
   * Ein- und Ausblenden wird jetzt mit Animation ausgeführt. [Vorschlag von IMC (phpBB.de)]
 * Bei Toggles wird jetzt eine Bewegungs-Animation beim Slider verwendet, sowie eine Farb-Animation (Übergang) bei der Hintergrundfarbe. [Vorschlag von Kirk (phpBB.de)]
