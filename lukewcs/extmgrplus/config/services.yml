@@ -31,7 +31,7 @@ services:
             - '@template'
             - '@ext.manager' 
     lukewcs.extmgrplus.controller.acp:
-        class: lukewcs\extmgrplus\controller\ext_mgr_plus_acp
+        class: lukewcs\extmgrplus\controller\acp_ext_mgr_plus_controller
         arguments:
             - '@lukewcs.extmgrplus.core.common'
             - '@language'

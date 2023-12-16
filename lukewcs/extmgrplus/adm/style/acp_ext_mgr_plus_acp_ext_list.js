@@ -56,8 +56,8 @@ function checkUncheckAll(e) {
 };
 
 function setButtonState(e) {
-	var checkedCount = $('#extmgrplus_list input[name="ext_mark_' + e.data.checkboxType + '[]"]:checked').length;
-	var buttonType = e.data.checkboxType == 'enabled' ? 'disable' : 'enable';
+	const checkedCount = $('#extmgrplus_list input[name="ext_mark_' + e.data.checkboxType + '[]"]:checked').length;
+	const buttonType = e.data.checkboxType == 'enabled' ? 'disable' : 'enable';
 
 	$('#extmgrplus_list input[name="extmgrplus_' + buttonType + '_all').prop('disabled', checkedCount == 0);
 };

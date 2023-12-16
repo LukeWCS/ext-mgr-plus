@@ -15,18 +15,18 @@
 
 class LukeWCSphpBBConfirmBox {
 /*
-* phpBB ConfirmBox class for checkboxes and yes/no radio buttons - v1.4.0
+* phpBB ConfirmBox class for checkboxes and yes/no radio buttons - v1.4.1
 * @copyright (c) 2023, LukeWCS, https://www.wcsaga.org
 * @license GNU General Public License, version 2 (GPL-2.0-only)
 */
 	constructor(submitSelector, animDuration = 0) {
+		let _this = this;
 		this.$submitObject	= $(submitSelector);
 		this.$formObject	= this.$submitObject.parents('form');
 		this.animDuration	= animDuration;
-		var _this = this;
 
 		this.$formObject.find('div[id$="_confirmbox"]').each(function () {
-			var elementName = this.id.replace('_confirmbox', '');
+			const elementName = this.id.replace('_confirmbox', '');
 
 			$('input[name="' + elementName + '"]')				.on('change'	, _this.#Show);
 			$('input[name^="' + elementName + '_confirm_"]')	.on('click'		, _this.#Button);
@@ -35,8 +35,8 @@ class LukeWCSphpBBConfirmBox {
 	}
 
 	#Show = (e) => {
-		var $elementObject		= $('input[name="' + e.target.name + '"]');
-		var $confirmBoxObject	= $('div[id="' + e.target.name + '_confirmbox"]');
+		const $elementObject	= $('input[name="' + e.target.name + '"]');
+		const $confirmBoxObject	= $('div[id="' + e.target.name + '_confirmbox"]');
 
 		if ($elementObject.prop('checked') != $confirmBoxObject.attr('data-default')) {
 			this.#changeBoxState($elementObject, $confirmBoxObject, true);
@@ -44,9 +44,9 @@ class LukeWCSphpBBConfirmBox {
 	}
 
 	#Button = (e) => {
-		var elementName			= e.target.name.replace(/_confirm_.*/, '');
-		var $elementObject		= $('input[name="' + elementName + '"]');
-		var $confirmBoxObject	= $('div[id="' + elementName + '_confirmbox"]');
+		const elementName		= e.target.name.replace(/_confirm_.*/, '');
+		const $elementObject	= $('input[name="' + elementName + '"]');
+		const $confirmBoxObject	= $('div[id="' + elementName + '_confirmbox"]');
 
 		if (e.target.name.endsWith('_confirm_no')) {
 			if ($elementObject.get(0).type == 'checkbox') {
@@ -60,8 +60,8 @@ class LukeWCSphpBBConfirmBox {
 	}
 
 	HideAll = () => {
-		var $elementObject		= this.$formObject.find('input.confirmbox_active');
-		var $confirmBoxObject	= this.$formObject.find('div[id$="_confirmbox"]');
+		const $elementObject	= this.$formObject.find('input.confirmbox_active');
+		const $confirmBoxObject	= this.$formObject.find('div[id$="_confirmbox"]');
 
 		this.#changeBoxState($elementObject, $confirmBoxObject, false);
 	}
@@ -76,17 +76,17 @@ class LukeWCSphpBBConfirmBox {
 
 // Variables declaration
 
-var constants = Object.freeze({
+const constants = Object.freeze({
 	CheckBoxModeOff:	'0',
 	CheckBoxModeAll:	'1',
 	CheckBoxModeLast:	'2',
 });
-var ConfirmBox;
+let ConfirmBox;
 
 // Settings form
 
 function setDefaults() {
-	var c = constants;
+	const c = constants;
 
 	setSwitch('[name="extmgrplus_switch_log"]',							true);
 	setSwitch('[name="extmgrplus_switch_confirmation"]',				true);
@@ -101,7 +101,7 @@ function setDefaults() {
 };
 
 function setSwitch(selector, checked) {
-	var $elementObject = $(selector);
+	const $elementObject = $(selector);
 
 	if ($elementObject.get(0).type == 'checkbox') {
 		$elementObject.prop('checked', checked);

@@ -1,3 +1,8 @@
+#### 2.0.0-b2
+* ACP Controller umbenannt.
+* JS:
+  * Unveränderliche Variablen als Konstanten definiert und Scopes präzisiert.
+
 #### 2.0.0-b1
 * Um den Versionswechsel auf 2.0 konsistent halten zu können, führe ich die Betas ab sofort mit 2.0.0 weiter und setze den Beta Zähler auf 1 zurück. Das betrifft ebenfalls die Repo Commits.
   * Alle betroffenen Dateien auf 2.0 angepasst.

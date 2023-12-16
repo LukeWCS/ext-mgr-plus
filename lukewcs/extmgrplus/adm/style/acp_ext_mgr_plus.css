@@ -45,39 +45,6 @@ input[type="reset"][name^="extmgrplus_"] {
 	margin-bottom: .25em;
 }
 
-/* LukeWCSphpBBConfirmBox */
-
-div[id$="_confirmbox"] {
-	max-width: 450px;
-	border: 2px solid skyblue;
-	margin: .75em .5em;
-	padding: .25em .5em;
-	border-radius: 5px;
-	-webkit-box-shadow: 2px 2px 10px 1px rgba(121, 162, 179, 0.5);
-	box-shadow: 2px 2px 10px 1px rgba(121, 162, 179, 0.5);
-}
-
-div[id$="_confirmbox"] h2 {
-	margin: 0 0 .25em 0;
-}
-
-div[id$="_confirmbox"] p:nth-of-type(2) {
-	text-align: center;
-	margin: 0;
-	padding: 0 4px 4px 4px;
-}
-
-div[id$="_confirmbox"] input[type="button"] {
-	padding: 3px 4px;
-}
-
-input[type="submit"]:disabled,
-input[type="button"]:disabled,
-input.confirmbox_active {
-	opacity: .5;
-	cursor: not-allowed;
-}
-
 /* SETTINGS */
 
 legend.legend_sub {
@@ -144,6 +111,39 @@ legend.legend_sub:after {
 .toggle:checked:before {
 	left: 2px;
 	content: "\f00c";
+}
+
+/* LukeWCSphpBBConfirmBox */
+
+div[id$="_confirmbox"] {
+	max-width: 450px;
+	border: 2px solid skyblue;
+	margin: .75em .5em;
+	padding: .25em .5em;
+	border-radius: 5px;
+	-webkit-box-shadow: 2px 2px 10px 1px rgba(121, 162, 179, 0.5);
+	box-shadow: 2px 2px 10px 1px rgba(121, 162, 179, 0.5);
+}
+
+div[id$="_confirmbox"] h2 {
+	margin: 0 0 .25em 0;
+}
+
+div[id$="_confirmbox"] p:nth-of-type(2) {
+	text-align: center;
+	margin: 0;
+	padding: 0 4px 4px 4px;
+}
+
+div[id$="_confirmbox"] input[type="button"] {
+	padding: 3px 4px;
+}
+
+input[type="submit"]:disabled,
+input[type="button"]:disabled,
+input.confirmbox_active {
+	opacity: .5;
+	cursor: not-allowed;
 }
 
 /* EXTENSION MANAGER */
