@@ -1,3 +1,11 @@
+#### 2.0.0-b3
+* Bei Reihenfolge&Ignorieren können nun auch direkte Abhängigkeiten definiert werden. Dadurch werden beim Auswählen/Abwählen automatisch abhängige Erweiterungen berücksichtigt.
+  * ExtMgr Template: In der Spalte "Reihenfolge" ist jetzt auch ein `+` am Anfang erlaubt.
+  * JS: Neue Funktion `setCheckboxes` mit der die Beziehungen zwischen Erweiterungen und Abhängigkeiten geprüft und Checkboxen entsprechend gesetzt werden können.
+  * Core: 
+    * Prüfung für die Spalte "Reihenfolge" um `+` erweitert.
+	* Bein Aktivieren müssen Exts aus der Reihenfolge-Liste gefiltert werden, bei denen eine Abhängigkeit definiert wurde.
+
 #### 2.0.0-b2
 * ACP Controller umbenannt.
 * JS:

@@ -148,7 +148,7 @@ class ext_mgr_plus
 			$order_list = $this->request->variable('ext_order', ['' => '']);
 			$ignore_list = $this->request->variable('ext_ignore', ['']);
 
-			$order_list = preg_grep('/^[0-9]{1,2}$/', $order_list);
+			$order_list = preg_grep('/^\+?[0-9]{1,2}$/', $order_list);
 
 			$this->common->config_text_set('extmgrplus_list_order_and_ignore', 'order', count($order_list) ? $order_list : null);
 			$this->common->config_text_set('extmgrplus_list_order_and_ignore', 'ignore', count($ignore_list) ? $ignore_list : null);
@@ -538,6 +538,7 @@ class ext_mgr_plus
 		}
 		if (isset($ext_list_order) && is_array($ext_list_order))
 		{
+			$ext_list_order = preg_grep('/^[0-9]{1,2}$/', $ext_list_order);
 			$ext_list_order = array_intersect_key($ext_list_order, $ext_list_disabled);
 			asort($ext_list_order, SORT_NUMERIC);
 		}

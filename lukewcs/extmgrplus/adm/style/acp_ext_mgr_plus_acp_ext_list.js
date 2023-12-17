@@ -55,6 +55,72 @@ function checkUncheckAll(e) {
 	setButtonState({data: {checkboxType: e.data.checkboxType}});
 };
 
+function setCheckboxes(e) {
+	const order = $('#extmgrplus_list input[name="ext_order[' + e.currentTarget.value + ']"]').val() ?? '';
+	const enabled = e.data.checkboxType == 'enabled';
+	const checked = e.currentTarget.checked;
+	const dependency = (order.slice(0, 1) != '+');
+
+	// (enabled && (checked && !dependency || !checked && dependency)) ||
+	// (!enabled && (checked && dependency || !checked && !dependency))
+
+	if (
+		order != '' &&
+		(
+			(enabled && (checked && dependency || !checked && !dependency)) ||
+			(!enabled && (!checked && dependency || checked && !dependency))
+		)
+	) {
+		const orderClean = order.replace(/\+/, '');
+		let selectValue;
+		let selectCheck;
+
+console.log('---------');
+console.log('order     : ' + order);
+console.log('enabled   : ' + enabled);
+console.log('checked   : ' + checked);
+console.log('dependency: ' + dependency);
+
+		// if (!e.currentTarget.checked || order == '' || enabled && !dependency || !enabled && dependency) {
+			// return;
+		// }
+		// if (enabled) {
+			// if (checked) {
+				// selectValue = (dependency ? '+' : '') + selectValue;
+				// selectCheck = dependency;
+			// } else {
+				// selectCheck = dependency;
+			// }
+		// } else {
+			// if (checked) {
+				// selectCheck = !dependency;
+			// } else {
+				// selectValue = (dependency ? '+' : '') + selectValue;
+				// selectCheck = !dependency;
+			// }
+		// }
+		if (enabled) {
+			selectValue = (checked && dependency ? '+' : '') + orderClean;
+			selectCheck = dependency;
+		} else {
+			selectValue = (!checked && dependency ? '+' : '') + orderClean;
+			selectCheck = !dependency;
+		}
+
+		// const $orderList = $('#extmgrplus_list input[name^="ext_order["][value="' + selectValue + '"');
+
+		// $orderList.each(function () {
+		$('#extmgrplus_list input[name^="ext_order["][value="' + selectValue + '"').each(function () {
+			const orderElement = this.name.replace(/.*?\[(.*?)\]/, '$1');
+			$('#extmgrplus_list input[name="ext_mark_' + e.data.checkboxType + '[]"][value="' + orderElement + '"]:enabled').prop('checked', selectCheck);
+		});
+console.log('selectValue: ' + selectValue);
+console.log('selectCheck: ' + selectCheck);
+	}
+
+	setButtonState({data: {checkboxType: e.data.checkboxType}});
+};
+
 function setButtonState(e) {
 	const checkedCount = $('#extmgrplus_list input[name="ext_mark_' + e.data.checkboxType + '[]"]:checked').length;
 	const buttonType = e.data.checkboxType == 'enabled' ? 'disable' : 'enable';
@@ -85,8 +151,10 @@ $(window).ready(function () {
 	$('#extmgrplus_link_save_checkboxes')		.on('click'		, saveCheckboxes);
 	$('[name="ext_mark_all_enabled"]:enabled')	.on('change'	, {checkboxType: 'enabled'}, checkUncheckAll);
 	$('[name="ext_mark_all_disabled"]:enabled')	.on('change'	, {checkboxType: 'disabled'}, checkUncheckAll);
-	$('[name="ext_mark_enabled[]"]:enabled')	.on('change'	, {checkboxType: 'enabled'}, setButtonState);
-	$('[name="ext_mark_disabled[]"]:enabled')	.on('change'	, {checkboxType: 'disabled'}, setButtonState);
+	// $('[name="ext_mark_enabled[]"]:enabled')	.on('change'	, {checkboxType: 'enabled'}, setButtonState);
+	// $('[name="ext_mark_disabled[]"]:enabled')	.on('change'	, {checkboxType: 'disabled'}, setButtonState);
+	$('[name="ext_mark_enabled[]"]:enabled')	.on('change'	, {checkboxType: 'enabled'}, setCheckboxes);
+	$('[name="ext_mark_disabled[]"]:enabled')	.on('change'	, {checkboxType: 'disabled'}, setCheckboxes);
 	$('[name="ext_ignore[]"]')					.on('change'	, setInputBoxState);
 });
 

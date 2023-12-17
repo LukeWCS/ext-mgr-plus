@@ -440,7 +440,7 @@
 {% endmacro %}
 
 {% macro inputbox(ext_name, value, inactive = false) -%}
-	<input type="text" name="ext_order[{{ ext_name }}]" size="1" maxlength="2"{{ inactive ? ' class="inactive"' }} title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER')|e('html') }}" value="{{ value }}" pattern="^[0-9]{1,2}$">
+	<input type="text" name="ext_order[{{ ext_name }}]" size="2" maxlength="3"{{ inactive ? ' class="inactive"' }} title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER')|e('html') }}" value="{{ value }}" pattern="^\+?[0-9]{1,2}$">
 {%- endmacro %}
 
 {% macro checkbox_ignore(ext_name, checked = false) -%}
