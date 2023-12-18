@@ -51,7 +51,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_CHECKBOX_MODE_ALL'			=> 'Set all',
 	'EXTMGRPLUS_CHECKBOX_MODE_LAST'			=> 'Remember last state',
 	'EXTMGRPLUS_ORDER_AND_IGNORE'			=> 'Order and Ignore',
-	'EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN'	=> 'If you enable this option, the “Enable selected” action respects the Order group and the “Enable selected” and “Disable selected” actions respect the Ignore property.',
+	'EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN'	=> 'If you enable this option, the “Enable selected” action respects the Order group and the “Enable selected” and “Disable selected” actions respect the Ignore property. In addition, defined dependencies are also taken into account when selecting/deselecting.',
 	'EXTMGRPLUS_SELF_DISABLE'				=> 'Allow self-deactivation',
 	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'		=> 'If you enable this option, then “Extension Manager Plus” can also deactivate itself in the “Disable selected” action, since this extension can then be selected like any other.',
 

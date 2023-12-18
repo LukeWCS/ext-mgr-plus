@@ -59,6 +59,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_SECTION_SETTINGS'			=> 'Einstellungen (Plus)',
 	'EXTMGRPLUS_ORDER'						=> 'Reihenfolge',
 	'EXTMGRPLUS_ORDER_EXPLAIN'				=> '%s In dieser Spalte kannst du Reihenfolge-Gruppen im Bereich 0 bis 99 für die Aktion „Ausgewählte aktivieren“ definieren. Damit können Erweiterungen, von denen andere Erweiterungen abhängig sind, vor diesen aktiviert werden, um Fehlermeldungen zu vermeiden. Erweiterungen die zu einer solchen Gruppe gehören, werden zuerst aktiviert und zwar beginnend bei Gruppe 0, dann Gruppe 1 und so weiter. Erweiterungen ohne Gruppe werden als letztes aktiviert.',
+	'EXTMGRPLUS_DEPENDENCY_EXPLAIN'			=> 'Mit einem vorangestelltem <code>+</code> kann eine Erweiterung mit einer Gruppe verknüpft werden. Hat man zum Beispiel die Erweiterung B die von Erweiterung A abhängig ist, kann man bei A <code>0</code> eintragen und bei B <code>+0</code>. Sind beide Erweiterungen aktiviert, wird beim Auswählen von A auch B ausgewählt. Sind beide Erweiterungen deaktiviert, wird beim Auswählen von B auch A ausgewählt.',
 	'EXTMGRPLUS_IGNORE'						=> 'Ignorieren',
 	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> '%s In dieser Spalte kannst du festlegen, welche Erweiterungen bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ ignoriert werden sollen. Ignorierte Erweiterungen können in der Erweiterungen-Liste nicht mehr ausgewählt werden. Wenn bei einer ignorierten Erweiterung eine Reihenfolge-Gruppe definiert wurde, dann bleibt diese erhalten, sie hat jedoch keine Bedeutung mehr.',
 
@@ -82,7 +83,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_IS_LOCKED'			=> 'Die Auswahl dieser Erweiterung ist wegen neuer Migrationen gesperrt.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE'		=> 'Alle ausgewählten Erweiterungen deaktivieren.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'		=> 'Alle ausgewählten Erweiterungen aktivieren.',
-	'EXTMGRPLUS_TOOLTIP_ORDER'				=> 'Reihenfolge-Gruppe im Bereich 0-99.',
+	'EXTMGRPLUS_TOOLTIP_ORDER'				=> 'Reihenfolge-Gruppe im Bereich 0-99. Mit vorangestelltem + kann eine Gruppe verknüpft werden.',
 	'EXTMGRPLUS_TOOLTIP_IGNORE'				=> 'Erweiterung ignorieren.',
 	'EXTMGRPLUS_TOOLTIP_SELECT_ALL'			=> 'Alle Erweiterungen auswählen oder abwählen.',
 	'EXTMGRPLUS_TOOLTIP_SELECT'				=> 'Erweiterung auswählen.',

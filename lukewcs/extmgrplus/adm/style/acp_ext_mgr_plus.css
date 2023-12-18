@@ -31,6 +31,12 @@ input[type="reset"][name^="extmgrplus_"] {
 	padding: 3px 4px;
 }
 
+code {
+    background-color: #DDDDDD;
+    padding: 0 0.25em;
+    color: black;
+}
+
 /* Footer */
 
 .extmgrplus_footer {
@@ -85,7 +91,7 @@ legend.legend_sub:after {
 	position: absolute;
 	width: 14px;
 	height: 13px;
-	background-color: #ffffff;
+	background-color: #FFFFFF;
 	top: 2px;
 	border-radius: 50%;
 	display: flex;
@@ -99,13 +105,13 @@ legend.legend_sub:after {
 .toggle,
 .toggle:hover,
 .toggle:focus {
-	background-color: #cccccc;
+	background-color: #CCCCCC;
 	border: none;
 	color: #000000;
 }
 
 .toggle:checked {
-	background-color: #3b87ab;
+	background-color: #3B87AB;
 }
 
 .toggle:checked:before {
