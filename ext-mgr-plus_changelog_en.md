@@ -1,8 +1,58 @@
+### 2.0.0
+(2023-12-19) / CDB: --)
+
+* Support for phpBB 3.2 has been dropped and all special customizations have been removed. Minimum is now phpBB 3.3.0, optimal is 3.3.8+.
+* Released for PHP 8.3.
+* Fix: When identifying new migrations, a file name check that was too strict prevented correct recognition if different case letters were used for file names and class names. This resulted in 2 errors:
+  * When displaying the column for new migrations was activated, the number was calculated incorrectly.
+  * If the activation of extensions with new migrations is not allowed, the selection checkbox of the affected extension has not been blocked.
+* Fix: Beta testing of 2.0 revealed that EMP could not handle invalid extensions, resulting in several issues:
+  * In certain situations the counter for uninstalled extensions could get into the minus range. Since a negative number is not provided, the number 18446744073709551615 was displayed instead, as a different variable type was expected in the language variable. [Reported from Kirk (phpBB.de)]
+  * If the number of uninstalled extensions was negative, all disabled extensions were displayed in the uninstalled extensions section. [Reported from Kirk (phpBB.de)]
+  * The "Deactivate selected" and "Activate selected" buttons were incorrectly activated depending on the situation.
+  * The "Select all extensions" checkbox for activated and deactivated was incorrectly activated depending on the situation.
+  * The "Enabled Extensions" and "Disabled Extensions" counters were incorrectly calculated depending on the situation.
+  * With Order&Ignore, input elements were incorrectly generated for invalid extensions, which could cause incorrect data to be written to the DB when saving.
+* Fix: The problem with resending the form data in Firefox (see next point) had revealed an error in EMP that could occur when extensions were activated without reloading the ExtMgr page first. If an extension became invalid between two switching processes, i.e. the metadata of the extension could no longer be read, then this led to a FATAL that was not caught. [Reported from Kirk (phpBB.de)]
+* Firefox Workaround: If extensions were activated when the query was deactivated and automatic confirmation was activated and the ExtMgr page was then manually reloaded (e.g. with F5), this resulted in Firefox incorrectly prompting a query to resend the form data. If this query was confirmed positively, EMP carried out the last action again, which could lead to errors depending on the situation. A new function now rotates the GET parameters of the URL during automatic redirection, which in Firefox means that unnecessary queries regarding form data are no longer triggered. Other tested browsers are not affected by the problem. [Reported from Kirk (phpBB.de)]
+* In the info table, the number of invalid extensions is also displayed in brackets after the number of available extensions.
+* If the version check of an extension could not be carried out successfully, this information is also saved and evaluated. This works for both the global VP (Recheck all versions) and the local VP (Details).
+  * In the info table, the number of errors is displayed after the date of the last version check.
+  * For extensions that had errors in the version check, an orange warning icon with a tooltip is displayed behind the version.
+* Since phpBB does not explicitly inform you by default if an extension does not offer a version check, EMP now also fills this gap. This means that all possible states (VP successful/VP faulty/no VP set up) can now be signaled accordingly.
+  * The info table above the extensions list expanded to 4 columns. What is new is the number of extensions with version checks set up.
+  * For extensions for which no version check is set up, an icon (broken chain) with a tooltip is displayed behind the version.
+* Other version checking changes:
+  * During a version check, all functions in the link bar that can disrupt the process are now blocked.
+  * Furthermore, the interactive elements in the extensions list are hidden to prevent accidental actions that can disrupt the process. [Suggestion from chris1278 (phpBB.de)]
+  * Additionally, a blue information box provides information about the process. [Suggestion from chris1278 (phpBB.de)]
+* In Order&Ignore, an extension can now be linked to a group (one or more extensions) in the "Order" column. For example, if such a link is defined and a deactivated extension "B" is selected for activation, then its required extension "A" is also automatically selected.
+* If the "Remember last status" option is activated, the selection of check boxes will only be saved if the query is activated if the query is confirmed with "Yes". If "No", the last saved selection is restored.
+* This extension is now compatible with Toggle Control. This means administrators can decide centrally in one place whether radio buttons, checkboxes or toggles should be used for yes/no switches.
+* If self-deactivation is active and EMP is also selected when deactivating the exts, then the workaround regarding clearing the cache will only be carried out if phpBB <3.3.8 is available. This means there will no longer be a delay for the next two page views, only once. See also "My Workaround" at 1.0.7.
+* Since the "Always check for unstable development versions:" switch in the settings is not part of EMP, it is no longer taken into account when resetting to EMP standard settings.
+* There is now also a tooltip for the red exclamation mark icon (in outdated versions).
+* Inline ConfirmBox
+  * EMP's inline ConfirmBox for generating queries in the settings has been converted into the Javascript class `LukeWCSphpBBConfirmBox`, which combines all functions and properties in a single object. This makes the ConfirmBox functionality very easy to integrate into other extensions. The class also optionally offers an animation (jQuery standard), the speed of which can be defined using class parameters.
+  * Fade in and out are now done with animation. [Suggestion from IMC (phpBB.de)]
+* Toggles now use a movement animation for the slider and a color animation (transition) for the background color. [Suggestion from Kirk (phpBB.de)]
+* Several criticisms and suggestions regarding CSS taken into account. [Suggestion from Kirk (phpBB.de)]
+* Code optimization:
+  * JS:
+    * For Javascript and jQuery, properties and functions classified as DEPRECATED have been replaced with current variants. See build changelog for details.
+    * Major improvements related to redundancy and cumbersome code.
+  * Twig:
+    * If the Order&Ignore function is deactivated, unnecessary HTML will no longer be generated for the explanatory texts, for the send block and for the contents of the "Order" and "Ignore" columns.
+  * PHP:
+    * Numerous detail improvements.
+* Language files:
+  * A change in 1.0.7 made a language variable obsolete, but this has not yet been removed.
+
 ### 1.1.2
 (2023-08-20)
 
-* Fix: If an extension had a file without a suffix in the `migrations` folder, EMP issued a debug warning: `Undefined array key "extension"`. [Message from Bruce Banner (phpBB.com)]
-* Fix: If one or more debug messages were generated due to errors during a version check using "Recheck all versions", then these were effectively suppressed by EMP. The reason was a change in 1.1.1 which, after a version check, cleaned up the URL with a redirect. The redirect has been removed. [Message from Kirk (phpBB.de)]
+* Fix: If an extension had a file without a suffix in the `migrations` folder, EMP issued a debug warning: `Undefined array key "extension"`. [Reported from Bruce Banner (phpBB.com)]
+* Fix: If one or more debug messages were generated due to errors during a version check using "Recheck all versions", then these were effectively suppressed by EMP. The reason was a change in 1.1.1 which, after a version check, cleaned up the URL with a redirect. The redirect has been removed. [Reported from Kirk (phpBB.de)]
 * Due to the "Smilie Signs" problem, the ignore function has been further expanded. If the ignore feature is set for an extension, no new migrations will be identified for this extension, as they are meaningless in such a case anyway. If the "New Migrations" column is activated, the corresponding ignore icon is displayed for ignored extensions instead of the number of new migrations.
 * If the ignore feature is set for an extension, a deactivated checkbox is no longer displayed in the "Select" column, but the same ignore icon as in the "New Migrations" column. There is now a visual difference in this column between ignored extensions and those for which the checkbox is not available due to conditions.
 * Validation Criticism 1.1.1:
@@ -124,7 +174,7 @@
 ### 1.0.4
 (2022-08-10)
 
-* Fix: The "Test user's permissions" function resulted in a Fatal: `Fatal error: Cannot declare class auth_admin, because the name is already in use in ...`. The reason for this is the Migrator class, which is not allowed to be integrated via `services.yml`. [Message from chris1278]
+* Fix: The "Test user's permissions" function resulted in a Fatal: `Fatal error: Cannot declare class auth_admin, because the name is already in use in ...`. The reason for this is the Migrator class, which is not allowed to be integrated via `services.yml`. [Reported from chris1278]
 
 ### 1.0.3
 (2022-06-24)
