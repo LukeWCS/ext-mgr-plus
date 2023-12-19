@@ -46,7 +46,7 @@ class acp_ext_mgr_plus_controller
 		);
 		$this->common->set_template_vars('EXTMGRPLUS');
 
-		$lang_outdated_msg = $this->common->lang_ver_check_msg('EXTMGRPLUS_LANG_VER',	'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED');
+		$lang_outdated_msg = $this->common->lang_ver_check_msg('EXTMGRPLUS_LANG_VER', 'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED');
 		if ($lang_outdated_msg)
 		{
 			$notes[] = $lang_outdated_msg;

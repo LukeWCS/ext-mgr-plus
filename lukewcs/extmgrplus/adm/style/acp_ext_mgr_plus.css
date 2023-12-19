@@ -32,9 +32,9 @@ input[type="reset"][name^="extmgrplus_"] {
 }
 
 code {
-    background-color: #DDDDDD;
-    padding: 0 0.25em;
-    color: black;
+	background-color: #DDDDDD;
+	padding: 0 0.25em;
+	color: black;
 }
 
 /* Footer */

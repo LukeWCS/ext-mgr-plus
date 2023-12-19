@@ -1,11 +1,11 @@
 ### 2.0.0
-(2023-12-)
+(2023-12-19) / CDB: --)
 
 * Die Unterstützung für phpBB 3.2 wurde aufgegeben und sämtliche Sonderanpassungen wurden entfernt. Minimum ist jetzt phpBB 3.3.0, optimal ist 3.3.8+.
 * Freigegeben für PHP 8.3.
 * Fix: Bei der Ermittlung neuer Migrationen verhinderte eine zu strikte Dateinamen-Prüfung eine korrekte Erkennung, wenn bei Dateinamen und Klassennamen abweichende Gross/Kleinschreibung verwendet wurde. Daraus ergaben sich 2 Fehler:
   * Bei aktivierter Anzeige der Spalte für neue Migrationen wurde die Anzahl falsch berechnet.
-  * Ist die Aktivierung von Erweiterungen mit neuen Migrationen nicht erlaubt, wurde die Auswahl-Checkbox der betroffenen Erweiterung nicht gesperrt.
+  * Ist die Aktivierung von Erweiterungen mit neuen Migrationen nicht erlaubt, wurde das Auswahl-Kontrollkästchen der betroffenen Erweiterung nicht gesperrt.
 * Fix: Beim Betatest von 2.0 zeigte sich, dass EMP nicht mit ungültigen Erweiterungen umgehen konnte, wodurch sich mehrere Probleme ergaben:
   * In bestimmten Situationen konnte der Zähler für nicht-installierte Erweiterungen in den Minus-Bereich geraten. Da eine negative Anzahl nicht vorgesehen ist, wurde stattdessen die Zahl 18446744073709551615 angezeigt, da in der Sprachvariable ein anderer Variablentyp erwartet wurde. [Meldung von Kirk (phpBB.de)]
   * Bei negativer Anzahl der nicht-installierten Erweiterungen wurden alle deaktivierten Erweiterungen in der Sektion für nicht-installierte Erweiterungen angezeigt. [Meldung von Kirk (phpBB.de)]
@@ -26,22 +26,25 @@
   * Bei einer Versionsprüfung werden jetzt alle Funktionen in der Link-Leiste gesperrt, die den Vorgang stören können.
   * Weiterhin werden die interaktiven Elemente in der Erweiterungen-Liste ausgeblendet, um versehentliche Aktionen zu verhindern, die den Vorgang stören können. [Vorschlag von chris1278 (phpBB.de)]
   * Zusätzlich informiert eine blaue Info-Box mit Hinweis über den Vorgang. [Vorschlag von chris1278 (phpBB.de)]
+* Bei Reihenfolge&Ignorieren kann jetzt in der Spalte "Reihenfolge" eine Erweiterung mit einer Gruppe (eine oder mehrere Erweiterungen) verknüpft werden. Ist zum Beispiel eine solche Verknüpfung definiert und eine deaktivierte Erweiterung "B" wird zum Aktivieren ausgewählt, dann wird auch automatisch deren benötigte Erweiterung "A" mit ausgewählt.
 * Bei aktivierter Option "Letzten Zustand merken" wird die Auswahl der Kontrollkästchen bei aktivierter Rückfrage nur noch dann gespeichert, wenn die Rückfrage mit "Ja" bestätigt wird. Bei "Nein" wird die zuletzt gespeicherte Auswahl wiederhergestellt.
-* Beim roten Ausrufezeichen-Icon (bei veralteten Versionen) ist jetzt ebenfalls ein Tooltip vorhanden.
-* Ist die Funktion "Reihenfolge&Ignorieren" deaktiviert, wird auch kein unnötiges HTML mehr generiert für die Erklärungstexte, für den Absenden-Block sowie für die Inhalte der Spalten "Reihenfolge" und "Ignorieren".
+* Diese Erweiterung ist jetzt kompatibel mit Toggle Control. Somit können Administratoren zentral an einer Stelle entscheiden, ob für Ja/Nein Schalter Radio Buttons, Checkboxen oder Toggles verwendet werden sollen.
 * Ist Eigendeaktivierung aktiv und es wird beim Deaktivieren der Exts auch EMP mit ausgewählt, dann wird der Workaround bezüglich Cache-löschen nur noch dann ausgeführt, wenn phpBB <3.3.8 vorhanden ist. Dadurch gibt es keine Verzögerung mehr bei den nächsten beiden Seitenaufrufen, sondern nur noch einmal. Siehe auch "Mein Workaround" bei 1.0.7.
 * Da der Schalter "Immer auf instabile Entwicklungs-Versionen prüfen:" in den Einstellungen nicht zu EMP gehört, wird dieser beim Zurücksetzen auf EMP Standard-Einstellungen nicht mehr berücksichtigt.
+* Beim roten Ausrufezeichen-Icon (bei veralteten Versionen) ist jetzt ebenfalls ein Tooltip vorhanden.
 * Inline-ConfirmBox
   * Die Inline-ConfirmBox von EMP für die Generierung von Rückfragen in den Einstellungen, wurde zur Javascript Klasse `LukeWCSphpBBConfirmBox` umgebaut, die sämtliche Funktionen und Eigenschaften in einem einzigen Objekt zusammenfasst. Dadurch kann die ConfirmBox-Funktionalität sehr einfach in andere Erweiterungen integriert werden. Die Klasse bietet optional auch eine Animation (jQuery Standard), deren Geschwindigkeit per Klassen-Parameter definiert werden kann.
   * Ein- und Ausblenden wird jetzt mit Animation ausgeführt. [Vorschlag von IMC (phpBB.de)]
 * Bei Toggles wird jetzt eine Bewegungs-Animation beim Slider verwendet, sowie eine Farb-Animation (Übergang) bei der Hintergrundfarbe. [Vorschlag von Kirk (phpBB.de)]
-* Erweiterung ist jetzt kompatibel mit Toggle Control. Somit können Administratoren zentral an einer Stelle entscheiden, ob für Ja/Nein Schalter Radio Buttons, Checkboxen oder Toggles verwendet werden sollen.
+* Mehrere Kritikpunkte und Vorschläge bezüglich CSS berücksichtigt. [Vorschlag von Kirk (phpBB.de)]
 * Code Optimierung:
   * JS:
     * Bei Javascript und jQuery wurden als DEPRECATED eingestufte Eigenschaften und Funktionen durch aktuelle Varianten ersetzt. Details siehe Build Changelog.
-    * Umfangreiche Verbesserungen in Bezug auf Redundanz und unnötig umständlichen Code.
-  * PHP
-* Mehrere Kritikpunkte und Vorschläge bezüglich CSS berücksichtigt. [Vorschlag von Kirk (phpBB.de)]
+    * Umfangreiche Verbesserungen in Bezug auf Redundanz und umständlichen Code.
+  * Twig: 
+    * Ist die Funktion Reihenfolge&Ignorieren deaktiviert, wird auch kein unnötiges HTML mehr generiert für die Erklärungstexte, für den Absenden-Block sowie für die Inhalte der Spalten "Reihenfolge" und "Ignorieren".
+  * PHP:
+    * Zahlreiche Detail-Verbesserungen.
 * Sprachdateien:
   * Durch eine Änderung in 1.0.7 wurde eine Sprachvariable obsolet, diese wurde jedoch bisher nicht entfernt.
 
@@ -51,7 +54,7 @@
 * Fix: Wenn bei einer Erweiterung im Ordner `migrations` eine Datei ohne Suffix vorhanden war, wurde von EMP eine Debug Warnung ausgegeben: `Undefined array key "extension"`. [Meldung von Bruce Banner (phpBB.com)]
 * Fix: Wenn bei einer Versionsprüfung mittels "Alle Versionen erneut prüfen" wegen Fehler eine oder mehrere Debug Meldungen erzeugt wurden, dann wurden diese von EMP effektiv unterdrückt. Der Grund war eine Änderung bei 1.1.1 durch die nach einer Versionsprüfung die URL mit einem Redirect bereinigt wurde. Der Redirect wurde entfernt. [Meldung von Kirk (phpBB.de)]
 * Aufgrund der "Smilie Signs" Problematik wurde die Ignorieren-Funktion weiter ausgebaut. Wird bei einer Erweiterung das Ignorieren-Merkmal gesetzt, werden bei dieser Erweiterung auch keine neuen Migrationen ermittelt, da diese in so einem Fall ohnehin bedeutungslos sind. Ist die Spalte "Neue Migrationen" aktiviert, wird bei ignorierten Erweiterungen das entsprechende Ignorieren-Icon angezeigt, statt der Anzahl der neuen Migrationen.
-* Ist bei einer Erweiterung das Ignorieren-Merkmal gesetzt, wird in der "Auswählen" Spalte nicht mehr ein deaktiviertes Kontrollkästchen angezeigt, sondern das gleiche Ignorieren-Icon wie in der "Neue Migrationen" Spalte. Somit gibt es nun in dieser Spalte einen optischen Unterschied zwischen ignorierten Erweiterungen und solchen, bei denen die Checkbox aufgrund von Bedingungen nicht zur Verfügung steht.
+* Ist bei einer Erweiterung das Ignorieren-Merkmal gesetzt, wird in der "Auswählen" Spalte nicht mehr ein deaktiviertes Kontrollkästchen angezeigt, sondern das gleiche Ignorieren-Icon wie in der "Neue Migrationen" Spalte. Somit gibt es nun in dieser Spalte einen optischen Unterschied zwischen ignorierten Erweiterungen und solchen, bei denen das Kontrollkästchen aufgrund von Bedingungen nicht zur Verfügung steht.
 * Validierungs-Kritik 1.1.1:
   * Bei Versions-Anzeigen kann das Präfix "v" jetzt per Sprachvariable global angepasst werden.
 

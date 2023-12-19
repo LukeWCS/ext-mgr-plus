@@ -1,3 +1,7 @@
+### 2.0.0
+* Release (2023-12-19)
+* Letzter Feinschliff.
+
 #### 2.0.0-b4
 * ExtMgr Template: 
   * In der Erklärung der Spalte "Reihenfolge" einen Zusatz für die Abhängigkeiten eingefügt.

@@ -185,7 +185,7 @@
 						</td>
 						<td style="display: none;">
 							{% if ext_enabled.NAME != 'lukewcs/extmgrplus' && EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE %}
-								{{ _self.inputbox(
+								{{ _self.inputbox_order(
 									ext_enabled.NAME,
 									EXTMGRPLUS_LIST_ORDER[ext_enabled.NAME] ?? '',
 									EXTMGRPLUS_LIST_IGNORE[ext_enabled.NAME] is defined
@@ -291,7 +291,7 @@
 						</td>
 						<td style="display: none;">
 							{% if EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE && ext_disabled.NAME is defined %}
-								{{ _self.inputbox(
+								{{ _self.inputbox_order(
 									ext_disabled.NAME,
 									EXTMGRPLUS_LIST_ORDER[ext_disabled.NAME] ?? '',
 									EXTMGRPLUS_LIST_IGNORE[ext_disabled.NAME] is defined
@@ -372,10 +372,6 @@
 	{% endif %}
 {% endmacro %}
 
-{% macro checkbox_all(section, enabled = true, checked = false) -%}
-	<input type="checkbox" name="ext_mark_all_{{ section }}" class="radio" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT_ALL')|e('html') }}"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
-{%- endmacro %}
-
 {% macro name(ext_obj) -%}
 	<strong title="{{ ext_obj.NAME }}">{{ ext_obj.META_DISPLAY_NAME }}</strong>
 {%- endmacro %}
@@ -428,6 +424,10 @@
 {% endapply %}
 {% endmacro %}
 
+{% macro checkbox_all(section, enabled = true, checked = false) -%}
+	<input type="checkbox" name="ext_mark_all_{{ section }}" class="radio" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT_ALL')|e('html') }}"{{ (enabled && checked) ? ' checked' }}{{ !enabled ? ' disabled' }}>
+{%- endmacro %}
+
 {% macro checkbox_select(section, ext_name, enabled = true, checked = false, ignore = false) %}
 {% apply spaceless %}
 	{% if ignore %}
@@ -440,7 +440,7 @@
 {% endapply %}
 {% endmacro %}
 
-{% macro inputbox(ext_name, value, inactive = false) -%}
+{% macro inputbox_order(ext_name, value, inactive = false) -%}
 	<input type="text" name="ext_order[{{ ext_name }}]" size="2" maxlength="3"{{ inactive ? ' class="inactive"' }} title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER')|e('html') }}" value="{{ value }}" pattern="^\+?[0-9]{1,2}$">
 {%- endmacro %}
 

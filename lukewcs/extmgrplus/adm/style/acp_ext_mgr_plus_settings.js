@@ -106,7 +106,7 @@ function setSwitch(selector, checked) {
 	if ($elementObject.get(0).type == 'checkbox') {
 		$elementObject.prop('checked', checked);
 	} else if ($elementObject.get(0).type == 'radio') {
-		$('[name="' + $elementObject[0].name + '"][value="' + (checked ? 1 : 0) + '"]').prop('checked', true);
+		$('[name="' + $elementObject.get(0).name + '"][value="' + (checked ? 1 : 0) + '"]').prop('checked', true);
 	}
 };
 

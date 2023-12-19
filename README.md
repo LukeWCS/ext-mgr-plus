@@ -4,5 +4,5 @@ Extension for phpBB - Extends the Extension Manager with the ability to disable 
 [![Build Status](https://github.com/LukeWCS/ext-mgr-plus/workflows/Tests/badge.svg)](https://github.com/LukeWCS/ext-mgr-plus/actions)
 
 ### Requirements
-* phpBB 3.3.x (optimal: 3.3.8+)
-* PHP 7.1 up to and including PHP 8.2
+* phpBB 3.3.0 - 3.3.x (optimal: 3.3.8+)
+* PHP 7.1.0 - 8.3.x
