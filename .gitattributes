@@ -7,5 +7,6 @@ docs/ export-ignore
 .gitattributes export-ignore
 ext-mgr-plus_build_changelog.md export-ignore
 ext-mgr-plus_changelog_de.md export-ignore
+ext-mgr-plus_changelog_en.md export-ignore
 LICENSE export-ignore
 README.md export-ignore
