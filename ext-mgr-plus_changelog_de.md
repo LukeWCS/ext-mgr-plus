@@ -1,5 +1,5 @@
 ### 2.0.0
-(2023-12-19) / CDB: --)
+(2023-12-19) / CDB: 2024-04-01)
 
 * Die Unterstützung für phpBB 3.2 wurde aufgegeben und sämtliche Sonderanpassungen wurden entfernt. Minimum ist jetzt phpBB 3.3.0, optimal ist 3.3.8+.
 * Freigegeben für PHP 8.3.
@@ -28,7 +28,7 @@
   * Zusätzlich informiert eine blaue Info-Box mit Hinweis über den Vorgang. [Vorschlag von chris1278 (phpBB.de)]
 * Bei Reihenfolge&Ignorieren kann jetzt in der Spalte "Reihenfolge" eine Erweiterung mit einer Gruppe (eine oder mehrere Erweiterungen) verknüpft werden. Ist zum Beispiel eine solche Verknüpfung definiert und eine deaktivierte Erweiterung "B" wird zum Aktivieren ausgewählt, dann wird auch automatisch deren benötigte Erweiterung "A" mit ausgewählt.
 * Bei aktivierter Option "Letzten Zustand merken" wird die Auswahl der Kontrollkästchen bei aktivierter Rückfrage nur noch dann gespeichert, wenn die Rückfrage mit "Ja" bestätigt wird. Bei "Nein" wird die zuletzt gespeicherte Auswahl wiederhergestellt.
-* Diese Erweiterung ist jetzt kompatibel mit Toggle Control. Somit können Administratoren zentral an einer Stelle entscheiden, ob für Ja/Nein Schalter Radio Buttons, Checkboxen oder Toggles verwendet werden sollen.
+* Diese Erweiterung ist jetzt kompatibel mit [Toggle Control](https://github.com/LukeWCS/toggle-control). Somit können Administratoren zentral an einer Stelle entscheiden, ob für Ja/Nein Schalter Radio Buttons, Checkboxen oder Toggles verwendet werden sollen.
 * Ist Eigendeaktivierung aktiv und es wird beim Deaktivieren der Exts auch EMP mit ausgewählt, dann wird der Workaround bezüglich Cache-löschen nur noch dann ausgeführt, wenn phpBB <3.3.8 vorhanden ist. Dadurch gibt es keine Verzögerung mehr bei den nächsten beiden Seitenaufrufen, sondern nur noch einmal. Siehe auch "Mein Workaround" bei 1.0.7.
 * Da der Schalter "Immer auf instabile Entwicklungs-Versionen prüfen:" in den Einstellungen nicht zu EMP gehört, wird dieser beim Zurücksetzen auf EMP Standard-Einstellungen nicht mehr berücksichtigt.
 * Beim roten Ausrufezeichen-Icon (bei veralteten Versionen) ist jetzt ebenfalls ein Tooltip vorhanden.

@@ -1,5 +1,5 @@
 ### 2.0.0
-(2023-12-19) / CDB: --)
+(2023-12-19) / CDB: 2024-04-01)
 
 * Support for phpBB 3.2 has been dropped and all special customizations have been removed. Minimum is now phpBB 3.3.0, optimal is 3.3.8+.
 * Released for PHP 8.3.
@@ -16,10 +16,10 @@
 * Fix: The problem with resending the form data in Firefox (see next point) had revealed an error in EMP that could occur when extensions were activated without reloading the ExtMgr page first. If an extension became invalid between two switching processes, i.e. the metadata of the extension could no longer be read, then this led to a FATAL that was not caught. [Reported from Kirk (phpBB.de)]
 * Firefox Workaround: If extensions were activated when the query was deactivated and automatic confirmation was activated and the ExtMgr page was then manually reloaded (e.g. with F5), this resulted in Firefox incorrectly prompting a query to resend the form data. If this query was confirmed positively, EMP carried out the last action again, which could lead to errors depending on the situation. A new function now rotates the GET parameters of the URL during automatic redirection, which in Firefox means that unnecessary queries regarding form data are no longer triggered. Other tested browsers are not affected by the problem. [Reported from Kirk (phpBB.de)]
 * In the info table, the number of invalid extensions is also displayed in brackets after the number of available extensions.
-* If the version check of an extension could not be carried out successfully, this information is also saved and evaluated. This works for both the global VP (Recheck all versions) and the local VP (Details).
+* If the version check of an extension could not be carried out successfully, this information is also saved and evaluated. This works for both the global VC (Recheck all versions) and the local VC (Details).
   * In the info table, the number of errors is displayed after the date of the last version check.
   * For extensions that had errors in the version check, an orange warning icon with a tooltip is displayed behind the version.
-* Since phpBB does not explicitly inform you by default if an extension does not offer a version check, EMP now also fills this gap. This means that all possible states (VP successful/VP faulty/no VP set up) can now be signaled accordingly.
+* Since phpBB does not explicitly inform you by default if an extension does not offer a version check, EMP now also fills this gap. This means that all possible states (VC successful/VC faulty/no VC set up) can now be signaled accordingly.
   * The info table above the extensions list expanded to 4 columns. What is new is the number of extensions with version checks set up.
   * For extensions for which no version check is set up, an icon (broken chain) with a tooltip is displayed behind the version.
 * Other version checking changes:
@@ -28,7 +28,7 @@
   * Additionally, a blue information box provides information about the process. [Suggestion from chris1278 (phpBB.de)]
 * In Order&Ignore, an extension can now be linked to a group (one or more extensions) in the "Order" column. For example, if such a link is defined and a deactivated extension "B" is selected for activation, then its required extension "A" is also automatically selected.
 * If the "Remember last status" option is activated, the selection of check boxes will only be saved if the query is activated if the query is confirmed with "Yes". If "No", the last saved selection is restored.
-* This extension is now compatible with Toggle Control. This means administrators can decide centrally in one place whether radio buttons, checkboxes or toggles should be used for yes/no switches.
+* This extension is now compatible with [Toggle Control](https://github.com/LukeWCS/toggle-control). This means administrators can decide centrally in one place whether radio buttons, checkboxes or toggles should be used for yes/no switches.
 * If self-deactivation is active and EMP is also selected when deactivating the exts, then the workaround regarding clearing the cache will only be carried out if phpBB <3.3.8 is available. This means there will no longer be a delay for the next two page views, only once. See also "My Workaround" at 1.0.7.
 * Since the "Always check for unstable development versions:" switch in the settings is not part of EMP, it is no longer taken into account when resetting to EMP standard settings.
 * There is now also a tooltip for the red exclamation mark icon (in outdated versions).
