@@ -324,28 +324,30 @@
 	{{ S_FORM_TOKEN }}
 </form>
 
-<table class="table1">
-	<tbody>
-		<tr>
-			<th>{{ lang('EXTENSION_INSTALL_HEADLINE') }}</th>
-		</tr>
-		<tr>
-			<td class="row3">{{ lang('EXTENSION_INSTALL_EXPLAIN') }}</td>
-		</tr>
-		<tr>
-			<th>{{ lang('EXTENSION_UPDATE_HEADLINE') }}</th>
-		</tr>
-		<tr>
-			<td class="row3">{{ lang('EXTENSION_UPDATE_EXPLAIN') }}</td>
-		</tr>
-		<tr>
-			<th>{{ lang('EXTENSION_REMOVE_HEADLINE') }}</th>
-		</tr>
-		<tr>
-			<td class="row3">{{ lang('EXTENSION_REMOVE_EXPLAIN') }}</td>
-		</tr>
-	</tbody>
-</table>
+{% if EXTMGRPLUS_SWITCH_INSTRUCTIONS %}
+	<table class="table1">
+		<tbody>
+			<tr>
+				<th>{{ lang('EXTENSION_INSTALL_HEADLINE') }}</th>
+			</tr>
+			<tr>
+				<td class="row3">{{ lang('EXTENSION_INSTALL_EXPLAIN') }}</td>
+			</tr>
+			<tr>
+				<th>{{ lang('EXTENSION_UPDATE_HEADLINE') }}</th>
+			</tr>
+			<tr>
+				<td class="row3">{{ lang('EXTENSION_UPDATE_EXPLAIN') }}</td>
+			</tr>
+			<tr>
+				<th>{{ lang('EXTENSION_REMOVE_HEADLINE') }}</th>
+			</tr>
+			<tr>
+				<td class="row3">{{ lang('EXTENSION_REMOVE_EXPLAIN') }}</td>
+			</tr>
+		</tbody>
+	</table>
+{% endif %}
 
 {{ common.footer(EXTMGRPLUS_METADATA) }}
 

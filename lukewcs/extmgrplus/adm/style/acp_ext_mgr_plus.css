@@ -32,7 +32,7 @@ input[type="reset"][name^="extmgrplus_"] {
 }
 
 code {
-	background-color: #DDDDDD;
+	background-color: #dddddd;
 	padding: 0 0.25em;
 	color: black;
 }
@@ -42,13 +42,13 @@ code {
 .extmgrplus_footer {
 	margin-top: 1em;
 	text-align: center;
-	font-size: .75em;
+	font-size: 0.75em;
 }
 
 /* confirm_box (phpBB)*/
 
 #confirm h2 {
-	margin-bottom: .25em;
+	margin-bottom: 0.25em;
 }
 
 /* SETTINGS */
@@ -63,9 +63,9 @@ legend.legend_sub {
 
 legend.legend_sub:after {
 	content: "";
-	border-bottom: 1px solid #CCCCCC;
+	border-bottom: 1px solid #cccccc;
 	width: 100%;
-	margin: 0 0 .5em 1em;
+	margin: 0 0 0.5em 1em;
 }
 
 /*
@@ -91,7 +91,7 @@ legend.legend_sub:after {
 	position: absolute;
 	width: 14px;
 	height: 13px;
-	background-color: #FFFFFF;
+	background-color: #ffffff;
 	top: 2px;
 	border-radius: 50%;
 	display: flex;
@@ -105,13 +105,13 @@ legend.legend_sub:after {
 .toggle,
 .toggle:hover,
 .toggle:focus {
-	background-color: #CCCCCC;
+	background-color: #cccccc;
 	border: none;
 	color: #000000;
 }
 
 .toggle:checked {
-	background-color: #3B87AB;
+	background-color: #3b87ab;
 }
 
 .toggle:checked:before {
@@ -124,15 +124,15 @@ legend.legend_sub:after {
 div[id$="_confirmbox"] {
 	max-width: 450px;
 	border: 2px solid skyblue;
-	margin: .75em .5em;
-	padding: .25em .5em;
+	margin: 0.75em 0.5em;
+	padding: 0.25em 0.5em;
 	border-radius: 5px;
 	-webkit-box-shadow: 2px 2px 10px 1px rgba(121, 162, 179, 0.5);
 	box-shadow: 2px 2px 10px 1px rgba(121, 162, 179, 0.5);
 }
 
 div[id$="_confirmbox"] h2 {
-	margin: 0 0 .25em 0;
+	margin: 0 0 0.25em 0;
 }
 
 div[id$="_confirmbox"] p:nth-of-type(2) {
@@ -148,7 +148,7 @@ div[id$="_confirmbox"] input[type="button"] {
 input[type="submit"]:disabled,
 input[type="button"]:disabled,
 input.confirmbox_active {
-	opacity: .5;
+	opacity: 0.5;
 	cursor: not-allowed;
 }
 
@@ -159,7 +159,7 @@ input.confirmbox_active {
 }
 
 .js_link:hover {
-	color: #BC2A4D;
+	color: #bc2a4d;
 	text-decoration: underline;
 	cursor: pointer;
 }
@@ -169,12 +169,12 @@ input.confirmbox_active {
 	color: #536482;
 	text-decoration: none;
 	cursor: not-allowed;
-	opacity: .5;
+	opacity: 0.5;
 }
 
 fieldset.quick a i.icon,
 .js_link i.icon {
-	margin: 0 .3em;
+	margin: 0 0.3em;
 	font-size: 1.1em;
 }
 
@@ -198,7 +198,7 @@ thead th i.icon {
 }
 
 #extmgrplus_list td:nth-of-type(2) i.fa-exclamation-triangle {
-	color: #DF950D;
+	color: #df950d;
 }
 
 #extmgrplus_list td:nth-of-type(2) i.icon {
@@ -241,11 +241,11 @@ fieldset.extmgrplus_order_and_ignore dd label:hover {
 	text-align: right;
 	padding: 0 2px;
 	margin: 0 2px;
-	background-color: #F9F9F9;
+	background-color: #f9f9f9;
 }
 
 input[type="text"].inactive {
-	opacity: .5;
+	opacity: 0.5;
 }
 
 input[type="checkbox"]:disabled {
@@ -294,7 +294,7 @@ input[type="checkbox"]:disabled {
 	}
 
 	#extmgrplus_settings dd {
-		margin: .5em 0 0 0;
+		margin: 0.5em 0 0 0;
 	}
 
 	fieldset.extmgrplus_order_and_ignore dt {
@@ -302,8 +302,8 @@ input[type="checkbox"]:disabled {
 	}
 
 	fieldset.extmgrplus_order_and_ignore dd {
-		margin: .5em 0 0 0;
-		padding: .5em 0 0 0;
-		border-top: 1px solid #CCCCCC;
+		margin: 0.5em 0 0 0;
+		padding: 0.5em 0 0 0;
+		border-top: 1px solid #cccccc;
 	}
 }

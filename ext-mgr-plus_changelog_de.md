@@ -1,3 +1,14 @@
+### 2.0.1
+(2024--) / CDB: 2024--)
+
+* Die Anzeige der Anleitungen für Installieren, Aktualisieren und Deinstallieren am Ende der Erweiterungen-Liste, kann jetzt in den Einstellungen deaktiviert werden. [Vorschlag von MattF (phpBB.com)]
+* JS: 
+  * Code Optimierung.
+  * LukeWCSphpBBConfirmBox 1.4.3
+  * Überarbeitete Funktion `setSwitch()` von LFWWH 2.2.0 übernommen.
+* Sprachdateien:
+  * 2 neue Sprachvariablen für den neuen Schalter.
+
 ### 2.0.0
 (2023-12-19) / CDB: 2024-04-01)
 

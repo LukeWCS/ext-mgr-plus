@@ -7,7 +7,7 @@
 *
 */
 
-(function () {	// IIFE start
+(function ($) {	// IIFE start
 
 'use strict';
 
@@ -109,7 +109,7 @@ function disableEnter(e) {
 
 // Event registration
 
-$(window).ready(function () {
+$(function () {
 	$('#extmgrplus_list')						.on('keypress'	, disableEnter);
 	$('#extmgrplus_link_version_check')			.on('click'		, versionCheck);
 	$('#extmgrplus_link_order_ignore')			.on('click'		, showHideOrderIgnore);
@@ -121,4 +121,4 @@ $(window).ready(function () {
 	$('[name="ext_ignore[]"]')					.on('change'	, setInputBoxState);
 });
 
-})();	// IIFE end
+})(jQuery);	// IIFE end

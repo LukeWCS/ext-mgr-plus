@@ -7,7 +7,7 @@
 *
 */
 
-(function () {	// IIFE start
+(function ($) {	// IIFE start
 
 'use strict';
 
@@ -15,7 +15,7 @@
 
 class LukeWCSphpBBConfirmBox {
 /*
-* phpBB ConfirmBox class for checkboxes and yes/no radio buttons - v1.4.1
+* phpBB ConfirmBox class for checkboxes and yes/no radio buttons - v1.4.3
 * @copyright (c) 2023, LukeWCS, https://www.wcsaga.org
 * @license GNU General Public License, version 2 (GPL-2.0-only)
 */
@@ -47,15 +47,15 @@ class LukeWCSphpBBConfirmBox {
 		const elementName		= e.target.name.replace(/_confirm_.*/, '');
 		const $elementObject	= $('input[name="' + elementName + '"]');
 		const $confirmBoxObject	= $('div[id="' + elementName + '_confirmbox"]');
+		const elementType		= $elementObject.attr('type');
 
 		if (e.target.name.endsWith('_confirm_no')) {
-			if ($elementObject.get(0).type == 'checkbox') {
+			if (elementType == 'checkbox') {
 				$elementObject.prop('checked', $confirmBoxObject.attr('data-default'));
-			} else if ($elementObject.get(0).type == 'radio') {
+			} else if (elementType == 'radio') {
 				$elementObject.filter('[value="' + ($confirmBoxObject.attr('data-default') ? '1' : '0') + '"]').prop('checked', true);
 			}
 		}
-
 		this.#changeBoxState($elementObject, $confirmBoxObject, null);
 	}
 
@@ -74,7 +74,7 @@ class LukeWCSphpBBConfirmBox {
 	}
 }
 
-// Variables declaration
+// Declarations
 
 const constants = Object.freeze({
 	CheckBoxModeOff:	'0',
@@ -94,6 +94,7 @@ function setDefaults() {
 	$(        '[name="extmgrplus_select_checkbox_mode"]').prop('value',	c.CheckBoxModeAll);
 	setSwitch('[name="extmgrplus_switch_order_and_ignore"]',			true);
 	setSwitch('[name="extmgrplus_switch_self_disable"]',				false);
+	setSwitch('[name="extmgrplus_switch_instructions"]',				true);
 	setSwitch('[name="extmgrplus_switch_migration_col"]',				false);
 	setSwitch('[name="extmgrplus_switch_migrations"]',					false);
 
@@ -101,12 +102,13 @@ function setDefaults() {
 };
 
 function setSwitch(selector, checked) {
-	const $elementObject = $(selector);
+	const $elementObject	= $(selector);
+	const elementType		= $elementObject.attr('type');
 
-	if ($elementObject.get(0).type == 'checkbox') {
+	if (elementType == 'checkbox') {
 		$elementObject.prop('checked', checked);
-	} else if ($elementObject.get(0).type == 'radio') {
-		$('[name="' + $elementObject.get(0).name + '"][value="' + (checked ? 1 : 0) + '"]').prop('checked', true);
+	} else if (elementType == 'radio') {
+		$elementObject.filter('[value="' + (checked ? 1 : 0) + '"]').prop('checked', true);
 	}
 };
 
@@ -124,7 +126,7 @@ function disableEnter(e) {
 
 // Event registration
 
-$(window).ready(function () {
+$(function () {
 	$('#extmgrplus_settings')			.on('keypress'	, disableEnter);
 	$('[name="extmgrplus_defaults"]')	.on('click'		, setDefaults);
 	$('[name="extmgrplus_submit"]')		.on('click'		, formSubmit);
@@ -132,4 +134,4 @@ $(window).ready(function () {
 	ConfirmBox = new LukeWCSphpBBConfirmBox('[name="extmgrplus_submit"]', 300);
 });
 
-})();	// IIFE end
+})(jQuery);	// IIFE end

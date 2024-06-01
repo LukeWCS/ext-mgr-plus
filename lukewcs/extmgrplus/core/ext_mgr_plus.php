@@ -291,6 +291,7 @@ class ext_mgr_plus
 			'EXTMGRPLUS_SELECT_CHECKBOX_MODE'		=> $this->config['extmgrplus_select_checkbox_mode'],
 			'EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE'	=> $this->config['extmgrplus_switch_order_and_ignore'],
 			'EXTMGRPLUS_SWITCH_SELF_DISABLE'		=> $this->config['extmgrplus_switch_self_disable'],
+			'EXTMGRPLUS_SWITCH_INSTRUCTIONS'		=> $this->config['extmgrplus_switch_instructions'],
 			'EXTMGRPLUS_SWITCH_MIGRATION_COL'		=> $this->config['extmgrplus_switch_migration_col'],
 			'EXTMGRPLUS_SWITCH_MIGRATIONS'			=> $this->config['extmgrplus_switch_migrations'],
 		]);

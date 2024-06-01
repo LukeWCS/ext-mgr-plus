@@ -99,6 +99,16 @@
 			</dd>
 		</dl>
 
+		<dl>
+			<dt>
+				<label>{{ lang('EXTMGRPLUS_INSTRUCTIONS') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('EXTMGRPLUS_INSTRUCTIONS_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				{{ _self.switch('extmgrplus_switch_instructions', EXTMGRPLUS_SWITCH_INSTRUCTIONS, switch_type) }}
+			</dd>
+		</dl>
+
 		<legend class="legend_sub">{{ lang('EXTMGRPLUS_SECTION_EXPERT_SETTINGS') }}</legend>
 
 		<dl>

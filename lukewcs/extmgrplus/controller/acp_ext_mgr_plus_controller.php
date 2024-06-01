@@ -62,6 +62,7 @@ class acp_ext_mgr_plus_controller
 			$this->config->set('extmgrplus_switch_auto_redirect'	, $this->request->variable('extmgrplus_switch_auto_redirect', 0));
 			$this->config->set('extmgrplus_select_checkbox_mode'	, $this->request->variable('extmgrplus_select_checkbox_mode', 0));
 			$this->config->set('extmgrplus_switch_order_and_ignore'	, $this->request->variable('extmgrplus_switch_order_and_ignore', 0));
+			$this->config->set('extmgrplus_switch_instructions'		, $this->request->variable('extmgrplus_switch_instructions', 0));
 			$this->config->set('extmgrplus_switch_self_disable'		, $this->request->variable('extmgrplus_switch_self_disable', 0));
 			$this->config->set('extmgrplus_switch_migration_col'	, $this->request->variable('extmgrplus_switch_migration_col', 0));
 			$this->config->set('extmgrplus_switch_migrations'		, $this->request->variable('extmgrplus_switch_migrations', 0));
@@ -82,6 +83,7 @@ class acp_ext_mgr_plus_controller
 				'EXTMGRPLUS_CHECKBOX_MODE_LAST'			=> '2',
 			],
 			'EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE'		=> $this->config['extmgrplus_switch_order_and_ignore'],
+			'EXTMGRPLUS_SWITCH_INSTRUCTIONS'			=> $this->config['extmgrplus_switch_instructions'],
 			'EXTMGRPLUS_SWITCH_SELF_DISABLE'			=> $this->config['extmgrplus_switch_self_disable'],
 			'EXTMGRPLUS_SWITCH_MIGRATION_COL'			=> $this->config['extmgrplus_switch_migration_col'],
 			'EXTMGRPLUS_SWITCH_MIGRATIONS'				=> $this->config['extmgrplus_switch_migrations'],

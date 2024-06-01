@@ -1,3 +1,27 @@
+#### 2.0.1-b1
+* ExtMgr Template:
+  * Die Anzeige der Anleitungen für Installieren, Aktualisieren und Deinstallieren am Ende der Erweiterungen-Liste, kann jetzt deaktiviert werden. [Vorschlag von MattF (phpBB.com)]
+* Settings Template:
+  * 1 neuer Schalter für die Anleitungen.
+* Core:
+  * Den neuen Schalter berücksichtigt.
+* ACP Controller:
+  * Den neuen Schalter berücksichtigt.
+* JS: 
+  * Im IIFE Konstrukt wird jetzt explizit das jQuery Objekt übergeben.
+  * Code Optimierung.
+  * LukeWCSphpBBConfirmBox 1.4.3
+  * Überarbeitete Funktion `setSwitch()` von LFWWH 2.2.0 übernommen.
+  * Den neuen Schalter bei der Funktion "Einstellungen zurücksetzen" berücksichtigt.  
+* CSS:
+  * Harmonisierung der Werte-Notation wie bei meinen anderen Erweiterungen: 
+    * Zahlen kleiner 1 werden mit 0 vor dem Komma definiert.
+	* Hexadezimale Werte werden mit Kleinbuchstaben definiert.
+* Sprachdateien:
+  * 2 neue Sprachvariablen für den neuen Schalter.
+* Migration: 
+  * Neue Config Variable `extmgrplus_switch_instructions`.
+
 ### 2.0.0
 * Release (2023-12-19)
 * Letzter Feinschliff.
