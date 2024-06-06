@@ -15,12 +15,17 @@
 
 <p>{{ lang('EXTENSIONS_EXPLAIN') }}</p>
 
-<p>{{ EXTMGRPLUS_ACTION_EXPLAIN }}</p>
+<p>{{ lang('EXTENSION_' ~ EXTMGRPLUS_ACTION_MODE ~ '_EXPLAIN') }}</p>
 
 <form id="confirm" method="post" action="{{ S_CONFIRM_ACTION }}">
 	<fieldset>
 		<h2>{{ MESSAGE_TITLE }}</h2>
+
 		<p>{{ MESSAGE_TEXT }}</p>
+
+		{% if EXTMGRPLUS_SELF_DISABLE %}
+			<p>{{ lang('EXTMGRPLUS_MSG_SELF_DISABLE') }}</p>
+		{% endif %}
 
 		{{ S_HIDDEN_FIELDS }}
 

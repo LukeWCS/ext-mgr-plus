@@ -45,7 +45,7 @@ class ext_mgr_plus_common
 		$this->u_action = $u_action;
 	}
 
-	public function set_template_vars($tpl_prefix): void
+	public function set_template_vars(string $tpl_prefix): void
 	{
 		$this->template->assign_vars([
 			$tpl_prefix . '_METADATA'	=> [
@@ -59,7 +59,7 @@ class ext_mgr_plus_common
 		]);
 	}
 
-	public function check_form_key_error($key): void
+	public function check_form_key_error(string $key): void
 	{
 		if (!check_form_key($key))
 		{
@@ -67,7 +67,7 @@ class ext_mgr_plus_common
 		}
 	}
 
-	public function back_link($lang_var = null): string
+	public function back_link(string $lang_var = null): string
 	{
 		return sprintf('<br><br><a href="%1$s">%2$s</a>',
 			/* 1 */ $this->u_action,

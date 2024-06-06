@@ -2,8 +2,8 @@
 (2024--) / CDB: 2024--)
 
 * Die Anzeige der Anleitungen für Installieren, Aktualisieren und Deinstallieren am Ende der Erweiterungen-Liste, kann jetzt in den Einstellungen deaktiviert werden. [Vorschlag von MattF (phpBB.com)]
-* JS: 
-  * Code Optimierung.
+* Code Optimierung: PHP und Javascript.
+* Javascript: 
   * LukeWCSphpBBConfirmBox 1.4.3
   * Überarbeitete Funktion `setSwitch()` von LFWWH 2.2.0 übernommen.
 * Sprachdateien:
@@ -49,7 +49,7 @@
 * Bei Toggles wird jetzt eine Bewegungs-Animation beim Slider verwendet, sowie eine Farb-Animation (Übergang) bei der Hintergrundfarbe. [Vorschlag von Kirk (phpBB.de)]
 * Mehrere Kritikpunkte und Vorschläge bezüglich CSS berücksichtigt. [Vorschlag von Kirk (phpBB.de)]
 * Code Optimierung:
-  * JS:
+  * Javascript:
     * Bei Javascript und jQuery wurden als DEPRECATED eingestufte Eigenschaften und Funktionen durch aktuelle Varianten ersetzt. Details siehe Build Changelog.
     * Umfangreiche Verbesserungen in Bezug auf Redundanz und umständlichen Code.
   * Twig: 

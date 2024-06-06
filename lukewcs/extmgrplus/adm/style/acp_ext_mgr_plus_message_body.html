@@ -15,13 +15,15 @@
 
 <p>{{ lang('EXTENSIONS_EXPLAIN') }}</p>
 
-{% if EXTMGRPLUS_ACTION_EXPLAIN -%}
-	<p>{{ EXTMGRPLUS_ACTION_EXPLAIN }}</p>
+{% if EXTMGRPLUS_ACTION_MODE -%}
+	<p>{{ lang('EXTENSION_' ~ EXTMGRPLUS_ACTION_MODE ~ '_EXPLAIN') }}</p>
 {%- endif %}
 
 <div class="{{ S_USER_NOTICE ? 'successbox' : 'errorbox' }}">
 	<h3>{{ MESSAGE_TITLE }}</h3>
+
 	<p>{{ MESSAGE_TEXT }}</p>
+
 	{% if EXTMGRPLUS_AUTO_REDIRECT %}
 		<br>
 		{{ common.icon('fa-spinner fa-pulse') }}

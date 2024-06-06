@@ -12,9 +12,9 @@ namespace lukewcs\extmgrplus\core;
 
 class ext_mgr_plus
 {
-	const CHECKBOX_MODE_OFF		= 0;
-	const CHECKBOX_MODE_ALL		= 1;
-	const CHECKBOX_MODE_LAST	= 2;
+	protected const CHECKBOX_MODE_OFF	= 0;
+	protected const CHECKBOX_MODE_ALL	= 1;
+	protected const CHECKBOX_MODE_LAST	= 2;
 
 	protected $common;
 	protected $ext_manager;
@@ -35,6 +35,7 @@ class ext_mgr_plus
 	protected $metadata;
 	protected $migrations_db;
 	protected $safe_time_limit;
+	protected $is_phpbb_min_3_3_8;
 
 	public function __construct(
 		$common,
@@ -85,7 +86,7 @@ class ext_mgr_plus
 			}
 		}
 
-		// Not needed with phpBB >=3.3.8-rc1: https://github.com/phpbb/phpbb/pull/6359
+		// Required for phpBB < 3.3.8 (https://github.com/phpbb/phpbb/pull/6359)
 		if ($this->common->config_text_get('extmgrplus_todo', 'purge_cache'))
 		{
 			$this->common->config_text_set('extmgrplus_todo', 'purge_cache', null);
@@ -340,12 +341,32 @@ class ext_mgr_plus
 
 	private function exts_switch_confirm(): void
 	{
-		$ext_mark_enabled = $this->request->variable('ext_mark_enabled', ['']);
-		$ext_mark_disabled = $this->request->variable('ext_mark_disabled', ['']);
+		$ext_mark_enabled	= $this->request->variable('ext_mark_enabled', ['']);
+		$ext_mark_disabled	= $this->request->variable('ext_mark_disabled', ['']);
+
+		$this->is_phpbb_min_3_3_8 = phpbb_version_compare(PHPBB_VERSION, '3.3.8-rc1', '>=');
+
+		$confirm_box = function (string $mode, int $ext_count) use ($ext_mark_enabled, $ext_mark_disabled): void
+		{
+			confirm_box(
+				false,
+				$this->language->lang('EXTMGRPLUS_MSG_CONFIRM_' . strtoupper($mode), $this->language->lang('EXTMGRPLUS_EXTENSION_PLURAL', $ext_count)),
+				build_hidden_fields([
+					"extmgrplus_{$mode}_all"	=> '1',
+					'ext_mark_enabled'			=> $ext_mark_enabled,
+					'ext_mark_disabled'			=> $ext_mark_disabled,
+					'u_action'					=> $this->u_action
+				]),
+				'@lukewcs_extmgrplus/acp_ext_mgr_plus_confirm_body.html'
+			);
+		};
 
 		if ($this->request->is_set_post('extmgrplus_disable_all'))
 		{
-			$this->template->assign_var('EXTMGRPLUS_ACTION_EXPLAIN', $this->language->lang('EXTENSION_DISABLE_EXPLAIN'));
+			$this->template->assign_vars([
+				'EXTMGRPLUS_ACTION_MODE'	=> 'DISABLE',
+				'EXTMGRPLUS_SELF_DISABLE'	=> array_search('lukewcs/extmgrplus', $ext_mark_enabled) !== false,
+			]);
 			if ($this->config['extmgrplus_switch_confirmation'])
 			{
 				if (confirm_box(true))
@@ -354,18 +375,7 @@ class ext_mgr_plus
 				}
 				else
 				{
-					confirm_box(
-						false,
-						$this->language->lang('EXTMGRPLUS_MSG_CONFIRM_DISABLE', $this->language->lang('EXTMGRPLUS_EXTENSION_PLURAL', count($ext_mark_enabled))) .
-							(array_search('lukewcs/extmgrplus', $ext_mark_enabled) !== false ? '<br><br>' . $this->language->lang('EXTMGRPLUS_MSG_SELF_DISABLE') : ''),
-						build_hidden_fields([
-							'extmgrplus_disable_all'	=> '1',
-							'ext_mark_enabled'			=> $ext_mark_enabled,
-							'ext_mark_disabled'			=> $ext_mark_disabled,
-							'u_action'					=> $this->u_action
-						]),
-						'@lukewcs_extmgrplus/acp_ext_mgr_plus_confirm_body.html'
-					);
+					$confirm_box('disable', count($ext_mark_enabled));
 				}
 			}
 			else
@@ -375,7 +385,9 @@ class ext_mgr_plus
 		}
 		else if ($this->request->is_set_post('extmgrplus_enable_all'))
 		{
-			$this->template->assign_var('EXTMGRPLUS_ACTION_EXPLAIN', $this->language->lang('EXTENSION_ENABLE_EXPLAIN'));
+			$this->template->assign_vars([
+				'EXTMGRPLUS_ACTION_MODE'	=> 'ENABLE',
+			]);
 			if ($this->config['extmgrplus_switch_confirmation'])
 			{
 				if (confirm_box(true))
@@ -384,17 +396,7 @@ class ext_mgr_plus
 				}
 				else
 				{
-					confirm_box(
-						false,
-						$this->language->lang('EXTMGRPLUS_MSG_CONFIRM_ENABLE', $this->language->lang('EXTMGRPLUS_EXTENSION_PLURAL', count($ext_mark_disabled))),
-						build_hidden_fields([
-							'extmgrplus_enable_all'		=> '1',
-							'ext_mark_disabled'			=> $ext_mark_disabled,
-							'ext_mark_enabled'			=> $ext_mark_enabled,
-							'u_action'					=> $this->u_action
-						]),
-						'@lukewcs_extmgrplus/acp_ext_mgr_plus_confirm_body.html'
-					);
+					$confirm_box('enable', count($ext_mark_disabled));
 				}
 			}
 			else
@@ -423,7 +425,7 @@ class ext_mgr_plus
 		}
 
 		$this->config->set('extmgrplus_exec_todo', 1);
-		if (phpbb_version_compare(PHPBB_VERSION, '3.3.8-rc1', '<'))
+		if (!$this->is_phpbb_min_3_3_8)
 		{
 			$this->common->config_text_set('extmgrplus_todo', 'purge_cache', true);
 		}
@@ -448,7 +450,7 @@ class ext_mgr_plus
 
 				if ($this->ext_manager->is_enabled($ext_name))
 				{
-					if ($ext_name != 'lukewcs/extmgrplus' || !phpbb_version_compare(PHPBB_VERSION, '3.3.8-rc1', '<'))
+					if ($ext_name != 'lukewcs/extmgrplus' || $this->is_phpbb_min_3_3_8)
 					{
 						while ($this->ext_manager->disable_step($ext_name))
 						{
@@ -484,7 +486,7 @@ class ext_mgr_plus
 		}
 		$this->set_last_ext_template_vars('');
 
-		if (!phpbb_version_compare(PHPBB_VERSION, '3.3.8-rc1', '<'))
+		if ($this->is_phpbb_min_3_3_8)
 		{
 			$this->todo();
 		}
@@ -517,13 +519,13 @@ class ext_mgr_plus
 		}
 
 		$this->config->set('extmgrplus_exec_todo', 1);
-		if (phpbb_version_compare(PHPBB_VERSION, '3.3.8-rc1', '<'))
+		if (!$this->is_phpbb_min_3_3_8)
 		{
 			$this->common->config_text_set('extmgrplus_todo', 'purge_cache', true);
 		}
 
 		$ext_list_failed_activation = [];
-		$get_failed_msg = function ($display_name, $ext_version, $ext_name, $message)
+		$get_failed_msg = function (string $display_name, string $ext_version, string $ext_name, string $message): string
 		{
 			return sprintf('<br><br><strong>%1$s %2$s (%3$s)</strong><br><br><em>%4$s</em>',
 				/* 1 */	$display_name,
@@ -620,7 +622,7 @@ class ext_mgr_plus
 
 		$this->set_last_ext_template_vars('');
 
-		if (!phpbb_version_compare(PHPBB_VERSION, '3.3.8-rc1', '<'))
+		if ($this->is_phpbb_min_3_3_8)
 		{
 			$this->todo();
 		}
