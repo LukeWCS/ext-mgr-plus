@@ -6,6 +6,9 @@
 * @copyright (c) 2022, LukeWCS, https://www.wcsaga.org
 * @license GNU General Public License, version 2 (GPL-2.0-only)
 *
+* Note: This extension is 100% genuine handcraft and consists of selected
+*       natural raw materials. There was no AI involved in making it.
+*
 */
 
 namespace lukewcs\extmgrplus\core;
@@ -49,12 +52,12 @@ class ext_mgr_plus_common
 	{
 		$this->template->assign_vars([
 			$tpl_prefix . '_METADATA'	=> [
-				'EXT_NAME'		=> $this->metadata['extra']['display-name'],
-				'EXT_VER'		=> $this->language->lang($tpl_prefix . '_VERSION_STRING', $this->metadata['version']),
-				'LANG_DESC'		=> $this->language->lang($tpl_prefix . '_LANG_DESC'),
-				'LANG_VER'		=> $this->language->lang($tpl_prefix . '_VERSION_STRING', $this->language->lang($tpl_prefix . '_LANG_VER')),
-				'LANG_AUTHOR'	=> $this->language->lang($tpl_prefix . '_LANG_AUTHOR'),
-				'CLASS'			=> strtolower($tpl_prefix) . '_footer',
+				'ext_name'		=> $this->metadata['extra']['display-name'],
+				'ext_ver'		=> $this->language->lang($tpl_prefix . '_VERSION_STRING', $this->metadata['version']),
+				'lang_desc'		=> $this->language->lang($tpl_prefix . '_LANG_DESC'),
+				'lang_ver'		=> $this->language->lang($tpl_prefix . '_VERSION_STRING', $this->language->lang($tpl_prefix . '_LANG_VER')),
+				'lang_author'	=> $this->language->lang($tpl_prefix . '_LANG_AUTHOR'),
+				'class'			=> strtolower($tpl_prefix) . '_footer',
 			],
 		]);
 	}
@@ -65,14 +68,6 @@ class ext_mgr_plus_common
 		{
 			$this->trigger_error_($this->language->lang('FORM_INVALID'), E_USER_WARNING);
 		}
-	}
-
-	public function back_link(string $lang_var = null): string
-	{
-		return sprintf('<br><br><a href="%1$s">%2$s</a>',
-			/* 1 */ $this->u_action,
-			/* 2 */ $this->language->lang($lang_var ?? 'BACK_TO_PREV')
-		);
 	}
 
 	// Determine the version of the language pack with fallback to 0.0.0
@@ -137,7 +132,7 @@ class ext_mgr_plus_common
 	}
 
 	// Get a variable/array from a config_text variable container
-	public function config_text_get(string $container, $name = null)
+	public function config_text_get(string $container, ?string $name = null)
 	{
 		$config_text = $this->config_text->get($container);
 		if ($config_text === null)
@@ -157,7 +152,7 @@ class ext_mgr_plus_common
 	}
 
 	// Wrapper for trigger_error
-	public function trigger_error_(string $message, int $error_type, string $back_link_lang_var = null): void
+	public function trigger_error_(string $message, int $error_type, ?string $back_link_lang_var = null): void
 	{
 		$this->template->assign_var('EXTMGRPLUS_LAST_EMP_ACTION', 'trigger_error');
 		if ($error_type == E_USER_NOTICE && $this->config['extmgrplus_switch_auto_redirect'])
@@ -166,6 +161,14 @@ class ext_mgr_plus_common
 			$this->template->assign_var('EXTMGRPLUS_AUTO_REDIRECT', true);
 		}
 		trigger_error($message . $this->back_link($back_link_lang_var), $error_type);
+	}
+
+	public function back_link(?string $lang_var = null): string
+	{
+		return sprintf('<br><br><a href="%1$s">%2$s</a>',
+			/* 1 */ $this->u_action,
+			/* 2 */ $this->language->lang($lang_var ?? 'BACK_TO_PREV')
+		);
 	}
 
 	// Rotates the GET parameters (Firefox F5-form-resend-workaround)

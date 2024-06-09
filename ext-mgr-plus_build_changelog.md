@@ -1,10 +1,13 @@
+### 2.0.1
+* Release (2024-06-09)
+
 #### 2.0.1-b2
 * Core:
   * Rückfrage beim Schalten:
     * Redundanten Code bezüglich `confirm_box` beim Aktivieren/Deaktivieren in einer Closure zusammengefasst.
     * Die unterschiedlichen Erklärungen von phpBB bei Aktivierung/Deaktivierung werden nicht mehr im Core generiert, sondern direkt im Template per Twig geschaltet. 
     * Der Hinweis bei Selbstdeaktivierung von EMP wurde ebenfalls in das Template verlagert.
-  * Code Optimierung: PHP
+  * Code Optimierung.
 
 #### 2.0.1-b1
 * ExtMgr Template:
