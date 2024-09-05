@@ -112,6 +112,16 @@
 			</dd>
 		</dl>
 
+		<dl>
+			<dt>
+				<label>{{ lang('EXTMGRPLUS_VC_LIMIT') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('EXTMGRPLUS_VC_LIMIT_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				{{ _self.number('extmgrplus_number_vc_limit', EXTMGRPLUS_NUMBER_VC_LIMIT, 1, 999) }}
+			</dd>
+		</dl>
+
 		<legend class="legend_sub">{{ lang('EXTMGRPLUS_SECTION_EXPERT_SETTINGS') }}</legend>
 
 		<dl>
@@ -187,6 +197,15 @@
 
 {% macro button(name, lang_var) -%}
 	<input type="button" class="button2" name="{{ name }}" value="{{ lang(lang_var) }}">
+{%- endmacro %}
+
+{% macro number(name, value, min = null, max = null, step = null, placeholder = null) -%}
+	<input type="number" name="{{ name }}" value="{{ value }}"{{
+		(min !== null ? ' min="' ~ min ~ '"') ~
+		(max !== null ? ' max="' ~ max ~ '"') ~
+		(step !== null ? ' step="' ~ step ~ '"') ~
+		(placeholder !== null ? ' placeholder="' ~ placeholder ~ '"')
+	}}>
 {%- endmacro %}
 
 {% macro confirmbox(name, message, default = false) -%}

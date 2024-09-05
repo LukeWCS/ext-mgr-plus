@@ -51,7 +51,8 @@ $lang = array_merge($lang, [
 	],
 	'EXTMGRPLUS_VERSIONCHECK_DATE' => [
 		0									=> '%2$s',
-		1									=> '%2$s (%1$u errors)',
+		1									=> '%2$s (%1$u error)',
+		2									=> '%2$s (%1$u errors)',
 	],
 
 	// link bar
@@ -97,6 +98,7 @@ $lang = array_merge($lang, [
 		1									=> '1 extension',
 		2									=> '%u extensions',
 	],
+	'EXTMGRPLUS_VERSIONCHECK_PROGRESS'		=> '%1$u / %2$u',
 
 	// messages
 	'EXTMGRPLUS_MSG_CONFIRM_DISABLE'		=> 'Are you sure that you wish to disable %s?',

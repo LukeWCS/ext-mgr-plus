@@ -97,6 +97,7 @@ $lang = array_merge($lang, [
 		1									=> '1 Erweiterung',
 		2									=> '%u Erweiterungen',
 	],
+	'EXTMGRPLUS_VERSIONCHECK_PROGRESS'		=> '%1$u / %2$u',
 
 	// messages
 	'EXTMGRPLUS_MSG_CONFIRM_DISABLE'		=> 'Bist du dir sicher, dass du %s deaktivieren möchtest?',

@@ -42,7 +42,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, [
 	// language pack author
 	'EXTMGRPLUS_LANG_DESC'					=> 'Deutsch (Sie)',
-	'EXTMGRPLUS_LANG_VER'	 				=> '2.0.1',
+	'EXTMGRPLUS_LANG_VER'	 				=> '2.1.0',
 	'EXTMGRPLUS_LANG_AUTHOR'	 			=> 'LukeWCS',
 
 	// messages

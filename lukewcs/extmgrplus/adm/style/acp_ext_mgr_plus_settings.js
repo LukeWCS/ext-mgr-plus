@@ -100,6 +100,7 @@ function setDefaults() {
 	setSwitch('[name="extmgrplus_switch_instructions"]',				true);
 	setSwitch('[name="extmgrplus_switch_migration_col"]',				false);
 	setSwitch('[name="extmgrplus_switch_migrations"]',					false);
+	$(        '[name="extmgrplus_number_vc_limit"]').prop('value',		25);
 
 	ConfirmBox.HideAll();
 };

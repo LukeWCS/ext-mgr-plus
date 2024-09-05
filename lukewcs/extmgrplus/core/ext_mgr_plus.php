@@ -73,6 +73,9 @@ class ext_mgr_plus
 		$this->php_ext			= $php_ext;
 	}
 
+	/*
+		A ToDo function with which tasks can be shifted to the next page generation
+	*/
 	public function todo(): void
 	{
 		if (!$this->config['extmgrplus_exec_todo'])
@@ -80,7 +83,9 @@ class ext_mgr_plus
 			return;
 		}
 
-		if ($this->common->config_text_get('extmgrplus_todo', 'self_disable'))
+		$todo = $this->common->config_text_get('extmgrplus_todo');
+
+		if ($todo['self_disable'] ?? false)
 		{
 			$this->common->config_text_set('extmgrplus_todo', 'self_disable', null);
 
@@ -89,17 +94,17 @@ class ext_mgr_plus
 			}
 		}
 
-		// Required for phpBB < 3.3.8 (https://github.com/phpbb/phpbb/pull/6359)
-		if ($this->common->config_text_get('extmgrplus_todo', 'purge_cache'))
+		// Required for phpBB <3.3.8 (https://github.com/phpbb/phpbb/pull/6359)
+		if ($todo['purge_cache'] ?? false)
 		{
 			$this->common->config_text_set('extmgrplus_todo', 'purge_cache', null);
 
 			$this->cache->purge();
 		}
 
-		if ($this->common->config_text_get('extmgrplus_todo', 'add_log'))
+		if ($todo['add_log'] ?? false)
 		{
-			$last_job = $this->common->config_text_get('extmgrplus_todo', 'add_log');
+			$last_job = $todo['add_log'];
 			$this->common->config_text_set('extmgrplus_todo', 'add_log', null);
 
 			if ($last_job !== null)
@@ -123,7 +128,7 @@ class ext_mgr_plus
 
 	public function ext_manager_before($event): void
 	{
-		if ($this->ext_manager->is_disabled('lukewcs/extmgrplus') || $event['action'] != 'list')
+		if ($this->ext_manager->is_disabled('lukewcs/extmgrplus') || ($event['action'] != 'list' && $event['action'] != 'none'))
 		{
 			return;
 		}
@@ -181,17 +186,66 @@ class ext_mgr_plus
 		}
 		else if ($event['action'] == 'details')
 		{
-			$this->versioncheck_save($event['ext_name']);
+			$this->versioncheck_details($event['ext_name']);
 			return;
 		}
-		else if ($event['action'] != 'list')
+		else if ($event['action'] != 'list' && $event['action'] != 'none')
 		{
 			return;
 		}
 
-		if ($this->request->variable('versioncheck_force', false))
+		$ext_list_vc_db	= $this->common->config_text_get('extmgrplus_list_version_check', 'updates');
+		$vc_active		= isset($ext_list_vc_db['data']['count_with_vc']) ?: false;
+
+// var_dump($ext_list_vc_db);
+// var_dump('extmgrplus_versioncheck', $this->request->is_set('extmgrplus_versioncheck'));
+// var_dump('$vc_active', $vc_active);
+		if ($this->request->is_set('extmgrplus_versioncheck') && !$vc_active)
 		{
-			$this->versioncheck_save();
+			$this->versioncheck_prepare($count_with_vc);
+			$this->template->assign_vars([
+				'EXTMGRPLUS_COUNT_VC_DONE'	=> 0,
+				'EXTMGRPLUS_COUNT_WITH_VC'	=> $count_with_vc,
+				'U_EXTMGRPLUS_VC_CANCEL'	=> $this->u_action,
+			]);
+			$event['tpl_name'] = '@lukewcs_extmgrplus/acp_ext_mgr_plus_versioncheck';
+
+			meta_refresh(1, $this->u_action . '&amp;action=none&amp;extmgrplus_versioncheck');
+			return;
+		}
+		else if ($this->request->is_set('extmgrplus_versioncheck') && $vc_active)
+		{
+			$event['tpl_name'] = '@lukewcs_extmgrplus/acp_ext_mgr_plus_versioncheck';
+// $this->common->trigger_error_('version-check', E_USER_NOTICE);
+// var_dump('version-check');
+			$vc_updated = $this->versioncheck($count_with_vc, $count_vc_done);
+			$this->template->assign_vars([
+				'EXTMGRPLUS_COUNT_VC_DONE'	=> $count_vc_done,
+				'EXTMGRPLUS_COUNT_WITH_VC'	=> $count_with_vc,
+				'U_EXTMGRPLUS_VC_CANCEL'	=> $this->u_action,
+			]);
+// var_dump($vc_updated);
+			if ($vc_updated)
+			{
+				meta_refresh(1, $this->u_action . '&amp;action=none&amp;extmgrplus_versioncheck');
+			}
+			else
+			{
+// var_dump('fertig');
+// exit;
+				redirect($this->u_action);
+			}
+
+			return;
+		}
+		else if (!$this->request->is_set('extmgrplus_versioncheck') && $vc_active)
+		{
+// var_dump('BREAK');
+// $ext_list_vc_db = $this->common->config_text_get('extmgrplus_list_version_check', 'updates');
+// var_dump($ext_list_vc_db);
+			unset($ext_list_vc_db['data']['count_with_vc']);
+			unset($ext_list_vc_db['data']['count_vc_done']);
+			$this->common->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_vc_db);
 		}
 
 		$event['tpl_name'] = '@lukewcs_extmgrplus/acp_ext_mgr_plus_acp_ext_list';
@@ -280,7 +334,7 @@ class ext_mgr_plus
 			'EXTMGRPLUS_LIST_IGNORE'				=> $ext_list_ignore,
 			'EXTMGRPLUS_LIST_MIGRATIONS_INACTIVE'	=> $ext_list_migrations_inactive,
 			'EXTMGRPLUS_LIST_SELECTED'				=> $ext_list_selected,
-			'EXTMGRPLUS_LIST_VERSIONCHECK'			=> $this->versioncheck_list($ext_list_available),
+			'EXTMGRPLUS_LIST_VERSIONCHECK'			=> $this->versioncheck_list($ext_list_available, $ext_list_vc_db),
 
 			'EXTMGRPLUS_COUNT_AVAILABLE'			=> count($ext_list_available),
 			'EXTMGRPLUS_COUNT_INVALID'				=> count($ext_list_enabled_invalid) + count($ext_list_disabled_invalid),
@@ -298,9 +352,14 @@ class ext_mgr_plus
 			'EXTMGRPLUS_SWITCH_INSTRUCTIONS'		=> $this->config['extmgrplus_switch_instructions'],
 			'EXTMGRPLUS_SWITCH_MIGRATION_COL'		=> $this->config['extmgrplus_switch_migration_col'],
 			'EXTMGRPLUS_SWITCH_MIGRATIONS'			=> $this->config['extmgrplus_switch_migrations'],
+
+			'U_EXTMGRPLUS_VERSIONCHECK'				=> $this->u_action . '&amp;action=none&amp;extmgrplus_versioncheck',
 		]);
 	}
 
+	/*
+		This can be used to intercept trigger_error messages whose messages cannot be changed otherwise
+	*/
 	public function catch_message(): void
 	{
 		$last_action = $this->template->retrieve_var('EXTMGRPLUS_LAST_EMP_ACTION');
@@ -342,6 +401,9 @@ class ext_mgr_plus
 		}
 	}
 
+	/*
+		Primary control for deactivation/reactivation with optional dialog
+	*/
 	private function exts_switch_confirm(): void
 	{
 		$ext_mark_enabled	= $this->request->variable('ext_mark_enabled', ['']);
@@ -411,6 +473,9 @@ class ext_mgr_plus
 		redirect($this->u_action);
 	}
 
+	/*
+		Deactivate selected extensions
+	*/
 	private function exts_disable(): void
 	{
 		$start_time = time();
@@ -505,6 +570,9 @@ class ext_mgr_plus
 		);
 	}
 
+	/*
+		Reactivate selected extensions
+	*/
 	private function exts_enable(): void
 	{
 		$start_time = time();
@@ -653,7 +721,9 @@ class ext_mgr_plus
 		);
 	}
 
-	// Store information about the current process in template variables
+	/*
+		Store information about the current process in template variables (required for todo)
+	*/
 	private function set_last_ext_template_vars(string $action, string $ext_name = '', string $ext_display_name = '', string $ext_version = ''): void
 	{
 		$this->template->assign_vars([
@@ -664,7 +734,9 @@ class ext_mgr_plus
 		]);
 	}
 
-	// Determine all extensions that have new migrations from the passed list of extensions
+	/*
+		Determine all extensions that have new migrations from the passed list of extensions
+	*/
 	private function get_exts_with_new_migration(array $ext_list): array
 	{
 		$this->load_migrations_db();
@@ -683,7 +755,9 @@ class ext_mgr_plus
 		return $ext_with_migrations_list;
 	}
 
-	// Get the number of new migration files of the specified extension
+	/*
+		Get the number of new migration files of the specified extension
+	*/
 	private function get_new_migrations_count(string $ext_name, string $ext_path): int
 	{
 		$migrations_available = $this->ext_manager->get_finder()->extension_directory('/migrations')->find_from_extension($ext_name, $ext_path, false);
@@ -703,7 +777,9 @@ class ext_mgr_plus
 		return count($migration_classes_new);
 	}
 
-	// Check if file is a valid migration file
+	/*
+		Check if file is a valid migration file
+	*/
 	private function is_migration(string $file): int
 	{
 		$file_info = pathinfo($file);
@@ -725,7 +801,9 @@ class ext_mgr_plus
 		return ($check_migration ?? -1);
 	}
 
-	// Load all extension migrations into an array
+	/*
+		Load all extension migrations into an array
+	*/
 	private function load_migrations_db(): void
 	{
 		$this->migrations_db = [];
@@ -745,7 +823,9 @@ class ext_mgr_plus
 		$this->db->sql_freeresult($result);
 	}
 
-	// Generate a log data package
+	/*
+		Generate a log data package
+	*/
 	private function get_log_data(string $log_lang_var, int $ext_count_success, int $ext_count_total): array
 	{
 		return [
@@ -758,88 +838,169 @@ class ext_mgr_plus
 		];
 	}
 
-	// Writes the cached version check data to the database.
-	private function versioncheck_save(string $param_ext_name = ''): void
+	/*
+		Preparation to be able to run a version check in blocks
+	*/
+	private function versioncheck_prepare(?int &$count_with_vc): void
 	{
-		if ($param_ext_name != '' && $this->config_text->get('extmgrplus_list_version_check') != '')
+		$ext_list_all = $this->ext_manager->all_available();
+		$ext_list_db = [
+			'data' => [
+				'count_with_vc'	=> 0,
+				'date'			=> time(),
+			],
+		];
+
+		foreach ($ext_list_all as $ext_name => $ext_path)
 		{
-			$ext_list_db = $this->common->config_text_get('extmgrplus_list_version_check', 'updates');
+			$ext_metadata = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
+
+			if (isset($ext_metadata['extra']['version-check']))
+			{
+				$ext_list_db[$ext_name] = [
+					'current' => '',
+				];
+			}
+		}
+		$count_with_vc = count($ext_list_db) - 1;
+		$ext_list_db['data']['count_with_vc'] = $count_with_vc;
+		$ext_list_db['data']['count_vc_done'] = 0;
+// var_dump($ext_list_db);
+
+		$this->common->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_db);
+	}
+
+	/*
+		Run global version check in blocks (for all extensions)
+	*/
+	private function versioncheck(?int &$count_with_vc, ?int &$count_vc_done): bool
+	{
+		$ext_list_db	= $this->common->config_text_get('extmgrplus_list_version_check', 'updates');
+		$count_with_vc	= $ext_list_db['data']['count_with_vc'];
+		$count_vc_done	= $ext_list_db['data']['count_vc_done'];
+
+		$count_vc_limit	= 0;
+		$ext_list		= $ext_list_db;
+		foreach ($ext_list as $ext_name => $ext_data)
+		{
+			if ($ext_name == 'data' || $ext_data['current'] != '')
+			{
+				continue;
+			}
+
+// var_dump($ext_name, $ext_data);
+			// $ext_list_db[$ext_name]['current'] = '1.1.0';
+			$this->versioncheck_helper($ext_list_db, $ext_name);
+
+			$count_vc_limit++;
+			$count_vc_done++;
+			if ($count_vc_limit == $this->config['extmgrplus_number_vc_limit'])
+			{
+				break;
+			}
+		}
+		if ($count_vc_limit == 0)
+		{
+			unset($ext_list_db['data']['count_with_vc']);
+			unset($ext_list_db['data']['count_vc_done']);
 		}
 		else
+		{
+			$ext_list_db['data']['count_vc_done'] = $count_vc_done;
+		}
+
+		$this->common->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_db);
+// var_dump($count_vc_limit);
+		return ($count_vc_limit > 0) ?: false;
+	}
+
+	/*
+		Read local version check from cache (for a specific extension)
+	*/
+	private function versioncheck_details(string $ext_name): void
+	{
+		$ext_list_db = $this->common->config_text_get('extmgrplus_list_version_check', 'updates');
+		if ($ext_list_db == null)
 		{
 			$ext_list_db = [
 				'data' => [
-					'date' => (($param_ext_name == '') ? time() : null),
+					'date' => time(),
 				],
 			];
 		}
-		if ($param_ext_name != '')
-		{
-			$ext_list = [
-				$param_ext_name => $this->ext_manager->get_extension_path($param_ext_name, true)
-			];
-			$ext_list_db_update = false;
-		}
-		else
-		{
-			$ext_list = $this->ext_manager->all_available();
-			$ext_list_db_update = true;
-		}
 
-		foreach ($ext_list as $ext_name => $path)
-		{
-			$md_manager = $this->ext_manager->create_extension_metadata_manager($ext_name);
-			$ext_current = $ext_list_db[$ext_name]['current'] ?? null;
-
-			try
-			{
-				$ext_metadata = $md_manager->get_metadata('all');
-
-				if (isset($ext_metadata['extra']['version-check']))
-				{
-					$vc_data = $this->ext_manager->version_check($md_manager, false, true);
-					if (!empty($vc_data))
-					{
-						if ($ext_current == 'ERROR' || phpbb_version_compare($ext_current ?? '0.0.0', $vc_data['current'], '<'))
-						{
-							$ext_current = $vc_data['current'];
-						}
-					}
-					else
-					{
-						$ext_current = null;
-					}
-				}
-			}
-			catch (exception_interface | \RuntimeException $e)
-			{
-				$ext_current = 'ERROR';
-			}
-			if ($ext_current != ($ext_list_db[$ext_name]['current'] ?? null))
-			{
-				if ($ext_current != null)
-				{
-					$ext_list_db[$ext_name] = [
-						'current' => $ext_current,
-					];
-				}
-				else
-				{
-					unset($ext_list_db[$ext_name]);
-				}
-				$ext_list_db_update = true;
-			}
-		}
-		if ($ext_list_db_update)
+		if ($this->versioncheck_helper($ext_list_db, $ext_name, true))
 		{
 			$this->common->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_db);
 		}
 	}
 
-	// Reads the version check data from the database and removes obsolete entries and generates a list for the template
-	private function versioncheck_list(&$ext_list): array
+	/*
+		Helper function to avoid redundant code for global and local version check
+	*/
+	private function versioncheck_helper(array &$ext_list_db, string $ext_name, bool $read_cache = false): bool
 	{
-		$ext_list_db = $this->common->config_text_get('extmgrplus_list_version_check', 'updates');
+		$md_manager			= $this->ext_manager->create_extension_metadata_manager($ext_name);
+		$ext_current		= $ext_list_db[$ext_name]['current'] ?? null;
+		$ext_list_db_update	= false;
+
+		try
+		{
+			$ext_metadata = $md_manager->get_metadata('all');
+
+			if (isset($ext_metadata['extra']['version-check']))
+			{
+				if ($read_cache)
+				{
+					$vc_data = $this->ext_manager->version_check($md_manager, false, true);
+				}
+				else
+				{
+					$vc_data = $this->ext_manager->version_check($md_manager, true, false, $this->config['extension_force_unstable'] ? 'unstable' : null);
+				}
+
+				if (!empty($vc_data))
+				{
+					if ($ext_current == 'ERROR' || phpbb_version_compare($ext_current ?? '0.0.0', $vc_data['current'], '<'))
+					{
+						$ext_current = $vc_data['current'];
+					}
+				}
+				else
+				{
+					$ext_current = null;
+				}
+			}
+		}
+		catch (exception_interface | \RuntimeException $e)
+		{
+			$ext_current = 'ERROR';
+		}
+
+		if ($ext_current !== ($ext_list_db[$ext_name]['current'] ?? null))
+		{
+			if ($ext_current != null)
+			{
+				$ext_list_db[$ext_name] = [
+					'current' => $ext_current,
+				];
+			}
+			else
+			{
+				unset($ext_list_db[$ext_name]);
+			}
+			$ext_list_db_update = true;
+		}
+
+		return $ext_list_db_update;
+	}
+
+	/*
+		Reads the version check data from the database and removes obsolete entries and generates a list for the template
+	*/
+	private function versioncheck_list(&$ext_list, &$ext_list_db): array
+	{
+		// $ext_list_db = $this->common->config_text_get('extmgrplus_list_version_check', 'updates');
 		if ($ext_list_db === null)
 		{
 			$ext_list_db = [];

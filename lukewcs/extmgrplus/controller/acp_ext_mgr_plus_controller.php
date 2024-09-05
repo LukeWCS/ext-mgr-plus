@@ -67,6 +67,7 @@ class acp_ext_mgr_plus_controller
 			$this->config->set('extmgrplus_switch_order_and_ignore'	, $this->request->variable('extmgrplus_switch_order_and_ignore', 0));
 			$this->config->set('extmgrplus_switch_instructions'		, $this->request->variable('extmgrplus_switch_instructions', 0));
 			$this->config->set('extmgrplus_switch_self_disable'		, $this->request->variable('extmgrplus_switch_self_disable', 0));
+			$this->config->set('extmgrplus_number_vc_limit'			, $this->request->variable('extmgrplus_number_vc_limit', 0));
 			$this->config->set('extmgrplus_switch_migration_col'	, $this->request->variable('extmgrplus_switch_migration_col', 0));
 			$this->config->set('extmgrplus_switch_migrations'		, $this->request->variable('extmgrplus_switch_migrations', 0));
 
@@ -88,6 +89,7 @@ class acp_ext_mgr_plus_controller
 			'EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE'		=> $this->config['extmgrplus_switch_order_and_ignore'],
 			'EXTMGRPLUS_SWITCH_INSTRUCTIONS'			=> $this->config['extmgrplus_switch_instructions'],
 			'EXTMGRPLUS_SWITCH_SELF_DISABLE'			=> $this->config['extmgrplus_switch_self_disable'],
+			'EXTMGRPLUS_NUMBER_VC_LIMIT'				=> $this->config['extmgrplus_number_vc_limit'],
 			'EXTMGRPLUS_SWITCH_MIGRATION_COL'			=> $this->config['extmgrplus_switch_migration_col'],
 			'EXTMGRPLUS_SWITCH_MIGRATIONS'				=> $this->config['extmgrplus_switch_migrations'],
 		]);

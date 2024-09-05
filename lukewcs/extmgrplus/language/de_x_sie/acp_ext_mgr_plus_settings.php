@@ -54,11 +54,13 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_CHECKBOX_MODE_ALL'			=> 'Alle setzen',
 	'EXTMGRPLUS_CHECKBOX_MODE_LAST'			=> 'Letzten Zustand merken',
 	'EXTMGRPLUS_ORDER_AND_IGNORE'			=> 'Reihenfolge und Ignorieren',
-	'EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN'	=> 'Wenn Sie diese Option aktivieren, wird bei der Aktion „Ausgewählte aktivieren“ die Reihenfolge-Gruppe berücksichtigt und bei „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ das Ignorieren-Merkmal. Ausserdem werden beim Auswählen/Abwählen auch definierte Abhängigkeiten berücksichtigt.',
+	'EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN'	=> 'Wenn Sie diese Option aktivieren, wird bei der Aktion „Ausgewählte aktivieren“ die Reihenfolge-Gruppe berücksichtigt und bei „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ das Ignorieren-Merkmal. Außerdem werden beim Auswählen/Abwählen auch definierte Abhängigkeiten berücksichtigt.',
 	'EXTMGRPLUS_SELF_DISABLE'				=> 'Erlaube Eigendeaktivierung',
 	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'		=> 'Wenn Sie diese Option aktivieren, dann kann sich „Extension Manager Plus“ bei der Aktion „Ausgewählte deaktivieren“ auch selbst deaktivieren, da diese Erweiterung dann wie jede andere ausgewählt werden kann.',
 	'EXTMGRPLUS_INSTRUCTIONS'				=> 'Anleitungen anzeigen',
 	'EXTMGRPLUS_INSTRUCTIONS_EXPLAIN'		=> 'Mit dieser Option können Sie festlegen, ob die Anleitungen für Installieren, Aktualisieren und Deinstallieren am Ende der Erweiterungen-Liste angezeigt werden sollen.',
+	'EXTMGRPLUS_VC_LIMIT'					=> 'Bei Versionsprüfung Anzahl der Erweiterungen begrenzen',
+	'EXTMGRPLUS_VC_LIMIT_EXPLAIN'			=> 'Mit diesem Wert können Sie festlegen, wie viele Erweiterungen pro Durchgang auf neue Versionen geprüft werden sollen. Dieser änderbare Wert hilft dabei zu verhindern, dass während einer Versionsprüfung Zeitlimits von PHP oder der Datenbank überschritten werden.',
 
 	// settings expert
 	'EXTMGRPLUS_SECTION_EXPERT_SETTINGS'	=> 'Experten-Einstellungen',

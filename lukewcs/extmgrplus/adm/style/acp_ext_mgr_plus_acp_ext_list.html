@@ -67,15 +67,11 @@
 <fieldset class="quick">
 	<span class="small">
 		<a href="https://www.phpbb.com/go/customise/extensions/{{ EXTMGRPLUS_CDB_VER }}" target="_blank">{{ common.icon('fa-database') }}{{ lang('BROWSE_EXTENSIONS_DATABASE') }}</a>
-		<span class="js_link" id="extmgrplus_link_version_check" data-url="{{ U_VERSIONCHECK_FORCE }}">{{ common.icon('fa-refresh') }}{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</span>
+		<span class="js_link" id="extmgrplus_link_version_check" data-url="{{ U_EXTMGRPLUS_VERSIONCHECK }}">{{ common.icon('fa-refresh') }}{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</span>
 		<span class="js_link{{ EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE ? '" id="extmgrplus_link_order_ignore"' : ' disabled"' }}>{{ common.icon('fa-sort') }}{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</span>
 		<span class="js_link{{ EXTMGRPLUS_SELECT_CHECKBOX_MODE == 2 ? '" id="extmgrplus_link_save_checkboxes"' : ' disabled"' }}>{{ common.icon('fa-check-square-o') }}{{ lang('EXTMGRPLUS_LINK_SAVE_CHECKBOXES') }}</span>
 	</span>
 </fieldset>
-
-<div class="successbox notice" id="extmgrplus_versioncheck_notice" style="display: none;">
-	<p>{{ lang('EXTMGRPLUS_MSG_VERSIONCHECK_HINT', common.icon('fa-spinner fa-pulse')) }}</p>
-</div>
 
 <form id="extmgrplus_list" method="post" action="{{ U_ACTION }}">
 	{% if EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE %}

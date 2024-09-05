@@ -1,3 +1,21 @@
+#### 2.1.0-b1
+* Fix: Im englischen Sprachpaket stimmte bei der Anzeige der Fehler-Anzahl nach einer Versionsprüfung die Plural-Form nicht, wenn die Anzahl exakt `1` betrug. [Meldung von leschek (phpBB.com)]
+* EMP steuert jetzt die Versionsprüfung selber und führt diese blockweise aus, wodurch Zeitlimits bei PHP und SQL verhindert werden können. Es steht außerdem eine neue Option (Eingabefeld für eine Zahl) zur Verfügung, mit der man die Anzahl gleichzeitig abgefragter Versionen ändern kann. Mit dieser neuen Funktion kann bei phpBB Installationen mit extrem vielen Erweiterungen eine Versionsprüfung erfolgreich ausgeführt werden, bei denen phpBB wegen Timeouts nicht in der Lage ist, eine solche vollständig auszuführen. [Meldung von dimassamid (phpBB.com)]
+* Bei der Version eines Sprachpakets sind jetzt auch Suffixe erlaubt, damit Korrekturen entsprechend signalisiert werden können, zum Beispiel in der Form `2.0.1.1`. Versionen müssen dabei nach den PHP Konventionen gestaltet sein, damit diese per `version_compare()` verglichen werden können.
+* Template:
+  * Für die Fortschrittsanzeige der VP das Template `acp_ext_mgr_plus_versioncheck.html` hinzugefügt.
+* JS:
+  * Das neue Eingabefeld bei der Funktion "Einstellungen zurücksetzen" berücksichtigt.  
+* CSS:
+  * Code hinzugefügt für den Fortschrittsbalken.
+* Code Optimierung:
+  * Anzahl der MySQL Abfragen in der ToDo Funktion reduziert.
+* Sprachdateien:
+  * 2 neue Sprachvariablen für das neue Eingabefeld.
+  * 1 neue Sprachvariable für den Fortschrittsbalken.
+* Migration: 
+  * Neue Config Variable `extmgrplus_number_vc_limit`.
+
 ### 2.0.1
 * Release (2024-06-09)
 
@@ -115,7 +133,6 @@
     * Redundanten Code zu einer Methode zusammengefasst.
     * Methoden die nur innerhalb der Klasse verwendet werden (für Events), sind jetzt als privat definiert.
     * Optional kann das Öffnen/Schliessen der ConfirmBox-Fenster jetzt als Animation ausgeführt werden. Dazu unterstützt die Klasse einen zweiten Parameter, mit dem die Animation aktiviert und die Geschwindigkeit geregelt werden kann: 400 = Standard, 0 = Aus. [Vorschlag von IMC (phpBB.de)] 
-    * Code Optimierung.
     * Code Optimierung.
 * Freigegeben für PHP 8.3.
 

@@ -21,10 +21,7 @@ function versionCheck() {
 		return;
 	}
 
-	showHideActionElements(false);
-	$('[id^="extmgrplus_link_"]')			.addClass('disabled');
-	$('#extmgrplus_versioncheck_notice')	.show();
-	$(location)								.prop('href', $('#extmgrplus_link_version_check').attr('data-url'));
+	$(location).prop('href', $('#extmgrplus_link_version_check').attr('data-url'));
 };
 
 function showHideOrderIgnore() {

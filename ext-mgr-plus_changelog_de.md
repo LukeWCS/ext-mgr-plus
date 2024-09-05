@@ -1,5 +1,5 @@
 ### 2.0.1
-(2024-06-09) / CDB: 2024--)
+(2024-06-09) / CDB: 2024-07-14)
 
 * Die Anzeige der Anleitungen für Installieren, Aktualisieren und Deinstallieren am Ende der Erweiterungen-Liste, kann jetzt in den Einstellungen deaktiviert werden. [Vorschlag von MattF (phpBB.com)]
 * Code Optimierung bei PHP und Javascript.

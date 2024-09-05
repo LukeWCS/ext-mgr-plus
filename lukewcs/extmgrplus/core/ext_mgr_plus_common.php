@@ -73,7 +73,7 @@ class ext_mgr_plus_common
 	// Determine the version of the language pack with fallback to 0.0.0
 	public function get_lang_ver(string $lang_ext_ver): string
 	{
-		preg_match('/^([0-9]+\.[0-9]+\.[0-9]+)/', $this->language->lang($lang_ext_ver), $matches);
+		preg_match('/^([0-9]+\.[0-9]+\.[0-9]+.*)/', $this->language->lang($lang_ext_ver), $matches);
 		return ($matches[1] ?? '0.0.0');
 	}
 
