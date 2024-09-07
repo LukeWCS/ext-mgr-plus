@@ -1,7 +1,7 @@
 #### 2.1.0-b2
 * Für die Entscheidung während der VP, ob ein neuer Durchgang gestartet werden muss, wird nicht mehr die Anzahl Erweiterungen berücksichtigt, sondern die Laufzeit des aktuellen Vorganges. Dafür wird die reale Laufzeit von phpBB herangezogen, die zwangsläufig höher liegt als die von EMP selber. Dabei auch den Standardwert von 25 auf 15 geändert, das betrifft:
- * JS (Einstellungen zurücksetzen).
- * Migration.
+  * JS (Einstellungen zurücksetzen).
+  * Migration.
 * Settings Template:
   * Beim neuen Eingabefeld für das VP Limit die Sprachvariable für "Sekunden" hinzugefügt.
 * PHP:
