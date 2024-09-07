@@ -14,7 +14,9 @@
 
 'use strict';
 
-// Extension Manager
+/*
+	Extension Manager
+*/
 
 function versionCheck() {
 	if ($('#extmgrplus_link_version_check').hasClass('disabled')) {
@@ -99,7 +101,9 @@ function setInputBoxState(e) {
 	$('input[name="ext_order[' + e.currentTarget.value + ']"]').toggleClass('inactive', e.currentTarget.checked);
 };
 
-// Common
+/*
+	Common
+*/
 
 function disableEnter(e) {
 	if (e.key == 'Enter' && e.target.type != 'textarea') {
@@ -107,7 +111,9 @@ function disableEnter(e) {
 	}
 };
 
-// Event registration
+/*
+	Event registration
+*/
 
 $(function () {
 	$('#extmgrplus_list')						.on('keypress'	, disableEnter);

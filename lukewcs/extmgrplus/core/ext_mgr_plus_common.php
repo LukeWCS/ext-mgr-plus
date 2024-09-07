@@ -70,14 +70,18 @@ class ext_mgr_plus_common
 		}
 	}
 
-	// Determine the version of the language pack with fallback to 0.0.0
+	/*
+		Determine the version of the language pack with fallback to 0.0.0
+	*/
 	public function get_lang_ver(string $lang_ext_ver): string
 	{
 		preg_match('/^([0-9]+\.[0-9]+\.[0-9]+.*)/', $this->language->lang($lang_ext_ver), $matches);
 		return ($matches[1] ?? '0.0.0');
 	}
 
-	// Check the language pack version for the minimum version and generate notice if outdated
+	/*
+		Check the language pack version for the minimum version and generate notice if outdated
+	*/
 	public function lang_ver_check_msg(string $lang_version_var, string $lang_outdated_var): string
 	{
 		$lang_outdated_msg = '';
@@ -100,7 +104,9 @@ class ext_mgr_plus_common
 		return $lang_outdated_msg;
 	}
 
-	// Set a variable/array in a config_text variable container or delete one or all variables/arrays
+	/*
+		Set a variable/array in a config_text variable container or delete one or all variables/arrays
+	*/
 	public function config_text_set(string $container, $name, $value): void
 	{
 		if ($this->config_text->get($container) === null)
@@ -131,7 +137,9 @@ class ext_mgr_plus_common
 		}
 	}
 
-	// Get a variable/array from a config_text variable container
+	/*
+		Get a variable/array from a config_text variable container
+	*/
 	public function config_text_get(string $container, ?string $name = null)
 	{
 		$config_text = $this->config_text->get($container);
@@ -151,7 +159,9 @@ class ext_mgr_plus_common
 		}
 	}
 
-	// Wrapper for trigger_error
+	/*
+		Wrapper for trigger_error
+	*/
 	public function trigger_error_(string $message, int $error_type, ?string $back_link_lang_var = null): void
 	{
 		$this->template->assign_var('EXTMGRPLUS_LAST_EMP_ACTION', 'trigger_error');
@@ -171,7 +181,9 @@ class ext_mgr_plus_common
 		);
 	}
 
-	// Rotates the GET parameters (Firefox F5-form-resend-workaround)
+	/*
+		Rotates the GET parameters (Firefox F5-form-resend-workaround)
+	*/
 	public function rotate_get_params(string $url_full): string
 	{
 		$separator	= (strpos($url_full, '&amp;') ? '&amp;' : '&');

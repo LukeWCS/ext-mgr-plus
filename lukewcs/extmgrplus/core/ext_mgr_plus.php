@@ -194,58 +194,47 @@ class ext_mgr_plus
 			return;
 		}
 
-		$ext_list_vc_db	= $this->common->config_text_get('extmgrplus_list_version_check', 'updates');
-		$vc_active		= isset($ext_list_vc_db['data']['count_with_vc']) ?: false;
+		$ext_list_versioncheck = $this->common->config_text_get('extmgrplus_list_version_check', 'updates');
 
-// var_dump($ext_list_vc_db);
-// var_dump('extmgrplus_versioncheck', $this->request->is_set('extmgrplus_versioncheck'));
-// var_dump('$vc_active', $vc_active);
-		if ($this->request->is_set('extmgrplus_versioncheck') && !$vc_active)
+		$vc_request = $this->request->is_set('extmgrplus_versioncheck');
+		$vc_active = isset($ext_list_versioncheck['data']['count_with_vc']) ?: false;
+		if ($vc_request && !$vc_active)
 		{
+			$event['tpl_name'] = '@lukewcs_extmgrplus/acp_ext_mgr_plus_versioncheck';
 			$this->versioncheck_prepare($count_with_vc);
 			$this->template->assign_vars([
 				'EXTMGRPLUS_COUNT_VC_DONE'	=> 0,
 				'EXTMGRPLUS_COUNT_WITH_VC'	=> $count_with_vc,
 				'U_EXTMGRPLUS_VC_CANCEL'	=> $this->u_action,
 			]);
-			$event['tpl_name'] = '@lukewcs_extmgrplus/acp_ext_mgr_plus_versioncheck';
 
 			meta_refresh(1, $this->u_action . '&amp;action=none&amp;extmgrplus_versioncheck');
 			return;
 		}
-		else if ($this->request->is_set('extmgrplus_versioncheck') && $vc_active)
+		else if ($vc_request && $vc_active)
 		{
-			$event['tpl_name'] = '@lukewcs_extmgrplus/acp_ext_mgr_plus_versioncheck';
-// $this->common->trigger_error_('version-check', E_USER_NOTICE);
-// var_dump('version-check');
-			$vc_updated = $this->versioncheck($count_with_vc, $count_vc_done);
-			$this->template->assign_vars([
-				'EXTMGRPLUS_COUNT_VC_DONE'	=> $count_vc_done,
-				'EXTMGRPLUS_COUNT_WITH_VC'	=> $count_with_vc,
-				'U_EXTMGRPLUS_VC_CANCEL'	=> $this->u_action,
-			]);
-// var_dump($vc_updated);
-			if ($vc_updated)
+			if ($this->versioncheck($ext_list_versioncheck, $count_with_vc, $count_vc_done_total))
 			{
+				$event['tpl_name'] = '@lukewcs_extmgrplus/acp_ext_mgr_plus_versioncheck';
+				$this->template->assign_vars([
+					'EXTMGRPLUS_COUNT_VC_DONE'	=> $count_vc_done_total,
+					'EXTMGRPLUS_COUNT_WITH_VC'	=> $count_with_vc,
+					'U_EXTMGRPLUS_VC_CANCEL'	=> $this->u_action,
+				]);
+
 				meta_refresh(1, $this->u_action . '&amp;action=none&amp;extmgrplus_versioncheck');
+				return;
 			}
 			else
 			{
-// var_dump('fertig');
-// exit;
 				redirect($this->u_action);
 			}
-
-			return;
 		}
-		else if (!$this->request->is_set('extmgrplus_versioncheck') && $vc_active)
+		else if (!$vc_request && $vc_active)
 		{
-// var_dump('BREAK');
-// $ext_list_vc_db = $this->common->config_text_get('extmgrplus_list_version_check', 'updates');
-// var_dump($ext_list_vc_db);
-			unset($ext_list_vc_db['data']['count_with_vc']);
-			unset($ext_list_vc_db['data']['count_vc_done']);
-			$this->common->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_vc_db);
+			unset($ext_list_versioncheck['data']['count_with_vc']);
+			unset($ext_list_versioncheck['data']['count_vc_done']);
+			$this->common->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_versioncheck);
 		}
 
 		$event['tpl_name'] = '@lukewcs_extmgrplus/acp_ext_mgr_plus_acp_ext_list';
@@ -334,7 +323,7 @@ class ext_mgr_plus
 			'EXTMGRPLUS_LIST_IGNORE'				=> $ext_list_ignore,
 			'EXTMGRPLUS_LIST_MIGRATIONS_INACTIVE'	=> $ext_list_migrations_inactive,
 			'EXTMGRPLUS_LIST_SELECTED'				=> $ext_list_selected,
-			'EXTMGRPLUS_LIST_VERSIONCHECK'			=> $this->versioncheck_list($ext_list_available, $ext_list_vc_db),
+			'EXTMGRPLUS_LIST_VERSIONCHECK'			=> $this->versioncheck_list($ext_list_available, $ext_list_versioncheck),
 
 			'EXTMGRPLUS_COUNT_AVAILABLE'			=> count($ext_list_available),
 			'EXTMGRPLUS_COUNT_INVALID'				=> count($ext_list_enabled_invalid) + count($ext_list_disabled_invalid),
@@ -844,10 +833,9 @@ class ext_mgr_plus
 	private function versioncheck_prepare(?int &$count_with_vc): void
 	{
 		$ext_list_all = $this->ext_manager->all_available();
-		$ext_list_db = [
+		$ext_list_vc = [
 			'data' => [
-				'count_with_vc'	=> 0,
-				'date'			=> time(),
+				'date' => time(),
 			],
 		];
 
@@ -857,30 +845,28 @@ class ext_mgr_plus
 
 			if (isset($ext_metadata['extra']['version-check']))
 			{
-				$ext_list_db[$ext_name] = [
+				$ext_list_vc[$ext_name] = [
 					'current' => '',
 				];
 			}
 		}
-		$count_with_vc = count($ext_list_db) - 1;
-		$ext_list_db['data']['count_with_vc'] = $count_with_vc;
-		$ext_list_db['data']['count_vc_done'] = 0;
-// var_dump($ext_list_db);
+		$count_with_vc = count($ext_list_vc) - 1;
+		$ext_list_vc['data']['count_with_vc'] = $count_with_vc;
+		$ext_list_vc['data']['count_vc_done'] = 0;
 
-		$this->common->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_db);
+		$this->common->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_vc);
 	}
 
 	/*
 		Run global version check in blocks (for all extensions)
 	*/
-	private function versioncheck(?int &$count_with_vc, ?int &$count_vc_done): bool
+	private function versioncheck(array &$ext_list_vc, ?int &$count_with_vc, ?int &$count_vc_done_total): bool
 	{
-		$ext_list_db	= $this->common->config_text_get('extmgrplus_list_version_check', 'updates');
-		$count_with_vc	= $ext_list_db['data']['count_with_vc'];
-		$count_vc_done	= $ext_list_db['data']['count_vc_done'];
+		$count_with_vc			= $ext_list_vc['data']['count_with_vc'];
+		$count_vc_done_total	= $ext_list_vc['data']['count_vc_done'];
 
-		$count_vc_limit	= 0;
-		$ext_list		= $ext_list_db;
+		$count_vc_done_block	= 0;
+		$ext_list				= $ext_list_vc;
 		foreach ($ext_list as $ext_name => $ext_data)
 		{
 			if ($ext_name == 'data' || $ext_data['current'] != '')
@@ -888,30 +874,31 @@ class ext_mgr_plus
 				continue;
 			}
 
-// var_dump($ext_name, $ext_data);
-			// $ext_list_db[$ext_name]['current'] = '1.1.0';
-			$this->versioncheck_helper($ext_list_db, $ext_name);
+			// $ext_list_vc[$ext_name]['current'] = '1.1.0';
+			// usleep(250000); // 5
+			$this->versioncheck_helper($ext_list_vc, $ext_name);
 
-			$count_vc_limit++;
-			$count_vc_done++;
-			if ($count_vc_limit == $this->config['extmgrplus_number_vc_limit'])
+			$count_vc_done_block++;
+			if ((microtime(true) - $GLOBALS['starttime']) > $this->config['extmgrplus_number_vc_limit'])
 			{
 				break;
 			}
 		}
-		if ($count_vc_limit == 0)
+		if ($count_vc_done_block == 0)
 		{
-			unset($ext_list_db['data']['count_with_vc']);
-			unset($ext_list_db['data']['count_vc_done']);
+			unset($ext_list_vc['data']['count_with_vc']);
+			unset($ext_list_vc['data']['count_vc_done']);
+			$this->common->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_vc);
 		}
-		else
+		else if (isset($this->common->config_text_get('extmgrplus_list_version_check', 'updates')['data']['count_with_vc']))
 		{
-			$ext_list_db['data']['count_vc_done'] = $count_vc_done;
+			$count_vc_done_total += $count_vc_done_block;
+			$ext_list_vc['data']['count_vc_done'] = $count_vc_done_total;
+			$this->common->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_vc);
+			return true;
 		}
 
-		$this->common->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_db);
-// var_dump($count_vc_limit);
-		return ($count_vc_limit > 0) ?: false;
+		return false;
 	}
 
 	/*
@@ -919,30 +906,31 @@ class ext_mgr_plus
 	*/
 	private function versioncheck_details(string $ext_name): void
 	{
-		$ext_list_db = $this->common->config_text_get('extmgrplus_list_version_check', 'updates');
-		if ($ext_list_db == null)
+		$ext_list_vc = $this->common->config_text_get('extmgrplus_list_version_check', 'updates');
+
+		if ($ext_list_vc == null)
 		{
-			$ext_list_db = [
+			$ext_list_vc = [
 				'data' => [
 					'date' => time(),
 				],
 			];
 		}
 
-		if ($this->versioncheck_helper($ext_list_db, $ext_name, true))
+		if ($this->versioncheck_helper($ext_list_vc, $ext_name, true))
 		{
-			$this->common->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_db);
+			$this->common->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_vc);
 		}
 	}
 
 	/*
 		Helper function to avoid redundant code for global and local version check
 	*/
-	private function versioncheck_helper(array &$ext_list_db, string $ext_name, bool $read_cache = false): bool
+	private function versioncheck_helper(array &$ext_list_vc, string $ext_name, bool $read_cache = false): bool
 	{
 		$md_manager			= $this->ext_manager->create_extension_metadata_manager($ext_name);
-		$ext_current		= $ext_list_db[$ext_name]['current'] ?? null;
-		$ext_list_db_update	= false;
+		$ext_current		= $ext_list_vc[$ext_name]['current'] ?? null;
+		$ext_list_vc_update	= false;
 
 		try
 		{
@@ -977,39 +965,38 @@ class ext_mgr_plus
 			$ext_current = 'ERROR';
 		}
 
-		if ($ext_current !== ($ext_list_db[$ext_name]['current'] ?? null))
+		if ($ext_current !== ($ext_list_vc[$ext_name]['current'] ?? null))
 		{
 			if ($ext_current != null)
 			{
-				$ext_list_db[$ext_name] = [
+				$ext_list_vc[$ext_name] = [
 					'current' => $ext_current,
 				];
 			}
 			else
 			{
-				unset($ext_list_db[$ext_name]);
+				unset($ext_list_vc[$ext_name]);
 			}
-			$ext_list_db_update = true;
+			$ext_list_vc_update = true;
 		}
 
-		return $ext_list_db_update;
+		return $ext_list_vc_update;
 	}
 
 	/*
 		Reads the version check data from the database and removes obsolete entries and generates a list for the template
 	*/
-	private function versioncheck_list(&$ext_list, &$ext_list_db): array
+	private function versioncheck_list(array &$ext_list, ?array &$ext_list_vc): array
 	{
-		// $ext_list_db = $this->common->config_text_get('extmgrplus_list_version_check', 'updates');
-		if ($ext_list_db === null)
+		if ($ext_list_vc === null)
 		{
-			$ext_list_db = [];
+			$ext_list_vc = [];
 		}
-		$ext_list_db_update = false;
+		$ext_list_vc_update = false;
 		$ext_list_tpl = [];
 
 		$count_updates = 0;
-		foreach ($ext_list_db as $ext_name => $ext_data)
+		foreach ($ext_list_vc as $ext_name => $ext_data)
 		{
 			if ($ext_name == 'data')
 			{
@@ -1032,13 +1019,13 @@ class ext_mgr_plus
 			}
 			if (!isset($ext_list_tpl[$ext_name]))
 			{
-				unset($ext_list_db[$ext_name]);
-				$ext_list_db_update = true;
+				unset($ext_list_vc[$ext_name]);
+				$ext_list_vc_update = true;
 			}
 		}
-		if ($ext_list_db_update)
+		if ($ext_list_vc_update)
 		{
-			$this->common->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_db);
+			$this->common->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_vc);
 		}
 
 		$count_no_vc = 0;
@@ -1067,7 +1054,7 @@ class ext_mgr_plus
 		}
 
 		$ext_list_tpl['data'] = [
-			'LOCAL_DATE'	=> (isset($ext_list_db['data']['date']) ? $this->user->format_date($ext_list_db['data']['date']) : null),
+			'LOCAL_DATE'	=> (isset($ext_list_vc['data']['date']) ? $this->user->format_date($ext_list_vc['data']['date']) : null),
 			'COUNT_UPDATE'	=> $count_updates,
 			'COUNT_WITH_VC'	=> count($ext_list) - $count_no_vc,
 			'COUNT_ERROR'	=> $count_errors,

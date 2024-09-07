@@ -23,7 +23,7 @@ class v_2_1_0 extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		return [
-			['config.add', ['extmgrplus_number_vc_limit', 25]],
+			['config.add', ['extmgrplus_number_vc_limit', 15]],
 		];
 	}
 }

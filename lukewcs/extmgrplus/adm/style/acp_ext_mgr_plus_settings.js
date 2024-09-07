@@ -14,7 +14,9 @@
 
 'use strict';
 
-// Classes
+/*
+	Classes
+*/
 
 class LukeWCSphpBBConfirmBox {
 /*
@@ -77,7 +79,9 @@ class LukeWCSphpBBConfirmBox {
 	}
 }
 
-// Declarations
+/*
+	Declarations
+*/
 
 const constants = Object.freeze({
 	CheckBoxModeOff:	'0',
@@ -86,7 +90,9 @@ const constants = Object.freeze({
 });
 let ConfirmBox;
 
-// Settings form
+/*
+	Settings form
+*/
 
 function setDefaults() {
 	const c = constants;
@@ -100,7 +106,7 @@ function setDefaults() {
 	setSwitch('[name="extmgrplus_switch_instructions"]',				true);
 	setSwitch('[name="extmgrplus_switch_migration_col"]',				false);
 	setSwitch('[name="extmgrplus_switch_migrations"]',					false);
-	$(        '[name="extmgrplus_number_vc_limit"]').prop('value',		25);
+	$(        '[name="extmgrplus_number_vc_limit"]').prop('value',		15);
 
 	ConfirmBox.HideAll();
 };
@@ -120,7 +126,9 @@ function formSubmit() {
 	$('#extmgrplus_settings').submit();
 };
 
-// Common
+/*
+	Common
+*/
 
 function disableEnter(e) {
 	if (e.key == 'Enter' && e.target.type != 'textarea') {
@@ -128,7 +136,9 @@ function disableEnter(e) {
 	}
 };
 
-// Event registration
+/*
+	Event registration
+*/
 
 $(function () {
 	$('#extmgrplus_settings')			.on('keypress'	, disableEnter);
