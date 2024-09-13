@@ -50,8 +50,8 @@ $lang = array_merge($lang, [
 		1									=> '%2$u (%1$u ungültige)',
 	],
 	'EXTMGRPLUS_VERSIONCHECK_DATE' => [
-		0									=> '%2$s',
-		1									=> '%2$s (%1$u Fehler)',
+		0									=> '%2$s (%3$u Sek.)',
+		1									=> '%2$s (%3$u Sek. / %1$u Fehler)',
 	],
 
 	// link bar
@@ -67,6 +67,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> '%s In dieser Spalte können Sie festlegen, welche Erweiterungen bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ ignoriert werden sollen. Ignorierte Erweiterungen können in der Erweiterungen-Liste nicht mehr ausgewählt werden. Wenn bei einer ignorierten Erweiterung eine Reihenfolge-Gruppe definiert wurde, dann bleibt diese erhalten, sie hat jedoch keine Bedeutung mehr.',
 
 	// ext manager
+	'EXTMGRPLUS_COL_CDB'					=> 'phpBB-Erweiterungsdatenbank',
 	'EXTMGRPLUS_COL_MIGRATIONS'				=> 'Neue Migrationen',
 	'EXTMGRPLUS_COL_SELECT'					=> 'Auswählen',
 	'EXTMGRPLUS_COL_ORDER'					=> 'Reihenfolge',
@@ -78,6 +79,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED'	=> 'Nicht installierte Erweiterungen: %u',
 
 	// tooltips
+	'EXTMGRPLUS_TOOLTIP_CDB_EXT'			=> 'Diese Erweiterung wurde offiziell validiert.',
 	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'		=> 'Diese Erweiterung hat neue Migrationen, die beim aktivieren der Erweiterung übernommen werden.',
 	'EXTMGRPLUS_TOOLTIP_OUTDATED'			=> 'Die installierte Version dieser Erweiterung ist veraltet.',
 	'EXTMGRPLUS_TOOLTIP_VERSIONCHECK_ERROR'	=> 'Bei der Versionsprüfung ist ein Fehler aufgetreten. Klicken Sie auf „Details“ um mehr zu erfahren.',
@@ -97,7 +99,15 @@ $lang = array_merge($lang, [
 		1									=> '1 Erweiterung',
 		2									=> '%u Erweiterungen',
 	],
-	'EXTMGRPLUS_VERSIONCHECK_PROGRESS'		=> '%1$u / %2$u',
+
+	// versioncheck
+	'EXTMGRPLUS_MSG_VERSIONCHECK_HINT'		=> 'Die Erweiterungen werden auf neue Versionen geprüft, bitte warten. %s',
+	'EXTMGRPLUS_MSG_VERSIONCHECK_PROGRESS'	=> '%1$u / %2$u',
+
+	// details
+	'EXTMGRPLUS_SECTION_DETAILS'			=> 'Informationen von Extension Manager Plus',
+	'EXTMGRPLUS_DETAILS_CDB_PAGE'			=> 'Zugehörige Seite der phpBB-Erweiterungsdatenbank',
+	'EXTMGRPLUS_DETAILS_VERSION_URL'		=> 'Link zur Versionsdatei',
 
 	// messages
 	'EXTMGRPLUS_MSG_CONFIRM_DISABLE'		=> 'Sind Sie sich sicher, dass Sie %s deaktivieren möchten?',
@@ -110,5 +120,4 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'		=> 'Die folgenden Erweiterungen konnten nicht aktiviert werden:',
 	'EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED'		=> 'Der Toleranzbereich (%u Sekunden) der maximalen PHP Ausführungszeit wurde überschritten.',
 	'EXTMGRPLUS_MSG_SELF_DISABLE'			=> 'Hinweis: Die Erweiterung „Extension Manager Plus“ wird ebenfalls deaktiviert.',
-	'EXTMGRPLUS_MSG_VERSIONCHECK_HINT'		=> 'Die Erweiterungen werden auf neue Versionen geprüft, bitte warten. %s',
 ]);

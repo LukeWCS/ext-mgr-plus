@@ -70,6 +70,7 @@ class acp_ext_mgr_plus_controller
 			$this->config->set('extmgrplus_number_vc_limit'			, $this->request->variable('extmgrplus_number_vc_limit', 0));
 			$this->config->set('extmgrplus_switch_migration_col'	, $this->request->variable('extmgrplus_switch_migration_col', 0));
 			$this->config->set('extmgrplus_switch_migrations'		, $this->request->variable('extmgrplus_switch_migrations', 0));
+			$this->config->set('extmgrplus_switch_version_url'		, $this->request->variable('extmgrplus_switch_version_url', 0));
 
 			$this->common->trigger_error_($this->language->lang('EXTMGRPLUS_MSG_SETTINGS_SAVED'), E_USER_NOTICE);
 		}
@@ -92,6 +93,7 @@ class acp_ext_mgr_plus_controller
 			'EXTMGRPLUS_NUMBER_VC_LIMIT'				=> $this->config['extmgrplus_number_vc_limit'],
 			'EXTMGRPLUS_SWITCH_MIGRATION_COL'			=> $this->config['extmgrplus_switch_migration_col'],
 			'EXTMGRPLUS_SWITCH_MIGRATIONS'				=> $this->config['extmgrplus_switch_migrations'],
+			'EXTMGRPLUS_SWITCH_VERSION_URL'				=> $this->config['extmgrplus_switch_version_url'],
 		]);
 
 		add_form_key('lukewcs_extmgrplus');

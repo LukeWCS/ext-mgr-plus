@@ -146,6 +146,16 @@
 			</dd>
 		</dl>
 
+		<dl>
+			<dt>
+				<label>{{ lang('EXTMGRPLUS_VERSION_URL') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('EXTMGRPLUS_VERSION_URL_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				{{ _self.switch('extmgrplus_switch_version_url', EXTMGRPLUS_SWITCH_VERSION_URL, switch_type) }}
+			</dd>
+		</dl>
+
 		<legend class="legend_sub">{{ lang('EXTMGRPLUS_SECTION_RESET') }}</legend>
 
 		<dl>

@@ -68,6 +68,8 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MIGRATION_COL_EXPLAIN'		=> 'Wenn diese Option aktiviert ist, dann wird eine zusätzliche Spalte angezeigt, in der die Anzahl neuer Migrationen aufgeführt ist. Die Anzahl wird sowohl bei „Deaktivierte Erweiterungen“ als auch bei „Nicht installierte Erweiterungen“ angezeigt.',
 	'EXTMGRPLUS_MIGRATIONS'					=> 'Erlaube Erweiterungen mit neuen Migrationen',
 	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'			=> 'Wenn diese Option aktiviert ist, dann kannst du bei der Aktion „Ausgewählte aktivieren“ auch diejenigen Erweiterungen aktivieren, bei denen neue Migrationen vorliegen. Das trifft auf aktualisierte Erweiterungen zu, die einen Ordner „migrations“ enthalten. Ohne diese Option müssen solche Erweiterungen manuell aktiviert werden, was empfohlen wird.',
+	'EXTMGRPLUS_VERSION_URL'				=> 'Link zur Versionsdatei anzeigen',
+	'EXTMGRPLUS_VERSION_URL_EXPLAIN'		=> 'Wenn du diese Option aktivierst, kannst du dir auf der Seite „Details“ einer Erweiterung den Link zur Versionsdatei anzeigen lassen, die von phpBB bei einer Versionsprüfung vom jeweiligen Server geladen und ausgewertet wird.',
 
 	// settings reset
 	'EXTMGRPLUS_SECTION_RESET'				=> 'Zurücksetzen',

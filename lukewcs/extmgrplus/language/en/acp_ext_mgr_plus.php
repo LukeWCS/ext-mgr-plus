@@ -50,9 +50,9 @@ $lang = array_merge($lang, [
 		1									=> '%2$u (%1$u invalid)',
 	],
 	'EXTMGRPLUS_VERSIONCHECK_DATE' => [
-		0									=> '%2$s',
-		1									=> '%2$s (%1$u error)',
-		2									=> '%2$s (%1$u errors)',
+		0									=> '%2$s (%3$u sec.)',
+		1									=> '%2$s (%3$u sec. / %1$u error)',
+		2									=> '%2$s (%3$u sec. / %1$u errors)',
 	],
 
 	// link bar
@@ -68,6 +68,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> '%s This column allows you to specify which extensions should be ignored during the “Enable selected” and “Disable selected” actions. Ignored extensions can no longer be selected in the extensions list. If an order group was defined for an ignored extension, then this is retained, but it no longer has any meaning.',
 
 	// ext manager
+	'EXTMGRPLUS_COL_CDB'					=> 'phpBB Extension Database',
 	'EXTMGRPLUS_COL_MIGRATIONS'				=> 'New migrations',
 	'EXTMGRPLUS_COL_SELECT'					=> 'Select',
 	'EXTMGRPLUS_COL_ORDER'					=> 'Order',
@@ -79,6 +80,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED'	=> 'Not installed Extensions: %u',
 
 	// tooltips
+	'EXTMGRPLUS_TOOLTIP_CDB_EXT'			=> 'This extension has been officially validated.',
 	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'		=> 'This extension has new migrations that are applied when activating the extension.',
 	'EXTMGRPLUS_TOOLTIP_OUTDATED'			=> 'The installed version of this extension is out of date.',
 	'EXTMGRPLUS_TOOLTIP_VERSIONCHECK_ERROR'	=> 'An error occurred during the version check. Click on “Details” to find out more.',
@@ -98,7 +100,15 @@ $lang = array_merge($lang, [
 		1									=> '1 extension',
 		2									=> '%u extensions',
 	],
-	'EXTMGRPLUS_VERSIONCHECK_PROGRESS'		=> '%1$u / %2$u',
+
+	// versioncheck
+	'EXTMGRPLUS_MSG_VERSIONCHECK_HINT'		=> 'The extensions are being checked for new versions, please wait. %s',
+	'EXTMGRPLUS_MSG_VERSIONCHECK_PROGRESS'	=> '%1$u / %2$u',
+
+	// details
+	'EXTMGRPLUS_SECTION_DETAILS'			=> 'Information from Extension Manager Plus',
+	'EXTMGRPLUS_DETAILS_CDB_PAGE'			=> 'Related page of the phpBB extension database',
+	'EXTMGRPLUS_DETAILS_VERSION_URL'		=> 'Link to version file',
 
 	// messages
 	'EXTMGRPLUS_MSG_CONFIRM_DISABLE'		=> 'Are you sure that you wish to disable %s?',
@@ -111,5 +121,4 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'		=> 'The following extensions could not be activated:',
 	'EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED'		=> 'The tolerance range (%u seconds) of the maximum PHP execution time has been exceeded.',
 	'EXTMGRPLUS_MSG_SELF_DISABLE'			=> 'Note: The “Extension Manager Plus” extension will also be disabled.',
-	'EXTMGRPLUS_MSG_VERSIONCHECK_HINT'		=> 'The extensions are being checked for new versions, please wait. %s',
 ]);

@@ -49,12 +49,13 @@
 				) }}</strong>
 			</td>
 			<td>
-				<strong>{{ EXTMGRPLUS_LIST_VERSIONCHECK.data.COUNT_WITH_VC }}</strong>
+				<strong>{{ EXTMGRPLUS_LIST_VERSIONCHECK.data.COUNT_TOTAL }}</strong>
 			</td>
 			<td>
 				<strong>{{ lang('EXTMGRPLUS_VERSIONCHECK_DATE',
 					EXTMGRPLUS_LIST_VERSIONCHECK.data.COUNT_ERROR,
-					EXTMGRPLUS_LIST_VERSIONCHECK.data.LOCAL_DATE ?? ''
+					EXTMGRPLUS_LIST_VERSIONCHECK.data.LOCAL_DATE ?? '',
+					EXTMGRPLUS_LIST_VERSIONCHECK.data.DURATION
 				) }}</strong>
 			</td>
 			<td>
@@ -95,9 +96,22 @@
 	{% endif %}
 
 	<table class="table1">
-		<col class="row1"><col class="row1"><col class="row1"><col class="row1"><col class="row2"><col class="row2"><col class="row2"><col class="row2">
+		<colgroup>
+			<col class="row1">
+			<col class="row1">
+			<col class="row1">
+			<col class="row1">
+			<col class="row1">
+			<col class="row2">
+			<col class="row2">
+			<col class="row2">
+			<col class="row2">
+		</colgroup>
 		<thead>
 			<tr>
+				<th title="{{ lang('EXTMGRPLUS_COL_CDB') }}">
+					{{ common.icon('fa-database') }}<span class="extmgrplus_responsive">{{ lang('EXTMGRPLUS_COL_CDB') }}</span>
+				</th>
 				<th>
 					{{ lang('EXTENSION_NAME') }}
 				</th>
@@ -129,6 +143,8 @@
 			{% if enabled|length %}
 				<tr>
 					<td class="row3">
+					</td>
+					<td class="row3">
 						<strong>{{ lang('EXTMGRPLUS_EXTENSIONS_ENABLED', EXTMGRPLUS_COUNT_ENABLED) }}</strong>{% EVENT acp_ext_list_enabled_title_after %}
 					</td>
 					<td class="row3">
@@ -158,10 +174,13 @@
 				{% for ext_enabled in enabled %}
 					<tr class="ext_enabled row-highlight">
 						<td>
+							{{ _self.cdb(EXTMGRPLUS_LIST_VERSIONCHECK[ext_enabled.NAME]) }}
+						</td>
+						<td>
 							{{ _self.name(ext_enabled) }}{% EVENT acp_ext_list_enabled_name_after %}
 						</td>
 						<td>
-							{{ _self.version(ext_enabled, attribute(EXTMGRPLUS_LIST_VERSIONCHECK, ext_enabled.NAME)) }}
+							{{ _self.version(ext_enabled, EXTMGRPLUS_LIST_VERSIONCHECK[ext_enabled.NAME]) }}
 						</td>
 						<td{{ !EXTMGRPLUS_SWITCH_MIGRATION_COL ? ' style="display: none;"' }}>
 						</td>
@@ -207,6 +226,8 @@
 				{% if EXTMGRPLUS_COUNT_DISABLED %}
 					<tr>
 						<td class="row3">
+						</td>
+						<td class="row3">
 							<strong>{{ lang('EXTMGRPLUS_EXTENSIONS_DISABLED', EXTMGRPLUS_COUNT_DISABLED) }}</strong>{% EVENT acp_ext_list_disabled_title_after %}
 						</td>
 						<td class="row3">
@@ -238,6 +259,8 @@
 					{% if loop.index == EXTMGRPLUS_COUNT_DISABLED + 1 %}
 						<tr>
 							<td class="row3">
+							</td>
+							<td class="row3">
 								<strong>{{ lang('EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED', EXTMGRPLUS_COUNT_NOT_INSTALLED) }}</strong>
 							</td>
 							<td class="row3">
@@ -258,10 +281,13 @@
 					{% endif %}
 					<tr class="ext_disabled row-highlight">
 						<td>
+							{{ _self.cdb(EXTMGRPLUS_LIST_VERSIONCHECK[ext_disabled.NAME]) }}
+						</td>
+						<td>
 							{{ _self.name(ext_disabled) }}{% EVENT acp_ext_list_disabled_name_after %}
 						</td>
 						<td>
-							{{ _self.version(ext_disabled, attribute(EXTMGRPLUS_LIST_VERSIONCHECK, ext_disabled.NAME)) }}
+							{{ _self.version(ext_disabled, EXTMGRPLUS_LIST_VERSIONCHECK[ext_disabled.NAME]) }}
 						</td>
 						<td{{ !EXTMGRPLUS_SWITCH_MIGRATION_COL ? ' style="display: none;"' }}>
 							{% if EXTMGRPLUS_SWITCH_MIGRATION_COL %}
@@ -377,23 +403,26 @@
 	<strong title="{{ ext_obj.NAME }}">{{ ext_obj.META_DISPLAY_NAME }}</strong>
 {%- endmacro %}
 
+{% macro cdb(vc_obj) -%}
+	{% if vc_obj.CDB_EXT %}
+		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_CDB_EXT')|e('html') }}">{{ common.icon('fa-database') }}</span>
+	{% endif %}
+{%- endmacro %}
+
 {% macro version(ext_obj, vc_obj) %}
 {% apply spaceless %}
-	{% if ext_obj.S_VERSIONCHECK || vc_obj.CURRENT %}
-		<strong class="{{ ext_obj.S_UP_TO_DATE ? 'current-ext' : 'outdated-ext' }}">{{ ext_obj.META_VERSION }}</strong>
-		{% if not ext_obj.S_UP_TO_DATE %}
-			<span title="{{ lang('EXTMGRPLUS_TOOLTIP_OUTDATED')|e('html') }}">&nbsp;{{ common.icon('fa-exclamation-circle outdated-ext') }}</span>
-		{% endif %}
-		{% if vc_obj.CURRENT %}
-			<strong class="current-ext">&nbsp;({{ vc_obj.CURRENT }})</strong>
-		{% endif %}
-	{% else %}
+	{% if vc_obj.HAS_VC === false || vc_obj.CURRENT == 'ERROR' || !vc_obj.CURRENT %}
 		<span>{{ ext_obj.META_VERSION }}</span>
+	{% else %}
+		<strong class="{{ vc_obj.CURRENT == 'NOUPD' ? 'current-ext' : 'outdated-ext' }}">{{ ext_obj.META_VERSION }}</strong>
 	{% endif %}
-	{% if vc_obj.ERROR %}
-		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_VERSIONCHECK_ERROR')|e('html') }}">&nbsp;{{ common.icon('fa-exclamation-triangle') }}</span>
-	{% elseif vc_obj.NO_VC %}
+	{% if vc_obj.HAS_VC === false %}
 		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_NO_VERSIONCHECK')|e('html') }}">&nbsp;{{ common.icon('fa-chain-broken') }}</span>
+	{% elseif vc_obj.CURRENT == 'ERROR' %}
+		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_VERSIONCHECK_ERROR')|e('html') }}">&nbsp;{{ common.icon('fa-exclamation-triangle') }}</span>
+	{% elseif vc_obj.CURRENT != 'NOUPD' && vc_obj.CURRENT %}
+		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_OUTDATED')|e('html') }}">&nbsp;{{ common.icon('fa-exclamation-circle outdated-ext') }}</span>
+		<strong class="current-ext">&nbsp;({{ vc_obj.CURRENT }})</strong>
 	{% endif %}
 {% endapply %}
 {% endmacro %}

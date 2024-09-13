@@ -23,11 +23,11 @@
 <div class="successbox notice">
 	<p>{{ lang('EXTMGRPLUS_MSG_VERSIONCHECK_HINT', common.icon('fa-spinner fa-pulse')) }}</p>
 
-	{% set percent = (EXTMGRPLUS_COUNT_VC_DONE * 100) / EXTMGRPLUS_COUNT_WITH_VC %}
+	{% set percent = (EXTMGRPLUS_VC_COUNT_DONE * 100) / EXTMGRPLUS_VC_COUNT_TOTAL %}
 	<div class="progress_container">
 		<div class="progress_bar" style="width: {{ percent|round }}%;">
 			<div class="progress_value">
-				{{ lang('EXTMGRPLUS_VERSIONCHECK_PROGRESS', EXTMGRPLUS_COUNT_VC_DONE, EXTMGRPLUS_COUNT_WITH_VC) }}
+				{{ lang('EXTMGRPLUS_MSG_VERSIONCHECK_PROGRESS', EXTMGRPLUS_VC_COUNT_DONE, EXTMGRPLUS_VC_COUNT_TOTAL) }}
 			</div>
 		</div>
 	</div>
@@ -42,4 +42,3 @@
 {% INCLUDE 'overall_footer.html' %}
 
 {% INCLUDECSS '@lukewcs_extmgrplus/acp_ext_mgr_plus.css' %}
-

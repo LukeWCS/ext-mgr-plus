@@ -184,10 +184,6 @@ fieldset.quick a i.icon,
 	display: inline-block;
 }
 
-/* div.successbox.notice { */
-	/* border-radius: 5px; */
-/* } */
-
 div.successbox.notice i.icon {
 	font-size: 1.2em;
 }
@@ -195,24 +191,6 @@ div.successbox.notice i.icon {
 thead th i.icon {
 	font-size: 1.1em;
 	font-weight: normal;
-}
-
-#extmgrplus_list td:nth-of-type(2) i.fa-exclamation-triangle {
-	color: #df950d;
-}
-
-#extmgrplus_list td:nth-of-type(2) i.icon {
-	cursor: help;
-	font-size: 1.2em;
-}
-
-#extmgrplus_list td:nth-of-type(3) i.icon {
-	font-size: 1.2em;
-}
-
-#extmgrplus_list td:nth-of-type(6) i.icon {
-	cursor: help;
-	font-size: 1.3em;
 }
 
 fieldset.extmgrplus_order_and_ignore dt {
@@ -252,34 +230,64 @@ input[type="checkbox"]:disabled {
 	cursor: not-allowed;
 }
 
-#extmgrplus_list th:nth-of-type(1n+2),		/* version+ */
-#extmgrplus_list td:nth-of-type(1n+2) {
+#extmgrplus_list th:nth-of-type(1) {		/* cdb */
+	width: 1%;
+}
+
+#extmgrplus_list th:nth-of-type(1n+3) {		/* version+ */
 	text-align: center;
 }
 
-#extmgrplus_list th:nth-of-type(2) {		/* version */
+#extmgrplus_list th:nth-of-type(3) {		/* version */
 	width: 16%;
 }
 
-#extmgrplus_list th:nth-of-type(3) {		/* migrations */
+#extmgrplus_list th:nth-of-type(4) {		/* migrations */
 	width: 1%;
 }
 
-#extmgrplus_list td:nth-of-type(3) span {	/* migrations */
-	cursor: help;
-}
-
-#extmgrplus_list th:nth-of-type(4) {		/* options */
+#extmgrplus_list th:nth-of-type(5) {		/* options */
 	width: 10%;
 }
 
-#extmgrplus_list th:nth-of-type(5) {		/* actions */
+#extmgrplus_list th:nth-of-type(6) {		/* actions */
 	width: 25%;
 }
 
-#extmgrplus_list th:nth-of-type(1n+6) {		/* select+  */
+#extmgrplus_list th:nth-of-type(1n+7) {		/* select+  */
 	width: 1%;
 }
+
+#extmgrplus_list td:nth-of-type(1) i.icon {
+	cursor: help;
+}
+
+#extmgrplus_list td:nth-of-type(1n+3) {
+	text-align: center;
+}
+
+#extmgrplus_list td:nth-of-type(3) i.icon {
+	cursor: help;
+	font-size: 1.2em;
+}
+
+#extmgrplus_list td:nth-of-type(3) i.fa-exclamation-triangle {
+	color: #df950d;
+}
+
+#extmgrplus_list td:nth-of-type(4) span {
+	cursor: help;
+}
+
+#extmgrplus_list td:nth-of-type(3) i.icon {
+	font-size: 1.2em;
+}
+
+#extmgrplus_list td:nth-of-type(7) i.icon {
+	cursor: help;
+	font-size: 1.3em;
+}
+
 
 /* VERSIONCHECK PROGGRESS */
 

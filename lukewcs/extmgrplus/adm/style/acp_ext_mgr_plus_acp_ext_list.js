@@ -36,8 +36,8 @@ function showHideOrderIgnore() {
 	showHideActionElements(!show);
 	$('[id^="extmgrplus_link_"]:not([id$="_order_ignore"])')		.toggleClass('disabled', show);
 	$('.extmgrplus_order_and_ignore')								.toggle(show);
-	$('#extmgrplus_list th:nth-of-type(1n+7):nth-of-type(-1n+8)')	.toggle(show);
-	$('#extmgrplus_list td:nth-of-type(1n+7):nth-of-type(-1n+8)')	.toggle(show);
+	$('#extmgrplus_list th:nth-of-type(1n+8):nth-of-type(-1n+9)')	.toggle(show);
+	$('#extmgrplus_list td:nth-of-type(1n+8):nth-of-type(-1n+9)')	.toggle(show);
 };
 
 function saveCheckboxes() {
@@ -49,7 +49,7 @@ function saveCheckboxes() {
 };
 
 function showHideActionElements(show) {
-	$('#extmgrplus_list td:nth-of-type(1n+4):nth-of-type(-1n+6) *:not(dfn)').toggle(show);
+	$('#extmgrplus_list td:nth-of-type(1n+5):nth-of-type(-1n+7) *:not(dfn)').toggle(show);
 };
 
 function checkUncheckAll(e) {

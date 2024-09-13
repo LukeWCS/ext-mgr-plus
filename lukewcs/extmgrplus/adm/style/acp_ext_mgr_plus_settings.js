@@ -104,9 +104,10 @@ function setDefaults() {
 	setSwitch('[name="extmgrplus_switch_order_and_ignore"]',			true);
 	setSwitch('[name="extmgrplus_switch_self_disable"]',				false);
 	setSwitch('[name="extmgrplus_switch_instructions"]',				true);
+	$(        '[name="extmgrplus_number_vc_limit"]').prop('value',		15);
 	setSwitch('[name="extmgrplus_switch_migration_col"]',				false);
 	setSwitch('[name="extmgrplus_switch_migrations"]',					false);
-	$(        '[name="extmgrplus_number_vc_limit"]').prop('value',		15);
+	setSwitch('[name="extmgrplus_switch_version_url"]',					false);
 
 	ConfirmBox.HideAll();
 };

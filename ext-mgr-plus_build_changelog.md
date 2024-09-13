@@ -1,3 +1,35 @@
+#### 2.1.0-b3
+* Fix: Da EMP ab 2.1.0 bei der Versionsprüfung nicht mehr direkt vom Cache abhängig ist, sondern die Daten direkt in der DB speichert die ermittelt wurden, ergab sich daraus ein neues Problem das dazu führen konnte, dass nach einer VP widersprüchliche Informationen in der Versions-Spalte angezeigt werden konnten. So konnte es vorkommen, das die Version in Grün dargestellt und gleichzeitig ein Fehler Symbol angezeigt wurde. Die Ursache liegt bei phpBB, da vor einer Versionsprüfung der Versions-Cache nicht gelöscht wird und die Rot/Grün Darstellung der bestehenden Version über den Cache gesteuert wird. Um dieses Problem zu beheben, wird jetzt auch diese Detail über die EMP Daten gesteuert.
+* Aus dem Fix ergab sich die Nebenwirkung, dass bei Erweiterungen ohne Updates dauerhaft eine grüne Version dargestellt wird, wie das auch bei phpBB der Fall ist, solange der Cache nicht gelöscht wird.
+* In der Erweiterungen-Liste wird jetzt in einer neuen Spalte angezeigt, ob die Erweiterung aus der CDB stammt. Als Indikator wird das gleiche Symbol verwendet wie in der Link-Leiste bei "phpBB-Erweiterungsdatenbank".
+* Auf der "Details" Seite wird jetzt unten eine neue Gruppe namens "Informationen von Extension Manager Plus" eingefügt, auf der EMP zusätzliche Informationen zur Erweiterung anzeigen kann:
+  * Bei Erweiterungen aus der CDB wird jetzt ein Link angezeigt, mit dem man direkt die zugehörige CDB Seite der Erweiterung aufrufen kann.
+  * Per neuem Experten-Schalter kann noch ein weiter Link angezeigt werden, der direkt auf die Versionsdatei verweist.
+* Bei der Versionsprüfung wird jetzt auch die gesamte Dauer ermittelt und in der DB gespeichert, damit diese dauerhaft angezeigt werden kann.
+* Vor der Ausführung der globalen Versionsprüfung werden jetzt sämtliche im Cache gespeicherten Versionsdaten der Erweiterungen gelöscht. Dadurch wird sichergestellt, das bei einer danach ausgeführten lokalen Versionsprüfung keine veralteten Daten verwendet werden.
+* Settings Template:
+  * Eine neue Option (Schalter) für den Versionsdatei-Link.
+* ExtMgr Template:
+  * Eine neue Spalte für das CDB Merkmal eingebaut.
+  * VP-Laufzeit in der Info-Tabelle hinzugefügt.
+  * Makro `version()` optimiert.
+  * Neues Makro `cdb()`.
+* Template:
+  * Für die "Details" Seite das Template `event/acp_ext_details_end.html` hinzugefügt.
+* Code optimiert:
+  * PHP
+  * Twig
+* JS:
+  * Code für die CDB Spalte angepasst.
+  * Code für die Versionsdatei-Option erweitert.
+* CSS:
+  * Code erweitert für die CDB Spalte.
+* Sprachdateien:
+  * 3 neue Sprachvariablen für die "Details" Seite.
+  * 2 neue Sprachvariablen für die CDB Spalte.
+  * 2 neue Sprachvariablen für die Versionsdatei-Option.
+  * 1 Sprachvariable angepasst.
+
 #### 2.1.0-b2
 * Für die Entscheidung während der VP, ob ein neuer Durchgang gestartet werden muss, wird nicht mehr die Anzahl Erweiterungen berücksichtigt, sondern die Laufzeit des aktuellen Vorganges. Dafür wird die reale Laufzeit von phpBB herangezogen, die zwangsläufig höher liegt als die von EMP selber. Dabei auch den Standardwert von 25 auf 15 geändert, das betrifft:
   * JS (Einstellungen zurücksetzen).
@@ -14,7 +46,7 @@
 * Fix: Im englischen Sprachpaket stimmte bei der Anzeige der Fehler-Anzahl nach einer Versionsprüfung die Plural-Form nicht, wenn die Anzahl exakt `1` betrug. [Meldung von leschek (phpBB.com)]
 * EMP steuert jetzt die Versionsprüfung selber und führt diese blockweise aus, wodurch Zeitlimits bei PHP und SQL verhindert werden können. Mit dieser neuen Funktion kann bei phpBB Installationen mit extrem vielen Erweiterungen eine Versionsprüfung erfolgreich ausgeführt werden, bei denen phpBB wegen Zeitlimits nicht in der Lage ist, eine solche vollständig auszuführen. [Meldung von dimassamid (phpBB.com)]
 * Settings Template:
-  * Eine neue Option (Eingabefeld für eine Zahl) für das VP Limit hinzugefügt.
+  * Eine neue Option (Eingabefeld für eine Zahl) für das VP-Limit hinzugefügt.
 * Template:
   * Für die neue Fortschrittsanzeige der VP das Template `acp_ext_mgr_plus_versioncheck.html` hinzugefügt.
 * JS:
@@ -25,7 +57,7 @@
   * Anzahl der MySQL Abfragen in der ToDo Funktion reduziert.
 * Bei der Version eines Sprachpakets sind jetzt auch Suffixe erlaubt, damit Korrekturen entsprechend signalisiert werden können, zum Beispiel in der Form `2.0.1.1`. Versionen müssen dabei nach den PHP Konventionen gestaltet sein, damit diese per `version_compare()` verglichen werden können.
 * Sprachdateien:
-  * 2 neue Sprachvariablen für das neue Eingabefeld.
+  * 2 neue Sprachvariablen für das neue VP-Limit.
   * 1 neue Sprachvariable für den Fortschrittsbalken.
 * Migration: 
   * Neue Config Variable `extmgrplus_number_vc_limit`.
