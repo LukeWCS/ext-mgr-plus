@@ -1,6 +1,6 @@
 #### 2.1.0-b3
-* Fix: Da EMP ab 2.1.0 bei der Versionsprüfung nicht mehr direkt vom Cache abhängig ist, sondern die Daten direkt in der DB speichert die ermittelt wurden, ergab sich daraus ein neues Problem das dazu führen konnte, dass nach einer VP widersprüchliche Informationen in der Versions-Spalte angezeigt werden konnten. So konnte es vorkommen, das die Version in Grün dargestellt und gleichzeitig ein Fehler Symbol angezeigt wurde. Die Ursache liegt bei phpBB, da vor einer Versionsprüfung der Versions-Cache nicht gelöscht wird und die Rot/Grün Darstellung der bestehenden Version über den Cache gesteuert wird. Um dieses Problem zu beheben, wird jetzt auch diese Detail über die EMP Daten gesteuert.
-* Aus dem Fix ergab sich die Nebenwirkung, dass bei Erweiterungen ohne Updates dauerhaft eine grüne Version dargestellt wird, wie das auch bei phpBB der Fall ist, solange der Cache nicht gelöscht wird.
+* Fix: Da EMP ab 2.1.0 bei der Versionsprüfung nicht mehr vom Cache abhängig ist, sondern die Daten direkt in der DB speichert die ermittelt wurden, ergab sich daraus ein neues Problem das dazu führen konnte, dass nach einer VP widersprüchliche Informationen in der Versions-Spalte angezeigt werden konnten. So konnte es vorkommen, das die Version in Grün dargestellt und gleichzeitig ein Fehler Symbol angezeigt wurde. Die Ursache liegt bei phpBB, da vor einer Versionsprüfung der Versions-Cache nicht gelöscht wird und die Rot/Grün Darstellung der bestehenden Version über den Cache gesteuert wird. Um dieses Problem zu beheben, wird jetzt auch dieses Detail über die EMP Daten gesteuert.
+* Aus dem Fix ergab sich die Nebenwirkung, dass bei Erweiterungen ohne Updates dauerhaft eine grüne Version dargestellt wird, wie das auch bei phpBB der Fall ist, solange dort der Cache nicht gelöscht wird.
 * In der Erweiterungen-Liste wird jetzt in einer neuen Spalte angezeigt, ob die Erweiterung aus der CDB stammt. Als Indikator wird das gleiche Symbol verwendet wie in der Link-Leiste bei "phpBB-Erweiterungsdatenbank".
 * Auf der "Details" Seite wird jetzt unten eine neue Gruppe namens "Informationen von Extension Manager Plus" eingefügt, auf der EMP zusätzliche Informationen zur Erweiterung anzeigen kann:
   * Bei Erweiterungen aus der CDB wird jetzt ein Link angezeigt, mit dem man direkt die zugehörige CDB Seite der Erweiterung aufrufen kann.
@@ -29,6 +29,8 @@
   * 2 neue Sprachvariablen für die CDB Spalte.
   * 2 neue Sprachvariablen für die Versionsdatei-Option.
   * 1 Sprachvariable angepasst.
+* Migration: 
+  * Neue Config Variable `extmgrplus_switch_version_url`.
 
 #### 2.1.0-b2
 * Für die Entscheidung während der VP, ob ein neuer Durchgang gestartet werden muss, wird nicht mehr die Anzahl Erweiterungen berücksichtigt, sondern die Laufzeit des aktuellen Vorganges. Dafür wird die reale Laufzeit von phpBB herangezogen, die zwangsläufig höher liegt als die von EMP selber. Dabei auch den Standardwert von 25 auf 15 geändert, das betrifft:
