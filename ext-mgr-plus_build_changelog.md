@@ -1,12 +1,29 @@
+#### 2.1.0-b4
+* Fix: Ab 2.1.0-b1 wird der Schalter "Immer auf instabile Entwicklungs-Versionen prüfen" wieder berücksichtigt, das galt jedoch nicht bei der lokalen Versionsprüfung auf der Seite "Details".
+* ExtMgr Template:
+  * Makro `version()` erweitert, um ein neues Icon (Fragezeichen in orangem Kreis) mit Tooltip anzeigen zu können, bei noch nicht ausgeführter Versionsprüfung. 
+* Core:
+  * Code optimiert.
+* Common:
+  * Aktuelle Funktion `set_meta_template_vars()` von LMR übernommen.
+* Template:
+  * Etliche kleine Struktur-Änderungen.
+  * Aktuelles Makro `footer()` von LMR übernommen.
+* CSS:
+  * Code erweitert für das neue Icon.
+* Sprachdateien:
+  * 1 neue Sprachvariable für den neuen Tooltip.
+  * Kleine Korrekturen.
+
 #### 2.1.0-b3
 * Fix: Da EMP ab 2.1.0 bei der Versionsprüfung nicht mehr vom Cache abhängig ist, sondern die Daten direkt in der DB speichert die ermittelt wurden, ergab sich daraus ein neues Problem das dazu führen konnte, dass nach einer VP widersprüchliche Informationen in der Versions-Spalte angezeigt werden konnten. So konnte es vorkommen, das die Version in Grün dargestellt und gleichzeitig ein Fehler Symbol angezeigt wurde. Die Ursache liegt bei phpBB, da vor einer Versionsprüfung der Versions-Cache nicht gelöscht wird und die Rot/Grün Darstellung der bestehenden Version über den Cache gesteuert wird. Um dieses Problem zu beheben, wird jetzt auch dieses Detail über die EMP Daten gesteuert.
 * Aus dem Fix ergab sich die Nebenwirkung, dass bei Erweiterungen ohne Updates dauerhaft eine grüne Version dargestellt wird, wie das auch bei phpBB der Fall ist, solange dort der Cache nicht gelöscht wird.
 * In der Erweiterungen-Liste wird jetzt in einer neuen Spalte angezeigt, ob die Erweiterung aus der CDB stammt. Als Indikator wird das gleiche Symbol verwendet wie in der Link-Leiste bei "phpBB-Erweiterungsdatenbank".
 * Auf der "Details" Seite wird jetzt unten eine neue Gruppe namens "Informationen von Extension Manager Plus" eingefügt, auf der EMP zusätzliche Informationen zur Erweiterung anzeigen kann:
   * Bei Erweiterungen aus der CDB wird jetzt ein Link angezeigt, mit dem man direkt die zugehörige CDB Seite der Erweiterung aufrufen kann.
-  * Per neuem Experten-Schalter kann noch ein weiter Link angezeigt werden, der direkt auf die Versionsdatei verweist.
+  * Per neuem Experten-Schalter kann noch ein weiterer Link angezeigt werden, der direkt auf die Versionsdatei verweist.
 * Bei der Versionsprüfung wird jetzt auch die gesamte Dauer ermittelt und in der DB gespeichert, damit diese dauerhaft angezeigt werden kann.
-* Vor der Ausführung der globalen Versionsprüfung werden jetzt sämtliche im Cache gespeicherten Versionsdaten der Erweiterungen gelöscht. Dadurch wird sichergestellt, das bei einer danach ausgeführten lokalen Versionsprüfung keine veralteten Daten verwendet werden.
+* Vor der Ausführung der globalen Versionsprüfung werden jetzt sämtliche im Cache gespeicherten Versionsdaten der Erweiterungen gelöscht. Dadurch wird sichergestellt, das keine veralteten Daten verwendet werden.
 * Settings Template:
   * Eine neue Option (Schalter) für den Versionsdatei-Link.
 * ExtMgr Template:

@@ -63,8 +63,7 @@ function setCheckboxes(e) {
 	const extChecked = e.currentTarget.checked;
 	const dependency = orderValue.charAt(0) != '+';
 
-	if (
-		orderValue != '' && (
+	if (orderValue != '' && (
 			(extEnabled && (extChecked && dependency || !extChecked && !dependency)) ||
 			(!extEnabled && (!extChecked && dependency || extChecked && !dependency))
 		)

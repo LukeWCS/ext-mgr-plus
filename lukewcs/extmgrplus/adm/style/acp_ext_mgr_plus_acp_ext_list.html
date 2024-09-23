@@ -22,8 +22,11 @@
 
 {{ common.notes(EXTMGRPLUS_NOTES) }}
 
-<table class="table1">
-	<col class="row2a"><col class="row2a"><col class="row2a"><col class="row2a">
+<table id="extmgrplus_info" class="table1">
+	<col class="row2a">
+	<col class="row2a">
+	<col class="row2a">
+	<col class="row2a">
 	<thead>
 		<tr>
 			<th>
@@ -49,17 +52,17 @@
 				) }}</strong>
 			</td>
 			<td>
-				<strong>{{ EXTMGRPLUS_LIST_VERSIONCHECK.data.COUNT_TOTAL }}</strong>
+				<strong>{{ EXTMGRPLUS_LIST_VERSIONCHECK.data.count_total }}</strong>
 			</td>
 			<td>
 				<strong>{{ lang('EXTMGRPLUS_VERSIONCHECK_DATE',
-					EXTMGRPLUS_LIST_VERSIONCHECK.data.COUNT_ERROR,
-					EXTMGRPLUS_LIST_VERSIONCHECK.data.LOCAL_DATE ?? '',
-					EXTMGRPLUS_LIST_VERSIONCHECK.data.DURATION
+					EXTMGRPLUS_LIST_VERSIONCHECK.data.count_error,
+					EXTMGRPLUS_LIST_VERSIONCHECK.data.local_date ?? '',
+					EXTMGRPLUS_LIST_VERSIONCHECK.data.duration
 				) }}</strong>
 			</td>
 			<td>
-				<strong>{{ EXTMGRPLUS_LIST_VERSIONCHECK.data.COUNT_UPDATE }}</strong>
+				<strong>{{ EXTMGRPLUS_LIST_VERSIONCHECK.data.count_update }}</strong>
 			</td>
 		</tr>
 	</tbody>
@@ -68,8 +71,11 @@
 <fieldset class="quick">
 	<span class="small">
 		<a href="https://www.phpbb.com/go/customise/extensions/{{ EXTMGRPLUS_CDB_VER }}" target="_blank">{{ common.icon('fa-database') }}{{ lang('BROWSE_EXTENSIONS_DATABASE') }}</a>
+		&nbsp;
 		<span class="js_link" id="extmgrplus_link_version_check" data-url="{{ U_EXTMGRPLUS_VERSIONCHECK }}">{{ common.icon('fa-refresh') }}{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</span>
+		&nbsp;
 		<span class="js_link{{ EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE ? '" id="extmgrplus_link_order_ignore"' : ' disabled"' }}>{{ common.icon('fa-sort') }}{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</span>
+		&nbsp;
 		<span class="js_link{{ EXTMGRPLUS_SELECT_CHECKBOX_MODE == 2 ? '" id="extmgrplus_link_save_checkboxes"' : ' disabled"' }}>{{ common.icon('fa-check-square-o') }}{{ lang('EXTMGRPLUS_LINK_SAVE_CHECKBOXES') }}</span>
 	</span>
 </fieldset>
@@ -185,7 +191,7 @@
 						<td{{ !EXTMGRPLUS_SWITCH_MIGRATION_COL ? ' style="display: none;"' }}>
 						</td>
 						<td>
-							{{ _self.details(ext_enabled) }}
+							{{ _self.options(ext_enabled) }}
 						</td>
 						<td>
 							{{ _self.actions(ext_enabled) }}
@@ -292,13 +298,13 @@
 						<td{{ !EXTMGRPLUS_SWITCH_MIGRATION_COL ? ' style="display: none;"' }}>
 							{% if EXTMGRPLUS_SWITCH_MIGRATION_COL %}
 								{{ _self.migrations(
-									EXTMGRPLUS_LIST_MIGRATIONS_INACTIVE[ext_disabled.NAME] ?? 0,
+									EXTMGRPLUS_LIST_MIGRATIONS[ext_disabled.NAME] ?? 0,
 									EXTMGRPLUS_LIST_IGNORE[ext_disabled.NAME] is defined
 								) }}
 							{% endif %}
 						</td>
 						<td>
-							{{ _self.details(ext_disabled) }}
+							{{ _self.options(ext_disabled) }}
 						</td>
 						<td>
 							{{ _self.actions(ext_disabled) }}
@@ -308,7 +314,7 @@
 								{{ _self.checkbox_select(
 									'disabled',
 									ext_disabled.NAME,
-									EXTMGRPLUS_LIST_MIGRATIONS_INACTIVE[ext_disabled.NAME] is not defined || EXTMGRPLUS_SWITCH_MIGRATIONS,
+									EXTMGRPLUS_LIST_MIGRATIONS[ext_disabled.NAME] is not defined || EXTMGRPLUS_SWITCH_MIGRATIONS,
 									EXTMGRPLUS_LIST_SELECTED[ext_disabled.NAME] is defined,
 									EXTMGRPLUS_LIST_IGNORE[ext_disabled.NAME] is defined
 								) }}
@@ -399,30 +405,34 @@
 	{% endif %}
 {% endmacro %}
 
+{% macro cdb(vc_obj) %}
+{% apply spaceless %}
+	{% if vc_obj.cdb_ext %}
+		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_CDB_EXT')|e('html') }}">{{ common.icon('fa-database') }}</span>
+	{% endif %}
+{% endapply %}
+{% endmacro %}
+
 {% macro name(ext_obj) -%}
 	<strong title="{{ ext_obj.NAME }}">{{ ext_obj.META_DISPLAY_NAME }}</strong>
 {%- endmacro %}
 
-{% macro cdb(vc_obj) -%}
-	{% if vc_obj.CDB_EXT %}
-		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_CDB_EXT')|e('html') }}">{{ common.icon('fa-database') }}</span>
-	{% endif %}
-{%- endmacro %}
-
 {% macro version(ext_obj, vc_obj) %}
 {% apply spaceless %}
-	{% if vc_obj.HAS_VC === false || vc_obj.CURRENT == 'ERROR' || !vc_obj.CURRENT %}
+	{% if vc_obj.has_vc === false || vc_obj.current == 'ERROR' || vc_obj.current is empty %}
 		<span>{{ ext_obj.META_VERSION }}</span>
 	{% else %}
-		<strong class="{{ vc_obj.CURRENT == 'NOUPD' ? 'current-ext' : 'outdated-ext' }}">{{ ext_obj.META_VERSION }}</strong>
+		<strong class="{{ vc_obj.current == 'NOUPD' ? 'current-ext' : 'outdated-ext' }}">{{ ext_obj.META_VERSION }}</strong>
 	{% endif %}
-	{% if vc_obj.HAS_VC === false %}
+	{% if vc_obj.has_vc === false %}
 		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_NO_VERSIONCHECK')|e('html') }}">&nbsp;{{ common.icon('fa-chain-broken') }}</span>
-	{% elseif vc_obj.CURRENT == 'ERROR' %}
+	{% elseif vc_obj.current == 'ERROR' %}
 		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_VERSIONCHECK_ERROR')|e('html') }}">&nbsp;{{ common.icon('fa-exclamation-triangle') }}</span>
-	{% elseif vc_obj.CURRENT != 'NOUPD' && vc_obj.CURRENT %}
+	{% elseif vc_obj.current is empty %}
+		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_VERSIONCHECK_EMPTY')|e('html') }}">&nbsp;{{ common.icon('fa-question-circle') }}</span>
+	{% elseif vc_obj.current != 'NOUPD' %}
 		<span title="{{ lang('EXTMGRPLUS_TOOLTIP_OUTDATED')|e('html') }}">&nbsp;{{ common.icon('fa-exclamation-circle outdated-ext') }}</span>
-		<strong class="current-ext">&nbsp;({{ vc_obj.CURRENT }})</strong>
+		<strong class="current-ext">&nbsp;({{ vc_obj.current }})</strong>
 	{% endif %}
 {% endapply %}
 {% endmacro %}
@@ -437,7 +447,7 @@
 {% endapply %}
 {% endmacro %}
 
-{% macro details(ext_obj) %}
+{% macro options(ext_obj) %}
 {% apply spaceless %}
 	{% if ext_obj.U_DETAILS %}
 		<a href="{{ ext_obj.U_DETAILS }}">{{ lang('DETAILS') }}</a>

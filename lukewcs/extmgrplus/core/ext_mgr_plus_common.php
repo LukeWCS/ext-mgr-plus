@@ -48,18 +48,21 @@ class ext_mgr_plus_common
 		$this->u_action = $u_action;
 	}
 
-	public function set_template_vars(string $tpl_prefix): void
+	public function set_meta_template_vars(string $tpl_prefix, string $copyright): void
 	{
-		$this->template->assign_vars([
-			$tpl_prefix . '_METADATA'	=> [
-				'ext_name'		=> $this->metadata['extra']['display-name'],
-				'ext_ver'		=> $this->language->lang($tpl_prefix . '_VERSION_STRING', $this->metadata['version']),
-				'lang_desc'		=> $this->language->lang($tpl_prefix . '_LANG_DESC'),
-				'lang_ver'		=> $this->language->lang($tpl_prefix . '_VERSION_STRING', $this->language->lang($tpl_prefix . '_LANG_VER')),
-				'lang_author'	=> $this->language->lang($tpl_prefix . '_LANG_AUTHOR'),
-				'class'			=> strtolower($tpl_prefix) . '_footer',
-			],
-		]);
+		$template_vars = [
+			'ext_name'		=> $this->metadata['extra']['display-name'],
+			'ext_ver'		=> $this->language->lang($tpl_prefix . '_VERSION_STRING', $this->metadata['version']),
+			'ext_copyright'	=> $copyright,
+			'class'			=> strtolower($tpl_prefix) . '_footer',
+		];
+		$template_vars += $this->language->is_set($tpl_prefix . '_LANG_VER') ? [
+			'lang_desc'		=> $this->language->lang($tpl_prefix . '_LANG_DESC'),
+			'lang_ver'		=> $this->language->lang($tpl_prefix . '_VERSION_STRING', $this->language->lang($tpl_prefix . '_LANG_VER')),
+			'lang_author'	=> $this->language->lang($tpl_prefix . '_LANG_AUTHOR'),
+		] : [];
+
+		$this->template->assign_vars([$tpl_prefix . '_METADATA' => $template_vars]);
 	}
 
 	public function check_form_key_error(string $key): void
@@ -164,7 +167,7 @@ class ext_mgr_plus_common
 	*/
 	public function trigger_error_(string $message, int $error_type, ?string $back_link_lang_var = null): void
 	{
-		$this->template->assign_var('EXTMGRPLUS_LAST_EMP_ACTION', 'trigger_error');
+		$this->template->assign_var('EXTMGRPLUS_LAST_ACTION', 'trigger_error_');
 		if ($error_type == E_USER_NOTICE && $this->config['extmgrplus_switch_auto_redirect'])
 		{
 			meta_refresh(1, $this->rotate_get_params($this->u_action));

@@ -68,7 +68,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> '%s This column allows you to specify which extensions should be ignored during the “Enable selected” and “Disable selected” actions. Ignored extensions can no longer be selected in the extensions list. If an order group was defined for an ignored extension, then this is retained, but it no longer has any meaning.',
 
 	// ext manager
-	'EXTMGRPLUS_COL_CDB'					=> 'phpBB Extension Database',
+	'EXTMGRPLUS_COL_CDB'					=> 'Validated extension',
 	'EXTMGRPLUS_COL_MIGRATIONS'				=> 'New migrations',
 	'EXTMGRPLUS_COL_SELECT'					=> 'Select',
 	'EXTMGRPLUS_COL_ORDER'					=> 'Order',
@@ -80,19 +80,22 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED'	=> 'Not installed Extensions: %u',
 
 	// tooltips
-	'EXTMGRPLUS_TOOLTIP_CDB_EXT'			=> 'This extension has been officially validated.',
 	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'		=> 'This extension has new migrations that are applied when activating the extension.',
-	'EXTMGRPLUS_TOOLTIP_OUTDATED'			=> 'The installed version of this extension is out of date.',
-	'EXTMGRPLUS_TOOLTIP_VERSIONCHECK_ERROR'	=> 'An error occurred during the version check. Click on “Details” to find out more.',
-	'EXTMGRPLUS_TOOLTIP_NO_VERSIONCHECK'	=> 'This extension does not provide version checking.',
-	'EXTMGRPLUS_TOOLTIP_IS_IGNORED'			=> 'This extension is ignored by “Extension Manager Plus”.',
-	'EXTMGRPLUS_TOOLTIP_IS_LOCKED'			=> 'The selection of this extension is blocked due to new migrations.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE'		=> 'Disable all selected extensions.',
 	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'		=> 'Enable all selected extensions.',
 	'EXTMGRPLUS_TOOLTIP_ORDER'				=> 'Order group in the range 0-99. A group can be linked with a preceding +.',
 	'EXTMGRPLUS_TOOLTIP_IGNORE'				=> 'Ignore extension.',
 	'EXTMGRPLUS_TOOLTIP_SELECT_ALL'			=> 'Select or deselect all extensions.',
 	'EXTMGRPLUS_TOOLTIP_SELECT'				=> 'Select extension.',
+	'EXTMGRPLUS_TOOLTIP_IS_LOCKED'			=> 'The selection of this extension is blocked due to new migrations.',
+
+	// icon tooltips
+	'EXTMGRPLUS_TOOLTIP_CDB_EXT'			=> 'This extension has been officially validated.',
+	'EXTMGRPLUS_TOOLTIP_OUTDATED'			=> 'The installed version of this extension is out of date.',
+	'EXTMGRPLUS_TOOLTIP_VERSIONCHECK_ERROR'	=> 'An error occurred during the version check. Click on “Details” to find out more.',
+	'EXTMGRPLUS_TOOLTIP_VERSIONCHECK_EMPTY'	=> 'No version check was performed for this extension.',
+	'EXTMGRPLUS_TOOLTIP_NO_VERSIONCHECK'	=> 'This extension does not provide version checking.',
+	'EXTMGRPLUS_TOOLTIP_IS_IGNORED'			=> 'This extension is ignored by “Extension Manager Plus”.',
 
 	// misc
 	'EXTMGRPLUS_EXTENSION_PLURAL' => [

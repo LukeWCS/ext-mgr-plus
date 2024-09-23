@@ -174,7 +174,7 @@ input.confirmbox_active {
 
 fieldset.quick a i.icon,
 .js_link i.icon {
-	margin: 0 0.3em;
+	margin: 0 0.3em 0 0;
 	font-size: 1.1em;
 }
 
@@ -230,31 +230,31 @@ input[type="checkbox"]:disabled {
 	cursor: not-allowed;
 }
 
-#extmgrplus_list th:nth-of-type(1) {		/* cdb */
+#extmgrplus_list th:nth-of-type(1) {
 	width: 1%;
 }
 
-#extmgrplus_list th:nth-of-type(1n+3) {		/* version+ */
-	text-align: center;
-}
-
-#extmgrplus_list th:nth-of-type(3) {		/* version */
+#extmgrplus_list th:nth-of-type(3) {
 	width: 16%;
 }
 
-#extmgrplus_list th:nth-of-type(4) {		/* migrations */
+#extmgrplus_list th:nth-of-type(1n+3) {
+	text-align: center;
+}
+
+#extmgrplus_list th:nth-of-type(4) {
 	width: 1%;
 }
 
-#extmgrplus_list th:nth-of-type(5) {		/* options */
+#extmgrplus_list th:nth-of-type(5) {
 	width: 10%;
 }
 
-#extmgrplus_list th:nth-of-type(6) {		/* actions */
+#extmgrplus_list th:nth-of-type(6) {
 	width: 25%;
 }
 
-#extmgrplus_list th:nth-of-type(1n+7) {		/* select+  */
+#extmgrplus_list th:nth-of-type(1n+7) {
 	width: 1%;
 }
 
@@ -262,32 +262,27 @@ input[type="checkbox"]:disabled {
 	cursor: help;
 }
 
-#extmgrplus_list td:nth-of-type(1n+3) {
-	text-align: center;
-}
-
 #extmgrplus_list td:nth-of-type(3) i.icon {
 	cursor: help;
 	font-size: 1.2em;
 }
 
-#extmgrplus_list td:nth-of-type(3) i.fa-exclamation-triangle {
+#extmgrplus_list td:nth-of-type(3) i.icon:is(.fa-question-circle, .fa-exclamation-triangle) {
 	color: #df950d;
+}
+
+#extmgrplus_list td:nth-of-type(1n+3) {
+	text-align: center;
 }
 
 #extmgrplus_list td:nth-of-type(4) span {
 	cursor: help;
 }
 
-#extmgrplus_list td:nth-of-type(3) i.icon {
-	font-size: 1.2em;
-}
-
 #extmgrplus_list td:nth-of-type(7) i.icon {
 	cursor: help;
 	font-size: 1.3em;
 }
-
 
 /* VERSIONCHECK PROGGRESS */
 
@@ -296,7 +291,6 @@ div.progress_container {
 	height: 1.20em;
 	border-radius: 5px;
 	position: relative;
-	text-align: center;
 	margin: 1em 0 0.25em 0;
 }
 

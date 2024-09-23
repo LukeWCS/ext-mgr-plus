@@ -26,7 +26,10 @@
 
 {% macro footer(metadata) %}
 	<p class="{{ metadata.class  }}">
-		{{ metadata.ext_name }} {{ metadata.ext_ver }} &copy; LukeWCS<br>
-		{{ metadata.lang_desc|e('html') }} {{ metadata.lang_ver|e('html') }} &bull; {{ metadata.lang_author|e('html') }}
+		{{ metadata.ext_name }} {{ metadata.ext_ver }} &copy; {{ metadata.ext_copyright }}
+		{% if metadata.lang_ver is defined %}
+			<br>
+			{{ metadata.lang_desc|e('html') }} {{ metadata.lang_ver|e('html') }} &bull; {{ metadata.lang_author|e('html') }}
+		{% endif %}
 	</p>
 {% endmacro %}

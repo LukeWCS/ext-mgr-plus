@@ -47,7 +47,7 @@ class acp_ext_mgr_plus_controller
 		$this->common->set_this(
 			$this->u_action
 		);
-		$this->common->set_template_vars('EXTMGRPLUS');
+		$this->common->set_meta_template_vars('EXTMGRPLUS', 'LukeWCS');
 
 		$lang_outdated_msg = $this->common->lang_ver_check_msg('EXTMGRPLUS_LANG_VER', 'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED');
 		if ($lang_outdated_msg)

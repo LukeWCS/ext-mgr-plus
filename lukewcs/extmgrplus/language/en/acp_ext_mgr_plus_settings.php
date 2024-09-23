@@ -69,12 +69,12 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MIGRATIONS'					=> 'Allow extensions with new migrations',
 	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'			=> 'If this option is enabled, you can also activate those extensions for which there are new migrations with the “Enable selected” action. This applies to updated extensions that contain a “migrations” folder. Without this option, such extensions must be activated manually, which is recommended.',
 	'EXTMGRPLUS_VERSION_URL'				=> 'Show link to version file',
-	'EXTMGRPLUS_VERSION_URL_EXPLAIN'		=> 'If you activate this option, you can display the link to the version file on the "Details" page of an extension, which is loaded and evaluated by phpBB from the respective server during a version check. Primarily interesting for extension developers.',
+	'EXTMGRPLUS_VERSION_URL_EXPLAIN'		=> 'If you activate this option, you can display the link to the version file on the “Details” page of an extension, which is loaded and evaluated by phpBB from the respective server during a version check. Primarily interesting for extension developers.',
 
 	// settings reset
 	'EXTMGRPLUS_SECTION_RESET'				=> 'Reset',
 	'EXTMGRPLUS_DEFAULTS'					=> 'Reset settings',
-	'EXTMGRPLUS_DEFAULTS_EXP'				=> 'Resets all settings to the installation standard. (Does not affect the “Order” and “Ignore columns”.)',
+	'EXTMGRPLUS_DEFAULTS_EXP'				=> 'Resets all settings to the installation standard. (Does not affect the “Order” and “Ignore” columns.)',
 	'EXTMGRPLUS_BUTTON_DEFAULTS'			=> 'Defaults',
 
 	// messages
