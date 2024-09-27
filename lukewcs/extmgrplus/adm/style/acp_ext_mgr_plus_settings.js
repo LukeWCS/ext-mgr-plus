@@ -124,7 +124,7 @@ function setSwitch(selector, checked) {
 };
 
 function formSubmit() {
-	$('#extmgrplus_settings').submit();
+	$('[name="extmgrplus_save_settings"]').click();
 };
 
 /*

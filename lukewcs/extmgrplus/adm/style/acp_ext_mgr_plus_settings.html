@@ -118,7 +118,7 @@
 				<span>{{ lang('EXTMGRPLUS_VC_LIMIT_EXPLAIN') }}</span>
 			</dt>
 			<dd>
-				{{ _self.number('extmgrplus_number_vc_limit', EXTMGRPLUS_NUMBER_VC_LIMIT, 1, 999) }}
+				{{ _self.number('extmgrplus_number_vc_limit', EXTMGRPLUS_NUMBER_VC_LIMIT, 1, 99) }}
 				{{ lang('SECONDS') }}
 			</dd>
 		</dl>
@@ -173,7 +173,7 @@
 		<legend>{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
 
 		<p class="submit-buttons">
-			<input type="hidden" name="extmgrplus_save_settings" value="1">&nbsp;
+			<input type="submit" name="extmgrplus_save_settings" value="save_settings" hidden>
 			<input type="button" class="button1" name="extmgrplus_submit" value="{{ lang('SUBMIT') }}">&nbsp;
 			<input type="reset" class="button2" name="extmgrplus_reset" value="{{ lang('RESET') }}">
 		</p>

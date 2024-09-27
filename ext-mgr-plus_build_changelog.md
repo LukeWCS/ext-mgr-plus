@@ -1,3 +1,7 @@
+#### 2.1.0-b5
+* Fix: Beim neuen Eingabefeld für Sekunden konnte ein Wert ausserhalb von 1-999 gespeichert werden. Ursache war die fehlende Formularprüfung, weil der Absenden-Button nicht als Submit-Element definiert war. [Meldung von Kirk (phpBB.de)]
+* Maximaler Wert für Sekunden von 999 auf 99 geändert.
+
 #### 2.1.0-b4
 * Fix: Ab 2.1.0-b1 wird der Schalter "Immer auf instabile Entwicklungs-Versionen prüfen" wieder berücksichtigt, das galt jedoch nicht bei der lokalen Versionsprüfung auf der Seite "Details".
 * ExtMgr Template:
