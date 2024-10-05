@@ -88,8 +88,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_SELECT_ALL'			=> 'Select or deselect all extensions.',
 	'EXTMGRPLUS_TOOLTIP_SELECT'				=> 'Select extension.',
 	'EXTMGRPLUS_TOOLTIP_IS_LOCKED'			=> 'The selection of this extension is blocked due to new migrations.',
-
-	// icon tooltips
+	// tooltips icons
 	'EXTMGRPLUS_TOOLTIP_CDB_EXT'			=> 'This extension has been officially validated.',
 	'EXTMGRPLUS_TOOLTIP_OUTDATED'			=> 'The installed version of this extension is out of date.',
 	'EXTMGRPLUS_TOOLTIP_VERSIONCHECK_ERROR'	=> 'An error occurred during the version check. Click on “Details” to find out more.',
@@ -103,10 +102,11 @@ $lang = array_merge($lang, [
 		1									=> '1 extension',
 		2									=> '%u extensions',
 	],
-
-	// versioncheck
-	'EXTMGRPLUS_MSG_VERSIONCHECK_HINT'		=> 'The extensions are being checked for new versions, please wait. %s',
-	'EXTMGRPLUS_MSG_VERSIONCHECK_PROGRESS'	=> '%1$u / %2$u',
+	'EXTMGRPLUS_SECOND_PLURAL' => [
+		0									=> '0 seconds',
+		1									=> '1 second',
+		2									=> '%u seconds',
+	],
 
 	// details
 	'EXTMGRPLUS_SECTION_DETAILS'			=> 'Information from Extension Manager Plus',
@@ -124,4 +124,8 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'		=> 'The following extensions could not be activated:',
 	'EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED'		=> 'The tolerance range (%u seconds) of the maximum PHP execution time has been exceeded.',
 	'EXTMGRPLUS_MSG_SELF_DISABLE'			=> 'Note: The “Extension Manager Plus” extension will also be disabled.',
+	// messages versioncheck
+	'EXTMGRPLUS_MSG_VERSIONCHECK_HINT'		=> 'The extensions are being checked for new versions.',
+	'EXTMGRPLUS_MSG_VERSIONCHECK_BLOCK'		=> 'Current block (maximum %s)',
+	'EXTMGRPLUS_MSG_VERSIONCHECK_PROGRESS'	=> 'Extensions checked: %1$u / %2$u',
 ]);

@@ -10,7 +10,7 @@
 *
 */
 
-(function ($) {	// IIFE start
+(function ($) {
 
 'use strict';
 
@@ -126,4 +126,4 @@ $(function () {
 	$('[name="ext_ignore[]"]')					.on('change'	, setInputBoxState);
 });
 
-})(jQuery);	// IIFE end
+})(jQuery);

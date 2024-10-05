@@ -87,8 +87,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_SELECT_ALL'			=> 'Alle Erweiterungen auswählen oder abwählen.',
 	'EXTMGRPLUS_TOOLTIP_SELECT'				=> 'Erweiterung auswählen.',
 	'EXTMGRPLUS_TOOLTIP_IS_LOCKED'			=> 'Die Auswahl dieser Erweiterung ist wegen neuer Migrationen gesperrt.',
-
-	// icon tooltips
+	// tooltips icons
 	'EXTMGRPLUS_TOOLTIP_CDB_EXT'			=> 'Diese Erweiterung wurde offiziell validiert.',
 	'EXTMGRPLUS_TOOLTIP_OUTDATED'			=> 'Die installierte Version dieser Erweiterung ist veraltet.',
 	'EXTMGRPLUS_TOOLTIP_VERSIONCHECK_ERROR'	=> 'Bei der Versionsprüfung ist ein Fehler aufgetreten. Klicken Sie auf „Details“ um mehr zu erfahren.',
@@ -102,10 +101,11 @@ $lang = array_merge($lang, [
 		1									=> '1 Erweiterung',
 		2									=> '%u Erweiterungen',
 	],
-
-	// versioncheck
-	'EXTMGRPLUS_MSG_VERSIONCHECK_HINT'		=> 'Die Erweiterungen werden auf neue Versionen geprüft, bitte warten. %s',
-	'EXTMGRPLUS_MSG_VERSIONCHECK_PROGRESS'	=> '%1$u / %2$u',
+	'EXTMGRPLUS_SECOND_PLURAL' => [
+		0									=> '0 Sekunden',
+		1									=> '1 Sekunde',
+		2									=> '%u Sekunden',
+	],
 
 	// details
 	'EXTMGRPLUS_SECTION_DETAILS'			=> 'Informationen von Extension Manager Plus',
@@ -123,4 +123,8 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'		=> 'Die folgenden Erweiterungen konnten nicht aktiviert werden:',
 	'EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED'		=> 'Der Toleranzbereich (%u Sekunden) der maximalen PHP Ausführungszeit wurde überschritten.',
 	'EXTMGRPLUS_MSG_SELF_DISABLE'			=> 'Hinweis: Die Erweiterung „Extension Manager Plus“ wird ebenfalls deaktiviert.',
+	// messages versioncheck
+	'EXTMGRPLUS_MSG_VERSIONCHECK_HINT'		=> 'Die Erweiterungen werden auf neue Versionen geprüft.',
+	'EXTMGRPLUS_MSG_VERSIONCHECK_BLOCK'		=> 'Aktueller Block (maximal %s)',
+	'EXTMGRPLUS_MSG_VERSIONCHECK_PROGRESS'	=> 'Erweiterungen geprüft: %1$u / %2$u',
 ]);

@@ -59,8 +59,8 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'		=> 'Wenn du diese Option aktivierst, dann kann sich „Extension Manager Plus“ bei der Aktion „Ausgewählte deaktivieren“ auch selbst deaktivieren, da diese Erweiterung dann wie jede andere ausgewählt werden kann.',
 	'EXTMGRPLUS_INSTRUCTIONS'				=> 'Anleitungen anzeigen',
 	'EXTMGRPLUS_INSTRUCTIONS_EXPLAIN'		=> 'Mit dieser Option kannst du festlegen, ob die Anleitungen für Installieren, Aktualisieren und Deinstallieren am Ende der Erweiterungen-Liste angezeigt werden sollen.',
-	'EXTMGRPLUS_VC_LIMIT'					=> 'Ausführungszeit der Versionsprüfung begrenzen',
-	'EXTMGRPLUS_VC_LIMIT_EXPLAIN'			=> 'Mit diesem Wert kannst du festlegen, wie lange ein einzelner Durchgang der Versionsprüfung maximal dauern darf. Dieser änderbare Wert hilft dabei zu verhindern, dass während einer Versionsprüfung Zeitlimits von PHP oder der Datenbank überschritten werden.',
+	'EXTMGRPLUS_VC_LIMIT'					=> 'Ausführungszeit der Versionsprüfung aufteilen',
+	'EXTMGRPLUS_VC_LIMIT_EXPLAIN'			=> 'Die Versionsprüfung wird blockweise ausgeführt und mit diesem Wert kannst du festlegen, wie lange ein einzelner Block der Versionsprüfung maximal dauern darf. Damit wird verhindert, dass Zeitlimits von PHP oder der Datenbank überschritten werden.',
 
 	// settings expert
 	'EXTMGRPLUS_SECTION_EXPERT_SETTINGS'	=> 'Experten-Einstellungen',

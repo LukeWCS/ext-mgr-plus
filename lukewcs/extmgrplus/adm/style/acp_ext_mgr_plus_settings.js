@@ -10,7 +10,7 @@
 *
 */
 
-(function ($) {	// IIFE start
+(function ($) {
 
 'use strict';
 
@@ -149,4 +149,4 @@ $(function () {
 	ConfirmBox = new LukeWCSphpBBConfirmBox('[name="extmgrplus_submit"]', 300);
 });
 
-})(jQuery);	// IIFE end
+})(jQuery);

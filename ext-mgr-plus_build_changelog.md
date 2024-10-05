@@ -1,16 +1,27 @@
+#### 2.1.0-b6
+* Wurde "Details" aufgerufen und es ist zu dem Zeitpunkt noch keine globale Versionsprüfung ausgeführt worden, dann wurde der aktuelle Zeitstempel für die Anzeige der letzten Versionsprüfung gespeichert. Das ist nicht mehr der Fall, der Zeitstempel wird nur noch bei der globalen Versionsprüfung gesetzt.
+* Progress Template:
+  * Die Fortschrittsanzeige hat jetzt einen zweiten Fortschrittsbalken (blau) oberhalb des bisherigen Fortschrittsbalken, der den ungefähren zeitlichen Fortschritt im aktuellen Block zeigt.
+  * Farbe des bisherigen Fortschrittsbalken für die geprüften Erweiterungen von Blau auf Grün geändert, damit beide Balken unterschiedliche Farben haben.
+  * Das animierte Icon entfernt, da dieses durch den neuen Fortschrittsbalken nicht länger sinnvoll ist.
+* Core:
+  * Code optimiert.
+* Sprachdateien:
+  * 4 neue Sprachvariablen für die zusätzliche Fortschrittsanzeige.
+  * 4 Sprachvariablen geändert.
+
 #### 2.1.0-b5
 * Fix: Beim neuen Eingabefeld für Sekunden konnte ein Wert ausserhalb von 1-999 gespeichert werden. Ursache war die fehlende Formularprüfung, weil der Absenden-Button nicht als Submit-Element definiert war. [Meldung von Kirk (phpBB.de)]
 * Maximaler Wert für Sekunden von 999 auf 99 geändert.
 
 #### 2.1.0-b4
 * Fix: Ab 2.1.0-b1 wird der Schalter "Immer auf instabile Entwicklungs-Versionen prüfen" wieder berücksichtigt, das galt jedoch nicht bei der lokalen Versionsprüfung auf der Seite "Details".
-* ExtMgr Template:
-  * Makro `version()` erweitert, um ein neues Icon (Fragezeichen in orangem Kreis) mit Tooltip anzeigen zu können, bei noch nicht ausgeführter Versionsprüfung. 
 * Core:
   * Code optimiert.
 * Common:
   * Aktuelle Funktion `set_meta_template_vars()` von LMR übernommen.
-* Template:
+* ExtMgr Template:
+  * Makro `version()` erweitert, um ein neues Icon (Fragezeichen in orangem Kreis) mit Tooltip anzeigen zu können, bei noch nicht ausgeführter Versionsprüfung. 
   * Etliche kleine Struktur-Änderungen.
   * Aktuelles Makro `footer()` von LMR übernommen.
 * CSS:
@@ -35,7 +46,7 @@
   * VP-Laufzeit in der Info-Tabelle hinzugefügt.
   * Makro `version()` optimiert.
   * Neues Makro `cdb()`.
-* Template:
+* Details Template:
   * Für die "Details" Seite das Template `event/acp_ext_details_end.html` hinzugefügt.
 * Code optimiert:
   * PHP
