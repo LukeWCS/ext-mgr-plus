@@ -19,25 +19,25 @@ class ext_mgr_plus
 	protected const CHECKBOX_MODE_ALL	= 1;
 	protected const CHECKBOX_MODE_LAST	= 2;
 
-	protected $common;
-	protected $ext_manager;
-	protected $cache;
-	protected $request;
-	protected $log;
-	protected $user;
-	protected $config;
-	protected $config_text;
-	protected $language;
-	protected $template;
-	protected $db;
-	protected $table_prefix;
-	protected $phpbb_root_path;
-	protected $php_ext;
+	protected object $common;
+	protected object $ext_manager;
+	protected object $cache;
+	protected object $request;
+	protected object $log;
+	protected object $user;
+	protected object $config;
+	protected object $config_text;
+	protected object $language;
+	protected object $template;
+	protected object $db;
+	protected string $table_prefix;
+	protected string $phpbb_root_path;
+	protected string $php_ext;
 
-	protected $u_action;
-	protected $migrations_db;
-	protected $safe_time_limit;
-	protected $is_phpbb_min_3_3_8;
+	protected string $u_action;
+	protected array  $migrations_db;
+	protected int    $safe_time_limit;
+	protected bool   $is_phpbb_min_3_3_8;
 
 	public function __construct(
 		$common,
@@ -896,11 +896,7 @@ class ext_mgr_plus
 	private function versioncheck_details(string $ext_name): void
 	{
 		$ext_list_vc = $this->common->config_text_get('extmgrplus_list_version_check', 'updates');
-
-		if ($ext_list_vc == null)
-		{
-			$ext_list_vc = [];
-		}
+		$ext_list_vc ??= [];
 
 		if ($this->versioncheck($ext_list_vc, $ext_name, true))
 		{
@@ -953,10 +949,7 @@ class ext_mgr_plus
 	*/
 	private function versioncheck_list(array &$ext_list, ?array &$ext_list_vc): array
 	{
-		if ($ext_list_vc === null)
-		{
-			$ext_list_vc = [];
-		}
+		$ext_list_vc ??= [];
 
 		$ext_list_vc_update	= false;
 		$ext_list_tpl		= [];

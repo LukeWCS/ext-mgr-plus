@@ -1,3 +1,14 @@
+#### 2.1.0-b7
+* Progress Template:
+  * Twig Optimierung.
+* Settings Template:
+  * Aktuelles Makro `select` von FAR übernommen, mit dem Auswahlmenüs in Templates einfacher und effizienter realisiert werden können. Bei dieser Version muss dem Makro auch nicht mehr separat die Config Variable übergeben werden.
+* ACP Controller:
+  * Funktion `select_struct` von FAR übernommen, zum Erzeugen einer Select Struktur fürs Template. Ausserdem verbessert um bestehende alte Select Strukturen einfacher auf diese Funktion umstellen zu können.
+* PHP Voraussetzungen geändert von `>=7.1.3,<8.4.0@dev` zu `>=7.4.0,<8.4.0@dev`.
+  * Typisierte Klassen-Eigenschaften.
+  * Verwendung von NCAO.
+
 #### 2.1.0-b6
 * Wurde "Details" aufgerufen und es ist zu dem Zeitpunkt noch keine globale Versionsprüfung ausgeführt worden, dann wurde der aktuelle Zeitstempel für die Anzeige der letzten Versionsprüfung gespeichert. Das ist nicht mehr der Fall, der Zeitstempel wird nur noch bei der globalen Versionsprüfung gesetzt.
 * Progress Template:

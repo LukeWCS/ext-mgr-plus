@@ -24,7 +24,7 @@ class listener implements EventSubscriberInterface
 		$this->extmgrplus = $extmgrplus;
 	}
 
-	public static function getSubscribedEvents()
+	public static function getSubscribedEvents(): array
 	{
 		return [
 			'core.common'							=> 'todo',
@@ -34,22 +34,22 @@ class listener implements EventSubscriberInterface
 		];
 	}
 
-	public function todo()
+	public function todo(): void
 	{
 		$this->extmgrplus->todo();
 	}
 
-	public function ext_manager_before($event)
+	public function ext_manager_before($event): void
 	{
 		$this->extmgrplus->ext_manager_before($event);
 	}
 
-	public function ext_manager_after($event)
+	public function ext_manager_after($event): void
 	{
 		$this->extmgrplus->ext_manager_after($event);
 	}
 
-	public function catch_message()
+	public function catch_message(): void
 	{
 		$this->extmgrplus->catch_message();
 	}

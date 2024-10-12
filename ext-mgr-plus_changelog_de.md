@@ -17,6 +17,7 @@
   * "Link zur Versionsdatei:", sofern der Experten-Schalter "Link zur Versionsdatei anzeigen:" aktiviert ist. Diese Information ist primär für Erweiterungen Entwickler relevant und initial nicht aktiviert.
 * Bei der Version eines Sprachpakets sind ab sofort auch Suffixe erlaubt, damit Korrekturen entsprechend signalisiert werden können, zum Beispiel in der Form `2.0.1.1`. Versionen müssen dabei nach den PHP Konventionen gestaltet sein, damit diese per `version_compare()` verglichen werden können.
 * Code Optimierung bei PHP und Twig.
+* PHP Mindestversion von 7.1.3 auf 7.4.0 geändert.
 * Sprachdateien:
   * `acp_ext_mgr_plus.php`: 11 neue Sprachvariablen, 2 geändert.
   * `acp_ext_mgr_plus_settings.php`: 4 neue Sprachvariablen.

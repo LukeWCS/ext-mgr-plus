@@ -15,14 +15,14 @@ namespace lukewcs\extmgrplus\core;
 
 class ext_mgr_plus_common
 {
-	protected $config;
-	protected $config_text;
-	protected $language;
-	protected $template;
-	protected $ext_manager;
+	protected object $config;
+	protected object $config_text;
+	protected object $language;
+	protected object $template;
+	protected object $ext_manager;
 
-	protected $metadata;
-	protected $u_action;
+	protected array  $metadata;
+	protected string $u_action;
 
 	public function __construct(
 		\phpbb\config\config $config,
@@ -110,7 +110,7 @@ class ext_mgr_plus_common
 	/*
 		Set a variable/array in a config_text variable container or delete one or all variables/arrays
 	*/
-	public function config_text_set(string $container, $name, $value): void
+	public function config_text_set(string $container, ?string $name, $value): void
 	{
 		if ($this->config_text->get($container) === null)
 		{
@@ -122,10 +122,7 @@ class ext_mgr_plus_common
 		}
 		if ($name !== null && $value !== null)
 		{
-			if ($vars === null)
-			{
-				$vars = [];
-			}
+			$vars ??= [];
 			$vars[$name] = $value;
 			$this->config_text->set($container, json_encode($vars));
 		}

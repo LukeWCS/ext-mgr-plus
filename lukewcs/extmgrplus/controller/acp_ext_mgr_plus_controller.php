@@ -15,13 +15,13 @@ namespace lukewcs\extmgrplus\controller;
 
 class acp_ext_mgr_plus_controller
 {
-	protected $common;
-	protected $language;
-	protected $template;
-	protected $request;
-	protected $config;
+	protected object $common;
+	protected object $language;
+	protected object $template;
+	protected object $request;
+	protected object $config;
 
-	protected $u_action;
+	protected string $u_action;
 
 	public function __construct(
 		$common,
@@ -77,30 +77,50 @@ class acp_ext_mgr_plus_controller
 
 		$this->template->assign_vars([
 			'EXTMGRPLUS_NOTES'							=> $notes,
-			'FORCE_UNSTABLE'							=> $this->config['extension_force_unstable'],
-			'EXTMGRPLUS_SWITCH_LOG'						=> $this->config['extmgrplus_switch_log'],
-			'EXTMGRPLUS_SWITCH_CONFIRMATION'			=> $this->config['extmgrplus_switch_confirmation'],
-			'EXTMGRPLUS_SWITCH_AUTO_REDIRECT'			=> $this->config['extmgrplus_switch_auto_redirect'],
-			'EXTMGRPLUS_SELECT_CHECKBOX_MODE'			=> $this->config['extmgrplus_select_checkbox_mode'],
-			'EXTMGRPLUS_SELECT_CHECKBOX_MODE_OPTIONS' => [
+			'FORCE_UNSTABLE'							=> (bool) $this->config['extension_force_unstable'],
+			'EXTMGRPLUS_SWITCH_LOG'						=> (bool) $this->config['extmgrplus_switch_log'],
+			'EXTMGRPLUS_SWITCH_CONFIRMATION'			=> (bool) $this->config['extmgrplus_switch_confirmation'],
+			'EXTMGRPLUS_SWITCH_AUTO_REDIRECT'			=> (bool) $this->config['extmgrplus_switch_auto_redirect'],
+			'EXTMGRPLUS_SELECT_CHECKBOX_MODE_OPTIONS'	=> $this->select_struct($this->config['extmgrplus_select_checkbox_mode'], [
 				'EXTMGRPLUS_CHECKBOX_MODE_OFF'			=> '0',
 				'EXTMGRPLUS_CHECKBOX_MODE_ALL'			=> '1',
 				'EXTMGRPLUS_CHECKBOX_MODE_LAST'			=> '2',
-			],
-			'EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE'		=> $this->config['extmgrplus_switch_order_and_ignore'],
-			'EXTMGRPLUS_SWITCH_INSTRUCTIONS'			=> $this->config['extmgrplus_switch_instructions'],
-			'EXTMGRPLUS_SWITCH_SELF_DISABLE'			=> $this->config['extmgrplus_switch_self_disable'],
-			'EXTMGRPLUS_NUMBER_VC_LIMIT'				=> $this->config['extmgrplus_number_vc_limit'],
-			'EXTMGRPLUS_SWITCH_MIGRATION_COL'			=> $this->config['extmgrplus_switch_migration_col'],
-			'EXTMGRPLUS_SWITCH_MIGRATIONS'				=> $this->config['extmgrplus_switch_migrations'],
-			'EXTMGRPLUS_SWITCH_VERSION_URL'				=> $this->config['extmgrplus_switch_version_url'],
+			]),
+			'EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE'		=> (bool) $this->config['extmgrplus_switch_order_and_ignore'],
+			'EXTMGRPLUS_SWITCH_INSTRUCTIONS'			=> (bool) $this->config['extmgrplus_switch_instructions'],
+			'EXTMGRPLUS_SWITCH_SELF_DISABLE'			=> (bool) $this->config['extmgrplus_switch_self_disable'],
+			'EXTMGRPLUS_NUMBER_VC_LIMIT'				=> (int) $this->config['extmgrplus_number_vc_limit'],
+			'EXTMGRPLUS_SWITCH_MIGRATION_COL'			=> (bool) $this->config['extmgrplus_switch_migration_col'],
+			'EXTMGRPLUS_SWITCH_MIGRATIONS'				=> (bool) $this->config['extmgrplus_switch_migrations'],
+			'EXTMGRPLUS_SWITCH_VERSION_URL'				=> (bool) $this->config['extmgrplus_switch_version_url'],
 		]);
 
 		add_form_key('lukewcs_extmgrplus');
 	}
 
-	public function set_page_url($u_action): void
+	public function set_page_url(string $u_action): void
 	{
 		$this->u_action = $u_action;
+	}
+
+	private function select_struct($cfg_value, array $options): array
+	{
+		$options_tpl = [];
+
+		foreach ($options as $opt_key => $opt_value)
+		{
+			if (!is_array($opt_value))
+			{
+				$opt_value = [$opt_value];
+			}
+			$options_tpl[] = [
+				'label'		=> $opt_key,
+				'value'		=> $opt_value[0],
+				'bold'		=> $opt_value[1] ?? false,
+				'selected'	=> is_array($cfg_value) ? in_array($opt_value[0], $cfg_value) : $opt_value[0] == $cfg_value,
+			];
+		}
+
+		return $options_tpl;
 	}
 }

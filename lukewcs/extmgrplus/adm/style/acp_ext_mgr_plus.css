@@ -317,11 +317,11 @@ input[type="checkbox"]:disabled {
 }
 
 @keyframes progress_anim_block {
-    from {
+	from {
 		width: 0%;
 	}
 
-    to {
+	to {
 		width: 100%;
 	}
 }
