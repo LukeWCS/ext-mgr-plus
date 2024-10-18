@@ -164,7 +164,7 @@ class ext_mgr_plus_common
 	*/
 	public function trigger_error_(string $message, int $error_type, ?string $back_link_lang_var = null): void
 	{
-		$this->template->assign_var('EXTMGRPLUS_LAST_ACTION', 'trigger_error_');
+		// $this->template->assign_var('EXTMGRPLUS_LAST_ACTION', 'trigger_error_');
 		if ($error_type == E_USER_NOTICE && $this->config['extmgrplus_switch_auto_redirect'])
 		{
 			meta_refresh(1, $this->rotate_get_params($this->u_action));

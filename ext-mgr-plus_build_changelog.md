@@ -1,3 +1,21 @@
+#### 2.1.0-b8
+* Ein `trigger_error` innerhalb von `ext.php` kann EMP nicht mehr blockieren bzw. nicht mehr zu einem Abbruch einer EMP Aktion führen. Nach sehr langer Zeit habe ich endlich herausgefunden, wie ich das gezielt unterbinden kann. Wollte man z.B. bisher 30 Erweiterungen aktivieren und die 16te würde ein `trigger_error` ausführen, hätte man schlussendlich nur 15 aktivierte Erweiterungen. Mit der neuen Technik hätte man in diesem Fall jedoch 29 aktivierte Erweiterungen und nur 1 nicht aktivierte. Dazu wird das Verhalten des phpBB Error Handlers kurzfristig und lokal begrenzt so geändert, dass die eigentliche Funktion von `trigger_error` komplett deaktiviert wird und die davon erzeugten Daten (4 Werte) in einem Array zwischengespeichert werden, welches dann ausgelesen werden kann. Bei den folgenden Methoden von `ext.php` wird diese Technik ab sofort angewendet:
+  * `is_enableable()`
+  * `disable_step()`
+  * `enable_step()`
+* Die neue Technik um `trigger_error` zu deaktivieren, hatte weitere Änderungen zur Folge, da nun manches nicht mehr benötigt wird:
+  * Die Funktion mit der verschiedene Daten zur aktuell bearbeiteten Erweiterung in Template Variablen zwischengespeichert werden mussten, ist nicht mehr nötig und wurde entfernt.
+  * Die Funktion mit der eine Nachricht abgefangen und erweitert werden kann, ist nicht mehr nötig und wurde in dieser Form entfernt. Das war der `trigger_error` Workaround.
+* Fehlerbehandlung auf Basis der oben genannten Technik weiter verbessert:
+  * Auch beim Deaktivieren werden nun alle nicht erfolgreich geschaltete Erweiterungen explizit aufgelistet. Das war bisher nur beim Aktivieren der Fall. Sollten dabei Nachrichten von `trigger_error` entstehen, werden diese ebenfalls angezeigt.
+  * Die fehlgeschlagenen Erweiterungen werden nun nummeriert.
+* Core:
+  * Code optimiert.
+  * VP SIM in eigene Funktion ausgelagert.
+* Sprachdateien:
+  * 1 Sprachvariable geändert.
+  * 1 Sprachvariable hinzugefügt.
+
 #### 2.1.0-b7
 * Progress Template:
   * Twig Optimierung.

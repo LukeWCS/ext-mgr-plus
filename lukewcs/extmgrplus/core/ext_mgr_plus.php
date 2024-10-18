@@ -38,6 +38,7 @@ class ext_mgr_plus
 	protected array  $migrations_db;
 	protected int    $safe_time_limit;
 	protected bool   $is_phpbb_min_3_3_8;
+	protected array  $last_message;
 
 	public function __construct(
 		$common,
@@ -70,6 +71,8 @@ class ext_mgr_plus
 		$this->table_prefix 	= $table_prefix;
 		$this->phpbb_root_path	= $phpbb_root_path;
 		$this->php_ext			= $php_ext;
+
+		$this->last_message		= [];
 	}
 
 	/*
@@ -333,44 +336,78 @@ class ext_mgr_plus
 	}
 
 	/*
-		This can be used to intercept and change trigger_error messages
+		Change template for trigger_error
 	*/
-	public function catch_message(): void
+	public function change_msg_template(): void
 	{
-		$last_action = $this->template->retrieve_var('EXTMGRPLUS_LAST_ACTION');
-		if ($last_action == '')
+		if (is_null($this->template->retrieve_var('MESSAGE_TITLE')) ||
+			is_null($this->template->retrieve_var('MESSAGE_TEXT')) ||
+			is_null($this->template->retrieve_var('S_USER_NOTICE')) ||
+			is_null($this->template->retrieve_var('S_USER_WARNING'))
+		)
 		{
 			return;
 		}
-
 		$this->template->set_filenames(['body' => '@lukewcs_extmgrplus/acp_ext_mgr_plus_message_body.html']);
-		if ($last_action == 'trigger_error_')
+	}
+
+	/*
+		This can be used to intercept and change trigger_error messages and template
+	*/
+	// public function catch_message(): void
+	// {
+		// $last_action = $this->template->retrieve_var('EXTMGRPLUS_LAST_ACTION');
+		// if ($last_action == '')
+		// {
+			// return;
+		// }
+
+		// $this->template->set_filenames(['body' => '@lukewcs_extmgrplus/acp_ext_mgr_plus_message_body.html']);
+		// if ($last_action == 'trigger_error_')
+		// {
+			// return;
+		// }
+
+		// $ext_name			= $this->template->retrieve_var('EXTMGRPLUS_LAST_EXT_NAME');
+		// $ext_display_name	= $this->template->retrieve_var('EXTMGRPLUS_LAST_EXT_DISPLAY_NAME');
+		// $ext_version		= $this->template->retrieve_var('EXTMGRPLUS_LAST_EXT_VERSION');
+		// $message_text		= $this->template->retrieve_var('MESSAGE_TEXT');
+		// $s_user_notice		= $this->template->retrieve_var('S_USER_NOTICE');
+		// $s_user_warning		= $this->template->retrieve_var('S_USER_WARNING');
+
+		// if ($ext_name != '' && $message_text != '' && ($s_user_notice || $s_user_warning))
+		// {
+			// $this->template->assign_vars([
+				// 'MESSAGE_TEXT'		=>	sprintf('%1$s<br><br><strong>%2$s %3$s (%4$s)</strong><br><br><em>%5$s</em>%6$s',
+											// /* 1 */	$this->language->lang('EXTMGRPLUS_MSG_PROCESS_ABORTED', $this->language->lang($last_action)),
+											// /* 2 */	$ext_display_name,
+											// /* 3 */	$this->language->lang('EXTMGRPLUS_VERSION_STRING', $ext_version),
+											// /* 4 */	$ext_name,
+											// /* 5 */	$message_text,
+											// /* 6 */	$this->common->back_link('RETURN_TO_EXTENSION_LIST')
+										// ),
+				// 'S_USER_NOTICE'		=>	false,
+				// 'S_USER_WARNING'	=>	true,
+			// ]);
+		// }
+	// }
+
+	/*
+		Is required to suppress trigger_error within ext.php and to process its message
+	*/
+	public function error_handler(int $errno, string $msg_text, string $errfile, int $errline): void
+	{
+		if ($errno == E_USER_NOTICE || $errno == E_USER_WARNING)
 		{
+			$this->last_message = [
+				'errno'		=> $errno,
+				'msg_text'	=> $msg_text,
+				'errfile'	=> $errfile,
+				'errline'	=> $errline,
+			];
 			return;
 		}
-
-		$ext_name			= $this->template->retrieve_var('EXTMGRPLUS_LAST_EXT_NAME');
-		$ext_display_name	= $this->template->retrieve_var('EXTMGRPLUS_LAST_EXT_DISPLAY_NAME');
-		$ext_version		= $this->template->retrieve_var('EXTMGRPLUS_LAST_EXT_VERSION');
-		$message_text		= $this->template->retrieve_var('MESSAGE_TEXT');
-		$s_user_notice		= $this->template->retrieve_var('S_USER_NOTICE');
-		$s_user_warning		= $this->template->retrieve_var('S_USER_WARNING');
-
-		if ($ext_name != '' && $message_text != '' && ($s_user_notice || $s_user_warning))
-		{
-			$this->template->assign_vars([
-				'MESSAGE_TEXT'		=>	sprintf('%1$s<br><br><strong>%2$s %3$s (%4$s)</strong><br><br><em>%5$s</em>%6$s',
-											/* 1 */	$this->language->lang('EXTMGRPLUS_MSG_PROCESS_ABORTED', $this->language->lang($last_action)),
-											/* 2 */	$ext_display_name,
-											/* 3 */	$this->language->lang('EXTMGRPLUS_VERSION_STRING', $ext_version),
-											/* 4 */	$ext_name,
-											/* 5 */	$message_text,
-											/* 6 */	$this->common->back_link('RETURN_TO_EXTENSION_LIST')
-										),
-				'S_USER_NOTICE'		=>	false,
-				'S_USER_WARNING'	=>	true,
-			]);
-		}
+		msg_handler($errno, $msg_text, $errfile, $errline);
 	}
 
 	/*
@@ -469,7 +506,8 @@ class ext_mgr_plus
 			$this->common->config_text_set('extmgrplus_todo', 'purge_cache', true);
 		}
 
-		foreach ($ext_list_enabled as $ext_name => $value)
+		$ext_list_failed_deactivation = [];
+		foreach ($ext_list_enabled as $ext_name => $ext_index)
 		{
 			try
 			{
@@ -483,17 +521,26 @@ class ext_mgr_plus
 
 			if ($exec_action)
 			{
-				$ext_display_name = $ext_metadata['extra']['display-name'] ?? '';
-				$ext_version = $ext_metadata['version'] ?? '';
-				$this->set_last_ext_template_vars('EXTMGRPLUS_ALL_DISABLE', $ext_name, $ext_display_name, $ext_version);
+				$ext_display_name	= $ext_metadata['extra']['display-name'] ?? '';
+				$ext_version		= $ext_metadata['version'] ?? '';
+				// $this->set_last_ext_template_vars('EXTMGRPLUS_ALL_DISABLE', $ext_name, $ext_display_name, $ext_version);
 
+				$disable_error = '';
 				if ($this->ext_manager->is_enabled($ext_name))
 				{
 					if ($ext_name != 'lukewcs/extmgrplus' || $this->is_phpbb_min_3_3_8)
 					{
+						set_error_handler([$this, 'error_handler']);
 						while ($this->ext_manager->disable_step($ext_name))
 						{
+							if ($this->last_message)
+							{
+								$disable_error = $this->last_message['msg_text'];
+								$this->last_message = [];
+								break;
+							}
 						}
+						restore_error_handler();
 					}
 					else
 					{
@@ -505,6 +552,14 @@ class ext_mgr_plus
 				if ($this->ext_manager->is_disabled($ext_name))
 				{
 					$ext_count_success++;
+				}
+				else
+				{
+					$ext_list_failed_deactivation[$ext_name] = [
+						'display_name'	=> $ext_display_name,
+						'ext_version'	=> $ext_version,
+						'message'		=> $disable_error,
+					];
 				}
 			}
 
@@ -523,7 +578,7 @@ class ext_mgr_plus
 				break;
 			}
 		}
-		$this->set_last_ext_template_vars('');
+		// $this->set_last_ext_template_vars('');
 
 		if ($this->is_phpbb_min_3_3_8)
 		{
@@ -533,6 +588,21 @@ class ext_mgr_plus
 		if ($safe_time_exceeded)
 		{
 			$msg_failed = '<br><br><strong>' . $this->language->lang('EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED', $this->safe_time_limit) . '</strong>';
+		}
+		else if (count($ext_list_failed_deactivation))
+		{
+			// $msg_failed = '<br><br>' . $this->language->lang('EXTMGRPLUS_MSG_DEACTIVATION_FAILED');
+			// $count_failed = 0;
+			// foreach ($ext_list_failed_deactivation as $name => $vars)
+			// {
+				// if (is_array($vars['message']))
+				// {
+					// $vars['message'] = implode('<br>', $vars['message']);
+				// }
+				// $count_failed++;
+				// $msg_failed .= $this->create_failed_msg($count_failed . '. ' . $vars['display_name'], $vars['ext_version'], $name, $vars['message']);
+			// }
+			$msg_failed = $this->create_failed_list_msg('EXTMGRPLUS_MSG_DEACTIVATION_FAILED', $ext_list_failed_deactivation);
 		}
 		$this->common->trigger_error_(
 			$this->language->lang('EXTMGRPLUS_MSG_DEACTIVATION', $ext_count_success, $ext_count_enabled) . ($msg_failed ?? ''),
@@ -565,17 +635,6 @@ class ext_mgr_plus
 			$this->common->config_text_set('extmgrplus_todo', 'purge_cache', true);
 		}
 
-		$ext_list_failed_activation = [];
-		$get_failed_msg = function (string $display_name, string $ext_version, string $ext_name, string $message): string
-		{
-			return sprintf('<br><br><strong>%1$s %2$s (%3$s)</strong><br><br><em>%4$s</em>',
-				/* 1 */	$display_name,
-				/* 2 */	$this->language->lang('EXTMGRPLUS_VERSION_STRING', $ext_version),
-				/* 3 */	$ext_name,
-				/* 4 */	$message
-			);
-		};
-
 		if ($this->config['extmgrplus_switch_order_and_ignore'])
 		{
 			$ext_list_order = $this->common->config_text_get('extmgrplus_list_order_and_ignore', 'order');
@@ -592,7 +651,8 @@ class ext_mgr_plus
 		}
 		$ext_list_disabled = array_merge($ext_list_order, $ext_list_disabled);
 
-		foreach ($ext_list_disabled as $ext_name => $value)
+		$ext_list_failed_activation = [];
+		foreach ($ext_list_disabled as $ext_name => $ext_index)
 		{
 			try
 			{
@@ -606,23 +666,40 @@ class ext_mgr_plus
 
 			if ($exec_action)
 			{
-				$ext_display_name = $ext_metadata['extra']['display-name'] ?? '';
-				$ext_version = $ext_metadata['version'] ?? '';
-				$this->set_last_ext_template_vars('EXTMGRPLUS_ALL_ENABLE', $ext_name, $ext_display_name, $ext_version);
+				$ext_display_name	= $ext_metadata['extra']['display-name'] ?? '';
+				$ext_version		= $ext_metadata['version'] ?? '';
+				// $this->set_last_ext_template_vars('EXTMGRPLUS_ALL_ENABLE', $ext_name, $ext_display_name, $ext_version);
 
+				set_error_handler([$this, 'error_handler']);
 				$is_enableable = $this->ext_manager->get_extension($ext_name)->is_enableable();
+				if ($this->last_message)
+				{
+					$is_enableable = $this->last_message['msg_text'];
+					$this->last_message = [];
+				}
+				restore_error_handler();
+
 				$is_enableable_condition = $is_enableable === true;
 				if ($this->ext_manager->is_disabled($ext_name) && $is_enableable_condition)
 				{
 					try
 					{
+						set_error_handler([$this, 'error_handler']);
 						while ($this->ext_manager->enable_step($ext_name))
 						{
+							if ($this->last_message)
+							{
+								$is_enableable = $this->last_message['msg_text'];
+								$this->last_message = [];
+								break;
+							}
 						}
+						restore_error_handler();
 					}
 					catch (\phpbb\db\migration\exception $e)
 					{
-						$msg_failed = $get_failed_msg($ext_display_name, $ext_version, $ext_name, $e->getLocalisedMessage($this->user));
+						restore_error_handler();
+						$msg_failed = $this->create_failed_msg($ext_display_name, $ext_version, $ext_name, $e->getLocalisedMessage($this->user));
 						$this->common->trigger_error_(
 							$this->language->lang('EXTMGRPLUS_MSG_PROCESS_ABORTED', $this->language->lang('EXTMGRPLUS_ALL_ENABLE')) . $msg_failed,
 							E_USER_WARNING,
@@ -660,8 +737,7 @@ class ext_mgr_plus
 				break;
 			}
 		}
-
-		$this->set_last_ext_template_vars('');
+		// $this->set_last_ext_template_vars('');
 
 		if ($this->is_phpbb_min_3_3_8)
 		{
@@ -674,15 +750,18 @@ class ext_mgr_plus
 		}
 		else if (count($ext_list_failed_activation))
 		{
-			$msg_failed = '<br><br>' . $this->language->lang('EXTMGRPLUS_MSG_ACTIVATION_FAILED');
-			foreach ($ext_list_failed_activation as $name => $vars)
-			{
-				if (is_array($vars['message']))
-				{
-					$vars['message'] = implode('<br>', $vars['message']);
-				}
-				$msg_failed .= $get_failed_msg($vars['display_name'], $vars['ext_version'], $name, $vars['message']);
-			}
+			// $msg_failed = '<br><br>' . $this->language->lang('EXTMGRPLUS_MSG_ACTIVATION_FAILED');
+			// $count_failed = 0;
+			// foreach ($ext_list_failed_activation as $name => $vars)
+			// {
+				// if (is_array($vars['message']))
+				// {
+					// $vars['message'] = implode('<br>', $vars['message']);
+				// }
+				// $count_failed++;
+				// $msg_failed .= $this->create_failed_msg($count_failed . '. ' . $vars['display_name'], $vars['ext_version'], $name, $vars['message']);
+			// }
+			$msg_failed = $this->create_failed_list_msg('EXTMGRPLUS_MSG_ACTIVATION_FAILED', $ext_list_failed_activation);
 		}
 		$this->common->trigger_error_(
 			$this->language->lang('EXTMGRPLUS_MSG_ACTIVATION', $ext_count_success, $ext_count_disabled) . ($msg_failed ?? ''),
@@ -692,17 +771,51 @@ class ext_mgr_plus
 	}
 
 	/*
+		Generate a message that lists all extensions that could not be switched with enable/disable
+	*/
+	private function create_failed_list_msg(string $lang_var, array &$ext_list): string
+	{
+		$msg_failed = '<br><br>' . $this->language->lang($lang_var);
+		$count_failed = 0;
+		foreach ($ext_list as $name => $vars)
+		{
+			if (is_array($vars['message']))
+			{
+				$vars['message'] = implode('<br>', $vars['message']);
+			}
+			$count_failed++;
+			$msg_failed .= $this->create_failed_msg($count_failed . '. ' . $vars['display_name'], $vars['ext_version'], $name, $vars['message']);
+		}
+
+		return $msg_failed;
+	}
+
+	/*
+		Helper function to generate a message text for an extension if enable/disable has failed
+	*/
+	private function create_failed_msg(string $display_name, string $ext_version, string $ext_name, string $message): string
+	{
+		return sprintf('<br><br><strong>%1$s %2$s (%3$s)</strong>%4$s',
+			/* 1 */	$display_name,
+			/* 2 */	$this->language->lang('EXTMGRPLUS_VERSION_STRING', $ext_version),
+			/* 3 */	$ext_name,
+			/* 4 */	empty($message) ? '' : "<br><br><em>{$message}</em>"
+		);
+	}
+
+
+	/*
 		Store information about the current process in template variables
 	*/
-	private function set_last_ext_template_vars(string $action, string $ext_name = '', string $ext_display_name = '', string $ext_version = ''): void
-	{
-		$this->template->assign_vars([
-			'EXTMGRPLUS_LAST_ACTION'			=> $action,
-			'EXTMGRPLUS_LAST_EXT_NAME'			=> $action !== '' ? $ext_name : '',
-			'EXTMGRPLUS_LAST_EXT_DISPLAY_NAME'	=> $action !== '' ? $ext_display_name : '',
-			'EXTMGRPLUS_LAST_EXT_VERSION'		=> $action !== '' ? $ext_version : '',
-		]);
-	}
+	// private function set_last_ext_template_vars(string $action, string $ext_name = '', string $ext_display_name = '', string $ext_version = ''): void
+	// {
+		// $this->template->assign_vars([
+			// 'EXTMGRPLUS_LAST_ACTION'			=> $action,
+			// 'EXTMGRPLUS_LAST_EXT_NAME'			=> $action !== '' ? $ext_name : '',
+			// 'EXTMGRPLUS_LAST_EXT_DISPLAY_NAME'	=> $action !== '' ? $ext_display_name : '',
+			// 'EXTMGRPLUS_LAST_EXT_VERSION'		=> $action !== '' ? $ext_version : '',
+		// ]);
+	// }
 
 	/*
 		Determine all extensions that have new migrations from the passed list of extensions
@@ -826,7 +939,14 @@ class ext_mgr_plus
 
 		foreach ($ext_list_all as $ext_name => $ext_path)
 		{
-			$vc_meta = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all')['extra']['version-check'] ?? null;
+			try
+			{
+				$vc_meta = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all')['extra']['version-check'] ?? null;
+			}
+			catch (\RuntimeException $e)
+			{
+			}
+
 			if (isset($vc_meta))
 			{
 				$ext_list_vc[$ext_name]['current'] = '';
@@ -852,24 +972,8 @@ class ext_mgr_plus
 				continue;
 			}
 
-			// if (rand(0, 9))
-			// {
-				// if (!rand(0, 5))
-				// {
-					// $ext_ver = explode('.', $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('version'));
-					// $ext_list_vc[$ext_name]['current'] = $ext_ver[0] . '.' . rand((int) $ext_ver[1] + 1, 10) . '.' . rand((int) $ext_ver[2] + 1, 20);
-				// }
-				// else
-				// {
-					// $ext_list_vc[$ext_name]['current'] = 'NOUPD';
-				// }
-			// }
-			// else
-			// {
-				// $ext_list_vc[$ext_name]['current'] = 'ERROR';
-			// }
-			// usleep(150000); // 3
 			$this->versioncheck($ext_list_vc, $ext_name);
+			// $this->versioncheck_sim($ext_list_vc, $ext_name);
 
 			$block_count++;
 			$block_time = microtime(true) - $GLOBALS['starttime'];
@@ -905,39 +1009,30 @@ class ext_mgr_plus
 	}
 
 	/*
-		Helper function to avoid redundant code for global and local version check
+		Helper function for global and local version check
 	*/
 	private function versioncheck(array &$ext_list_vc, string $ext_name, bool $read_cache = false): bool
 	{
 		$md_manager			= $this->ext_manager->create_extension_metadata_manager($ext_name);
-		$ext_current		= $ext_list_vc[$ext_name]['current'] ?? null;
 		$ext_list_vc_update	= false;
 
 		try
 		{
 			$ext_metadata = $md_manager->get_metadata('all');
-
 			if (isset($ext_metadata['extra']['version-check']))
 			{
 				$vc_data = $this->ext_manager->version_check($md_manager, !$read_cache, $read_cache, $this->config['extension_force_unstable'] ? 'unstable' : null);
-				if (empty($vc_data))
-				{
-					$ext_current = 'NOUPD';
-				}
-				else if ($ext_current == 'ERROR' || $ext_current == 'NOUPD' || phpbb_version_compare($ext_current ?? '0.0.0', $vc_data['current'], '<'))
-				{
-					$ext_current = $vc_data['current'];
-				}
+				$vc_current = empty($vc_data) ? 'NOUPD' : $vc_data['current'];
 			}
 		}
 		catch (exception_interface | \RuntimeException $e)
 		{
-			$ext_current = 'ERROR';
+			$vc_current = 'ERROR';
 		}
 
-		if ($ext_current !== ($ext_list_vc[$ext_name]['current'] ?? null))
+		if ($vc_current !== ($ext_list_vc[$ext_name]['current'] ?? null))
 		{
-			$ext_list_vc[$ext_name]['current'] = $ext_current;
+			$ext_list_vc[$ext_name]['current'] = $vc_current;
 			$ext_list_vc_update = true;
 		}
 
@@ -997,14 +1092,22 @@ class ext_mgr_plus
 				$ext_list_vc_update = true;
 			}
 		}
+		unset($vc_data);
+
 		if ($ext_list_vc_update)
 		{
 			$this->common->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_vc);
 		}
 
-		foreach ($ext_list as $ext_name => $value)
+		foreach ($ext_list as $ext_name => $ext_path)
 		{
-			$ext_metadata = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
+			try
+			{
+				$ext_metadata = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
+			}
+			catch (\RuntimeException $e)
+			{
+			}
 
 			$ext_list_tpl[$ext_name]['cdb_ext']	= ($ext_metadata['extra']['version-check']['host'] ?? '') == 'www.phpbb.com';
 			if (isset($ext_metadata['extra']['version-check']))
@@ -1048,5 +1151,28 @@ class ext_mgr_plus
 			}
 		}
 		$this->template->assign_var('EXTMGRPLUS_DETAILS', $details);
+	}
+
+	private function versioncheck_sim(array &$ext_list_vc, string $ext_name, int $msec = 150): bool
+	{
+		if (rand(0, 9))
+		{
+			if (!rand(0, 5))
+			{
+				$ext_ver = explode('.', $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('version'));
+				$ext_list_vc[$ext_name]['current'] = $ext_ver[0] . '.' . rand((int) $ext_ver[1] + 1, 10) . '.' . rand((int) $ext_ver[2] + 1, 20);
+			}
+			else
+			{
+				$ext_list_vc[$ext_name]['current'] = 'NOUPD';
+			}
+		}
+		else
+		{
+			$ext_list_vc[$ext_name]['current'] = 'ERROR';
+		}
+		usleep($msec * 1000);
+
+		return true;
 	}
 }

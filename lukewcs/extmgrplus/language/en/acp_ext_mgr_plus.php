@@ -110,7 +110,7 @@ $lang = array_merge($lang, [
 
 	// details
 	'EXTMGRPLUS_SECTION_DETAILS'			=> 'Information from Extension Manager Plus',
-	'EXTMGRPLUS_DETAILS_CDB_PAGE'			=> 'Related page of the phpBB extension database',
+	'EXTMGRPLUS_DETAILS_CDB_PAGE'			=> 'phpBB extension database page',
 	'EXTMGRPLUS_DETAILS_VERSION_URL'		=> 'Link to version file',
 
 	// messages
@@ -121,7 +121,8 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_PROCESS_ABORTED'		=> 'The “%s” operation was interrupted by the following extension:',
 	'EXTMGRPLUS_MSG_DEACTIVATION'			=> '%1$u of %2$u extensions have been disabled.',
 	'EXTMGRPLUS_MSG_ACTIVATION'				=> '%1$u of %2$u extensions have been enabled.',
-	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'		=> 'The following extensions could not be activated:',
+	'EXTMGRPLUS_MSG_DEACTIVATION_FAILED'	=> 'The following extensions could not be disabled:',
+	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'		=> 'The following extensions could not be enabled:',
 	'EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED'		=> 'The tolerance range (%u seconds) of the maximum PHP execution time has been exceeded.',
 	'EXTMGRPLUS_MSG_SELF_DISABLE'			=> 'Note: The “Extension Manager Plus” extension will also be disabled.',
 	// messages versioncheck

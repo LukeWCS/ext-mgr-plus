@@ -109,7 +109,7 @@ $lang = array_merge($lang, [
 
 	// details
 	'EXTMGRPLUS_SECTION_DETAILS'			=> 'Informationen von Extension Manager Plus',
-	'EXTMGRPLUS_DETAILS_CDB_PAGE'			=> 'Zugehörige Seite der phpBB-Erweiterungsdatenbank',
+	'EXTMGRPLUS_DETAILS_CDB_PAGE'			=> 'Seite der phpBB-Erweiterungsdatenbank',
 	'EXTMGRPLUS_DETAILS_VERSION_URL'		=> 'Link zur Versionsdatei',
 
 	// messages
@@ -120,6 +120,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_PROCESS_ABORTED'		=> 'Der Vorgang „%s“ wurde von folgender Erweiterung unterbrochen:',
 	'EXTMGRPLUS_MSG_DEACTIVATION'			=> 'Es wurden %1$u von %2$u Erweiterungen deaktiviert.',
 	'EXTMGRPLUS_MSG_ACTIVATION'				=> 'Es wurden %1$u von %2$u Erweiterungen aktiviert.',
+	'EXTMGRPLUS_MSG_DEACTIVATION_FAILED'	=> 'Die folgenden Erweiterungen konnten nicht deaktiviert werden:',
 	'EXTMGRPLUS_MSG_ACTIVATION_FAILED'		=> 'Die folgenden Erweiterungen konnten nicht aktiviert werden:',
 	'EXTMGRPLUS_MSG_SAFE_TIME_EXCEEDED'		=> 'Der Toleranzbereich (%u Sekunden) der maximalen PHP Ausführungszeit wurde überschritten.',
 	'EXTMGRPLUS_MSG_SELF_DISABLE'			=> 'Hinweis: Die Erweiterung „Extension Manager Plus“ wird ebenfalls deaktiviert.',

@@ -5,4 +5,4 @@ Extension for phpBB - Extends the Extension Manager with the ability to disable 
 
 ### Requirements
 * phpBB 3.3.0 - 3.3.x (optimal: 3.3.8+)
-* PHP 7.1.3 - 8.3.x
+* PHP 7.4.0 - 8.3.x

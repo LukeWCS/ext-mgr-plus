@@ -23,7 +23,7 @@
 <div class="successbox notice">
 	<p>{{ lang('EXTMGRPLUS_MSG_VERSIONCHECK_HINT') }}</p>
 
-	{% set seconds = (EXTMGRPLUS_VC_DATA.count_done != EXTMGRPLUS_VC_DATA.count_total) ? EXTMGRPLUS_VC_DATA.vc_limit + 1 : 0 %}
+	{% set seconds = (EXTMGRPLUS_VC_DATA.count_done < EXTMGRPLUS_VC_DATA.count_total) ? EXTMGRPLUS_VC_DATA.vc_limit + 1 : 0 %}
 	<div class="progress_container">
 		<div class="progress_bar progress_anim" style="animation-duration: {{ seconds }}s;" }}>
 			<div class="progress_value">
