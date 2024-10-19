@@ -1,14 +1,18 @@
+#### 2.1.0-b9
+* Fix: Durch die Änderungen bei b8 wurde im ACP beim Speichern einer beliebigen ACP Seite fälschlicherweise das Message Template von EMP für die Bestätigung verwendet.
+* Fix: Die bei b8 eingebaute Methode zur kurzfristigen Änderung des Error Handlers hatte zur Folge, dass die Kontrolle wieder an `ext.php` zurückgegeben wurde, was unter Umständen dazu führen konnte, dass nachfolgender Code Aktionen ausgeführt hat, die nicht ausgeführt werden sollen/dürfen. Um das zu lösen, wird jetzt im EMP Error Handler eine eigene Exception erzeugt, wodurch jegliche weitere Ausführung von `ext.php` effektiv verhindert wird. Dadurch ist die Ermittlung der Nachricht auch eleganter, weil dazu keine separate Klassen-Eigenschaft mehr benötigt wird, sondern die Daten von `trigger_error` direkt als Exception Datenpaket übergeben werden können.
+
 #### 2.1.0-b8
 * Ein `trigger_error` innerhalb von `ext.php` kann EMP nicht mehr blockieren bzw. nicht mehr zu einem Abbruch einer EMP Aktion führen. Nach sehr langer Zeit habe ich endlich herausgefunden, wie ich das gezielt unterbinden kann. Wollte man z.B. bisher 30 Erweiterungen aktivieren und die 16te würde ein `trigger_error` ausführen, hätte man schlussendlich nur 15 aktivierte Erweiterungen. Mit der neuen Technik hätte man in diesem Fall jedoch 29 aktivierte Erweiterungen und nur 1 nicht aktivierte. Dazu wird das Verhalten des phpBB Error Handlers kurzfristig und lokal begrenzt so geändert, dass die eigentliche Funktion von `trigger_error` komplett deaktiviert wird und die davon erzeugten Daten (4 Werte) in einem Array zwischengespeichert werden, welches dann ausgelesen werden kann. Bei den folgenden Methoden von `ext.php` wird diese Technik ab sofort angewendet:
   * `is_enableable()`
   * `disable_step()`
   * `enable_step()`
+* Fehlerbehandlung auf Basis der oben genannten Technik weiter verbessert:
+  * Auch beim Deaktivieren werden nun alle nicht erfolgreich geschalteten Erweiterungen explizit aufgelistet. Das war bisher nur beim Aktivieren der Fall. Sollten dabei Nachrichten von `trigger_error` entstehen, werden diese ebenfalls angezeigt.
+  * Die fehlgeschlagenen Erweiterungen werden nun nummeriert.
 * Die neue Technik um `trigger_error` zu deaktivieren, hatte weitere Änderungen zur Folge, da nun manches nicht mehr benötigt wird:
   * Die Funktion mit der verschiedene Daten zur aktuell bearbeiteten Erweiterung in Template Variablen zwischengespeichert werden mussten, ist nicht mehr nötig und wurde entfernt.
   * Die Funktion mit der eine Nachricht abgefangen und erweitert werden kann, ist nicht mehr nötig und wurde in dieser Form entfernt. Das war der `trigger_error` Workaround.
-* Fehlerbehandlung auf Basis der oben genannten Technik weiter verbessert:
-  * Auch beim Deaktivieren werden nun alle nicht erfolgreich geschaltete Erweiterungen explizit aufgelistet. Das war bisher nur beim Aktivieren der Fall. Sollten dabei Nachrichten von `trigger_error` entstehen, werden diese ebenfalls angezeigt.
-  * Die fehlgeschlagenen Erweiterungen werden nun nummeriert.
 * Core:
   * Code optimiert.
   * VP SIM in eigene Funktion ausgelagert.

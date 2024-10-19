@@ -170,6 +170,7 @@ class ext_mgr_plus_common
 			meta_refresh(1, $this->rotate_get_params($this->u_action));
 			$this->template->assign_var('EXTMGRPLUS_AUTO_REDIRECT', true);
 		}
+		$this->template->assign_var('EXTMGRPLUS_TRIGGER_ERROR', true);
 		trigger_error($message . $this->back_link($back_link_lang_var), $error_type);
 	}
 

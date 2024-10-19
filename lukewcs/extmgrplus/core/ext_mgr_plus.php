@@ -38,7 +38,7 @@ class ext_mgr_plus
 	protected array  $migrations_db;
 	protected int    $safe_time_limit;
 	protected bool   $is_phpbb_min_3_3_8;
-	protected array  $last_message;
+	// protected array  $last_message;
 
 	public function __construct(
 		$common,
@@ -72,7 +72,7 @@ class ext_mgr_plus
 		$this->phpbb_root_path	= $phpbb_root_path;
 		$this->php_ext			= $php_ext;
 
-		$this->last_message		= [];
+		// $this->last_message		= [];
 	}
 
 	/*
@@ -340,15 +340,19 @@ class ext_mgr_plus
 	*/
 	public function change_msg_template(): void
 	{
-		if (is_null($this->template->retrieve_var('MESSAGE_TITLE')) ||
-			is_null($this->template->retrieve_var('MESSAGE_TEXT')) ||
-			is_null($this->template->retrieve_var('S_USER_NOTICE')) ||
-			is_null($this->template->retrieve_var('S_USER_WARNING'))
-		)
+		if ($this->template->retrieve_var('EXTMGRPLUS_TRIGGER_ERROR') === true)
 		{
-			return;
+			$this->template->set_filenames(['body' => '@lukewcs_extmgrplus/acp_ext_mgr_plus_message_body.html']);
 		}
-		$this->template->set_filenames(['body' => '@lukewcs_extmgrplus/acp_ext_mgr_plus_message_body.html']);
+		// if (is_null($this->template->retrieve_var('MESSAGE_TITLE')) ||
+			// is_null($this->template->retrieve_var('MESSAGE_TEXT')) ||
+			// is_null($this->template->retrieve_var('S_USER_NOTICE')) ||
+			// is_null($this->template->retrieve_var('S_USER_WARNING'))
+		// )
+		// {
+			// return;
+		// }
+		// $this->template->set_filenames(['body' => '@lukewcs_extmgrplus/acp_ext_mgr_plus_message_body.html']);
 	}
 
 	/*
@@ -399,13 +403,19 @@ class ext_mgr_plus
 	{
 		if ($errno == E_USER_NOTICE || $errno == E_USER_WARNING)
 		{
-			$this->last_message = [
+			// $this->last_message = [
+				// 'errno'		=> $errno,
+				// 'msg_text'	=> $msg_text,
+				// 'errfile'	=> $errfile,
+				// 'errline'	=> $errline,
+			// ];
+			// return;
+			throw new \phpbb\extension\exception('suppress trigger_error', [
 				'errno'		=> $errno,
 				'msg_text'	=> $msg_text,
 				'errfile'	=> $errfile,
 				'errline'	=> $errline,
-			];
-			return;
+			]);
 		}
 		msg_handler($errno, $msg_text, $errfile, $errline);
 	}
@@ -531,14 +541,21 @@ class ext_mgr_plus
 					if ($ext_name != 'lukewcs/extmgrplus' || $this->is_phpbb_min_3_3_8)
 					{
 						set_error_handler([$this, 'error_handler']);
-						while ($this->ext_manager->disable_step($ext_name))
+						try
 						{
-							if ($this->last_message)
+							while ($this->ext_manager->disable_step($ext_name))
 							{
-								$disable_error = $this->last_message['msg_text'];
-								$this->last_message = [];
-								break;
+								// if ($this->last_message)
+								// {
+									// $disable_error = $this->last_message['msg_text'];
+									// $this->last_message = [];
+									// break;
+								// }
 							}
+						}
+						catch (\phpbb\extension\exception $e)
+						{
+							$disable_error = $e->get_parameters()['msg_text'] ?? '';
 						}
 						restore_error_handler();
 					}
@@ -671,28 +688,42 @@ class ext_mgr_plus
 				// $this->set_last_ext_template_vars('EXTMGRPLUS_ALL_ENABLE', $ext_name, $ext_display_name, $ext_version);
 
 				set_error_handler([$this, 'error_handler']);
-				$is_enableable = $this->ext_manager->get_extension($ext_name)->is_enableable();
-				if ($this->last_message)
+				// $is_enableable = $this->ext_manager->get_extension($ext_name)->is_enableable();
+				// if ($this->last_message)
+				// {
+					// $is_enableable = $this->last_message['msg_text'];
+					// $this->last_message = [];
+				// }
+				try
 				{
-					$is_enableable = $this->last_message['msg_text'];
-					$this->last_message = [];
+					$is_enableable = $this->ext_manager->get_extension($ext_name)->is_enableable();
+				}
+				catch (\phpbb\extension\exception $e)
+				{
+					$is_enableable = $e->get_parameters()['msg_text'] ?? '';
 				}
 				restore_error_handler();
 
-				$is_enableable_condition = $is_enableable === true;
-				if ($this->ext_manager->is_disabled($ext_name) && $is_enableable_condition)
+				if ($this->ext_manager->is_disabled($ext_name) && $is_enableable === true)
 				{
 					try
 					{
 						set_error_handler([$this, 'error_handler']);
-						while ($this->ext_manager->enable_step($ext_name))
+						try
 						{
-							if ($this->last_message)
+							while ($this->ext_manager->enable_step($ext_name))
 							{
-								$is_enableable = $this->last_message['msg_text'];
-								$this->last_message = [];
-								break;
+								// if ($this->last_message)
+								// {
+									// $is_enableable = $this->last_message['msg_text'];
+									// $this->last_message = [];
+									// break;
+								// }
 							}
+						}
+						catch (\phpbb\extension\exception $e)
+						{
+							$is_enableable = $e->get_parameters()['msg_text'] ?? '';
 						}
 						restore_error_handler();
 					}
@@ -802,7 +833,6 @@ class ext_mgr_plus
 			/* 4 */	empty($message) ? '' : "<br><br><em>{$message}</em>"
 		);
 	}
-
 
 	/*
 		Store information about the current process in template variables
