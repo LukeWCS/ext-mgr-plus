@@ -1,3 +1,8 @@
+#### 2.1.0-b10
+* Core:
+  * Code Optimierung: 3 `try/catch` Blöcke zu 1 zusammengefasst.
+  * Den bei b9 deaktivierten Code endgültig entfernt.
+
 #### 2.1.0-b9
 * Fix: Durch die Änderungen bei b8 wurde im ACP beim Speichern einer beliebigen ACP Seite fälschlicherweise das Message Template von EMP für die Bestätigung verwendet.
 * Fix: Die bei b8 eingebaute Methode zur kurzfristigen Änderung des Error Handlers hatte zur Folge, dass die Kontrolle wieder an `ext.php` zurückgegeben wurde, was unter Umständen dazu führen konnte, dass nachfolgender Code Aktionen ausgeführt hat, die nicht ausgeführt werden sollen/dürfen. Um das zu lösen, wird jetzt im EMP Error Handler eine eigene Exception erzeugt, wodurch jegliche weitere Ausführung von `ext.php` effektiv verhindert wird. Dadurch ist die Ermittlung der Nachricht auch eleganter, weil dazu keine separate Klassen-Eigenschaft mehr benötigt wird, sondern die Daten von `trigger_error` direkt als Exception Datenpaket übergeben werden können.
@@ -12,7 +17,7 @@
   * Die fehlgeschlagenen Erweiterungen werden nun nummeriert.
 * Die neue Technik um `trigger_error` zu deaktivieren, hatte weitere Änderungen zur Folge, da nun manches nicht mehr benötigt wird:
   * Die Funktion mit der verschiedene Daten zur aktuell bearbeiteten Erweiterung in Template Variablen zwischengespeichert werden mussten, ist nicht mehr nötig und wurde entfernt.
-  * Die Funktion mit der eine Nachricht abgefangen und erweitert werden kann, ist nicht mehr nötig und wurde in dieser Form entfernt. Das war der `trigger_error` Workaround.
+  * Die Funktion mit der eine Nachricht abgefangen und erweitert werden kann (`trigger_error` Workaround), ist nicht mehr nötig und wurde in dieser Form entfernt.
 * Core:
   * Code optimiert.
   * VP SIM in eigene Funktion ausgelagert.

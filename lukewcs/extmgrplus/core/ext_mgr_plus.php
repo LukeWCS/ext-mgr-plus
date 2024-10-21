@@ -38,7 +38,6 @@ class ext_mgr_plus
 	protected array  $migrations_db;
 	protected int    $safe_time_limit;
 	protected bool   $is_phpbb_min_3_3_8;
-	// protected array  $last_message;
 
 	public function __construct(
 		$common,
@@ -71,8 +70,6 @@ class ext_mgr_plus
 		$this->table_prefix 	= $table_prefix;
 		$this->phpbb_root_path	= $phpbb_root_path;
 		$this->php_ext			= $php_ext;
-
-		// $this->last_message		= [];
 	}
 
 	/*
@@ -336,7 +333,7 @@ class ext_mgr_plus
 	}
 
 	/*
-		Change template for trigger_error
+		Change template for trigger_error messages
 	*/
 	public function change_msg_template(): void
 	{
@@ -344,15 +341,6 @@ class ext_mgr_plus
 		{
 			$this->template->set_filenames(['body' => '@lukewcs_extmgrplus/acp_ext_mgr_plus_message_body.html']);
 		}
-		// if (is_null($this->template->retrieve_var('MESSAGE_TITLE')) ||
-			// is_null($this->template->retrieve_var('MESSAGE_TEXT')) ||
-			// is_null($this->template->retrieve_var('S_USER_NOTICE')) ||
-			// is_null($this->template->retrieve_var('S_USER_WARNING'))
-		// )
-		// {
-			// return;
-		// }
-		// $this->template->set_filenames(['body' => '@lukewcs_extmgrplus/acp_ext_mgr_plus_message_body.html']);
 	}
 
 	/*
@@ -397,20 +385,13 @@ class ext_mgr_plus
 	// }
 
 	/*
-		Is required to suppress trigger_error within ext.php and to process its message
+		Is required to suppress the normal function of trigger_error within ext.php and to be able to process its message
 	*/
 	public function error_handler(int $errno, string $msg_text, string $errfile, int $errline): void
 	{
 		if ($errno == E_USER_NOTICE || $errno == E_USER_WARNING)
 		{
-			// $this->last_message = [
-				// 'errno'		=> $errno,
-				// 'msg_text'	=> $msg_text,
-				// 'errfile'	=> $errfile,
-				// 'errline'	=> $errline,
-			// ];
-			// return;
-			throw new \phpbb\extension\exception('suppress trigger_error', [
+			throw new \phpbb\extension\exception('EXTMGRPLUS_SUPPRESS_TRIGGER_ERROR', [
 				'errno'		=> $errno,
 				'msg_text'	=> $msg_text,
 				'errfile'	=> $errfile,
@@ -545,12 +526,6 @@ class ext_mgr_plus
 						{
 							while ($this->ext_manager->disable_step($ext_name))
 							{
-								// if ($this->last_message)
-								// {
-									// $disable_error = $this->last_message['msg_text'];
-									// $this->last_message = [];
-									// break;
-								// }
 							}
 						}
 						catch (\phpbb\extension\exception $e)
@@ -608,17 +583,6 @@ class ext_mgr_plus
 		}
 		else if (count($ext_list_failed_deactivation))
 		{
-			// $msg_failed = '<br><br>' . $this->language->lang('EXTMGRPLUS_MSG_DEACTIVATION_FAILED');
-			// $count_failed = 0;
-			// foreach ($ext_list_failed_deactivation as $name => $vars)
-			// {
-				// if (is_array($vars['message']))
-				// {
-					// $vars['message'] = implode('<br>', $vars['message']);
-				// }
-				// $count_failed++;
-				// $msg_failed .= $this->create_failed_msg($count_failed . '. ' . $vars['display_name'], $vars['ext_version'], $name, $vars['message']);
-			// }
 			$msg_failed = $this->create_failed_list_msg('EXTMGRPLUS_MSG_DEACTIVATION_FAILED', $ext_list_failed_deactivation);
 		}
 		$this->common->trigger_error_(
@@ -688,56 +652,31 @@ class ext_mgr_plus
 				// $this->set_last_ext_template_vars('EXTMGRPLUS_ALL_ENABLE', $ext_name, $ext_display_name, $ext_version);
 
 				set_error_handler([$this, 'error_handler']);
-				// $is_enableable = $this->ext_manager->get_extension($ext_name)->is_enableable();
-				// if ($this->last_message)
-				// {
-					// $is_enableable = $this->last_message['msg_text'];
-					// $this->last_message = [];
-				// }
 				try
 				{
 					$is_enableable = $this->ext_manager->get_extension($ext_name)->is_enableable();
+					if ($this->ext_manager->is_disabled($ext_name) && $is_enableable === true)
+					{
+						while ($this->ext_manager->enable_step($ext_name))
+						{
+						}
+					}
+				}
+				catch (\phpbb\db\migration\exception $e)
+				{
+					restore_error_handler();
+					$msg_failed = $this->create_failed_msg($ext_display_name, $ext_version, $ext_name, $e->getLocalisedMessage($this->user));
+					$this->common->trigger_error_(
+						$this->language->lang('EXTMGRPLUS_MSG_PROCESS_ABORTED', $this->language->lang('EXTMGRPLUS_ALL_ENABLE')) . $msg_failed,
+						E_USER_WARNING,
+						'RETURN_TO_EXTENSION_LIST'
+					);
 				}
 				catch (\phpbb\extension\exception $e)
 				{
 					$is_enableable = $e->get_parameters()['msg_text'] ?? '';
 				}
 				restore_error_handler();
-
-				if ($this->ext_manager->is_disabled($ext_name) && $is_enableable === true)
-				{
-					try
-					{
-						set_error_handler([$this, 'error_handler']);
-						try
-						{
-							while ($this->ext_manager->enable_step($ext_name))
-							{
-								// if ($this->last_message)
-								// {
-									// $is_enableable = $this->last_message['msg_text'];
-									// $this->last_message = [];
-									// break;
-								// }
-							}
-						}
-						catch (\phpbb\extension\exception $e)
-						{
-							$is_enableable = $e->get_parameters()['msg_text'] ?? '';
-						}
-						restore_error_handler();
-					}
-					catch (\phpbb\db\migration\exception $e)
-					{
-						restore_error_handler();
-						$msg_failed = $this->create_failed_msg($ext_display_name, $ext_version, $ext_name, $e->getLocalisedMessage($this->user));
-						$this->common->trigger_error_(
-							$this->language->lang('EXTMGRPLUS_MSG_PROCESS_ABORTED', $this->language->lang('EXTMGRPLUS_ALL_ENABLE')) . $msg_failed,
-							E_USER_WARNING,
-							'RETURN_TO_EXTENSION_LIST'
-						);
-					}
-				}
 
 				if ($this->ext_manager->is_enabled($ext_name))
 				{
@@ -781,17 +720,6 @@ class ext_mgr_plus
 		}
 		else if (count($ext_list_failed_activation))
 		{
-			// $msg_failed = '<br><br>' . $this->language->lang('EXTMGRPLUS_MSG_ACTIVATION_FAILED');
-			// $count_failed = 0;
-			// foreach ($ext_list_failed_activation as $name => $vars)
-			// {
-				// if (is_array($vars['message']))
-				// {
-					// $vars['message'] = implode('<br>', $vars['message']);
-				// }
-				// $count_failed++;
-				// $msg_failed .= $this->create_failed_msg($count_failed . '. ' . $vars['display_name'], $vars['ext_version'], $name, $vars['message']);
-			// }
 			$msg_failed = $this->create_failed_list_msg('EXTMGRPLUS_MSG_ACTIVATION_FAILED', $ext_list_failed_activation);
 		}
 		$this->common->trigger_error_(
