@@ -89,6 +89,7 @@
 				<dt>
 					<label>{{ lang('EXTMGRPLUS_ORDER') ~ lang('COLON') }}</label><br>
 					<span>{{ lang('EXTMGRPLUS_ORDER_EXPLAIN', common.icon('fa-sort')) }}</span><br><br>
+					<label>{{ lang('EXTMGRPLUS_DEPENDENCY') ~ lang('COLON') }}</label><br>
 					<span>{{ lang('EXTMGRPLUS_DEPENDENCY_EXPLAIN') }}</span>
 				</dt>
 				<dd>
@@ -160,17 +161,10 @@
 					<td class="row3">
 					</td>
 					<td class="row3">
-						{{ _self.submit_buttons(
-							'disable_all',
-							EXTMGRPLUS_COUNT_ENABLED_SELECTED > 0
-						) }}
+						{{ _self.submit_buttons('disable_all', EXTMGRPLUS_COUNT_ENABLED_SELECTED > 0) }}
 					</td>
 					<td class="row3">
-						{{ _self.checkbox_all(
-							'enabled',
-							EXTMGRPLUS_COUNT_ENABLED_SELECTABLE > 0,
-							EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1
-						) }}
+						{{ _self.checkbox_all('enabled', EXTMGRPLUS_COUNT_ENABLED_SELECTABLE > 0, EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1) }}
 					</td>
 					<td class="row3" style="display: none;">
 					</td>
@@ -197,7 +191,7 @@
 							{{ _self.actions(ext_enabled) }}
 						</td>
 						<td>
-							{% if (ext_enabled.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_SWITCH_SELF_DISABLE) %}
+							{% if ext_enabled.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_SWITCH_SELF_DISABLE %}
 								{{ _self.checkbox_select(
 									'enabled',
 									ext_enabled.NAME,
@@ -243,17 +237,10 @@
 						<td class="row3">
 						</td>
 						<td class="row3">
-							{{ _self.submit_buttons(
-								'enable_all',
-								EXTMGRPLUS_COUNT_DISABLED_SELECTED > 0
-							) }}
+							{{ _self.submit_buttons('enable_all', EXTMGRPLUS_COUNT_DISABLED_SELECTED > 0) }}
 						</td>
 						<td class="row3">
-							{{ _self.checkbox_all(
-								'disabled',
-								EXTMGRPLUS_COUNT_DISABLED_SELECTABLE > 0,
-								EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1
-							) }}
+							{{ _self.checkbox_all('disabled', EXTMGRPLUS_COUNT_DISABLED_SELECTABLE > 0, EXTMGRPLUS_SELECT_CHECKBOX_MODE == 1) }}
 						</td>
 						<td class="row3" style="display: none;">
 						</td>
@@ -310,7 +297,7 @@
 							{{ _self.actions(ext_disabled) }}
 						</td>
 						<td>
-							{% if ext_disabled.actions|length == 2 %}
+							{% if loop.index < EXTMGRPLUS_COUNT_DISABLED + 1 %}
 								{{ _self.checkbox_select(
 									'disabled',
 									ext_disabled.NAME,

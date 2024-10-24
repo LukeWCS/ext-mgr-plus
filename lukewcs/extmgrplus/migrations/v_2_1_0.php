@@ -23,8 +23,12 @@ class v_2_1_0 extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		return [
-			['config.add', ['extmgrplus_number_vc_limit'	, 15]],
-			['config.add', ['extmgrplus_switch_version_url'	, 0]],
+			['config.add', 			['extmgrplus_number_vc_limit'		, 15]],
+			['config.add', 			['extmgrplus_switch_version_url'	, 0]],
+
+			['config.remove',		['extmgrplus_exec_todo']],
+
+			['config_text.remove',	['extmgrplus_todo']],
 		];
 	}
 }

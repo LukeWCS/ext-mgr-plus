@@ -56,13 +56,14 @@ $lang = array_merge($lang, [
 	],
 
 	// link bar
-	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'		=> 'Order & Ignore',
+	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'		=> 'Order | Dependency | Ignore',
 	'EXTMGRPLUS_LINK_SAVE_CHECKBOXES'		=> 'Save',
 
 	// settings order and ignore
 	'EXTMGRPLUS_SECTION_SETTINGS'			=> 'Settings (Plus)',
 	'EXTMGRPLUS_ORDER'						=> 'Order',
 	'EXTMGRPLUS_ORDER_EXPLAIN'				=> '%s This column allows you to define order groups in the range 0 to 99 for the “Enable selected” action. This allows extensions that other extensions depend on to be activated before them to avoid error messages. Extensions belonging to such a group are activated first, starting with group 0, then group 1 and so on. Extensions without a group are activated last.',
+	'EXTMGRPLUS_DEPENDENCY'					=> 'Dependency',
 	'EXTMGRPLUS_DEPENDENCY_EXPLAIN'			=> 'An extension can be linked to a group by preceding it with <code>+</code>. For example, if you have extension B which is dependent on extension A, you can enter <code>0</code> for A and <code>+0</code> for B. If both extensions are enabled, selecting A will also select B. If both extensions are disabled, selecting B will also select A.',
 	'EXTMGRPLUS_IGNORE'						=> 'Ignore',
 	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> '%s This column allows you to specify which extensions should be ignored during the “Enable selected” and “Disable selected” actions. Ignored extensions can no longer be selected in the extensions list. If an order group was defined for an ignored extension, then this is retained, but it no longer has any meaning.',

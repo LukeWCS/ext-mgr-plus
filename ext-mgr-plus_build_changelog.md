@@ -1,3 +1,22 @@
+#### 2.1.0-b11
+* ExtMgr Template:
+  * Für die Erklärung der "Abhängigkeiten" bei "Reihenfolge & Ignorieren" eine eigene Überschrift hinzugefügt.
+  * Kleinere Änderungen.
+* phpBB Voraussetzungen geändert: 3.3.0 - 3.3.x -> 3.3.8 - 3.3.x
+  * Interne ToDo Funktion mit der Aktionen auf den nächsten Seitenaufbau verschoben werden konnten, wurde vollständig entfernt. Diese Funktion wurde für phpBB Versionen <3.3.8 benötigt und hatte die folgenden Aufgaben gesteuert:
+    * Cache löschen
+    * Eigendeaktivierung
+    * Log-Eintrag
+* Core:
+  * Code Optimierung.
+  * Den bei b8 deaktivierten Code (`trigger_error` Workaround) endgültig entfernt.
+* Sprachdateien:
+  * 2 Sprachvariablen geändert.
+  * 1 Sprachvariable hinzugefügt.
+* Migration:
+  * Konfig `extmgrplus_exec_todo` wird entfernt.
+  * Text-Konfig `extmgrplus_todo` wird entfernt.
+
 #### 2.1.0-b10
 * Core:
   * Code Optimierung: 3 `try/catch` Blöcke zu 1 zusammengefasst.
@@ -32,7 +51,7 @@
   * Aktuelles Makro `select` von FAR übernommen, mit dem Auswahlmenüs in Templates einfacher und effizienter realisiert werden können. Bei dieser Version muss dem Makro auch nicht mehr separat die Config Variable übergeben werden.
 * ACP Controller:
   * Funktion `select_struct` von FAR übernommen, zum Erzeugen einer Select Struktur fürs Template. Ausserdem verbessert um bestehende alte Select Strukturen einfacher auf diese Funktion umstellen zu können.
-* PHP Voraussetzungen geändert von `>=7.1.3,<8.4.0@dev` zu `>=7.4.0,<8.4.0@dev`.
+* PHP Voraussetzungen geändert: 7.1.3 - 8.3.x -> 7.4.0 - 8.3.x
   * Typisierte Klassen-Eigenschaften.
   * Verwendung von NCAO.
 
@@ -115,6 +134,7 @@
   * 2 Sprachvariablen angepasst.
 
 #### 2.1.0-b1
+* (2023-09-05)
 * Fix: Im englischen Sprachpaket stimmte bei der Anzeige der Fehler-Anzahl nach einer Versionsprüfung die Plural-Form nicht, wenn die Anzahl exakt `1` betrug. [Meldung von leschek (phpBB.com)]
 * EMP steuert jetzt die Versionsprüfung selber und führt diese blockweise aus, wodurch Zeitlimits bei PHP und SQL verhindert werden können. Mit dieser neuen Funktion kann bei phpBB Installationen mit extrem vielen Erweiterungen eine Versionsprüfung erfolgreich ausgeführt werden, bei denen phpBB wegen Zeitlimits nicht in der Lage ist, eine solche vollständig auszuführen. [Meldung von dimassamid (phpBB.com)]
 * Settings Template:
@@ -146,6 +166,7 @@
   * Code Optimierung.
 
 #### 2.0.1-b1
+* (2024-06-01)
 * ExtMgr Template:
   * Die Anzeige der Anleitungen für Installieren, Aktualisieren und Deinstallieren am Ende der Erweiterungen-Liste, kann jetzt deaktiviert werden. [Vorschlag von MattF (phpBB.com)]
 * Settings Template:
@@ -436,6 +457,7 @@
   * 1 neue Sprachvariable für den neuen Gesperrt-Tooltip.
 
 #### 1.1.3-b1
+* (2023-09-17)
 * Fix: Bei der Ermittlung neuer Migrationen verhinderte eine zu strikte Dateinamen-Prüfung eine korrekte Erkennung, wenn bei Dateinamen und Klassennamen abweichende Gross/Kleinschreibung verwendet wurde. Daraus ergaben sich 2 Fehler:
   * Bei aktivierter Anzeige der Spalte für neue Migrationen wurde die Anzahl falsch berechnet.
   * Bei deaktiviertem Sicherheitsschalter für neue Migrationen wurde die Auswahl-Checkbox der betroffenen Erweiterung nicht gesperrt.
