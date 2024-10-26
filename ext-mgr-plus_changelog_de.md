@@ -1,12 +1,13 @@
 ### 2.1.0
 (2024--) / CDB: --)
 
-* Fix: Im englischen Sprachpaket stimmte bei der Anzeige der Fehler-Anzahl nach einer Versionsprüfung die Plural-Form nicht, wenn die Anzahl exakt `1` betrug. Plural Liste entsprechend für die Anzahl 1 und 2+ angepasst. [Meldung von leschek (phpBB.com)]
-* Fix: Der Schalter "Immer auf instabile Entwicklungs-Versionen prüfen:" wurde nicht berücksichtigt und somit konnten auch keine neuen Entwickler-Versionen gemeldet werden. Dieser Fehler ist erst bei der Entwicklung von 2.1.0 aufgefallen. Allerdings hat dieser Schalter zumindest bei CDB Erweiterungen keine Relevanz, da das Hochladen von "instabilen" Versionen ohnehin nicht erlaubt ist. Dieser Fehler existierte seit dem Zeitpunkt, ab dem EMP die von phpBB ermittelten Versionsdaten dauerhaft in der DB speichert, also seit 1.0.5.
 * phpBB Voraussetzungen geändert:
   * 3.3.0 - 3.3.x -> 3.3.8 - 3.3.x
 * PHP Voraussetzungen geändert:
   * 7.1.3 - 8.3.x -> 7.4.0 - 8.3.x
+* Fix: Im englischen Sprachpaket stimmte bei der Anzeige der Fehler-Anzahl nach einer Versionsprüfung die Plural-Form nicht, wenn die Anzahl exakt `1` betrug. Plural Liste entsprechend für die Anzahl 1 und 2+ angepasst. [Meldung von leschek (phpBB.com)]
+* Fix: Der Schalter "Immer auf instabile Entwicklungs-Versionen prüfen:" wurde nicht berücksichtigt und somit konnten auch keine neuen Entwickler-Versionen gemeldet werden. Dieser Fehler ist erst bei der Entwicklung von 2.1.0 aufgefallen. Allerdings hat dieser Schalter zumindest bei CDB Erweiterungen keine Relevanz, da das Hochladen von "instabilen" Versionen ohnehin nicht erlaubt ist. Dieser Fehler existierte seit dem Zeitpunkt, ab dem EMP die von phpBB ermittelten Versionsdaten dauerhaft in der DB speichert, also seit 1.0.5.
+* Bei phpBB 3.3.14 konnte EMP nicht mehr die nicht-installierten Erweiterungen anzeigen, da für diese Gruppe ein neues, separates Template Array erstellt wird. Im EMP Template wird dieses neue Array mit dem bisherigen Array für deaktivierte Erweiterungen wieder zusammengeführt, damit die nicht-installierten Erweiterungen angezeigt werden.
 * EMP steuert jetzt die Versionsprüfung selber und führt diese blockweise aus, wodurch Zeitüberschreitungen bei PHP und Datenbank effektiv verhindert werden können. Mit dieser neuen Funktion kann bei phpBB-Installationen mit extrem vielen Erweiterungen eine Versionsprüfung erfolgreich ausgeführt werden, bei denen phpBB wegen Zeitlimits nicht mehr in der Lage ist, eine solche vollständig auszuführen. [Meldung von dimassamid (phpBB.com)]
   * Beim Aufruf der Versionsprüfung wird eine neue Seite geöffnet die eine Fortschrittsanzeige bietet. Der blaue Fortschrittsbalken informiert über den ungefähren zeitlichen Fortschritt im aktuellen Block und der grüne Fortschrittsbalken informiert über den prozentualen Gesamt-Fortschritt und zeigt mittig an, wieviele Erweiterungen beim letzten Durchgang bereits auf neue Versionen geprüft wurden und wieviele insgesamt eine Versionsprüfung bieten (erledigt / insgesamt). Diese Seite wird nach Ablauf eines Durchgangs automatisch neu geladen und aktualisiert.
   * In den Einstellungen steht die neue Option "Ausführungszeit der Versionsprüfung begrenzen:" zur Verfügung, um die maximale Laufzeit (in Sekunden) eines Durchgangs ändern zu können. Diese ist per Standard auf 15 Sekunden eingestellt, das ist ein sicherer Wert mit genug Reserve für ungünstige Situationen.
@@ -34,9 +35,6 @@
 * Twig:
   * Aktuelles Makro `select()` von "Force Account Reactivation" übernommen.
   * Aktuelles Makro `footer()` von "Limit Multiple Replies" übernommen.
-* Sprachdateien:
-  * `acp_ext_mgr_plus.php`: 13 neue Sprachvariablen, 3 geändert.
-  * `acp_ext_mgr_plus_settings.php`: 4 neue Sprachvariablen, 1 geändert.
 
 ### 2.0.1
 (2024-06-09) / CDB: 2024-07-14)

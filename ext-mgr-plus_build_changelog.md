@@ -1,3 +1,11 @@
+#### 2.1.0-b12
+* ExtMgr Template:
+  * Bei phpBB wird ab 3.3.14 für nicht-installierte Erweiterungen ein neues, separates Template Array erstellt. Im EMP Template wird dieses neue Array jetzt mit dem bisherigen Array für deaktivierte Erweiterungen zusammengeführt, da ansonsten die nicht-installierten Erweiterungen in der Liste fehlen würden.
+  * Unnötige `if...endif` Konstrukte durch Ternary (Kurzform) ersetzt.
+  * Um besser erkennen zu können welche Elemente zu welcher Spalte gehören, entsprechende Twig Kommentare eingefügt.
+* Sprachdateien:
+  * Kleine Änderungen.
+
 #### 2.1.0-b11
 * ExtMgr Template:
   * Für die Erklärung der "Abhängigkeiten" bei "Reihenfolge & Ignorieren" eine eigene Überschrift hinzugefügt.

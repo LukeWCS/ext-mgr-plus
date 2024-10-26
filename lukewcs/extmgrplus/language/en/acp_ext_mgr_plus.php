@@ -56,7 +56,7 @@ $lang = array_merge($lang, [
 	],
 
 	// link bar
-	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'		=> 'Order | Dependency | Ignore',
+	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'		=> 'Order, Dependency, Ignore',
 	'EXTMGRPLUS_LINK_SAVE_CHECKBOXES'		=> 'Save',
 
 	// settings order and ignore

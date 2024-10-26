@@ -55,7 +55,7 @@ $lang = array_merge($lang, [
 	],
 
 	// link bar
-	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'		=> 'Reihenfolge | Abhängigkeit | Ignorieren',
+	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'		=> 'Reihenfolge, Abhängigkeit, Ignorieren',
 	'EXTMGRPLUS_LINK_SAVE_CHECKBOXES'		=> 'Speichern',
 
 	// settings order and ignore

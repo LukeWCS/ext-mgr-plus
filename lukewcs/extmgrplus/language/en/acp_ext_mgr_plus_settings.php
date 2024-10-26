@@ -67,7 +67,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MIGRATION_COL'				=> 'Show column with new migrations',
 	'EXTMGRPLUS_MIGRATION_COL_EXPLAIN'		=> 'If this option is enabled, then an additional column is displayed in which the number of new migrations is listed. The number is displayed for both “Disabled Extensions” and “Not installed extensions”.',
 	'EXTMGRPLUS_MIGRATIONS'					=> 'Allow extensions with new migrations',
-	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'			=> 'If this option is enabled, you can also activate those extensions for which there are new migrations with the “Enable selected” action. This applies to updated extensions that contain a “migrations” folder. Without this option, such extensions must be activated manually, which is recommended.',
+	'EXTMGRPLUS_MIGRATIONS_EXPLAIN'			=> 'If this option is enabled, the “Enable selected” action will also allow you to select extensions that have new migrations. This applies to updated extensions that contain a <code>migrations</code> folder. Without this option, such extensions must be activated manually, which is recommended.',
 	'EXTMGRPLUS_VERSION_URL'				=> 'Show link to version file',
 	'EXTMGRPLUS_VERSION_URL_EXPLAIN'		=> 'If you activate this option, you can display the link to the version file on the “Details” page of an extension, which is loaded and evaluated by phpBB from the respective server during a version check. Primarily interesting for extension developers.',
 
