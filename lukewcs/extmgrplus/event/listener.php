@@ -27,17 +27,11 @@ class listener implements EventSubscriberInterface
 	public static function getSubscribedEvents(): array
 	{
 		return [
-			// 'core.common'							=> 'todo',
 			'core.acp_extensions_run_action_before'	=> 'ext_manager_before',
 			'core.acp_extensions_run_action_after'	=> 'ext_manager_after',
 			'core.adm_page_footer'					=> 'change_msg_template',
 		];
 	}
-
-	// public function todo(): void
-	// {
-		// $this->extmgrplus->todo();
-	// }
 
 	public function ext_manager_before($event): void
 	{

@@ -1,3 +1,18 @@
+#### 2.1.0-b13
+* Fix: Wenn bei einer Erweiterung ohne Versionsprüfung die "Details" aufgerufen wurde, erschien die Fehlermeldung "Undefined variable $vc_current". Fehlende VP Daten wurden ab b8 an dieser Stelle nicht mehr berücksichtigt.
+* ExtMgr Template:
+  * Die Anpassung bei b12 für phpBB 3.3.14 komplett geändert. Anstatt die Arrays für deaktivierte und nicht-installierte Erweiterungen wieder zusammenzuführen, wie es bei phpBB <3.3.14 standardmässig der Fall war, gibt es jetzt eine zusätzliche Schleife, in der die nicht-installierten Erweiterungen separat verarbeitet werden. Somit ist die Verarbeitung der Arrays wieder mit phpBB 3.3.14 vergleichbar. Bei phpBB <3.3.14 wird dazu das fehlende Array `not_installed` der nicht-installierten Erweiterungen direkt im Template erzeugt, damit die weitere Verarbeitung identisch bleiben kann. Durch diese Änderung konnten auch 3 Twig Abfragen entfallen: 1 einmalige und 2 mehrfache Abfragen innerhalb einer `for` Schleife.
+  * Der Name für das Template Array der nicht-installierten Erweiterungen sowie die 2 neuen Event-Namen wurden bei 3.3.14-rc1 nochmals geändert, siehe [phpBB #6743](https://github.com/phpbb/phpbb/pull/6743). Entsprechend den Twig Code angepasst. Somit ist EMP 2.1.0 mit der spezifischen phpBB Version 3.3.14-rc1 nicht mehr kompatibel.
+* Definierte Reihenfolge-Gruppen werden jetzt auch beim Deaktivieren berücksichtigt, in umgekehrter Reihenfolge.
+* Core:
+  * Den bei b11 deaktivierten Code (ToDo Funktion, Cache Workaround) endgültig entfernt.
+  * Da jetzt im Template die Information benötigt wird, ob mindestens phpBB 3.3.14 vorhanden ist, wird dafür eine neue Template Variable generiert.
+  * Weiteren Code entfernt, der noch mit den Workarounds zusammenhing und nicht mehr benötigt wird.
+  * Optimierung.
+* Laut [UPGRADING Doc](https://github.com/php/php-src/blob/php-8.4.0RC3/UPGRADING) von PHP 8.4, sollte es mit EMP 2.1.0 keine Probleme geben, daher vorab Maximal-Version von 8.3 auf 8.4 geändert.
+* Sprachdateien:
+  * 2 Sprachvariablen geändert
+
 #### 2.1.0-b12
 * ExtMgr Template:
   * Bei phpBB wird ab 3.3.14 für nicht-installierte Erweiterungen ein neues, separates Template Array erstellt. Im EMP Template wird dieses neue Array jetzt mit dem bisherigen Array für deaktivierte Erweiterungen zusammengeführt, da ansonsten die nicht-installierten Erweiterungen in der Liste fehlen würden.
@@ -56,12 +71,12 @@
 * Progress Template:
   * Twig Optimierung.
 * Settings Template:
-  * Aktuelles Makro `select` von FAR übernommen, mit dem Auswahlmenüs in Templates einfacher und effizienter realisiert werden können. Bei dieser Version muss dem Makro auch nicht mehr separat die Config Variable übergeben werden.
+  * Aktuelles Twig Makro `select` von FAR übernommen, mit dem Auswahlmenüs in Templates einfacher und effizienter realisiert werden können. Bei dieser Version muss dem Makro auch nicht mehr separat die Config Variable übergeben werden.
 * ACP Controller:
-  * Funktion `select_struct` von FAR übernommen, zum Erzeugen einer Select Struktur fürs Template. Ausserdem verbessert um bestehende alte Select Strukturen einfacher auf diese Funktion umstellen zu können.
+  * PHP Funktion `select_struct` von FAR übernommen, zum Erzeugen einer Select Struktur fürs Template. Ausserdem verbessert um bestehende alte Select Strukturen einfacher auf diese Funktion umstellen zu können.
 * PHP Voraussetzungen geändert: 7.1.3 - 8.3.x -> 7.4.0 - 8.3.x
-  * Typisierte Klassen-Eigenschaften.
-  * Verwendung von NCAO.
+  * 7.4.0: Typisierte Klassen-Eigenschaften.
+  * 7.4.0: Verwendung von NCAO.
 
 #### 2.1.0-b6
 * Wurde "Details" aufgerufen und es ist zu dem Zeitpunkt noch keine globale Versionsprüfung ausgeführt worden, dann wurde der aktuelle Zeitstempel für die Anzeige der letzten Versionsprüfung gespeichert. Das ist nicht mehr der Fall, der Zeitstempel wird nur noch bei der globalen Versionsprüfung gesetzt.
@@ -84,11 +99,11 @@
 * Core:
   * Code optimiert.
 * Common:
-  * Aktuelle Funktion `set_meta_template_vars()` von LMR übernommen.
+  * Aktuelle PHP Funktion `set_meta_template_vars()` von LMR übernommen.
 * ExtMgr Template:
-  * Makro `version()` erweitert, um ein neues Icon (Fragezeichen in orangem Kreis) mit Tooltip anzeigen zu können, bei noch nicht ausgeführter Versionsprüfung. 
+  * Twig Makro `version()` erweitert, um ein neues Icon (Fragezeichen in orangem Kreis) mit Tooltip anzeigen zu können, bei noch nicht ausgeführter Versionsprüfung. 
   * Etliche kleine Struktur-Änderungen.
-  * Aktuelles Makro `footer()` von LMR übernommen.
+  * Aktuelles Twig Makro `footer()` von LMR übernommen.
 * CSS:
   * Code erweitert für das neue Icon.
 * Sprachdateien:

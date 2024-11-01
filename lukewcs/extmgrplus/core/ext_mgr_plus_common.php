@@ -22,7 +22,7 @@ class ext_mgr_plus_common
 	protected object $ext_manager;
 
 	protected array  $metadata;
-	protected string $u_action;
+	public    string $u_action;
 
 	public function __construct(
 		\phpbb\config\config $config,
@@ -39,13 +39,6 @@ class ext_mgr_plus_common
 		$this->ext_manager	= $ext_manager;
 
 		$this->metadata		= $this->ext_manager->create_extension_metadata_manager('lukewcs/extmgrplus')->get_metadata('all');
-	}
-
-	public function set_this(
-		$u_action
-	): void
-	{
-		$this->u_action = $u_action;
 	}
 
 	public function set_meta_template_vars(string $tpl_prefix, string $copyright): void

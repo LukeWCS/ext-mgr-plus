@@ -1,13 +1,13 @@
 ### 2.1.0
 (2024--) / CDB: --)
 
+* Fix: Im englischen Sprachpaket stimmte bei der Anzeige der Fehler-Anzahl nach einer Versionsprüfung die Plural-Form nicht, wenn die Anzahl exakt 1 betrug. Plural Liste entsprechend für die Anzahl 1 und 2+ angepasst. [Meldung von leschek (phpBB.com)]
+* Fix: Der Schalter "Immer auf instabile Entwicklungs-Versionen prüfen:" wurde nicht berücksichtigt und somit konnten auch keine neuen Entwickler-Versionen gemeldet werden. Dieser Fehler ist erst bei der Entwicklung von 2.1.0 aufgefallen. Allerdings hat dieser Schalter zumindest bei CDB Erweiterungen keine Relevanz, da das Hochladen von "instabilen" Versionen ohnehin nicht erlaubt ist. Dieser Fehler existierte seit dem Zeitpunkt, ab dem EMP die von phpBB ermittelten Versionsdaten dauerhaft in der DB speichert, also seit 1.0.5.
 * phpBB Voraussetzungen geändert:
   * 3.3.0 - 3.3.x -> 3.3.8 - 3.3.x
 * PHP Voraussetzungen geändert:
-  * 7.1.3 - 8.3.x -> 7.4.0 - 8.3.x
-* Fix: Im englischen Sprachpaket stimmte bei der Anzeige der Fehler-Anzahl nach einer Versionsprüfung die Plural-Form nicht, wenn die Anzahl exakt `1` betrug. Plural Liste entsprechend für die Anzahl 1 und 2+ angepasst. [Meldung von leschek (phpBB.com)]
-* Fix: Der Schalter "Immer auf instabile Entwicklungs-Versionen prüfen:" wurde nicht berücksichtigt und somit konnten auch keine neuen Entwickler-Versionen gemeldet werden. Dieser Fehler ist erst bei der Entwicklung von 2.1.0 aufgefallen. Allerdings hat dieser Schalter zumindest bei CDB Erweiterungen keine Relevanz, da das Hochladen von "instabilen" Versionen ohnehin nicht erlaubt ist. Dieser Fehler existierte seit dem Zeitpunkt, ab dem EMP die von phpBB ermittelten Versionsdaten dauerhaft in der DB speichert, also seit 1.0.5.
-* Bei phpBB 3.3.14 konnte EMP nicht mehr die nicht-installierten Erweiterungen anzeigen, da für diese Gruppe ein neues, separates Template Array erstellt wird. Im EMP Template wird dieses neue Array mit dem bisherigen Array für deaktivierte Erweiterungen wieder zusammengeführt, damit die nicht-installierten Erweiterungen angezeigt werden.
+  * 7.1.3 - 8.3.x -> 7.4.0 - 8.4.x
+* Bei phpBB wird ab 3.3.14 für die nicht-installierten Erweiterungen ein neues, separates Template Array von phpBB generiert. Entsprechend bei EMP das Template so angepasst, dass die deaktivierten und nicht-installierten Erweiterungen ebenfalls getrennt behandelt werden können, damit die nicht-installierten Erweiterungen ab phpBB 3.3.14 weiterhin angezeigt werden können. Dabei wird das Verhalten von phpBB 3.3.14 bei einer niedrigeren phpBB Version nachgeahmt. Die Anpassung wurde auf folgender Basis vorgenommen: [phpBB #6665](https://github.com/phpbb/phpbb/pull/6665) und [phpBB #6743](https://github.com/phpbb/phpbb/pull/6743).
 * EMP steuert jetzt die Versionsprüfung selber und führt diese blockweise aus, wodurch Zeitüberschreitungen bei PHP und Datenbank effektiv verhindert werden können. Mit dieser neuen Funktion kann bei phpBB-Installationen mit extrem vielen Erweiterungen eine Versionsprüfung erfolgreich ausgeführt werden, bei denen phpBB wegen Zeitlimits nicht mehr in der Lage ist, eine solche vollständig auszuführen. [Meldung von dimassamid (phpBB.com)]
   * Beim Aufruf der Versionsprüfung wird eine neue Seite geöffnet die eine Fortschrittsanzeige bietet. Der blaue Fortschrittsbalken informiert über den ungefähren zeitlichen Fortschritt im aktuellen Block und der grüne Fortschrittsbalken informiert über den prozentualen Gesamt-Fortschritt und zeigt mittig an, wieviele Erweiterungen beim letzten Durchgang bereits auf neue Versionen geprüft wurden und wieviele insgesamt eine Versionsprüfung bieten (erledigt / insgesamt). Diese Seite wird nach Ablauf eines Durchgangs automatisch neu geladen und aktualisiert.
   * In den Einstellungen steht die neue Option "Ausführungszeit der Versionsprüfung begrenzen:" zur Verfügung, um die maximale Laufzeit (in Sekunden) eines Durchgangs ändern zu können. Diese ist per Standard auf 15 Sekunden eingestellt, das ist ein sicherer Wert mit genug Reserve für ungünstige Situationen.
@@ -17,24 +17,29 @@
   * Vor der Ausführung der globalen Versionsprüfung werden sämtliche im phpBB-Cache gespeicherten Versionsdaten gelöscht. Dadurch wird sichergestellt, das keine veralteten Daten verwendet werden. Das betrifft die lokale Versionsprüfung der "Details" Seite.
   * Die Daten die in die Datenbank geschrieben werden, enthalten jetzt auch die Information, welche Erweiterungen noch aktuell sind. In diesem Fall werden die Versionen dauerhaft grün dargestellt.
   * Mit den Änderungen bei der Versionsprüfung ist EMP nun vollständig unabhängig vom Versions-Cache von phpBB. Das hat auch den Vorteil, dass nach Deaktivierung und Reaktivierung von EMP alle Informationen der letzten Versionsprüfung wieder vollständig angezeigt werden können. Das ist bei phpBB Vanilla nicht der Fall, da hier die Daten der letzten Versionsprüfung verlorengehen, sobald der Cache gelöscht wird.
-* Ein `trigger_error` innerhalb von `ext.php` kann EMP nicht mehr blockieren bzw. nicht mehr zu einem Abbruch einer EMP Aktion führen. Nach sehr langer Zeit habe ich endlich herausgefunden, wie ich gezielt die Wirkung von `trigger_error` ändern kann. Wollte man z.B. bisher 30 Erweiterungen aktivieren und die 16te würde ein `trigger_error` ausführen, hätte man schlussendlich nur 15 aktivierte Erweiterungen. Mit der neuen Technik hat man in diesem Fall jedoch 29 aktivierte Erweiterungen und nur 1 nicht aktivierte. Dazu wird das Verhalten des phpBB Error Handlers kurzfristig so geändert, dass die eigentliche Funktion von `trigger_error` bei `E_USER_WARNING` und `E_USER_NOTICE` komplett deaktiviert wird und die dabei erzeugten Daten (4 Werte) per Exception Datenpaket an EMP übergeben werden. Bei den folgenden Methoden von `ext.php` wird diese Technik ab sofort angewendet:
+* Ein `trigger_error` innerhalb von `ext.php` kann EMP nicht mehr blockieren bzw. nicht mehr zu einem Abbruch einer EMP Aktion führen. Nach sehr langer Zeit habe ich endlich herausgefunden, wie ich gezielt die Wirkung von `trigger_error` ändern kann. Wollte man z.B. bisher 30 Erweiterungen aktivieren und die 16te würde ein `trigger_error` ausführen, hätte man schlussendlich nur 15 aktivierte Erweiterungen. Des Weiteren hätte man in diesem Fall auch keine Rückmeldung bekommen, wieviele Erweiterungen erfolgreich umgeschaltet werden konnten. Mit der neuen Technik hat man in diesem Fall jedoch 29 aktivierte Erweiterungen und nur 1 nicht aktivierte, inklusive der normalen Rückmeldung, wieviele Erweiterungen umgeschaltet werden konnten. Dazu wird das Verhalten des phpBB Error Handlers kurzfristig so geändert, dass die normale Funktion von `trigger_error` bei `E_USER_WARNING` und `E_USER_NOTICE` komplett deaktiviert wird und die dabei erzeugten Daten (4 Werte) per Exception Datenpaket übergeben werden, die dann von EMP weiterverarbeitet werden können. Bei den folgenden Methoden von `ext.php` wird diese Technik ab sofort angewendet:
   * `is_enableable()`
   * `disable_step()`
   * `enable_step()`
 * Fehlerbehandlung auf Basis der oben genannten Technik weiter verbessert:
-  * Auch beim Deaktivieren werden nun alle nicht erfolgreich deaktivierte Erweiterungen explizit aufgelistet. Das war bisher nur beim Aktivieren der Fall. Sollten dabei Nachrichten von `trigger_error` entstanden sein, werden diese ebenfalls angezeigt.
-  * In der Bestätigungsmeldung werden nun die fehlgeschlagenen Erweiterungen nummeriert.
+  * Auch beim Deaktivieren werden nun alle nicht erfolgreich deaktivierten Erweiterungen explizit aufgelistet. Das war bisher nur beim Aktivieren der Fall. Sollten dabei Nachrichten von `trigger_error` entstanden sein, werden diese ebenfalls angezeigt.
+  * In der Bestätigungsmeldung werden die fehlgeschlagenen Erweiterungen jetzt nummeriert.
 * Validierte Erweiterungen, also solche die in der Customisation Database (CDB) verfügbar sind, werden jetzt deutlich markiert mit demselben Icon wie beim Link zur "phpBB-Erweiterungsdatenbank". Dazu wurde eine neue Spalte vor der Namens-Spalte eingefügt.
 * In den "Details" einer Erweiterung gibt es eine neue Untergruppe "Informationen von Extension Manager Plus" mit folgenden Zusätzen:
   * "Zugehörige Seite der phpBB-Erweiterungsdatenbank:", sofern eine Erweiterung aus der CDB stammt.
   * "Link zur Versionsdatei:", sofern der Experten-Schalter "Link zur Versionsdatei anzeigen:" aktiviert ist. Diese Information ist primär für Erweiterungen Entwickler relevant und initial nicht aktiviert.
-* Bei der Version eines Sprachpakets sind ab sofort auch Suffixe erlaubt, damit Korrekturen entsprechend gekennzeichnet werden können, zum Beispiel in der Form `2.0.1.1`. Versionen müssen dabei nach den PHP Konventionen gestaltet sein, damit diese per `version_compare()` verglichen werden können.
+* Eine definierte Reihenfolge-Gruppe wird jetzt auch beim Deaktivieren berücksichtigt, in umgekehrter Reihenfolge.
+* Durch die umfangreichen Verbesserungen wurden mehrere Workarounds obsolet und wurden daher entfernt:
+  * Die Funktion mit der verschiedene Daten zur aktuell bearbeiteten Erweiterung in Template Variablen zwischengespeichert werden mussten.
+  * Die Funktion mit der nach jeder einzelnen Umschaltung (aktivieren oder deaktivieren) einer Erweiterung die Log Daten - sofern Log aktiviert ist - in der DB zwischengespeichert werden mussten, um nach einem unvorhergesehenen Abbruch trotzdem einen Log Eintrag erzeugen zu können.
+  * Die Funktion mit der eine Nachricht abgefangen und erweitert werden kann (`trigger_error` Workaround).
+  * ToDo Funktion mit der Aktionen auf den nächsten Seitenaufbau verschoben werden konnten. Dadurch wird auch bei jeder Seitengenerierung im Forum und ACP ein PHP Event und ein Funktionsaufruf eingespart. Diese Funktion wurde für phpBB Versionen <3.3.8 benötigt und hatte die folgenden Aufgaben gesteuert:
+    * Cache löschen (Cache Workaround)
+    * Eigendeaktivierung (Cache Workaround)
+    * Log-Eintrag
+* Bei der Version eines Sprachpakets sind ab sofort auch Suffixe oder ein viertes Segment erlaubt, damit Korrekturen entsprechend gekennzeichnet werden können, zum Beispiel in der Form `2.1.0.1`. Versionen müssen dabei nach den PHP Versions-Konventionen gestaltet sein, damit diese per `version_compare()` verglichen werden können.
+* Aktualisierte PHP Funktionen und Twig Makros von "Force Account Reactivation" und "Limit Multiple Replies" übernommen.
 * Code Optimierung bei PHP und Twig.
-* ACP Controller:
-  * Funktion `select_struct()` von "Force Account Reactivation" übernommen, zum Erzeugen einer Select Struktur fürs Template. Ausserdem verbessert um bestehende alte Select Strukturen einfacher auf diese Funktion umstellen zu können.
-* Twig:
-  * Aktuelles Makro `select()` von "Force Account Reactivation" übernommen.
-  * Aktuelles Makro `footer()` von "Limit Multiple Replies" übernommen.
 
 ### 2.0.1
 (2024-06-09) / CDB: 2024-07-14)

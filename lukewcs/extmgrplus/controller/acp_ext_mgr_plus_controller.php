@@ -31,11 +31,11 @@ class acp_ext_mgr_plus_controller
 		\phpbb\config\config $config
 	)
 	{
-		$this->common		= $common;
-		$this->language		= $language;
-		$this->template		= $template;
-		$this->request		= $request;
-		$this->config		= $config;
+		$this->common	= $common;
+		$this->language	= $language;
+		$this->template	= $template;
+		$this->request	= $request;
+		$this->config	= $config;
 	}
 
 	public function module_settings(): void
@@ -44,9 +44,7 @@ class acp_ext_mgr_plus_controller
 		$this->language->add_lang('acp/extensions');
 		$this->language->add_lang(['acp_ext_mgr_plus_settings', 'acp_ext_mgr_plus_lang_author'], 'lukewcs/extmgrplus');
 
-		$this->common->set_this(
-			$this->u_action
-		);
+		$this->common->u_action = $this->u_action;
 		$this->common->set_meta_template_vars('EXTMGRPLUS', 'LukeWCS');
 
 		$lang_outdated_msg = $this->common->lang_ver_check_msg('EXTMGRPLUS_LANG_VER', 'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED');
@@ -59,18 +57,18 @@ class acp_ext_mgr_plus_controller
 		{
 			$this->common->check_form_key_error('lukewcs_extmgrplus');
 
-			$this->config->set('extension_force_unstable'			, $this->request->variable('force_unstable', false));
-			$this->config->set('extmgrplus_switch_log'				, $this->request->variable('extmgrplus_switch_log', 0));
-			$this->config->set('extmgrplus_switch_confirmation'		, $this->request->variable('extmgrplus_switch_confirmation', 0));
-			$this->config->set('extmgrplus_switch_auto_redirect'	, $this->request->variable('extmgrplus_switch_auto_redirect', 0));
-			$this->config->set('extmgrplus_select_checkbox_mode'	, $this->request->variable('extmgrplus_select_checkbox_mode', 0));
-			$this->config->set('extmgrplus_switch_order_and_ignore'	, $this->request->variable('extmgrplus_switch_order_and_ignore', 0));
-			$this->config->set('extmgrplus_switch_self_disable'		, $this->request->variable('extmgrplus_switch_self_disable', 0));
-			$this->config->set('extmgrplus_switch_instructions'		, $this->request->variable('extmgrplus_switch_instructions', 0));
-			$this->config->set('extmgrplus_number_vc_limit'			, $this->request->variable('extmgrplus_number_vc_limit', 0));
-			$this->config->set('extmgrplus_switch_migration_col'	, $this->request->variable('extmgrplus_switch_migration_col', 0));
-			$this->config->set('extmgrplus_switch_migrations'		, $this->request->variable('extmgrplus_switch_migrations', 0));
-			$this->config->set('extmgrplus_switch_version_url'		, $this->request->variable('extmgrplus_switch_version_url', 0));
+			$this->config->set('extension_force_unstable'			, $this->request->variable('force_unstable'						, false));
+			$this->config->set('extmgrplus_switch_log'				, $this->request->variable('extmgrplus_switch_log'				, 0));
+			$this->config->set('extmgrplus_switch_confirmation'		, $this->request->variable('extmgrplus_switch_confirmation'		, 0));
+			$this->config->set('extmgrplus_switch_auto_redirect'	, $this->request->variable('extmgrplus_switch_auto_redirect'	, 0));
+			$this->config->set('extmgrplus_select_checkbox_mode'	, $this->request->variable('extmgrplus_select_checkbox_mode'	, 0));
+			$this->config->set('extmgrplus_switch_order_and_ignore'	, $this->request->variable('extmgrplus_switch_order_and_ignore'	, 0));
+			$this->config->set('extmgrplus_switch_self_disable'		, $this->request->variable('extmgrplus_switch_self_disable'		, 0));
+			$this->config->set('extmgrplus_switch_instructions'		, $this->request->variable('extmgrplus_switch_instructions'		, 0));
+			$this->config->set('extmgrplus_number_vc_limit'			, $this->request->variable('extmgrplus_number_vc_limit'			, 0));
+			$this->config->set('extmgrplus_switch_migration_col'	, $this->request->variable('extmgrplus_switch_migration_col'	, 0));
+			$this->config->set('extmgrplus_switch_migrations'		, $this->request->variable('extmgrplus_switch_migrations'		, 0));
+			$this->config->set('extmgrplus_switch_version_url'		, $this->request->variable('extmgrplus_switch_version_url'		, 0));
 
 			$this->common->trigger_error_($this->language->lang('EXTMGRPLUS_MSG_SETTINGS_SAVED'), E_USER_NOTICE);
 		}
