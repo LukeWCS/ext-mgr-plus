@@ -55,7 +55,7 @@ class acp_ext_mgr_plus_controller
 
 		if ($this->request->is_set_post('extmgrplus_save_settings'))
 		{
-			$this->common->check_form_key_error('lukewcs_extmgrplus');
+			$this->common->check_form_key_('lukewcs_extmgrplus');
 
 			$this->config->set('extension_force_unstable'			, $this->request->variable('force_unstable'						, false));
 			$this->config->set('extmgrplus_switch_log'				, $this->request->variable('extmgrplus_switch_log'				, 0));

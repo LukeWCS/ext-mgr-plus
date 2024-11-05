@@ -58,14 +58,6 @@ class ext_mgr_plus_common
 		$this->template->assign_vars([$tpl_prefix . '_METADATA' => $template_vars]);
 	}
 
-	public function check_form_key_error(string $key): void
-	{
-		if (!check_form_key($key))
-		{
-			$this->trigger_error_($this->language->lang('FORM_INVALID'), E_USER_WARNING);
-		}
-	}
-
 	/*
 		Determine the version of the language pack with fallback to 0.0.0
 	*/
@@ -149,6 +141,17 @@ class ext_mgr_plus_common
 		else
 		{
 			return ($vars ?? null);
+		}
+	}
+
+	/*
+		Wrapper for check_form_key
+	*/
+	public function check_form_key_(string $key): void
+	{
+		if (!check_form_key($key))
+		{
+			$this->trigger_error_($this->language->lang('FORM_INVALID'), E_USER_WARNING);
 		}
 	}
 

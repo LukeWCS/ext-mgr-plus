@@ -1,5 +1,9 @@
+#### 2.1.0-b14
+* Beta Fix: Bei ungültigen Erweiterungen wurden die Spalten "Auswählen", "Reihenfolge" und "Ignorieren" angeboten, die in dieser Situation gar nicht vorhanden sein dürfen. Das hängt mit den Änderungen von b11 und b12 zusammen, da hier fälschlicherweise notwendige Abfragen entfernt wurden. Ebenso wird jetzt auch das orange Fragezeichen in der Spalte "Aktuelle Version" unterdrückt, welches bei b4 eingebaut wurde und in dieser Situation ebenfalls fälschlicherweise angezeigt wurde.
+* Code Optimierung.
+
 #### 2.1.0-b13
-* Fix: Wenn bei einer Erweiterung ohne Versionsprüfung die "Details" aufgerufen wurde, erschien die Fehlermeldung "Undefined variable $vc_current". Fehlende VP Daten wurden ab b8 an dieser Stelle nicht mehr berücksichtigt.
+* Beta Fix: Wenn bei einer Erweiterung ohne Versionsprüfung die "Details" aufgerufen wurde, erschien die Fehlermeldung "Undefined variable $vc_current". Fehlende VP Daten wurden ab b8 an dieser Stelle nicht mehr berücksichtigt.
 * ExtMgr Template:
   * Die Anpassung bei b12 für phpBB 3.3.14 komplett geändert. Anstatt die Arrays für deaktivierte und nicht-installierte Erweiterungen wieder zusammenzuführen, wie es bei phpBB <3.3.14 standardmässig der Fall war, gibt es jetzt eine zusätzliche Schleife, in der die nicht-installierten Erweiterungen separat verarbeitet werden. Somit ist die Verarbeitung der Arrays wieder mit phpBB 3.3.14 vergleichbar. Bei phpBB <3.3.14 wird dazu das fehlende Array `not_installed` der nicht-installierten Erweiterungen direkt im Template erzeugt, damit die weitere Verarbeitung identisch bleiben kann. Durch diese Änderung konnten auch 3 Twig Abfragen entfallen: 1 einmalige und 2 mehrfache Abfragen innerhalb einer `for` Schleife.
   * Der Name für das Template Array der nicht-installierten Erweiterungen sowie die 2 neuen Event-Namen wurden bei 3.3.14-rc1 nochmals geändert, siehe [phpBB #6743](https://github.com/phpbb/phpbb/pull/6743). Entsprechend den Twig Code angepasst. Somit ist EMP 2.1.0 mit der spezifischen phpBB Version 3.3.14-rc1 nicht mehr kompatibel.
@@ -46,8 +50,8 @@
   * Den bei b9 deaktivierten Code endgültig entfernt.
 
 #### 2.1.0-b9
-* Fix: Durch die Änderungen bei b8 wurde im ACP beim Speichern einer beliebigen ACP Seite fälschlicherweise das Message Template von EMP für die Bestätigung verwendet.
-* Fix: Die bei b8 eingebaute Methode zur kurzfristigen Änderung des Error Handlers hatte zur Folge, dass die Kontrolle wieder an `ext.php` zurückgegeben wurde, was unter Umständen dazu führen konnte, dass nachfolgender Code Aktionen ausgeführt hat, die nicht ausgeführt werden sollen/dürfen. Um das zu lösen, wird jetzt im EMP Error Handler eine eigene Exception erzeugt, wodurch jegliche weitere Ausführung von `ext.php` effektiv verhindert wird. Dadurch ist die Ermittlung der Nachricht auch eleganter, weil dazu keine separate Klassen-Eigenschaft mehr benötigt wird, sondern die Daten von `trigger_error` direkt als Exception Datenpaket übergeben werden können.
+* Beta Fix: Durch die Änderungen bei b8 wurde im ACP beim Speichern einer beliebigen ACP Seite fälschlicherweise das Message Template von EMP für die Bestätigung verwendet.
+* Beta Fix: Die bei b8 eingebaute Methode zur kurzfristigen Änderung des Error Handlers hatte zur Folge, dass die Kontrolle wieder an `ext.php` zurückgegeben wurde, was unter Umständen dazu führen konnte, dass nachfolgender Code Aktionen ausgeführt hat, die nicht ausgeführt werden sollen/dürfen. Um das zu lösen, wird jetzt im EMP Error Handler eine eigene Exception erzeugt, wodurch jegliche weitere Ausführung von `ext.php` effektiv verhindert wird. Dadurch ist die Ermittlung der Nachricht auch eleganter, weil dazu keine separate Klassen-Eigenschaft mehr benötigt wird, sondern die Daten von `trigger_error` direkt als Exception Datenpaket übergeben werden können.
 
 #### 2.1.0-b8
 * Ein `trigger_error` innerhalb von `ext.php` kann EMP nicht mehr blockieren bzw. nicht mehr zu einem Abbruch einer EMP Aktion führen. Nach sehr langer Zeit habe ich endlich herausgefunden, wie ich das gezielt unterbinden kann. Wollte man z.B. bisher 30 Erweiterungen aktivieren und die 16te würde ein `trigger_error` ausführen, hätte man schlussendlich nur 15 aktivierte Erweiterungen. Mit der neuen Technik hätte man in diesem Fall jedoch 29 aktivierte Erweiterungen und nur 1 nicht aktivierte. Dazu wird das Verhalten des phpBB Error Handlers kurzfristig und lokal begrenzt so geändert, dass die eigentliche Funktion von `trigger_error` komplett deaktiviert wird und die davon erzeugten Daten (4 Werte) in einem Array zwischengespeichert werden, welches dann ausgelesen werden kann. Bei den folgenden Methoden von `ext.php` wird diese Technik ab sofort angewendet:
@@ -91,11 +95,11 @@
   * 4 Sprachvariablen geändert.
 
 #### 2.1.0-b5
-* Fix: Beim neuen Eingabefeld für Sekunden konnte ein Wert ausserhalb von 1-999 gespeichert werden. Ursache war die fehlende Formularprüfung, weil der Absenden-Button nicht als Submit-Element definiert war. [Meldung von Kirk (phpBB.de)]
+* Beta Fix: Beim neuen Eingabefeld für Sekunden konnte ein Wert ausserhalb von 1-999 gespeichert werden. Ursache war die fehlende Formularprüfung, weil der Absenden-Button nicht als Submit-Element definiert war. [Meldung von Kirk (phpBB.de)]
 * Maximaler Wert für Sekunden von 999 auf 99 geändert.
 
 #### 2.1.0-b4
-* Fix: Ab 2.1.0-b1 wird der Schalter "Immer auf instabile Entwicklungs-Versionen prüfen" wieder berücksichtigt, das galt jedoch nicht bei der lokalen Versionsprüfung auf der Seite "Details".
+* Beta Fix: Ab 2.1.0-b1 wird der Schalter "Immer auf instabile Entwicklungs-Versionen prüfen" wieder berücksichtigt, das galt jedoch nicht bei der lokalen Versionsprüfung auf der Seite "Details".
 * Core:
   * Code optimiert.
 * Common:
@@ -111,7 +115,7 @@
   * Kleine Korrekturen.
 
 #### 2.1.0-b3
-* Fix: Da EMP ab 2.1.0 bei der Versionsprüfung nicht mehr vom Cache abhängig ist, sondern die Daten direkt in der DB speichert die ermittelt wurden, ergab sich daraus ein neues Problem das dazu führen konnte, dass nach einer VP widersprüchliche Informationen in der Versions-Spalte angezeigt werden konnten. So konnte es vorkommen, das die Version in Grün dargestellt und gleichzeitig ein Fehler Symbol angezeigt wurde. Die Ursache liegt bei phpBB, da vor einer Versionsprüfung der Versions-Cache nicht gelöscht wird und die Rot/Grün Darstellung der bestehenden Version über den Cache gesteuert wird. Um dieses Problem zu beheben, wird jetzt auch dieses Detail über die EMP Daten gesteuert.
+* Beta Fix: Da EMP ab 2.1.0 bei der Versionsprüfung nicht mehr vom Cache abhängig ist, sondern die Daten direkt in der DB speichert die ermittelt wurden, ergab sich daraus ein neues Problem das dazu führen konnte, dass nach einer VP widersprüchliche Informationen in der Versions-Spalte angezeigt werden konnten. So konnte es vorkommen, das die Version in Grün dargestellt und gleichzeitig ein Fehler Symbol angezeigt wurde. Die Ursache liegt bei phpBB, da vor einer Versionsprüfung der Versions-Cache nicht gelöscht wird und die Rot/Grün Darstellung der bestehenden Version über den Cache gesteuert wird. Um dieses Problem zu beheben, wird jetzt auch dieses Detail über die EMP Daten gesteuert.
 * Aus dem Fix ergab sich die Nebenwirkung, dass bei Erweiterungen ohne Updates dauerhaft eine grüne Version dargestellt wird, wie das auch bei phpBB der Fall ist, solange dort der Cache nicht gelöscht wird.
 * In der Erweiterungen-Liste wird jetzt in einer neuen Spalte angezeigt, ob die Erweiterung aus der CDB stammt. Als Indikator wird das gleiche Symbol verwendet wie in der Link-Leiste bei "phpBB-Erweiterungsdatenbank".
 * Auf der "Details" Seite wird jetzt unten eine neue Gruppe namens "Informationen von Extension Manager Plus" eingefügt, auf der EMP zusätzliche Informationen zur Erweiterung anzeigen kann:
