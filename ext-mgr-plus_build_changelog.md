@@ -1,3 +1,9 @@
+#### 2.1.0-b15
+* ExtMgr Template:
+  * Anpassung für phpBB 3.3.14 komplett geändert. Anstatt 3 separate `for` Schleifen auszuführen, wird jetzt 3 mal dieselbe Schleife ausgeführt, wodurch der redundante Code für die separaten Listen entfallen konnte. Dadurch konnten auch sämtliche Spalten-Makros entfallen. Durch diesen Umbau ist die Generierung wieder näher am Original und der Umfang des Templates reduziert sich um rund 4KB und 150 Zeilen. Ausserdem Twig optimiert.
+* Core:
+  * Optimierung.
+
 #### 2.1.0-b14
 * Beta Fix: Bei ungültigen Erweiterungen wurden die Spalten "Auswählen", "Reihenfolge" und "Ignorieren" angeboten, die in dieser Situation gar nicht vorhanden sein dürfen. Das hängt mit den Änderungen von b11 und b12 zusammen, da hier fälschlicherweise notwendige Abfragen entfernt wurden. Ebenso wird jetzt auch das orange Fragezeichen in der Spalte "Aktuelle Version" unterdrückt, welches bei b4 eingebaut wurde und in dieser Situation ebenfalls fälschlicherweise angezeigt wurde.
 * Code Optimierung.

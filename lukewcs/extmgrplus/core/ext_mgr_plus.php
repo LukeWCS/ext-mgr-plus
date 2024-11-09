@@ -15,9 +15,9 @@ namespace lukewcs\extmgrplus\core;
 
 class ext_mgr_plus
 {
-	protected const CHECKBOX_MODE_OFF	= 0;
-	protected const CHECKBOX_MODE_ALL	= 1;
-	protected const CHECKBOX_MODE_LAST	= 2;
+	protected const CHECKBOX_OFF	= 0;
+	protected const CHECKBOX_ALL	= 1;
+	protected const CHECKBOX_LAST	= 2;
 
 	protected object $common;
 	protected object $ext_manager;
@@ -71,7 +71,7 @@ class ext_mgr_plus
 	}
 
 	/*
-		EVENT TRIGGER: core.acp_extensions_run_action_before
+		EVENT: core.acp_extensions_run_action_before
 	*/
 	public function ext_manager_before($event): void
 	{
@@ -109,7 +109,7 @@ class ext_mgr_plus
 
 			$this->common->trigger_error_($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'), E_USER_NOTICE, 'RETURN_TO_EXTENSION_LIST');
 		}
-		else if ($this->request->is_set_post('extmgrplus_save_checkboxes') && $this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_LAST)
+		else if ($this->request->is_set_post('extmgrplus_save_checkboxes') && $this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_LAST)
 		{
 			$this->common->check_form_key_('lukewcs_extmgrplus');
 
@@ -124,7 +124,7 @@ class ext_mgr_plus
 	}
 
 	/*
-		EVENT TRIGGER: core.acp_extensions_run_action_after
+		EVENT: core.acp_extensions_run_action_after
 	*/
 	public function ext_manager_after($event): void
 	{
@@ -222,11 +222,11 @@ class ext_mgr_plus
 		$ext_list_enabled_selectable	= array_diff_key($ext_list_enabled, $ext_list_enabled_ignored, $ext_list_enabled_invalid);
 		$ext_list_disabled_selectable	= array_diff_key($ext_list_disabled, $ext_list_disabled_ignored, $ext_list_disabled_invalid);
 
-		if ($this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_ALL)
+		if ($this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_ALL)
 		{
 			$ext_list_selected = array_merge($ext_list_enabled_selectable, $ext_list_disabled_selectable);
 		}
-		else if ($this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_LAST)
+		else if ($this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_LAST)
 		{
 			$ext_list_selected = array_flip($this->common->config_text_get('extmgrplus_list_selected', 'selected') ?? []);
 		}
@@ -278,12 +278,11 @@ class ext_mgr_plus
 
 	/*
 		Change template for trigger_error messages
-
-		EVENT TRIGGER: core.adm_page_footer
+		EVENT: core.adm_page_footer
 	*/
 	public function change_msg_template(): void
 	{
-		if ($this->template->retrieve_var('EXTMGRPLUS_TRIGGER_ERROR') === true)
+		if ($this->template->retrieve_var('EXTMGRPLUS_TRIGGER_ERROR'))
 		{
 			$this->template->set_filenames(['body' => '@lukewcs_extmgrplus/acp_ext_mgr_plus_message_body.html']);
 		}
@@ -335,20 +334,13 @@ class ext_mgr_plus
 				'EXTMGRPLUS_ACTION_MODE'	=> 'DISABLE',
 				'EXTMGRPLUS_SELF_DISABLE'	=> array_search('lukewcs/extmgrplus', $ext_mark_enabled) !== false,
 			]);
-			if ($this->config['extmgrplus_switch_confirmation'])
+			if (!$this->config['extmgrplus_switch_confirmation'] || confirm_box(true))
 			{
-				if (confirm_box(true))
-				{
-					$this->exts_disable();
-				}
-				else
-				{
-					$confirm_box('disable', count($ext_mark_enabled));
-				}
+				$this->exts_disable();
 			}
 			else
 			{
-				$this->exts_disable();
+				$confirm_box('disable', count($ext_mark_enabled));
 			}
 		}
 		else if ($this->request->is_set_post('extmgrplus_enable_all'))
@@ -356,23 +348,15 @@ class ext_mgr_plus
 			$this->template->assign_vars([
 				'EXTMGRPLUS_ACTION_MODE'	=> 'ENABLE',
 			]);
-			if ($this->config['extmgrplus_switch_confirmation'])
-			{
-				if (confirm_box(true))
-				{
-					$this->exts_enable();
-				}
-				else
-				{
-					$confirm_box('enable', count($ext_mark_disabled));
-				}
-			}
-			else
+			if (!$this->config['extmgrplus_switch_confirmation'] || confirm_box(true))
 			{
 				$this->exts_enable();
 			}
+			else
+			{
+				$confirm_box('enable', count($ext_mark_disabled));
+			}
 		}
-
 		redirect($this->u_action);
 	}
 
@@ -387,7 +371,7 @@ class ext_mgr_plus
 		$ext_count_success	= 0;
 		$safe_time_exceeded = false;
 
-		if ($this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_LAST)
+		if ($this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_LAST)
 		{
 			$ext_mark_disabled = $this->request->variable('ext_mark_disabled', ['']);
 			$this->common->config_text_set('extmgrplus_list_selected', 'selected', array_merge($ext_mark_enabled, $ext_mark_disabled));
@@ -492,7 +476,7 @@ class ext_mgr_plus
 		$ext_count_success	= 0;
 		$safe_time_exceeded = false;
 
-		if ($this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_MODE_LAST)
+		if ($this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_LAST)
 		{
 			$ext_mark_enabled = $this->request->variable('ext_mark_enabled', ['']);
 			$this->common->config_text_set('extmgrplus_list_selected', 'selected', array_merge($ext_mark_enabled, $ext_mark_disabled));
@@ -799,8 +783,7 @@ class ext_mgr_plus
 	*/
 	private function versioncheck_details(string $ext_name): void
 	{
-		$ext_list_vc = $this->common->config_text_get('extmgrplus_list_version_check', 'updates');
-		$ext_list_vc ??= [];
+		$ext_list_vc = $this->common->config_text_get('extmgrplus_list_version_check', 'updates') ?? [];
 
 		if ($this->versioncheck($ext_list_vc, $ext_name, true))
 		{
@@ -909,15 +892,14 @@ class ext_mgr_plus
 			{
 			}
 
-			$ext_list_tpl[$ext_name]['cdb_ext']	= ($ext_metadata['extra']['version-check']['host'] ?? '') == 'www.phpbb.com';
 			if (isset($ext_metadata['extra']['version-check']))
 			{
-				$ext_list_tpl[$ext_name]['has_vc'] = true;
+				$ext_list_tpl[$ext_name]['cdb_ext']	= ($ext_metadata['extra']['version-check']['host'] ?? '') == 'www.phpbb.com';
 				$count_total++;
 			}
 			else
 			{
-				$ext_list_tpl[$ext_name]['has_vc'] = false;
+				$ext_list_tpl[$ext_name]['current'] = false;
 			}
 		}
 
