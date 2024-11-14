@@ -61,12 +61,15 @@ $lang = array_merge($lang, [
 
 	// settings order and ignore
 	'EXTMGRPLUS_SECTION_SETTINGS'			=> 'Settings (Plus)',
-	'EXTMGRPLUS_ORDER'						=> 'Order',
-	'EXTMGRPLUS_ORDER_EXPLAIN'				=> '%s In this column, you can define order groups in the range 0 to 99 for the “Enable selected” and “Disable selected” actions. This allows extensions that depend on other extensions to be activated before them to avoid error messages. Extensions that belong to such a group are activated first, starting with group 0, then group 1, and so on. Extensions without a group are activated last. When deactivating, the order is reversed.',
+	'EXTMGRPLUS_ORDER'						=> '%s Order',
+	'EXTMGRPLUS_ORDER_EXPLAIN_SHORT'		=> 'In this column, you can define order groups in the range 0 to 99 for the “Enable selected” and “Disable selected” actions.',
+	'EXTMGRPLUS_ORDER_EXPLAIN'				=> 'This allows extensions that depend on other extensions to be activated before them to avoid error messages. Extensions that belong to such a group are activated first, starting with group 0, then group 1, and so on. Extensions without a group are activated last. When deactivating, the order is reversed.',
 	'EXTMGRPLUS_DEPENDENCY'					=> 'Dependency',
 	'EXTMGRPLUS_DEPENDENCY_EXPLAIN'			=> 'An extension can be linked to a group by preceding it with <code>+</code>. For example, if you have extension B which is dependent on extension A, you can enter <code>0</code> for A and <code>+0</code> for B. If both extensions are enabled, selecting A will also select B. If both extensions are disabled, selecting B will also select A.',
-	'EXTMGRPLUS_IGNORE'						=> 'Ignore',
-	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> '%s This column allows you to specify which extensions should be ignored during the “Enable selected” and “Disable selected” actions. Ignored extensions can no longer be selected in the extensions list. If an order group was defined for an ignored extension, then this is retained, but it no longer has any meaning.',
+	'EXTMGRPLUS_IGNORE'						=> '%s Ignore',
+	'EXTMGRPLUS_IGNORE_EXPLAIN_SHORT'		=> 'This column allows you to specify which extensions should be ignored during the “Enable selected” and “Disable selected” actions.',
+	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> 'Ignored extensions can no longer be selected in the extensions list and no new migrations will be detected and displayed for such extensions. If an order group was defined for an ignored extension, then this is retained, but it no longer has any meaning.',
+	'EXTMGRPLUS_SPOILER_LABEL'				=> 'Further explanation',
 
 	// ext manager
 	'EXTMGRPLUS_COL_CDB'					=> 'Validated extension',
@@ -74,16 +77,16 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_COL_SELECT'					=> 'Select',
 	'EXTMGRPLUS_COL_ORDER'					=> 'Order',
 	'EXTMGRPLUS_COL_IGNORE'					=> 'Ignore',
-	'EXTMGRPLUS_ALL_DISABLE'				=> 'Disable selected',
-	'EXTMGRPLUS_ALL_ENABLE'					=> 'Enable selected',
+	'EXTMGRPLUS_DISABLE_ALL'				=> 'Disable selected',
+	'EXTMGRPLUS_ENABLE_ALL'					=> 'Enable selected',
 	'EXTMGRPLUS_EXTENSIONS_ENABLED'			=> 'Enabled Extensions: %u',
 	'EXTMGRPLUS_EXTENSIONS_DISABLED'		=> 'Disabled Extensions: %u',
 	'EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED'	=> 'Not installed Extensions: %u',
 
 	// tooltips
 	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'		=> 'This extension has new migrations that are applied when activating the extension.',
-	'EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE'		=> 'Disable all selected extensions.',
-	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'		=> 'Enable all selected extensions.',
+	'EXTMGRPLUS_TOOLTIP_DISABLE_ALL'		=> 'Disable all selected extensions.',
+	'EXTMGRPLUS_TOOLTIP_ENABLE_ALL'			=> 'Enable all selected extensions.',
 	'EXTMGRPLUS_TOOLTIP_ORDER'				=> 'Order group in the range 0-99. A group can be linked with a preceding +.',
 	'EXTMGRPLUS_TOOLTIP_IGNORE'				=> 'Ignore extension.',
 	'EXTMGRPLUS_TOOLTIP_SELECT_ALL'			=> 'Select or deselect all extensions.',

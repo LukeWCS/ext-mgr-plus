@@ -60,12 +60,15 @@ $lang = array_merge($lang, [
 
 	// settings order and ignore
 	'EXTMGRPLUS_SECTION_SETTINGS'			=> 'Einstellungen (Plus)',
-	'EXTMGRPLUS_ORDER'						=> 'Reihenfolge',
-	'EXTMGRPLUS_ORDER_EXPLAIN'				=> '%s In dieser Spalte können Sie Reihenfolge-Gruppen im Bereich 0 bis 99 für die Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ definieren. Damit können Erweiterungen, von denen andere Erweiterungen abhängig sind, vor diesen aktiviert werden, um Fehlermeldungen zu vermeiden. Erweiterungen die zu einer solchen Gruppe gehören, werden zuerst aktiviert und zwar beginnend bei Gruppe 0, dann Gruppe 1 und so weiter. Erweiterungen ohne Gruppe werden als letztes aktiviert. Beim Deaktivieren ist die Reihenfolge umgekehrt.',
+	'EXTMGRPLUS_ORDER'						=> '%s Reihenfolge',
+	'EXTMGRPLUS_ORDER_EXPLAIN_SHORT'		=> 'In dieser Spalte können Sie Reihenfolge-Gruppen im Bereich 0 bis 99 für die Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ definieren.',
+	'EXTMGRPLUS_ORDER_EXPLAIN'				=> 'Damit können Erweiterungen, von denen andere Erweiterungen abhängig sind, vor diesen aktiviert werden, um Fehlermeldungen zu vermeiden. Erweiterungen die zu einer solchen Gruppe gehören, werden zuerst aktiviert und zwar beginnend bei Gruppe 0, dann Gruppe 1 und so weiter. Erweiterungen ohne Gruppe werden als letztes aktiviert. Beim Deaktivieren ist die Reihenfolge umgekehrt.',
 	'EXTMGRPLUS_DEPENDENCY'					=> 'Abhängigkeit',
 	'EXTMGRPLUS_DEPENDENCY_EXPLAIN'			=> 'Mit einem vorangestelltem <code>+</code> kann eine Erweiterung mit einer Gruppe verknüpft werden. Hat man zum Beispiel die Erweiterung B die von Erweiterung A abhängig ist, kann man bei A <code>0</code> eintragen und bei B <code>+0</code>. Sind beide Erweiterungen aktiviert, wird beim Auswählen von A auch B ausgewählt. Sind beide Erweiterungen deaktiviert, wird beim Auswählen von B auch A ausgewählt.',
-	'EXTMGRPLUS_IGNORE'						=> 'Ignorieren',
-	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> '%s In dieser Spalte können Sie festlegen, welche Erweiterungen bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ ignoriert werden sollen. Ignorierte Erweiterungen können in der Erweiterungen-Liste nicht mehr ausgewählt werden. Wenn bei einer ignorierten Erweiterung eine Reihenfolge-Gruppe definiert wurde, dann bleibt diese erhalten, sie hat jedoch keine Bedeutung mehr.',
+	'EXTMGRPLUS_IGNORE'						=> '%s Ignorieren',
+	'EXTMGRPLUS_IGNORE_EXPLAIN_SHORT'		=> 'In dieser Spalte können Sie festlegen, welche Erweiterungen bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ ignoriert werden sollen.',
+	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> 'Ignorierte Erweiterungen können in der Erweiterungen-Liste nicht mehr ausgewählt werden und bei solchen Erweiterungen werden auch keine neuen Migrationen ermittelt und angezeigt. Wenn bei einer ignorierten Erweiterung eine Reihenfolge-Gruppe definiert wurde, dann bleibt diese erhalten, sie hat jedoch keine Bedeutung mehr.',
+	'EXTMGRPLUS_DETAILS_VERSION_URL'		=> 'Link zur Versionsdatei',
 
 	// ext manager
 	'EXTMGRPLUS_COL_CDB'					=> 'Validierte Erweiterung',
@@ -73,16 +76,16 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_COL_SELECT'					=> 'Auswählen',
 	'EXTMGRPLUS_COL_ORDER'					=> 'Reihenfolge',
 	'EXTMGRPLUS_COL_IGNORE'					=> 'Ignorieren',
-	'EXTMGRPLUS_ALL_DISABLE'				=> 'Ausgewählte deaktivieren',
-	'EXTMGRPLUS_ALL_ENABLE'					=> 'Ausgewählte aktivieren',
+	'EXTMGRPLUS_DISABLE_ALL'				=> 'Ausgewählte deaktivieren',
+	'EXTMGRPLUS_ENABLE_ALL'					=> 'Ausgewählte aktivieren',
 	'EXTMGRPLUS_EXTENSIONS_ENABLED'			=> 'Aktivierte Erweiterungen: %u',
 	'EXTMGRPLUS_EXTENSIONS_DISABLED'		=> 'Deaktivierte Erweiterungen: %u',
 	'EXTMGRPLUS_EXTENSIONS_NOT_INSTALLED'	=> 'Nicht installierte Erweiterungen: %u',
 
 	// tooltips
 	'EXTMGRPLUS_TOOLTIP_HAS_MIGRATION'		=> 'Diese Erweiterung hat neue Migrationen, die beim aktivieren der Erweiterung übernommen werden.',
-	'EXTMGRPLUS_TOOLTIP_BUTTON_DISABLE'		=> 'Alle ausgewählten Erweiterungen deaktivieren.',
-	'EXTMGRPLUS_TOOLTIP_BUTTON_ENABLE'		=> 'Alle ausgewählten Erweiterungen aktivieren.',
+	'EXTMGRPLUS_TOOLTIP_DISABLE_ALL'		=> 'Alle ausgewählten Erweiterungen deaktivieren.',
+	'EXTMGRPLUS_TOOLTIP_ENABLE_ALL'			=> 'Alle ausgewählten Erweiterungen aktivieren.',
 	'EXTMGRPLUS_TOOLTIP_ORDER'				=> 'Reihenfolge-Gruppe im Bereich 0-99. Mit vorangestelltem + kann eine Gruppe verknüpft werden.',
 	'EXTMGRPLUS_TOOLTIP_IGNORE'				=> 'Erweiterung ignorieren.',
 	'EXTMGRPLUS_TOOLTIP_SELECT_ALL'			=> 'Alle Erweiterungen auswählen oder abwählen.',
@@ -107,11 +110,11 @@ $lang = array_merge($lang, [
 		1									=> '1 Sekunde',
 		2									=> '%u Sekunden',
 	],
+	'EXTMGRPLUS_SPOILER_LABEL'				=> 'Weitere Erklärung',
 
 	// details
 	'EXTMGRPLUS_SECTION_DETAILS'			=> 'Informationen von Extension Manager Plus',
 	'EXTMGRPLUS_DETAILS_CDB_PAGE'			=> 'Seite der phpBB-Erweiterungsdatenbank',
-	'EXTMGRPLUS_DETAILS_VERSION_URL'		=> 'Link zur Versionsdatei',
 
 	// messages
 	'EXTMGRPLUS_MSG_CONFIRM_DISABLE'		=> 'Sind Sie sich sicher, dass Sie %s deaktivieren möchten?',

@@ -93,7 +93,7 @@ function setButtonState(e) {
 	const checkedCount = $('input[name="ext_mark_' + e.data.checkboxType + '[]"]:checked').length;
 	const buttonType = e.data.checkboxType == 'enabled' ? 'disable' : 'enable';
 
-	$('input[name="extmgrplus_' + buttonType + '_all').prop('disabled', checkedCount == 0);
+	$('input[name="extmgrplus_' + buttonType + '_all"]').prop('disabled', checkedCount == 0);
 };
 
 function setInputBoxState(e) {

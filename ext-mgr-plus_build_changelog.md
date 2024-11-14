@@ -1,3 +1,24 @@
+#### 2.1.0-b16
+* Fix: 2 Struktur-Fehler in einem jQuery Selektor behoben, die jedoch seltsamerweise keine Auswirkungen hatten.
+* Core:
+  * Template Variablen für die verschiedenen Zähler werden nicht mehr als separate Variablen, sondern als Array generiert um dynamischen Zugriff zu vereinfachen.
+* ExtMgr Template:
+  * Twig an das neue Zähler-Array angepasst.
+  * Unnötige Klasse `extmgrplus_responsive` entfernt und stattdessen Inline-CSS definiert.
+  * Änderungen bei Reihenfolge & Ignorieren:
+    * Um zukünftige Änderungen zu vereinfachen, wie z.B. das Hinzufügen einer weiteren Spalte, werden die Erklärungen jetzt nicht mehr nebeneinander, sondern untereinander dargestellt. Dabei werden die Erklärungen innerhalb von Spoiler-Boxen angezeigt, damit die Anzeige kompakt gehalten werden kann. Durch diese Änderung entspricht Reihenfolge & Ignorieren auch wieder mehr einem normalen ACP Modul, bei dem Labels links und interaktive Elemente rechts angeordnet sind.
+	* Das FA Icon wird nicht mehr in der Beschreibung angezeigt, sondern im Label.
+  * Optimierung.
+* CSS:
+  * Icons im Label für Reihenfolge & Ignorieren minimal grösser definiert und Fettschrift entfernt, dadurch deutlich besser erkennbar.
+  * CSS für die Spoiler-Funktion hinzugefügt.
+  * Nicht mehr benötigtes CSS für die alte Darstellung von Reihenfolge & Ignorieren entfernt, inklusive Responsive Code.
+* Sprachdateien:
+  * 4 Variablen umbenannt um dynamischen Zugriff zu vereinfachen.
+  * 4 Variablen an die Änderungen im Template angepasst.
+  * 3 Variablen für die Spoiler-Funktion hinzugefügt.
+  * 1 Variable überarbeitet.
+
 #### 2.1.0-b15
 * ExtMgr Template:
   * Anpassung für phpBB 3.3.14 komplett geändert. Anstatt 3 separate `for` Schleifen auszuführen, wird jetzt 3 mal dieselbe Schleife ausgeführt, wodurch der redundante Code für die separaten Listen entfallen konnte. Dadurch konnten auch sämtliche Spalten-Makros entfallen. Durch diesen Umbau ist die Generierung wieder näher am Original und der Umfang des Templates reduziert sich um rund 4KB und 150 Zeilen. Ausserdem Twig optimiert.

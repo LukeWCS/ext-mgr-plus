@@ -10,7 +10,7 @@ fieldset p.submit-buttons {
 }
 
 fieldset dt label,
-fieldset.extmgrplus_order_and_ignore dd label {
+fieldset dd label {
 	cursor: inherit;
 }
 
@@ -188,27 +188,51 @@ div.successbox.notice i.icon {
 	font-size: 1.2em;
 }
 
+fieldset.extmgrplus_order_and_ignore i.icon,
 thead th i.icon {
 	font-size: 1.1em;
 	font-weight: normal;
 }
 
-fieldset.extmgrplus_order_and_ignore dt {
-	width: 50%;
-}
-
 fieldset.extmgrplus_order_and_ignore dd {
-	margin-left: 50%;
 	color: inherit;
 }
 
 fieldset.extmgrplus_order_and_ignore dd label {
-	text-align: left;
+	font-size: inherit;
 	font-weight: bold;
 }
 
 fieldset.extmgrplus_order_and_ignore dd label:hover {
 	color: inherit;
+}
+
+fieldset.extmgrplus_order_and_ignore dd details {
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+}
+
+fieldset.extmgrplus_order_and_ignore dd summary {
+	padding: 0.25em 0.5em;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+fieldset.extmgrplus_order_and_ignore dd details div {
+	border-top: 1px solid #cccccc;
+	font-size: inherit;
+	padding: 0.25em 0;
+	margin: 0 0.5em;
+}
+
+input[type="text"].inactive {
+	opacity: 0.5;
+}
+
+input[type="checkbox"]:disabled {
+	cursor: not-allowed;
 }
 
 #extmgrplus_list input[name$="able_all"] {
@@ -220,14 +244,6 @@ fieldset.extmgrplus_order_and_ignore dd label:hover {
 	padding: 0 2px;
 	margin: 0 2px;
 	background-color: #f9f9f9;
-}
-
-input[type="text"].inactive {
-	opacity: 0.5;
-}
-
-input[type="checkbox"]:disabled {
-	cursor: not-allowed;
 }
 
 #extmgrplus_list th:nth-of-type(1) {
@@ -328,10 +344,6 @@ input[type="checkbox"]:disabled {
 
 /* RESPONSIVE */
 
-.extmgrplus_responsive {
-	display: none;
-}
-
 @media (max-width: 700px){
 	legend {
 		margin: 2px 0 0 -6px;
@@ -342,13 +354,7 @@ input[type="checkbox"]:disabled {
 		margin: 0.5em 0 0 0;
 	}
 
-	fieldset.extmgrplus_order_and_ignore dt {
-		width: 100%;
-	}
-
 	fieldset.extmgrplus_order_and_ignore dd {
-		margin: 0.5em 0 0 0;
 		padding: 0.5em 0 0 0;
-		border-top: 1px solid #cccccc;
 	}
 }
