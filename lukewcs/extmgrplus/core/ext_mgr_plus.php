@@ -95,7 +95,7 @@ class ext_mgr_plus
 
 			$this->exts_switch_confirm();
 		}
-		else if ($this->request->is_set_post('extmgrplus_save_order_and_ignore') && $this->config['extmgrplus_switch_order_and_ignore'])
+		else if ($this->request->is_set_post('extmgrplus_save_ext_properties') && $this->config['extmgrplus_switch_order_and_ignore'])
 		{
 			$this->common->check_form_key_('lukewcs_extmgrplus');
 
@@ -107,7 +107,7 @@ class ext_mgr_plus
 			$this->common->config_text_set('extmgrplus_list_order_and_ignore', 'order', count($order_list) ? $order_list : null);
 			$this->common->config_text_set('extmgrplus_list_order_and_ignore', 'ignore', count($ignore_list) ? $ignore_list : null);
 
-			$this->common->trigger_error_($this->language->lang('EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'), E_USER_NOTICE, 'RETURN_TO_EXTENSION_LIST');
+			$this->common->trigger_error_($this->language->lang('EXTMGRPLUS_MSG_EXT_PROPERTIES_SAVED'), E_USER_NOTICE, 'RETURN_TO_EXTENSION_LIST');
 		}
 		else if ($this->request->is_set_post('extmgrplus_save_checkboxes') && $this->config['extmgrplus_select_checkbox_mode'] == self::CHECKBOX_LAST)
 		{
@@ -248,6 +248,8 @@ class ext_mgr_plus
 			'EXTMGRPLUS_CDB_VER'					=> vsprintf('%u.%u', explode('.', PHPBB_VERSION)),
 			'EXTMGRPLUS_NOTES'						=> $notes,
 			'IS_PHPBB_MIN_3_3_14'					=> phpbb_version_compare(PHPBB_VERSION, '3.3.14', '>='),
+			'U_EXTMGRPLUS_VERSIONCHECK'				=> $this->u_action . '&amp;action=none&amp;versioncheck',
+			'EXTMGRPLUS_EXT_PROPERTIES'				=> $this->config['extmgrplus_switch_order_and_ignore'],
 
 			'EXTMGRPLUS_LIST_ORDER'					=> $ext_list_order,
 			'EXTMGRPLUS_LIST_IGNORE'				=> $ext_list_ignore,
@@ -273,8 +275,6 @@ class ext_mgr_plus
 			'EXTMGRPLUS_SWITCH_INSTRUCTIONS'		=> $this->config['extmgrplus_switch_instructions'],
 			'EXTMGRPLUS_SWITCH_MIGRATION_COL'		=> $this->config['extmgrplus_switch_migration_col'],
 			'EXTMGRPLUS_SWITCH_MIGRATIONS'			=> $this->config['extmgrplus_switch_migrations'],
-
-			'U_EXTMGRPLUS_VERSIONCHECK'				=> $this->u_action . '&amp;action=none&amp;versioncheck',
 		]);
 	}
 

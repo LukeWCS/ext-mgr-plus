@@ -79,10 +79,10 @@ class acp_ext_mgr_plus_controller
 			'EXTMGRPLUS_SWITCH_LOG'						=> (bool) $this->config['extmgrplus_switch_log'],
 			'EXTMGRPLUS_SWITCH_CONFIRMATION'			=> (bool) $this->config['extmgrplus_switch_confirmation'],
 			'EXTMGRPLUS_SWITCH_AUTO_REDIRECT'			=> (bool) $this->config['extmgrplus_switch_auto_redirect'],
-			'EXTMGRPLUS_SELECT_CHECKBOX_MODE_OPTIONS'	=> $this->select_struct($this->config['extmgrplus_select_checkbox_mode'], [
-				'EXTMGRPLUS_CHECKBOX_MODE_OFF'			=> '0',
-				'EXTMGRPLUS_CHECKBOX_MODE_ALL'			=> '1',
-				'EXTMGRPLUS_CHECKBOX_MODE_LAST'			=> '2',
+			'EXTMGRPLUS_SELECT_CHECKBOX_MODE_OPTIONS'	=> $this->select_struct((int) $this->config['extmgrplus_select_checkbox_mode'], [
+				'EXTMGRPLUS_CHECKBOX_MODE_OFF'			=> 0,
+				'EXTMGRPLUS_CHECKBOX_MODE_ALL'			=> 1,
+				'EXTMGRPLUS_CHECKBOX_MODE_LAST'			=> 2,
 			]),
 			'EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE'		=> (bool) $this->config['extmgrplus_switch_order_and_ignore'],
 			'EXTMGRPLUS_SWITCH_SELF_DISABLE'			=> (bool) $this->config['extmgrplus_switch_self_disable'],

@@ -37,6 +37,10 @@ code {
 	color: black;
 }
 
+.inactive {
+	opacity: 0.5;
+}
+
 /* Footer */
 
 .extmgrplus_footer {
@@ -188,31 +192,31 @@ div.successbox.notice i.icon {
 	font-size: 1.2em;
 }
 
-fieldset.extmgrplus_order_and_ignore i.icon,
+fieldset.ext_properties i.icon,
 thead th i.icon {
 	font-size: 1.1em;
 	font-weight: normal;
 }
 
-fieldset.extmgrplus_order_and_ignore dd {
+fieldset.ext_properties dd {
 	color: inherit;
 }
 
-fieldset.extmgrplus_order_and_ignore dd label {
+fieldset.ext_properties dd label {
 	font-size: inherit;
 	font-weight: bold;
 }
 
-fieldset.extmgrplus_order_and_ignore dd label:hover {
+fieldset.ext_properties dd label:hover {
 	color: inherit;
 }
 
-fieldset.extmgrplus_order_and_ignore dd details {
+fieldset.ext_properties dd details {
 	border: 1px solid #cccccc;
 	border-radius: 3px;
 }
 
-fieldset.extmgrplus_order_and_ignore dd summary {
+fieldset.ext_properties dd summary {
 	padding: 0.25em 0.5em;
 	cursor: pointer;
 	-webkit-user-select: none;
@@ -220,15 +224,11 @@ fieldset.extmgrplus_order_and_ignore dd summary {
 	-ms-user-select: none;
 }
 
-fieldset.extmgrplus_order_and_ignore dd details div {
+fieldset.ext_properties dd details div {
 	border-top: 1px solid #cccccc;
 	font-size: inherit;
 	padding: 0.25em 0;
 	margin: 0 0.5em;
-}
-
-input[type="text"].inactive {
-	opacity: 0.5;
 }
 
 input[type="checkbox"]:disabled {
@@ -283,7 +283,7 @@ input[type="checkbox"]:disabled {
 	font-size: 1.2em;
 }
 
-#extmgrplus_list td:nth-of-type(3) i.icon:is(.fa-question-circle, .fa-exclamation-triangle) {
+#extmgrplus_list td:nth-of-type(3) i.icon:is(.fa-question-circle, .fa-exclamation-triangle, .fa-refresh) {
 	color: #df950d;
 }
 
@@ -354,7 +354,7 @@ input[type="checkbox"]:disabled {
 		margin: 0.5em 0 0 0;
 	}
 
-	fieldset.extmgrplus_order_and_ignore dd {
+	fieldset.ext_properties dd {
 		padding: 0.5em 0 0 0;
 	}
 }

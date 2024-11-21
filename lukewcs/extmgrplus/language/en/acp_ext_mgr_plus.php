@@ -56,20 +56,17 @@ $lang = array_merge($lang, [
 	],
 
 	// link bar
-	'EXTMGRPLUS_LINK_ORDER_AND_IGNORE'		=> 'Order, Dependency, Ignore',
+	'EXTMGRPLUS_LINK_EXT_PROPERTIES'		=> 'Extension properties',
 	'EXTMGRPLUS_LINK_SAVE_CHECKBOXES'		=> 'Save',
 
 	// settings order and ignore
 	'EXTMGRPLUS_SECTION_SETTINGS'			=> 'Settings (Plus)',
-	'EXTMGRPLUS_ORDER'						=> '%s Order',
-	'EXTMGRPLUS_ORDER_EXPLAIN_SHORT'		=> 'In this column, you can define order groups in the range 0 to 99 for the “Enable selected” and “Disable selected” actions.',
-	'EXTMGRPLUS_ORDER_EXPLAIN'				=> 'This allows extensions that depend on other extensions to be activated before them to avoid error messages. Extensions that belong to such a group are activated first, starting with group 0, then group 1, and so on. Extensions without a group are activated last. When deactivating, the order is reversed.',
+	'EXTMGRPLUS_ORDER'						=> '%s Order & Dependency',
+	'EXTMGRPLUS_ORDER_EXPLAIN'				=> 'In this column, you can define order groups in the range 0 to 99 for the “Enable selected” and “Disable selected” actions. This allows extensions that depend on other extensions to be activated before them to avoid error messages. Extensions that belong to such a group are activated first, starting with group 0, then group 1, and so on. Extensions without a group are activated last. When deactivating, the order is reversed.',
 	'EXTMGRPLUS_DEPENDENCY'					=> 'Dependency',
 	'EXTMGRPLUS_DEPENDENCY_EXPLAIN'			=> 'An extension can be linked to a group by preceding it with <code>+</code>. For example, if you have extension B which is dependent on extension A, you can enter <code>0</code> for A and <code>+0</code> for B. If both extensions are enabled, selecting A will also select B. If both extensions are disabled, selecting B will also select A.',
 	'EXTMGRPLUS_IGNORE'						=> '%s Ignore',
-	'EXTMGRPLUS_IGNORE_EXPLAIN_SHORT'		=> 'This column allows you to specify which extensions should be ignored during the “Enable selected” and “Disable selected” actions.',
-	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> 'Ignored extensions can no longer be selected in the extensions list and no new migrations will be detected and displayed for such extensions. If an order group was defined for an ignored extension, then this is retained, but it no longer has any meaning.',
-	'EXTMGRPLUS_SPOILER_LABEL'				=> 'Further explanation',
+	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> 'This column allows you to specify which extensions should be ignored during the “Enable selected” and “Disable selected” actions. Ignored extensions can no longer be selected in the extensions list and no new migrations will be detected and displayed for such extensions. If an order group was defined for an ignored extension, then this is retained, but it no longer has any meaning.',
 
 	// ext manager
 	'EXTMGRPLUS_COL_CDB'					=> 'Validated extension',
@@ -111,6 +108,7 @@ $lang = array_merge($lang, [
 		1									=> '1 second',
 		2									=> '%u seconds',
 	],
+	'EXTMGRPLUS_SPOILER_LABEL'				=> 'Explanation',
 
 	// details
 	'EXTMGRPLUS_SECTION_DETAILS'			=> 'Information from Extension Manager Plus',
@@ -120,7 +118,7 @@ $lang = array_merge($lang, [
 	// messages
 	'EXTMGRPLUS_MSG_CONFIRM_DISABLE'		=> 'Are you sure that you wish to disable %s?',
 	'EXTMGRPLUS_MSG_CONFIRM_ENABLE'			=> 'Are you sure that you wish to enable %s?',
-	'EXTMGRPLUS_MSG_ORDER_AND_IGNORE_SAVED'	=> 'Order and Ignore columns saved successfully.',
+	'EXTMGRPLUS_MSG_EXT_PROPERTIES_SAVED'	=> 'Extension properties saved successfully.',
 	'EXTMGRPLUS_MSG_CHECKBOXES_SAVED'		=> 'Selection of checkboxes saved successfully.',
 	'EXTMGRPLUS_MSG_PROCESS_ABORTED'		=> 'The “%s” operation was interrupted by the following extension:',
 	'EXTMGRPLUS_MSG_DEACTIVATION'			=> '%1$u of %2$u extensions have been disabled.',

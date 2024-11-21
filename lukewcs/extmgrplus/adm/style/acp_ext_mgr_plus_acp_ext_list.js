@@ -26,16 +26,16 @@ function versionCheck() {
 	$(location).prop('href', $('#extmgrplus_link_version_check').attr('data-url'));
 };
 
-function showHideOrderIgnore() {
-	if ($('#extmgrplus_link_order_ignore').hasClass('disabled')) {
+function showExtProperties() {
+	if ($('#extmgrplus_link_ext_properties').hasClass('disabled')) {
 		return;
 	}
 
-	const show = !$('.extmgrplus_order_and_ignore').is(":visible");
+	const show = !$('.ext_properties').is(":visible");
 
 	showHideActionElements(!show);
-	$('[id^="extmgrplus_link_"]:not([id$="_order_ignore"])')		.toggleClass('disabled', show);
-	$('.extmgrplus_order_and_ignore')								.toggle(show);
+	$('[id^="extmgrplus_link_"]:not([id$="_ext_properties"])')		.toggleClass('disabled', show);
+	$('.ext_properties')											.toggle(show);
 	$('#extmgrplus_list th:nth-of-type(1n+8):nth-of-type(-1n+9)')	.toggle(show);
 	$('#extmgrplus_list td:nth-of-type(1n+8):nth-of-type(-1n+9)')	.toggle(show);
 };
@@ -117,7 +117,7 @@ function disableEnter(e) {
 $(function () {
 	$('#extmgrplus_list')						.on('keypress'	, disableEnter);
 	$('#extmgrplus_link_version_check')			.on('click'		, versionCheck);
-	$('#extmgrplus_link_order_ignore')			.on('click'		, showHideOrderIgnore);
+	$('#extmgrplus_link_ext_properties')		.on('click'		, showExtProperties);
 	$('#extmgrplus_link_save_checkboxes')		.on('click'		, saveCheckboxes);
 	$('[name="ext_mark_all_enabled"]:enabled')	.on('change'	, {checkboxType: 'enabled'}, checkUncheckAll);
 	$('[name="ext_mark_all_disabled"]:enabled')	.on('change'	, {checkboxType: 'disabled'}, checkUncheckAll);

@@ -1,5 +1,21 @@
+#### 2.1.0-b17
+* ExtMgr Template:
+  * Eigenschaften der Erweiterungen:
+    * Den Link "Reihenfolge & Ignorieren" umbenannt zu "Eigenschaften der Erweiterungen".
+    * Neues Icon für diesen Link; Zahnräder-Symbol.
+    * Im aufgeklappten Formular werden nicht verfügbare Elemente jetzt entweder abgeblendet dargestellt (Erklärungen) oder nicht erzeugt (Spalteninhalte). Stehen gar keine Eigenschaften zur Verfügung, wird der Link zum Öffnen des Formulars nicht angeboten, wie es bisher bei Reihenfolge&Ignorieren der Fall war.
+    * Den ersten Satz der Erklärungen auf der linken Seite unterhalb der Labels entfernt und wieder bei den Erklärungen auf der rechten Seite eingefügt. Somit noch kompakter und weniger Code und Variablen nötig.
+    * CSS und JS an die Änderungen angepasst.
+  * Twig Optimierung.
+* Core:
+  * An die Änderungen bez. "Eigenschaften der Erweiterungen" angepasst.
+* Sprachdateien:
+  * 2 Variablen umbenannt.
+  * 2 Variablen entfernt.
+  * 5 Variablen geändert.
+  
 #### 2.1.0-b16
-* Fix: 2 Struktur-Fehler in einem jQuery Selektor behoben, die jedoch seltsamerweise keine Auswirkungen hatten.
+* Fix: 2 Syntax-Fehler in einem jQuery Selektor behoben, die jedoch seltsamerweise keine Auswirkungen hatten.
 * Core:
   * Template Variablen für die verschiedenen Zähler werden nicht mehr als separate Variablen, sondern als Array generiert um dynamischen Zugriff zu vereinfachen.
 * ExtMgr Template:

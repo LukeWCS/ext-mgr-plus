@@ -20,9 +20,9 @@
 {% endif %}
 
 {% set const = {
-	'CHECKBOX_OFF'	: 0,
-	'CHECKBOX_ALL'	: 1,
-	'CHECKBOX_LAST'	: 2,
+	CHECKBOX_OFF	: 0,
+	CHECKBOX_ALL	: 1,
+	CHECKBOX_LAST	: 2,
 } %}
 
 <a id="maincontent"></a>
@@ -42,18 +42,10 @@
 	</colgroup>
 	<thead>
 		<tr>
-			<th>
-				{{ lang('EXTMGRPLUS_COL_AVAILABLE_EXTENSIONS') }}
-			</th>
-			<th>
-				{{ lang('EXTMGRPLUS_COL_WITH_VERSIONCHECK') }}
-			</th>
-			<th>
-				{{ lang('EXTMGRPLUS_COL_LAST_VERSIONCHECK') }}
-			</th>
-			<th>
-				{{ lang('EXTMGRPLUS_COL_AVAILABLE_UPDATES') }}
-			</th>
+			<th>{{ lang('EXTMGRPLUS_COL_AVAILABLE_EXTENSIONS') }}</th>
+			<th>{{ lang('EXTMGRPLUS_COL_WITH_VERSIONCHECK') }}</th>
+			<th>{{ lang('EXTMGRPLUS_COL_LAST_VERSIONCHECK') }}</th>
+			<th>{{ lang('EXTMGRPLUS_COL_AVAILABLE_UPDATES') }}</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -87,27 +79,24 @@
 		&nbsp;
 		<span class="js_link" id="extmgrplus_link_version_check" data-url="{{ U_EXTMGRPLUS_VERSIONCHECK }}">{{ common.icon('fa-refresh') }}{{ lang('VERSIONCHECK_FORCE_UPDATE_ALL') }}</span>
 		&nbsp;
-		<span class="js_link{{ EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE ? '" id="extmgrplus_link_order_ignore"' : ' disabled"' }}>{{ common.icon('fa-sort') }}{{ lang('EXTMGRPLUS_LINK_ORDER_AND_IGNORE') }}</span>
+		<span class="js_link{{ EXTMGRPLUS_EXT_PROPERTIES ? '" id="extmgrplus_link_ext_properties"' : ' disabled"' }}>{{ common.icon('fa-cogs') }}{{ lang('EXTMGRPLUS_LINK_EXT_PROPERTIES') }}</span>
 		&nbsp;
 		<span class="js_link{{ EXTMGRPLUS_SELECT_CHECKBOX_MODE == const.CHECKBOX_LAST ? '" id="extmgrplus_link_save_checkboxes"' : ' disabled"' }}>{{ common.icon('fa-check-square-o') }}{{ lang('EXTMGRPLUS_LINK_SAVE_CHECKBOXES') }}</span>
 	</span>
 </fieldset>
 
 <form id="extmgrplus_list" method="post" action="{{ U_ACTION }}">
-	{% if EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE %}
-		<fieldset class="extmgrplus_order_and_ignore" style="display: none;">
+	{% if EXTMGRPLUS_EXT_PROPERTIES %}
+		<fieldset class="ext_properties" style="display: none;">
 			<legend>{{ lang('EXTMGRPLUS_SECTION_SETTINGS') }}</legend>
 
-			<dl>
+			<dl{{ !EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE ? ' class="inactive"' }}>
 				<dt>
 					<label>{{ lang('EXTMGRPLUS_ORDER', common.icon('fa-sort')) ~ lang('COLON') }}</label><br>
-					<span>{{ lang('EXTMGRPLUS_ORDER_EXPLAIN_SHORT') }}</span>
 				</dt>
 				<dd>
 					<details>
-						<summary>
-							{{ lang('EXTMGRPLUS_SPOILER_LABEL') }}
-						</summary>
+						<summary>{{ lang('EXTMGRPLUS_SPOILER_LABEL') }}</summary>
 						<div>
 							<span>{{ lang('EXTMGRPLUS_ORDER_EXPLAIN') }}</span><br><br>
 							<label>{{ lang('EXTMGRPLUS_DEPENDENCY') }}</label><br>
@@ -117,25 +106,22 @@
 				</dd>
 			</dl>
 
-			<dl>
+			<dl{{ !EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE ? ' class="inactive"' }}>
 				<dt>
 					<label>{{ lang('EXTMGRPLUS_IGNORE', common.icon('fa-ban')) ~ lang('COLON') }}</label><br>
-					<span>{{ lang('EXTMGRPLUS_IGNORE_EXPLAIN_SHORT') }}</span>
 				</dt>
 				<dd>
 					<details>
-						<summary>
-							{{ lang('EXTMGRPLUS_SPOILER_LABEL') }}
-						</summary>
-						<div>
-							<span>{{ lang('EXTMGRPLUS_IGNORE_EXPLAIN') }}</span>
-						</div>
+						<summary>{{ lang('EXTMGRPLUS_SPOILER_LABEL') }}</summary>
+							<div>
+								<span>{{ lang('EXTMGRPLUS_IGNORE_EXPLAIN') }}</span>
+							</div>
 					</details>
 				</dd>
 			</dl>
 		</fieldset>
 
-		{{ _self.submit_buttons('order_and_ignore') }}
+		{{ _self.submit_buttons('ext_properties') }}
 	{% endif %}
 
 	<table class="table1">
@@ -183,154 +169,146 @@
 		</thead>
 
 		<tbody>
-			{% for list in ['enabled', 'disabled', 'not_installed'] %}
-				{% if _context[list]|length %}
-					<tr>
-						<td class="row3">
-						</td>
-						<td class="row3">
+			{% for list in ['enabled', 'disabled', 'not_installed']|filter(list => _context[list]|length) %}
+				<tr>
+					<td class="row3"></td>
+					<td class="row3">
+						{% apply spaceless %}
+						<strong>{{ lang('EXTMGRPLUS_EXTENSIONS_' ~ list|upper, EXTMGRPLUS_COUNT[list]) }}</strong>
+						{% if list == 'enabled' %}
+							{% EVENT acp_ext_list_enabled_title_after %}
+						{% elseif list == 'disabled' %}
+							{% EVENT acp_ext_list_disabled_title_after %}
+						{% elseif list == 'not_installed' %}
+							{% EVENT acp_ext_list_not_installed_title_after %}
+						{% endif %}
+						{% endapply %}
+					</td>
+					<td class="row3"></td>
+					<td class="row3"{{ !EXTMGRPLUS_SWITCH_MIGRATION_COL ? ' style="display: none;"' }}></td>
+					<td class="row3"></td>
+					<td class="row3">
+						{% apply spaceless %}
+						{% if list != 'not_installed' %}
+							{{ _self.submit_buttons({'enabled': 'disable_all', 'disabled': 'enable_all'}[list], EXTMGRPLUS_COUNT[list ~ '_selected'] > 0) }}
+						{% endif %}
+						{% endapply %}
+					</td>
+					<td class="row3">
+						{% apply spaceless %}
+						{% if list != 'not_installed' %}
+							{% set this_enabled = EXTMGRPLUS_COUNT[list ~ '_selectable'] > 0 %}
+							<input type="checkbox" name="ext_mark_all_{{ list }}" class="checkbox" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT_ALL')|e('html') }}"{{ (this_enabled && EXTMGRPLUS_SELECT_CHECKBOX_MODE == const.CHECKBOX_ALL) ? ' checked' }}{{ !this_enabled ? ' disabled' }}>
+						{% endif %}
+						{% endapply %}
+					</td>
+					<td class="row3" style="display: none;"></td>
+					<td class="row3" style="display: none;"></td>
+				</tr>
+				{% for ext in _context[list] %}
+					{% set vc_obj = EXTMGRPLUS_LIST_VERSIONCHECK[ext.NAME] ?? {} %}
+					<tr class="ext_{{ list }} row-highlight">
+						<td>
 							{% apply spaceless %}
-							<strong>{{ lang('EXTMGRPLUS_EXTENSIONS_' ~ list|upper, EXTMGRPLUS_COUNT[list]) }}</strong>
+							{% if vc_obj.cdb_ext === true %}
+								<span title="{{ lang('EXTMGRPLUS_TOOLTIP_CDB_EXT')|e('html') }}">{{ common.icon('fa-database') }}</span>
+							{% endif %}
+							{% endapply %}
+						</td>
+						<td>
+							{% apply spaceless %}
+							<strong title="{{ ext.NAME }}">{{ ext.META_DISPLAY_NAME }}</strong>
 							{% if list == 'enabled' %}
-								{% EVENT acp_ext_list_enabled_title_after %}
+								{% EVENT acp_ext_list_enabled_name_after %}
 							{% elseif list == 'disabled' %}
-								{% EVENT acp_ext_list_disabled_title_after %}
+								{% EVENT acp_ext_list_disabled_name_after %}
 							{% elseif list == 'not_installed' %}
-								{% EVENT acp_ext_list_not_installed_title_after %}
+								{% EVENT acp_ext_list_not_installed_name_after %}
 							{% endif %}
 							{% endapply %}
 						</td>
-						<td class="row3">
-						</td>
-						<td class="row3"{{ !EXTMGRPLUS_SWITCH_MIGRATION_COL ? ' style="display: none;"' }}>
-						</td>
-						<td class="row3">
-						</td>
-						<td class="row3">
+						<td>
 							{% apply spaceless %}
-							{% if list != 'not_installed' %}
-								{{ _self.submit_buttons({'enabled': 'disable_all', 'disabled': 'enable_all'}[list], EXTMGRPLUS_COUNT[list ~ '_selected'] > 0) }}
+							{% if ext.NAME is defined %}
+								{% if vc_obj.current == 'ERROR' || vc_obj.current is empty %}
+									<span>{{ ext.META_VERSION }}</span>
+								{% else %}
+									<strong class="{{ vc_obj.current == 'NOUPD' ? 'current-ext' : 'outdated-ext' }}">{{ ext.META_VERSION }}</strong>
+								{% endif %}
+								{% if vc_obj.current === false %}
+									<span title="{{ lang('EXTMGRPLUS_TOOLTIP_NO_VERSIONCHECK')|e('html') }}">&nbsp;{{ common.icon('fa-chain-broken') }}</span>
+								{% elseif vc_obj.current == 'ERROR' %}
+									<span title="{{ lang('EXTMGRPLUS_TOOLTIP_VERSIONCHECK_ERROR')|e('html') }}">&nbsp;{{ common.icon('fa-exclamation-triangle') }}</span>
+								{% elseif vc_obj.current is empty %}
+									<span title="{{ lang('EXTMGRPLUS_TOOLTIP_VERSIONCHECK_EMPTY')|e('html') }}">&nbsp;{{ common.icon('fa-question-circle') }}</span>
+								{% elseif vc_obj.current != 'NOUPD' %}
+									<span title="{{ lang('EXTMGRPLUS_TOOLTIP_OUTDATED')|e('html') }}">&nbsp;{{ common.icon('fa-exclamation-circle outdated-ext') }}</span>
+									<strong class="current-ext">&nbsp;({{ vc_obj.current }})</strong>
+								{% endif %}
 							{% endif %}
 							{% endapply %}
 						</td>
-						<td class="row3">
+						<td{{ !EXTMGRPLUS_SWITCH_MIGRATION_COL ? ' style="display: none;"' }}>
 							{% apply spaceless %}
-							{% if list != 'not_installed' %}
-								{% set this_enabled = EXTMGRPLUS_COUNT[list ~ '_selectable'] > 0 %}
-								<input type="checkbox" name="ext_mark_all_{{ list }}" class="radio" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT_ALL')|e('html') }}"{{ (this_enabled && EXTMGRPLUS_SELECT_CHECKBOX_MODE == const.CHECKBOX_ALL) ? ' checked' }}{{ !this_enabled ? ' disabled' }}>
+							{% if list != 'enabled' && EXTMGRPLUS_SWITCH_MIGRATION_COL %}
+								{% set count = EXTMGRPLUS_LIST_MIGRATIONS[ext.NAME] ?? 0 %}
+								{% if EXTMGRPLUS_LIST_IGNORE[ext.NAME] is defined %}
+									<span title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_IGNORED')|e('html') }}">{{ common.icon('fa-ban') }}</span>
+								{% elseif count %}
+									<span title="{{ lang('EXTMGRPLUS_TOOLTIP_HAS_MIGRATION')|e('html') }}">{{ count }}</span>
+								{% endif %}
 							{% endif %}
 							{% endapply %}
 						</td>
-						<td class="row3" style="display: none;">
+						<td>
+							{% apply spaceless %}
+							{% if ext.U_DETAILS %}
+								<a href="{{ ext.U_DETAILS }}">{{ lang('DETAILS') }}</a>
+							{% endif %}
+							{% endapply %}
 						</td>
-						<td class="row3" style="display: none;">
+						<td>
+							{% apply spaceless %}
+							{% for action in ext.actions %}
+								<a href="{{ action.U_ACTION }}"{{ action.L_ACTION_EXPLAIN ? ' title="' ~ action.L_ACTION_EXPLAIN ~ '"' }}>{{ action.L_ACTION }}</a>
+								{{ !loop.last ? '<span>&nbsp;|&nbsp;</span>' }}
+							{% endfor %}
+							{% endapply %}
+						</td>
+						<td>
+							{% apply spaceless %}
+							{% if list != 'not_installed' && ext.NAME is defined && (ext.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_SWITCH_SELF_DISABLE) %}
+								{% if EXTMGRPLUS_LIST_IGNORE[ext.NAME] is defined %}
+									<span title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_IGNORED')|e('html') }}">{{ common.icon('fa-ban') }}
+								{% elseif EXTMGRPLUS_LIST_MIGRATIONS[ext.NAME] is defined && !EXTMGRPLUS_SWITCH_MIGRATIONS %}
+									<input type="checkbox" name="ext_mark_{{ list }}[]" class="checkbox" title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_LOCKED')|e('html') }}" disabled>
+								{% else %}
+									<input type="checkbox" name="ext_mark_{{ list }}[]" class="checkbox" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT')|e('html') }}" value="{{ ext.NAME }}"{{ EXTMGRPLUS_LIST_SELECTED[ext.NAME] is defined ? ' checked' }}>
+								{% endif %}
+							{% endif %}
+							{% endapply %}
+						</td>
+						<td style="display: none;">
+							{% apply spaceless %}
+							{% if ext.NAME is defined && ext.NAME != 'lukewcs/extmgrplus' && EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE %}
+								<input type="text" name="ext_order[{{ ext.NAME }}]" size="2" maxlength="3"{{ EXTMGRPLUS_LIST_IGNORE[ext.NAME] is defined ? ' class="inactive"' }} title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER')|e('html') }}" value="{{ EXTMGRPLUS_LIST_ORDER[ext.NAME] ?? '' }}" pattern="^\+?[0-9]{1,2}$">
+							{% endif %}
+							{% endapply %}
+						</td>
+						<td style="display: none;">
+							{% apply spaceless %}
+							{% if ext.NAME is defined && ext.NAME != 'lukewcs/extmgrplus' && EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE %}
+								<input type="checkbox" name="ext_ignore[]" class="checkbox" title="{{ lang('EXTMGRPLUS_TOOLTIP_IGNORE')|e('html') }}" value="{{ ext.NAME }}"{{ EXTMGRPLUS_LIST_IGNORE[ext.NAME] is defined ? ' checked' }}>
+							{% endif %}
+							{% endapply %}
 						</td>
 					</tr>
-					{% for ext in _context[list] %}
-						{% set vc_obj = EXTMGRPLUS_LIST_VERSIONCHECK[ext.NAME] ?? {} %}
-						<tr class="ext_{{ list }} row-highlight">
-							<td>
-								{% apply spaceless %}
-								{% if vc_obj.cdb_ext === true %}
-									<span title="{{ lang('EXTMGRPLUS_TOOLTIP_CDB_EXT')|e('html') }}">{{ common.icon('fa-database') }}</span>
-								{% endif %}
-								{% endapply %}
-							</td>
-							<td>
-								{% apply spaceless %}
-								<strong title="{{ ext.NAME }}">{{ ext.META_DISPLAY_NAME }}</strong>
-								{% if list == 'enabled' %}
-									{% EVENT acp_ext_list_enabled_name_after %}
-								{% elseif list == 'disabled' %}
-									{% EVENT acp_ext_list_disabled_name_after %}
-								{% elseif list == 'not_installed' %}
-									{% EVENT acp_ext_list_not_installed_name_after %}
-								{% endif %}
-								{% endapply %}
-							</td>
-							<td>
-								{% apply spaceless %}
-								{% if ext.NAME is defined %}
-									{% if vc_obj.current == 'ERROR' || vc_obj.current is empty %}
-										<span>{{ ext.META_VERSION }}</span>
-									{% else %}
-										<strong class="{{ vc_obj.current == 'NOUPD' ? 'current-ext' : 'outdated-ext' }}">{{ ext.META_VERSION }}</strong>
-									{% endif %}
-									{% if vc_obj.current === false %}
-										<span title="{{ lang('EXTMGRPLUS_TOOLTIP_NO_VERSIONCHECK')|e('html') }}">&nbsp;{{ common.icon('fa-chain-broken') }}</span>
-									{% elseif vc_obj.current == 'ERROR' %}
-										<span title="{{ lang('EXTMGRPLUS_TOOLTIP_VERSIONCHECK_ERROR')|e('html') }}">&nbsp;{{ common.icon('fa-exclamation-triangle') }}</span>
-									{% elseif vc_obj.current is empty %}
-										<span title="{{ lang('EXTMGRPLUS_TOOLTIP_VERSIONCHECK_EMPTY')|e('html') }}">&nbsp;{{ common.icon('fa-question-circle') }}</span>
-									{% elseif vc_obj.current != 'NOUPD' %}
-										<span title="{{ lang('EXTMGRPLUS_TOOLTIP_OUTDATED')|e('html') }}">&nbsp;{{ common.icon('fa-exclamation-circle outdated-ext') }}</span>
-										<strong class="current-ext">&nbsp;({{ vc_obj.current }})</strong>
-									{% endif %}
-								{% endif %}
-								{% endapply %}
-							</td>
-							<td{{ !EXTMGRPLUS_SWITCH_MIGRATION_COL ? ' style="display: none;"' }}>
-								{% apply spaceless %}
-								{% if list != 'enabled' && EXTMGRPLUS_SWITCH_MIGRATION_COL %}
-									{% set count = EXTMGRPLUS_LIST_MIGRATIONS[ext.NAME] ?? 0 %}
-									{% if EXTMGRPLUS_LIST_IGNORE[ext.NAME] is defined %}
-										<span title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_IGNORED')|e('html') }}">{{ common.icon('fa-ban') }}</span>
-									{% elseif count %}
-										<span title="{{ lang('EXTMGRPLUS_TOOLTIP_HAS_MIGRATION')|e('html') }}">{{ count }}</span>
-									{% endif %}
-								{% endif %}
-								{% endapply %}
-							</td>
-							<td>
-								{% apply spaceless %}
-								{% if ext.U_DETAILS %}
-									<a href="{{ ext.U_DETAILS }}">{{ lang('DETAILS') }}</a>
-								{% endif %}
-								{% endapply %}
-							</td>
-							<td>
-								{% apply spaceless %}
-								{% for action in ext.actions %}
-									<a href="{{ action.U_ACTION }}"{{ action.L_ACTION_EXPLAIN ? ' title="' ~ action.L_ACTION_EXPLAIN ~ '"' }}>{{ action.L_ACTION }}</a>
-									{{ !loop.last ? '<span>&nbsp;|&nbsp;</span>' }}
-								{% endfor %}
-								{% endapply %}
-							</td>
-							<td>
-								{% apply spaceless %}
-								{% if list != 'not_installed' && ext.NAME is defined && (ext.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_SWITCH_SELF_DISABLE) %}
-									{% if EXTMGRPLUS_LIST_IGNORE[ext.NAME] is defined %}
-										<span title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_IGNORED')|e('html') }}">{{ common.icon('fa-ban') }}
-									{% elseif EXTMGRPLUS_LIST_MIGRATIONS[ext.NAME] is defined && !EXTMGRPLUS_SWITCH_MIGRATIONS %}
-										<input type="checkbox" name="ext_mark_{{ list }}[]" class="radio" title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_LOCKED')|e('html') }}" disabled>
-									{% else %}
-										<input type="checkbox" name="ext_mark_{{ list }}[]" class="radio" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT')|e('html') }}" value="{{ ext.NAME }}"{{ EXTMGRPLUS_LIST_SELECTED[ext.NAME] is defined ? ' checked' }}>
-									{% endif %}
-								{% endif %}
-								{% endapply %}
-							</td>
-							<td style="display: none;">
-								{% apply spaceless %}
-								{% if ext.NAME is defined && ext.NAME != 'lukewcs/extmgrplus' && EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE %}
-									<input type="text" name="ext_order[{{ ext.NAME }}]" size="2" maxlength="3"{{ EXTMGRPLUS_LIST_IGNORE[ext.NAME] is defined ? ' class="inactive"' }} title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER')|e('html') }}" value="{{ EXTMGRPLUS_LIST_ORDER[ext.NAME] ?? '' }}" pattern="^\+?[0-9]{1,2}$">
-								{% endif %}
-								{% endapply %}
-							</td>
-							<td style="display: none;">
-								{% apply spaceless %}
-								{% if ext.NAME is defined && ext.NAME != 'lukewcs/extmgrplus' && EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE %}
-									<input type="checkbox" name="ext_ignore[]" class="radio" title="{{ lang('EXTMGRPLUS_TOOLTIP_IGNORE')|e('html') }}" value="{{ ext.NAME }}"{{ EXTMGRPLUS_LIST_IGNORE[ext.NAME] is defined ? ' checked' }}>
-								{% endif %}
-								{% endapply %}
-							</td>
-						</tr>
-					{% endfor %}
-				{% endif %}
+				{% endfor %}
 			{% endfor %}
 		</tbody>
 	</table>
 
-	{{ EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE ? _self.submit_buttons('order_and_ignore') }}
+	{{ EXTMGRPLUS_EXT_PROPERTIES ? _self.submit_buttons('ext_properties') }}
 
 	{{ EXTMGRPLUS_SELECT_CHECKBOX_MODE == const.CHECKBOX_LAST ? _self.submit_buttons('save_checkboxes') }}
 
@@ -370,12 +348,12 @@
 {% INCLUDECSS '@lukewcs_extmgrplus/acp_ext_mgr_plus.css' %}
 
 {% macro submit_buttons(type, enabled = true) %}
-	{% if type == 'order_and_ignore' %}
-		<fieldset class="extmgrplus_order_and_ignore" style="display: none;">
+	{% if type == 'ext_properties' %}
+		<fieldset class="ext_properties" style="display: none;">
 			<legend>{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
 
 			<p class="submit-buttons">
-				<input type="submit" name="extmgrplus_save_order_and_ignore" class="button1" value="{{ lang('SUBMIT') }}">
+				<input type="submit" name="extmgrplus_save_ext_properties" class="button1" value="{{ lang('SUBMIT') }}">
 			</p>
 		</fieldset>
 	{% elseif type == 'save_checkboxes' %}
