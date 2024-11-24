@@ -1,3 +1,6 @@
+#### 2.1.0-b18
+* Fix: Bei Aktivierung einer Ext mit fehlgeschlagener Migration wurde beim Vorgang nur die Sprachvariable `EXTMGRPLUS_ALL_ENABLE` angezeigt, anstatt dem Text.
+
 #### 2.1.0-b17
 * ExtMgr Template:
   * Eigenschaften der Erweiterungen:

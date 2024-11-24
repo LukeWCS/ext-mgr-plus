@@ -532,7 +532,7 @@ class ext_mgr_plus
 						restore_error_handler();
 						$msg_failed = $this->create_failed_msg($ext_display_name, $ext_version, $ext_name, $e->getLocalisedMessage($this->user));
 						$this->common->trigger_error_(
-							$this->language->lang('EXTMGRPLUS_MSG_PROCESS_ABORTED', $this->language->lang('EXTMGRPLUS_ALL_ENABLE')) . $msg_failed,
+							$this->language->lang('EXTMGRPLUS_MSG_PROCESS_ABORTED', $this->language->lang('EXTMGRPLUS_ENABLE_ALL')) . $msg_failed,
 							E_USER_WARNING,
 							'RETURN_TO_EXTENSION_LIST'
 						);

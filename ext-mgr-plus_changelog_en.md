@@ -1,11 +1,11 @@
 ### 2.0.1
-(2024-06-09) / CDB: 2024--)
+(2024-06-09) / CDB: 2024-07-14)
 
 * The display of the instructions for installing, updating and uninstalling at the end of the extensions list can now be disabled in the settings. [Suggestion by MattF (phpBB.com)]
 * Code optimization for PHP and Javascript.
 * Javascript:
   * LukeWCSphpBBConfirmBox 1.4.3
-  * Revised function `setSwitch()` adopted from LFWWH 2.2.0.
+  * Revised function `setSwitch()` adopted from "LFwho was here" 2.2.0.
 * Language files:
   * 2 new language variables for the new switch.
 
