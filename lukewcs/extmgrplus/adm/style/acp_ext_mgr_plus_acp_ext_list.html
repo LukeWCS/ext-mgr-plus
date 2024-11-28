@@ -190,7 +190,7 @@
 					<td class="row3">
 						{% apply spaceless %}
 						{% if list != 'not_installed' %}
-							{{ _self.submit_buttons({'enabled': 'disable_all', 'disabled': 'enable_all'}[list], EXTMGRPLUS_COUNT[list ~ '_selected'] > 0) }}
+							{{ _self.submit_buttons({enabled: 'disable_all', disabled: 'enable_all'}[list], EXTMGRPLUS_COUNT[list ~ '_selected'] > 0) }}
 						{% endif %}
 						{% endapply %}
 					</td>

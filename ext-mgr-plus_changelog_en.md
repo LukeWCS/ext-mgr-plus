@@ -1,3 +1,52 @@
+### 3.0.0
+(2024-11-28) / CDB: --)
+
+* This version represents a significant development, as in addition to new features and changes, several workarounds that were still necessary for older phpBB versions have been removed. Optimizations have also been made in many places. The changes also result in higher requirements. **Important: If you have already tested EMP 2.1 Beta, you must completely uninstall it (delete working data) before you can install EMP 3.0.**
+* The requirements have changed:
+  * phpBB: 3.3.8 - 3.3.x (Previously: 3.3.0 - 3.3.x)
+  * PHP: 7.4.0 - 8.4.x (Previously: 7.1.3 - 8.3.x)
+* Fix: In the English language pack, the plural form was incorrect when displaying the number of errors after a version check if the number was exactly 1. Plural list adjusted accordingly for the number 1 and 2+. [Report from leschek (phpBB.com)]
+* Fix: The switch "Always check for unstable development versions:" was not taken into account and therefore no new developer versions could be reported. This error was only noticed during the development of 3.0.0. However, this switch is not relevant for CDB extensions anyway, since uploading "unstable" versions is not allowed. This error has existed since EMP started storing the version data determined by phpBB permanently in the DB, i.e. since 1.0.5.
+* Fix: 2 syntax errors in a jQuery selector were fixed, but strangely enough they had no effect.
+* As of 3.3.14, phpBB generates separate template arrays for the deactivated and non-installed extensions so that both groups can be displayed separately. Accordingly, the template in EMP has been redesigned so that the non-installed extensions can still be displayed. The behavior of phpBB 3.3.14 is imitated for lower phpBB versions so that the template conversion can also work here. The conversion was carried out on the following basis: [phpBB #6665](https://github.com/phpbb/phpbb/pull/6665) and [phpBB #6743](https://github.com/phpbb/phpbb/pull/6743).
+* EMP now controls the version check itself and executes it block by block, which can effectively prevent timeouts in PHP and the database. With this new function, a version check can be carried out successfully on phpBB installations with an extremely large number of extensions, where phpBB is no longer able to carry out such a check completely due to time limits. [Message from dimassamid (phpBB.com)]
+  * When the version check is called, a new page opens with a progress bar. The blue progress bar provides information about the approximate progress in the current block and the green progress bar provides information about the overall progress in percentage terms and shows in the middle how many extensions have already been checked for new versions in the last runs and how many in total offer a version check (done / total). This page is automatically reloaded and updated after a run has finished.
+  * The new option "Limit version check execution time:" is available in the settings to change the maximum runtime (in seconds) of a run. This is set to 15 seconds by default, which is a safe value with enough reserve for unfavorable situations.
+  * The small info table above the extensions list now also shows the duration of the last version check in seconds. Only the pure PHP time is counted, i.e. minus the time required for page updates.
+* Additional changes to the version check:
+  * For extensions for which no version check has yet been carried out, e.g. for a newly installed extension, a new icon (question mark in an orange circle) is now explicitly displayed with a tooltip. This means that there is a separate icon for all situations that EMP knows without exception.
+  * Before the global version check is carried out, all version data stored in the phpBB cache is deleted. This ensures that no outdated data is used. This affects the local version check of the "Details" page.
+  * The data that is written to the database now also contains information about which extensions were recognized as current during the last version check. In this case, the versions are permanently displayed in green.
+  * With the changes to the version check, EMP is now completely independent of the phpBB version cache, at least for the global version check. This also has the advantage that after deactivating and reactivating EMP, all information from the last version check can be displayed again without exception. This is not the case with phpBB Vanilla, as the data from the last version check is lost as soon as the cache is deleted.
+* A `trigger_error` within `ext.php` can no longer lead to an action being aborted in EMP. After a long time, I finally figured out how to specifically prevent the normal effect of `trigger_error` and intercept the message. For example, if you wanted to activate 30 extensions and the 16th one were to execute a `trigger_error`, you would ultimately only have 15 activated extensions. Furthermore, in this case you would not have received any feedback on how many extensions were successfully switched. However, with the new technology, in this case you have 29 activated extensions and only 1 not activated, including the normal feedback on how many extensions could be switched. To do this, the behavior of the phpBB error handler is temporarily changed so that the normal function of `trigger_error` is completely deactivated for `E_USER_WARNING` and `E_USER_NOTICE` and the data generated (4 values) are passed via extension exception, which can then be further processed by EMP. This technology is now used for the following methods of `ext.php`:
+  * `is_enableable()`
+  * `disable_step()`
+  * `enable_step()`
+* Error handling based on the above technology further improved:
+  * When deactivating, all extensions that were not successfully deactivated are now explicitly listed. This was previously only the case when activating. If messages from `trigger_error` were generated, these are also displayed.
+  * In the confirmation message, the failed extensions are now numbered.
+* Validated extensions, i.e. those that are available in the Customisation Database (CDB), are now clearly marked with the same icon as the link to the "phpBB extension database". A new column has been added before the name column.
+* In the "Details" of an extension, there is a new subgroup "Information from Extension Manager Plus" with the following additions:
+  * "Related page of the phpBB extension database:", if an extension comes from the CDB.
+  * "Link to version file:", if the expert switch "Show link to version file:" is activated. This function is primarily relevant for extension developers and is not activated initially.
+* The "Order & Ignore" link has been renamed to "Extension Properties". This involves further changes:
+  * New icon for this link; the gear symbol.
+  * In the expanded form, unavailable elements are now dimmed or not created. If no properties are available due to settings, the link is not offered either, as was previously the case with Order&Ignore.
+  * To simplify future changes, such as adding another column, the explanations are now no longer displayed next to each other, but one below the other. The explanations are displayed within spoiler boxes so that the display can be kept compact. This change also makes the form more like a normal ACP module, with labels on the left and interactive elements on the right. The new compact display with spoiler boxes is also advantageous for mobile devices.
+  * Moved the "Order & Ignore" switch to the new, separate "Extension Properties" section.
+* A defined order group is now also taken into account when deactivating, in reverse order.
+* Due to the extensive improvements including increasing the minimum versions, several workarounds became obsolete and have therefore been removed:
+  * The function with which various data for the currently edited extension had to be temporarily stored in template variables.
+  * The function with which the log data - if logging is activated - had to be temporarily stored in the DB after each individual switchover (activation or deactivation) of an extension, in order to be able to create a log entry after an unexpected termination.
+  * The function with which a message can be intercepted and expanded (`trigger_error` workaround).
+  * ToDo function with which actions can be postponed to the next page load. This also saves a PHP event and a function call every time a page is generated in the forum and ACP. This function was required for phpBB versions <3.3.8 and controlled the following tasks:
+    * Clear cache (cache workaround)
+    * Self-deactivation (cache workaround)
+    * Log entry
+* Suffixes or a fourth segment are now allowed for the version of a language pack so that corrections can be marked accordingly, for example in the form `3.0.0.1`. Versions must be designed according to the PHP version conventions so that they can be compared using [version_compare](https://www.php.net/version_compare).
+* Updated PHP functions and Twig macros from "Force Account Reactivation" and "Limit Multiple Replies" adopted.
+* Code optimization for PHP and Twig.
+
 ### 2.0.1
 (2024-06-09) / CDB: 2024-07-14)
 

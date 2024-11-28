@@ -33,6 +33,7 @@ class v_1_1_0 extends \phpbb\db\migration\container_aware_migration
 			['config.add',			['extmgrplus_switch_migration_col'		, 0]],
 			['config.add',			['extmgrplus_switch_migrations'			, $this->config['extmgrplus_enable_migrations']]],
 			['config.add',			['extmgrplus_exec_todo'					, 0]],
+
 			['config_text.add', 	['extmgrplus_list_order_and_ignore'		, $this->config_text->get('extmgrplus_order_and_ignore_list')]],
 			['config_text.add', 	['extmgrplus_list_selected'				, '']],
 			['config_text.add', 	['extmgrplus_list_version_check'		, $this->config_text->get('extmgrplus_version_check')]],
@@ -44,6 +45,7 @@ class v_1_1_0 extends \phpbb\db\migration\container_aware_migration
 			['config.remove',		['extmgrplus_enable_order_and_ignore']],
 			['config.remove',		['extmgrplus_enable_self_disable']],
 			['config.remove',		['extmgrplus_enable_migrations']],
+
 			['config_text.remove',	['extmgrplus_todo_list']],
 			['config_text.remove',	['extmgrplus_order_and_ignore_list']],
 			['config_text.remove',	['extmgrplus_version_check']],

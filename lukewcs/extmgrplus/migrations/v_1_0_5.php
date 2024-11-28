@@ -24,6 +24,7 @@ class v_1_0_5 extends \phpbb\db\migration\migration
 	{
 		return [
 			['config.add',		['extmgrplus_enable_version_notification'	, 1]],
+
 			['config_text.add', ['extmgrplus_version_check'					, '']],
 		];
 	}

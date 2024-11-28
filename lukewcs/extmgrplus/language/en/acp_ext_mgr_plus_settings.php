@@ -53,8 +53,6 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_CHECKBOX_MODE_OFF'			=> 'Off',
 	'EXTMGRPLUS_CHECKBOX_MODE_ALL'			=> 'Set all',
 	'EXTMGRPLUS_CHECKBOX_MODE_LAST'			=> 'Remember last state',
-	'EXTMGRPLUS_ORDER_AND_IGNORE'			=> 'Order, dependency and ignore',
-	'EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN'	=> 'If you enable this option, the “Enable selected” and “Disable selected” actions will take the order group and the ignore property into account. In addition, defined dependencies will also be taken into account when selecting/deselecting.',
 	'EXTMGRPLUS_SELF_DISABLE'				=> 'Allow self-deactivation',
 	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'		=> 'If you enable this option, then “Extension Manager Plus” can also deactivate itself in the “Disable selected” action, since this extension can then be selected like any other.',
 	'EXTMGRPLUS_INSTRUCTIONS'				=> 'View instructions',
@@ -62,8 +60,14 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_VC_LIMIT'					=> 'Divide execution time of the version check',
 	'EXTMGRPLUS_VC_LIMIT_EXPLAIN'			=> 'The version check is executed in blocks and with this value you can specify the maximum length of a single block of the version check. This prevents PHP or database time limits from being exceeded.',
 
+	// settings extension properties
+	'EXTMGRPLUS_SECTION_EXT_PROPERTIES'		=> 'Extension properties',
+	'EXTMGRPLUS_ORDER_AND_IGNORE'			=> 'Order, dependency and ignore',
+	'EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN'	=> 'If you enable this option, the “Enable selected” and “Disable selected” actions will take the order group and the ignore property into account. In addition, defined dependencies will also be taken into account when selecting/deselecting.',
+
 	// settings expert
 	'EXTMGRPLUS_SECTION_EXPERT_SETTINGS'	=> 'Expert settings',
+	'EXTMGRPLUS_EXPERT_SETTINGS_EXPLAIN'	=> 'In this section, special functions can be activated that are relevant for developers, for example. For functions that could be problematic, a query must be confirmed.',
 	'EXTMGRPLUS_MIGRATION_COL'				=> 'Show column with new migrations',
 	'EXTMGRPLUS_MIGRATION_COL_EXPLAIN'		=> 'If this option is enabled, then an additional column is displayed in which the number of new migrations is listed. The number is displayed for both “Disabled Extensions” and “Not installed extensions”.',
 	'EXTMGRPLUS_MIGRATIONS'					=> 'Allow extensions with new migrations',
@@ -74,7 +78,7 @@ $lang = array_merge($lang, [
 	// settings reset
 	'EXTMGRPLUS_SECTION_RESET'				=> 'Reset',
 	'EXTMGRPLUS_DEFAULTS'					=> 'Reset settings',
-	'EXTMGRPLUS_DEFAULTS_EXP'				=> 'Resets all settings to the installation standard. (Does not affect the “Order” and “Ignore” columns.)',
+	'EXTMGRPLUS_DEFAULTS_EXP'				=> 'Resets all settings to the installation default. (Has no effect on the “Extension Properties” columns.)',
 	'EXTMGRPLUS_BUTTON_DEFAULTS'			=> 'Defaults',
 
 	// messages

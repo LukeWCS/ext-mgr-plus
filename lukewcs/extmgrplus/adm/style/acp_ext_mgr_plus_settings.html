@@ -84,16 +84,6 @@
 
 		<dl>
 			<dt>
-				<label>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE') ~ lang('COLON') }}</label><br>
-				<span>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN') }}</span>
-			</dt>
-			<dd>
-				{{ _self.switch('extmgrplus_switch_order_and_ignore', EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE, switch_type) }}
-			</dd>
-		</dl>
-
-		<dl>
-			<dt>
 				<label>{{ lang('EXTMGRPLUS_SELF_DISABLE') ~ lang('COLON') }}</label><br>
 				<span>{{ lang('EXTMGRPLUS_SELF_DISABLE_EXPLAIN') }}</span>
 			</dt>
@@ -123,7 +113,20 @@
 			</dd>
 		</dl>
 
+		<legend class="legend_sub">{{ lang('EXTMGRPLUS_SECTION_EXT_PROPERTIES') }}</legend>
+
+		<dl>
+			<dt>
+				<label>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				{{ _self.switch('extmgrplus_switch_order_and_ignore', EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE, switch_type) }}
+			</dd>
+		</dl>
+
 		<legend class="legend_sub">{{ lang('EXTMGRPLUS_SECTION_EXPERT_SETTINGS') }}</legend>
+		<p>{{ lang('EXTMGRPLUS_EXPERT_SETTINGS_EXPLAIN') }}</p>
 
 		<dl>
 			<dt>

@@ -1,3 +1,17 @@
+### 3.0.0
+* Release (2024-11-28)
+* Umstellung der Version 2.1.0 auf 3.0.0.
+* Settings Template:
+  * Den Schalter für Reihenfolge&Ignorieren in die neue, separate Sektion "Eigenschaften der Erweiterungen" verschoben.
+  * Die Sektion für die Experten-Einstellungen hat jetzt eine kurze Einleitung.
+* Sprachdateien:
+  * 1 Variable hinzugefügt für die neue Sektion.
+  * 1 Variable hinzugefügt für die neue Einleitung.
+  * Kleinere Textänderungen.
+* Beschreibung in `composer.json` um blockweise Versionsprüfung erweitert.
+* Core:
+  * VP SIM entfernt.
+
 #### 2.1.0-b18
 * Fix: Bei Aktivierung einer Ext mit fehlgeschlagener Migration wurde beim Vorgang nur die Sprachvariable `EXTMGRPLUS_ALL_ENABLE` angezeigt, anstatt dem Text.
 

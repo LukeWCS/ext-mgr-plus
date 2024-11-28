@@ -24,6 +24,7 @@ class v_1_1_1 extends \phpbb\db\migration\migration
 	{
 		return [
 			['config.add', ['extmgrplus_switch_auto_redirect', 0]],
+
 			['module.add', [
 				'acp',
 				'ACP_EXTENSION_MANAGEMENT', [

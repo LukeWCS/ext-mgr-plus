@@ -53,8 +53,6 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_CHECKBOX_MODE_OFF'			=> 'Aus',
 	'EXTMGRPLUS_CHECKBOX_MODE_ALL'			=> 'Alle setzen',
 	'EXTMGRPLUS_CHECKBOX_MODE_LAST'			=> 'Letzten Zustand merken',
-	'EXTMGRPLUS_ORDER_AND_IGNORE'			=> 'Reihenfolge, Abhängigkeit und Ignorieren',
-	'EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN'	=> 'Wenn du diese Option aktivierst, wird bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ die Reihenfolge-Gruppe und das Ignorieren-Merkmal berücksichtigt. Außerdem werden beim Auswählen/Abwählen auch definierte Abhängigkeiten berücksichtigt.',
 	'EXTMGRPLUS_SELF_DISABLE'				=> 'Erlaube Eigendeaktivierung',
 	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'		=> 'Wenn du diese Option aktivierst, dann kann sich „Extension Manager Plus“ bei der Aktion „Ausgewählte deaktivieren“ auch selbst deaktivieren, da diese Erweiterung dann wie jede andere ausgewählt werden kann.',
 	'EXTMGRPLUS_INSTRUCTIONS'				=> 'Anleitungen anzeigen',
@@ -62,8 +60,14 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_VC_LIMIT'					=> 'Ausführungszeit der Versionsprüfung aufteilen',
 	'EXTMGRPLUS_VC_LIMIT_EXPLAIN'			=> 'Die Versionsprüfung wird blockweise ausgeführt und mit diesem Wert kannst du festlegen, wie lange ein einzelner Block der Versionsprüfung maximal dauern darf. Damit wird verhindert, dass Zeitlimits von PHP oder der Datenbank überschritten werden.',
 
+	// settings extension properties
+	'EXTMGRPLUS_SECTION_EXT_PROPERTIES'		=> 'Eigenschaften der Erweiterungen',
+	'EXTMGRPLUS_ORDER_AND_IGNORE'			=> 'Reihenfolge, Abhängigkeit und Ignorieren',
+	'EXTMGRPLUS_ORDER_AND_IGNORE_EXPLAIN'	=> 'Wenn du diese Option aktivierst, wird bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ die Reihenfolge-Gruppe und das Ignorieren-Merkmal berücksichtigt. Außerdem werden beim Auswählen/Abwählen auch definierte Abhängigkeiten berücksichtigt.',
+
 	// settings expert
 	'EXTMGRPLUS_SECTION_EXPERT_SETTINGS'	=> 'Experten-Einstellungen',
+	'EXTMGRPLUS_EXPERT_SETTINGS_EXPLAIN'	=> 'In diesem Abschnitt können besondere Funktionen aktiviert werden, die zum Beispiel für Entwickler relevant sind. Bei Funktionen die problematisch sein können, muss eine Rückfrage bestätigt werden.',
 	'EXTMGRPLUS_MIGRATION_COL'				=> 'Spalte mit neuen Migrationen anzeigen',
 	'EXTMGRPLUS_MIGRATION_COL_EXPLAIN'		=> 'Wenn diese Option aktiviert ist, dann wird eine zusätzliche Spalte angezeigt, in der die Anzahl neuer Migrationen aufgeführt ist. Die Anzahl wird sowohl bei „Deaktivierte Erweiterungen“ als auch bei „Nicht installierte Erweiterungen“ angezeigt.',
 	'EXTMGRPLUS_MIGRATIONS'					=> 'Erlaube Erweiterungen mit neuen Migrationen',
@@ -74,7 +78,7 @@ $lang = array_merge($lang, [
 	// settings reset
 	'EXTMGRPLUS_SECTION_RESET'				=> 'Zurücksetzen',
 	'EXTMGRPLUS_DEFAULTS'					=> 'Einstellungen zurücksetzen',
-	'EXTMGRPLUS_DEFAULTS_EXP'				=> 'Setzt alle Einstellungen auf den Installationsstandard zurück. (Hat keine Auswirkung auf die Spalten „Reihenfolge“ und „Ignorieren“.)',
+	'EXTMGRPLUS_DEFAULTS_EXP'				=> 'Setzt alle Einstellungen auf den Installationsstandard zurück. (Hat keine Auswirkung auf die Spalten von „Eigenschaften der Erweiterungen“.)',
 	'EXTMGRPLUS_BUTTON_DEFAULTS'			=> 'Standard',
 
 	// messages

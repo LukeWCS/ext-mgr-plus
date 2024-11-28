@@ -15,9 +15,9 @@ namespace lukewcs\extmgrplus\core;
 
 class ext_mgr_plus
 {
-	protected const CHECKBOX_OFF	= 0;
-	protected const CHECKBOX_ALL	= 1;
-	protected const CHECKBOX_LAST	= 2;
+	protected const  CHECKBOX_OFF	= 0;
+	protected const  CHECKBOX_ALL	= 1;
+	protected const  CHECKBOX_LAST	= 2;
 
 	protected object $common;
 	protected object $ext_manager;
@@ -759,7 +759,6 @@ class ext_mgr_plus
 			}
 
 			$this->versioncheck($ext_list_vc, $ext_name);
-			// $this->versioncheck_sim($ext_list_vc, $ext_name);
 
 			$block_count++;
 			$block_time = microtime(true) - $GLOBALS['starttime'];
@@ -935,28 +934,5 @@ class ext_mgr_plus
 			}
 		}
 		$this->template->assign_var('EXTMGRPLUS_DETAILS', $details);
-	}
-
-	private function versioncheck_sim(array &$ext_list_vc, string $ext_name, int $msec = 150): bool
-	{
-		if (rand(0, 9))
-		{
-			if (!rand(0, 5))
-			{
-				$ext_ver = explode('.', $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('version'));
-				$ext_list_vc[$ext_name]['current'] = $ext_ver[0] . '.' . rand((int) $ext_ver[1] + 1, 10) . '.' . rand((int) $ext_ver[2] + 1, 20);
-			}
-			else
-			{
-				$ext_list_vc[$ext_name]['current'] = 'NOUPD';
-			}
-		}
-		else
-		{
-			$ext_list_vc[$ext_name]['current'] = 'ERROR';
-		}
-		usleep($msec * 1000);
-
-		return true;
 	}
 }

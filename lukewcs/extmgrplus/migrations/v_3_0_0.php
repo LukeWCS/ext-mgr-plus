@@ -13,7 +13,7 @@
 
 namespace lukewcs\extmgrplus\migrations;
 
-class v_2_1_0 extends \phpbb\db\migration\migration
+class v_3_0_0 extends \phpbb\db\migration\migration
 {
 	public static function depends_on()
 	{

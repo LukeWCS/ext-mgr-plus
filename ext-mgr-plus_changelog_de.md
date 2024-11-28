@@ -1,12 +1,12 @@
-### 2.1.0
-(2024--) / CDB: --)
+### 3.0.0
+(2024-11-28) / CDB: --)
 
-* Diese Version stellt eine deutliche Weiterentwicklung dar, da hier neben Neuerungen und Änderungen auch mehrere Workarounds entfernt wurden, die noch für ältere phpBB Versionen nötig waren. Ebenso wurde an vielen Stellen Optimierungen vorgenommen. Die Änderungen haben auch höhere Anforderungen zur Folge. __Wichtig: Wer bereits EMP 2.1 Beta getestet hatte, muss das vorher komplett deinstallieren (Arbeitsdaten löschen), bevor EMP 3.0 installiert werden kann.__
+* Diese Version stellt eine deutliche Weiterentwicklung dar, da hier neben Neuerungen und Änderungen auch mehrere Workarounds entfernt wurden, die noch für ältere phpBB Versionen nötig waren. Ebenso wurden an vielen Stellen Optimierungen vorgenommen. Die Änderungen haben auch höhere Anforderungen zur Folge. **Wichtig: Wer bereits EMP 2.1 Beta getestet hatte, muss das vorher komplett deinstallieren (Arbeitsdaten löschen), bevor EMP 3.0 installiert werden kann.**
 * Die Voraussetzungen haben sich geändert:
   * phpBB: 3.3.8 - 3.3.x (Bisher: 3.3.0 - 3.3.x)
   * PHP: 7.4.0 - 8.4.x (Bisher: 7.1.3 - 8.3.x)
 * Fix: Im englischen Sprachpaket stimmte bei der Anzeige der Fehler-Anzahl nach einer Versionsprüfung die Plural-Form nicht, wenn die Anzahl exakt 1 betrug. Plural Liste entsprechend für die Anzahl 1 und 2+ angepasst. [Meldung von leschek (phpBB.com)]
-* Fix: Der Schalter "Immer auf instabile Entwicklungs-Versionen prüfen:" wurde nicht berücksichtigt und somit konnten auch keine neuen Entwickler-Versionen gemeldet werden. Dieser Fehler ist erst bei der Entwicklung von 2.1.0 aufgefallen. Allerdings hat dieser Schalter zumindest bei CDB Erweiterungen ohnehin keine Relevanz, da das Hochladen von "instabilen" Versionen nicht erlaubt ist. Dieser Fehler existierte seit dem Zeitpunkt, ab dem EMP die von phpBB ermittelten Versionsdaten dauerhaft in der DB speichert, also seit 1.0.5.
+* Fix: Der Schalter "Immer auf instabile Entwicklungs-Versionen prüfen:" wurde nicht berücksichtigt und somit konnten auch keine neuen Entwickler-Versionen gemeldet werden. Dieser Fehler ist erst bei der Entwicklung von 3.0.0 aufgefallen. Allerdings hat dieser Schalter zumindest bei CDB Erweiterungen ohnehin keine Relevanz, da das Hochladen von "instabilen" Versionen nicht erlaubt ist. Dieser Fehler existierte seit dem Zeitpunkt, ab dem EMP die von phpBB ermittelten Versionsdaten dauerhaft in der DB speichert, also seit 1.0.5.
 * Fix: 2 Syntax-Fehler in einem jQuery Selektor behoben, die jedoch seltsamerweise keine Auswirkungen hatten.
 * Bei phpBB werden ab 3.3.14 für die deaktivierten und nicht-installierten Erweiterungen separate Template Arrays generiert, damit beiden Gruppen getrennt dargestellt werden können. Entsprechend bei EMP das Template so umgebaut, dass die nicht-installierten Erweiterungen weiterhin angezeigt werden können. Dabei wird das Verhalten von phpBB 3.3.14 bei niedrigeren phpBB Versionen nachgeahmt, damit der Template-Umbau auch hier funktionieren kann. Der Umbau wurde auf folgender Basis vorgenommen: [phpBB #6665](https://github.com/phpbb/phpbb/pull/6665) und [phpBB #6743](https://github.com/phpbb/phpbb/pull/6743).
 * EMP steuert jetzt die Versionsprüfung selber und führt diese blockweise aus, wodurch Zeitüberschreitungen bei PHP und Datenbank effektiv verhindert werden können. Mit dieser neuen Funktion kann bei phpBB-Installationen mit extrem vielen Erweiterungen eine Versionsprüfung erfolgreich ausgeführt werden, bei denen phpBB wegen Zeitlimits nicht mehr in der Lage ist, eine solche vollständig auszuführen. [Meldung von dimassamid (phpBB.com)]
@@ -33,6 +33,7 @@
   * Neues Icon für diesen Link; das Zahnräder-Symbol.
   * Im aufgeklappten Formular werden nicht verfügbare Elemente jetzt abgeblendet dargestellt oder nicht erzeugt. Stehen aufgrund von Einstellungen gar keine Eigenschaften zur Verfügung, wird auch der Link nicht angeboten, wie es bisher auch bei Reihenfolge&Ignorieren der Fall war.
   * Um zukünftige Änderungen zu vereinfachen, wie z.B. das Hinzufügen einer weiteren Spalte, werden die Erklärungen jetzt nicht mehr nebeneinander, sondern untereinander dargestellt. Dabei werden die Erklärungen innerhalb von Spoiler-Boxen angezeigt, damit die Anzeige kompakt gehalten werden kann. Durch diese Änderung entspricht das Formular auch wieder mehr einem normalen ACP Modul, bei dem Labels links und interaktive Elemente rechts angeordnet sind. Die neue kompakte Darstellung mit Spoiler-Boxen ist auch vorteilhaft bei Mobil-Geräten.
+  * Den Schalter für "Reihenfolge & Ignorieren" in die neue, separate Sektion "Eigenschaften der Erweiterungen" verschoben.
 * Eine definierte Reihenfolge-Gruppe wird jetzt auch beim Deaktivieren berücksichtigt, in umgekehrter Reihenfolge.
 * Durch die umfangreichen Verbesserungen inklusive Erhöhung der Mindestversionen, wurden mehrere Workarounds obsolet und wurden daher entfernt:
   * Die Funktion mit der verschiedene Daten zur aktuell bearbeiteten Erweiterung in Template Variablen zwischengespeichert werden mussten.
@@ -42,7 +43,7 @@
     * Cache löschen (Cache Workaround)
     * Eigendeaktivierung (Cache Workaround)
     * Log-Eintrag
-* Bei der Version eines Sprachpakets sind ab sofort auch Suffixe oder ein viertes Segment erlaubt, damit Korrekturen entsprechend gekennzeichnet werden können, zum Beispiel in der Form `2.1.0.1`. Versionen müssen dabei nach den PHP Versions-Konventionen gestaltet sein, damit diese per [version_compare](https://www.php.net/version_compare) verglichen werden können.
+* Bei der Version eines Sprachpakets sind ab sofort auch Suffixe oder ein viertes Segment erlaubt, damit Korrekturen entsprechend gekennzeichnet werden können, zum Beispiel in der Form `3.0.0.1`. Versionen müssen dabei nach den PHP Versions-Konventionen gestaltet sein, damit diese per [version_compare](https://www.php.net/version_compare) verglichen werden können.
 * Aktualisierte PHP Funktionen und Twig Makros von "Force Account Reactivation" und "Limit Multiple Replies" übernommen.
 * Code Optimierung bei PHP und Twig.
 
