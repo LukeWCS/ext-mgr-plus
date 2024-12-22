@@ -273,15 +273,23 @@
 								<a href="{{ action.U_ACTION }}"{{ action.L_ACTION_EXPLAIN ? ' title="' ~ action.L_ACTION_EXPLAIN ~ '"' }}>{{ action.L_ACTION }}</a>
 								{{ !loop.last ? '<span>&nbsp;|&nbsp;</span>' }}
 							{% endfor %}
+							{% if list == 'enabled' %}
+								<span>&nbsp;|&nbsp;</span>
+								{% if EXTMGRPLUS_LIST_MODULES[ext.NAME] is defined %}
+									<a href="{{ EXTMGRPLUS_LIST_MODULES[ext.NAME] }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_SETTINGS') }}">{{ lang('SETTINGS') }}</a>
+								{% else %}
+									<span class="unavailable">{{ lang('SETTINGS') }}</span>
+								{% endif %}
+							{% endif %}
 							{% endapply %}
 						</td>
 						<td>
 							{% apply spaceless %}
 							{% if list != 'not_installed' && ext.NAME is defined && (ext.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_SWITCH_SELF_DISABLE) %}
 								{% if EXTMGRPLUS_LIST_IGNORE[ext.NAME] is defined %}
-									<span title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_IGNORED')|e('html') }}">{{ common.icon('fa-ban') }}
+									<span title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_IGNORED')|e('html') }}">{{ common.icon('fa-ban') }}</span>
 								{% elseif EXTMGRPLUS_LIST_MIGRATIONS[ext.NAME] is defined && !EXTMGRPLUS_SWITCH_MIGRATIONS %}
-									<input type="checkbox" name="ext_mark_{{ list }}[]" class="checkbox" title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_LOCKED')|e('html') }}" disabled>
+									<input type="checkbox" class="checkbox" title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_LOCKED')|e('html') }}" disabled>
 								{% else %}
 									<input type="checkbox" name="ext_mark_{{ list }}[]" class="checkbox" title="{{ lang('EXTMGRPLUS_TOOLTIP_SELECT')|e('html') }}" value="{{ ext.NAME }}"{{ EXTMGRPLUS_LIST_SELECTED[ext.NAME] is defined ? ' checked' }}>
 								{% endif %}

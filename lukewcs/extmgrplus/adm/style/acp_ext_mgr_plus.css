@@ -41,6 +41,10 @@ code {
 	opacity: 0.5;
 }
 
+.unavailable {
+	opacity: 0.3;
+}
+
 /* Footer */
 
 .extmgrplus_footer {

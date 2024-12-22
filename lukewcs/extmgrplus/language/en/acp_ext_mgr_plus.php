@@ -96,6 +96,7 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_VERSIONCHECK_EMPTY'	=> 'No version check was performed for this extension.',
 	'EXTMGRPLUS_TOOLTIP_NO_VERSIONCHECK'	=> 'This extension does not provide version checking.',
 	'EXTMGRPLUS_TOOLTIP_IS_IGNORED'			=> 'This extension is ignored by “Extension Manager Plus”.',
+	'EXTMGRPLUS_TOOLTIP_SETTINGS'			=> 'Call the primary settings module of this extension.',
 
 	// misc
 	'EXTMGRPLUS_EXTENSION_PLURAL' => [

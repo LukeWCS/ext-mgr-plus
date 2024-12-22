@@ -36,6 +36,7 @@ class ext_mgr_plus
 
 	protected string $u_action;
 	protected int    $safe_time_limit;
+	protected string $phpbb_admin_path;
 
 	public function __construct(
 		$common,
@@ -49,6 +50,7 @@ class ext_mgr_plus
 		\phpbb\language\language $language,
 		\phpbb\template\template $template,
 		\phpbb\db\driver\driver_interface $db,
+		\phpbb\path_helper $path_helper,
 		$table_prefix,
 		$phpbb_root_path,
 		$php_ext
@@ -68,6 +70,8 @@ class ext_mgr_plus
 		$this->table_prefix 	= $table_prefix;
 		$this->phpbb_root_path	= $phpbb_root_path;
 		$this->php_ext			= $php_ext;
+
+		$this->phpbb_admin_path	= $this->phpbb_root_path . $path_helper->get_adm_relative_path();
 	}
 
 	/*
@@ -95,17 +99,19 @@ class ext_mgr_plus
 
 			$this->exts_switch_confirm();
 		}
-		else if ($this->request->is_set_post('extmgrplus_save_ext_properties') && $this->config['extmgrplus_switch_order_and_ignore'])
+		else if ($this->request->is_set_post('extmgrplus_save_ext_properties'))
 		{
 			$this->common->check_form_key_('lukewcs_extmgrplus');
 
-			$order_list = $this->request->variable('ext_order', ['' => '']);
-			$ignore_list = $this->request->variable('ext_ignore', ['']);
+			if ($this->config['extmgrplus_switch_order_and_ignore'])
+			{
+				$order_list = $this->request->variable('ext_order', ['' => '']);
+				$ignore_list = $this->request->variable('ext_ignore', ['']);
+				$order_list = preg_grep('/^\+?[0-9]{1,2}$/', $order_list);
 
-			$order_list = preg_grep('/^\+?[0-9]{1,2}$/', $order_list);
-
-			$this->common->config_text_set('extmgrplus_list_order_and_ignore', 'order', count($order_list) ? $order_list : null);
-			$this->common->config_text_set('extmgrplus_list_order_and_ignore', 'ignore', count($ignore_list) ? $ignore_list : null);
+				$this->common->config_text_set('extmgrplus_list_order_and_ignore', 'order', count($order_list) ? $order_list : null);
+				$this->common->config_text_set('extmgrplus_list_order_and_ignore', 'ignore', count($ignore_list) ? $ignore_list : null);
+			}
 
 			$this->common->trigger_error_($this->language->lang('EXTMGRPLUS_MSG_EXT_PROPERTIES_SAVED'), E_USER_NOTICE, 'RETURN_TO_EXTENSION_LIST');
 		}
@@ -256,6 +262,7 @@ class ext_mgr_plus
 			'EXTMGRPLUS_LIST_MIGRATIONS'			=> $ext_list_migrations_inactive,
 			'EXTMGRPLUS_LIST_SELECTED'				=> $ext_list_selected,
 			'EXTMGRPLUS_LIST_VERSIONCHECK'			=> $this->versioncheck_list($ext_list_available, $ext_list_versioncheck),
+			'EXTMGRPLUS_LIST_MODULES'				=> $this->get_module_urls($ext_list_enabled),
 
 			'EXTMGRPLUS_COUNT'						=> [
 				'available'							=> count($ext_list_available),
@@ -663,6 +670,69 @@ class ext_mgr_plus
 		}
 
 		return count($migration_classes_new);
+	}
+
+// http://phpbb33/adm/index.php?sid=c4041b20081b95f07abc20092ab1595d&i=-lukewcs-extmgrplus-acp-settings_module&mode=settings
+// http://phpbb33/adm/index.php?i=-lukewcs-extmgrplus-acp-settings_module&mode=settings&sid=c4041b20081b95f07abc20092ab1595d
+
+	/*
+		Determine all ACP module URLs of the active extensions
+	*/
+	private function get_module_urls(array &$ext_list): array
+	{
+		$sql = "SELECT module_id, module_enabled, module_basename, parent_id, module_mode, module_auth
+				FROM " . $this->table_prefix . 'modules' . "
+				WHERE module_class = 'acp'
+					AND module_display = 1
+					AND (module_basename LIKE '" . $this->db->sql_escape('\\\\%\\\\%\\\\acp\\\\%') . "'
+						OR module_basename = '')
+				ORDER BY module_id";
+		$result = $this->db->sql_query($sql);
+		$modules_db = $this->db->sql_fetchrowset($result);
+		$this->db->sql_freeresult($result);
+
+		$modules_db = array_combine(array_column($modules_db, 'module_id'), $modules_db);
+// var_dump($modules_db);
+
+		$check_enabled = function (int $module_id) use ($modules_db): bool
+		{
+			$rc = true;
+			$c = 0;
+			while ($module_id != 0 && $c <10)
+			{
+				$c++;
+				// var_dump("{$c}>{$module_id}>{$modules_db[$module_id]['module_enabled']}" );
+				if ($modules_db[$module_id]['module_enabled'] == 0)
+				{
+					$rc = false;
+					break;
+				}
+				$module_id = $modules_db[$module_id]['parent_id'];
+			}
+			return $rc;
+		};
+
+		$module = new \p_master(false);
+		$module_urls = [];
+		foreach ($modules_db as $row)
+		{
+			$tech_name = preg_replace('/\\\\(.+?)\\\\(.+?)\\\\.*/', '$1/$2', $row['module_basename']);
+// if ($tech_name != 'kirk/sidebar') { continue; }
+			if ($tech_name != ''
+				&& !isset($module_urls[$tech_name])
+				&& isset($ext_list[$tech_name])
+				&& $check_enabled($row['module_id'])
+				&& $module->module_auth($row['module_auth'], 0)
+			)
+			{
+				$module_name = str_replace('\\', '-', $row['module_basename']);
+				$module_urls[$tech_name] = append_sid("{$this->phpbb_admin_path}index.{$this->php_ext}", "i={$module_name}&amp;mode={$row['module_mode']}");
+// var_dump($row['module_basename'], $tech_name, $module_urls[$tech_name], '---');
+			}
+		}
+// var_dump($ext_list);
+// var_dump($module_urls);
+		return $module_urls;
 	}
 
 	/*

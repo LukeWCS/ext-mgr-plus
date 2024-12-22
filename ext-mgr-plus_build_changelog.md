@@ -1,3 +1,13 @@
+#### 3.1.0-b1
+* In der Spalte "Vorgänge" gibt es den neuen Link "Einstellungen", mit dem direkt das primäre Einstellungsmodul einer Erweiterung aufgerufen werden kann, also das erste Modul das per Migration installiert wurde.
+  * Dabei wird die Modul-Einstellung "Modul anzeigen:" respektiert; ist diese Einstellung deaktiviert, generiert EMP kein Link zum Modul.
+  * Ebenso wird auch die Modul-Einstellung "Modul aktiviert:" aller übergeordneten Gruppen/Kategorien berücksichtigt; Ist diese Einstellung bei einem Element in der Hierarchie deaktiviert, steht auch bei EMP kein Link zu diesem ACP Modul zur Verfügung. 
+  * Auch die individuellen Modul-Rechte werden berücksichtigt; hat der Admin kein Recht für ein Einstellungsmodul, wird kein Link zum Modul generiert.
+* Core:
+  * Code Optimierung.
+* ExtMgr Template:
+  * Kleine Korrekturen.
+
 ### 3.0.0
 * Release (2024-11-28)
 * Umstellung der Version 2.1.0 auf 3.0.0.

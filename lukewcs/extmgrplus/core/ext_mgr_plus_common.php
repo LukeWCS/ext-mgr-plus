@@ -82,7 +82,7 @@ class ext_mgr_plus_common
 			{
 				$lang_outdated_msg = $this->language->lang($lang_outdated_var);
 			}
-			else // Fallback if the current language package does not yet have the required variable.
+			else /* Fallback if the current language package does not yet have the required variable. */
 			{
 				$lang_outdated_msg = 'Note: The language pack for the extension <strong>%1$s</strong> is no longer up-to-date. (installed: %2$s / needed: %3$s)';
 			}
