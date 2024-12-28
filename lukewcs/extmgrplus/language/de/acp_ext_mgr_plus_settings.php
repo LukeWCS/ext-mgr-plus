@@ -59,6 +59,8 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_INSTRUCTIONS_EXPLAIN'		=> 'Mit dieser Option kannst du festlegen, ob die Anleitungen für Installieren, Aktualisieren und Deinstallieren am Ende der Erweiterungen-Liste angezeigt werden sollen.',
 	'EXTMGRPLUS_VC_LIMIT'					=> 'Ausführungszeit der Versionsprüfung aufteilen',
 	'EXTMGRPLUS_VC_LIMIT_EXPLAIN'			=> 'Die Versionsprüfung wird blockweise ausgeführt und mit diesem Wert kannst du festlegen, wie lange ein einzelner Block der Versionsprüfung maximal dauern darf. Damit wird verhindert, dass Zeitlimits von PHP oder der Datenbank überschritten werden.',
+	'EXTMGRPLUS_SETTING_LINKS'				=> 'Link zu den Einstellungen erzeugen',
+	'EXTMGRPLUS_SETTING_LINKS_EXPLAIN'		=> 'Mit dieser Option kannst du festlegen, ob in der Spalte „Vorgänge“ ein Link zum primären Einstellungsmodul (sofern vorhanden) der jeweiligen Erweiterung eingefügt werden soll.',
 
 	// settings extension properties
 	'EXTMGRPLUS_SECTION_EXT_PROPERTIES'		=> 'Eigenschaften der Erweiterungen',
@@ -78,7 +80,7 @@ $lang = array_merge($lang, [
 	// settings reset
 	'EXTMGRPLUS_SECTION_RESET'				=> 'Zurücksetzen',
 	'EXTMGRPLUS_DEFAULTS'					=> 'Einstellungen zurücksetzen',
-	'EXTMGRPLUS_DEFAULTS_EXP'				=> 'Setzt alle Einstellungen auf den Installationsstandard zurück. (Hat keine Auswirkung auf die Spalten von „Eigenschaften der Erweiterungen“.)',
+	'EXTMGRPLUS_DEFAULTS_EXP'				=> 'Setzt alle Einstellungen auf den Installationsstandard zurück. Hat keine Auswirkung auf die Spalten von „Eigenschaften der Erweiterungen“.',
 	'EXTMGRPLUS_BUTTON_DEFAULTS'			=> 'Standard',
 
 	// messages

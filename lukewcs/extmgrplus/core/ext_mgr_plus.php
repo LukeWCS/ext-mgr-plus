@@ -187,6 +187,7 @@ class ext_mgr_plus
 		$ext_list_migrations_inactive			= [];
 		$ext_list_order							= [];
 		$ext_list_ignore						= [];
+		$ext_list_modules						= [];
 		$ext_list_enabled_ignored				= [];
 		$ext_list_disabled_ignored				= [];
 		$ext_list_selected						= [];
@@ -203,6 +204,11 @@ class ext_mgr_plus
 		{
 			$ext_list_enabled_ignored	= array_intersect_key($ext_list_ignore, $ext_list_enabled);
 			$ext_list_disabled_ignored	= array_intersect_key($ext_list_ignore, $ext_list_disabled);
+		}
+
+		if ($this->config['extmgrplus_switch_setting_links'])
+		{
+			$ext_list_modules = $this->get_module_links($ext_list_enabled);
 		}
 
 		if ($this->config['extmgrplus_switch_migration_col'])
@@ -261,8 +267,8 @@ class ext_mgr_plus
 			'EXTMGRPLUS_LIST_IGNORE'				=> $ext_list_ignore,
 			'EXTMGRPLUS_LIST_MIGRATIONS'			=> $ext_list_migrations_inactive,
 			'EXTMGRPLUS_LIST_SELECTED'				=> $ext_list_selected,
+			'EXTMGRPLUS_LIST_MODULES'				=> $ext_list_modules,
 			'EXTMGRPLUS_LIST_VERSIONCHECK'			=> $this->versioncheck_list($ext_list_available, $ext_list_versioncheck),
-			'EXTMGRPLUS_LIST_MODULES'				=> $this->get_module_urls($ext_list_enabled),
 
 			'EXTMGRPLUS_COUNT'						=> [
 				'available'							=> count($ext_list_available),
@@ -280,6 +286,7 @@ class ext_mgr_plus
 			'EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE'	=> $this->config['extmgrplus_switch_order_and_ignore'],
 			'EXTMGRPLUS_SWITCH_SELF_DISABLE'		=> $this->config['extmgrplus_switch_self_disable'],
 			'EXTMGRPLUS_SWITCH_INSTRUCTIONS'		=> $this->config['extmgrplus_switch_instructions'],
+			'EXTMGRPLUS_SWITCH_SETTING_LINKS'		=> $this->config['extmgrplus_switch_setting_links'],
 			'EXTMGRPLUS_SWITCH_MIGRATION_COL'		=> $this->config['extmgrplus_switch_migration_col'],
 			'EXTMGRPLUS_SWITCH_MIGRATIONS'			=> $this->config['extmgrplus_switch_migrations'],
 		]);
@@ -676,9 +683,9 @@ class ext_mgr_plus
 // http://phpbb33/adm/index.php?i=-lukewcs-extmgrplus-acp-settings_module&mode=settings&sid=c4041b20081b95f07abc20092ab1595d
 
 	/*
-		Determine all ACP module URLs of the active extensions
+		Determine all ACP module links of the active extensions
 	*/
-	private function get_module_urls(array &$ext_list): array
+	private function get_module_links(array &$ext_list): array
 	{
 		$sql = "SELECT module_id, module_enabled, module_basename, parent_id, module_mode, module_auth
 				FROM " . $this->table_prefix . 'modules' . "
@@ -696,20 +703,18 @@ class ext_mgr_plus
 
 		$check_enabled = function (int $module_id) use ($modules_db): bool
 		{
-			$rc = true;
 			$c = 0;
 			while ($module_id != 0 && $c <10)
 			{
 				$c++;
-				// var_dump("{$c}>{$module_id}>{$modules_db[$module_id]['module_enabled']}" );
+// var_dump("{$c}>{$module_id}>{$modules_db[$module_id]['module_enabled']}" );
 				if ($modules_db[$module_id]['module_enabled'] == 0)
 				{
-					$rc = false;
-					break;
+					return false;
 				}
 				$module_id = $modules_db[$module_id]['parent_id'];
 			}
-			return $rc;
+			return true;
 		};
 
 		$module = new \p_master(false);

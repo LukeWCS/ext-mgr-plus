@@ -1,3 +1,14 @@
+### 3.1.0
+(2025--) / CDB: --)
+
+* In der Spalte "Vorgänge" gibt es den neuen Link "Einstellungen", mit dem direkt das primäre Einstellungsmodul einer Erweiterung aufgerufen werden kann, also das erste Modul das per Migration installiert wurde.
+  * Dabei wird die Modul-Einstellung "Modul anzeigen:" respektiert; ist diese Einstellung deaktiviert, generiert EMP kein Link zum Modul.
+  * Ebenso wird auch die Modul-Einstellung "Modul aktiviert:" aller übergeordneten Gruppen/Kategorien berücksichtigt; ist diese Einstellung bei einem Element in der Hierarchie deaktiviert, steht auch bei EMP kein Link zu diesem ACP Modul zur Verfügung. 
+  * Auch die individuellen Modul-Rechte werden berücksichtigt; hat der Admin kein Recht für ein Einstellungsmodul, wird kein Link zum Modul generiert.
+  * Die Generierung der Einstellungen-Links kann optional deaktiviert werden.
+* Kleine Korrekturen.
+* Code Optimierung bei PHP und Twig.
+
 ### 3.0.0
 (2024-11-28) / CDB: --)
 

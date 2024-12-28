@@ -1,6 +1,3 @@
-{% import '@lukewcs_extmgrplus/acp_ext_mgr_plus_macros.html' as common %}
-
-
 {% if EXTMGRPLUS_DETAILS|length %}
 	<fieldset>
 		<legend>{{ lang('EXTMGRPLUS_SECTION_DETAILS') }}</legend>
@@ -20,7 +17,3 @@
 	{% endif %}
 	</fieldset>
 {% endif %}
-
-{{ common.footer(EXTMGRPLUS_METADATA) }}
-
-{% INCLUDECSS '@lukewcs_extmgrplus/acp_ext_mgr_plus.css' %}

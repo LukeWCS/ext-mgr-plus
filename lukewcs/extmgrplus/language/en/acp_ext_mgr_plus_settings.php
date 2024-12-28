@@ -59,6 +59,8 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_INSTRUCTIONS_EXPLAIN'		=> 'This option allows you to choose whether to display the install, update, and uninstall instructions at the end of the extensions list.',
 	'EXTMGRPLUS_VC_LIMIT'					=> 'Divide execution time of the version check',
 	'EXTMGRPLUS_VC_LIMIT_EXPLAIN'			=> 'The version check is executed in blocks and with this value you can specify the maximum length of a single block of the version check. This prevents PHP or database time limits from being exceeded.',
+	'EXTMGRPLUS_SETTING_LINKS'				=> 'Create a link to the settings',
+	'EXTMGRPLUS_SETTING_LINKS_EXPLAIN'		=> 'With this option you can specify whether a link to the primary settings module (if available) of the respective extension should be inserted in the “Actions” column.',
 
 	// settings extension properties
 	'EXTMGRPLUS_SECTION_EXT_PROPERTIES'		=> 'Extension properties',
@@ -78,7 +80,7 @@ $lang = array_merge($lang, [
 	// settings reset
 	'EXTMGRPLUS_SECTION_RESET'				=> 'Reset',
 	'EXTMGRPLUS_DEFAULTS'					=> 'Reset settings',
-	'EXTMGRPLUS_DEFAULTS_EXP'				=> 'Resets all settings to the installation default. (Has no effect on the “Extension Properties” columns.)',
+	'EXTMGRPLUS_DEFAULTS_EXP'				=> 'Resets all settings to the installation default. Has no effect on the “Extension properties” columns.',
 	'EXTMGRPLUS_BUTTON_DEFAULTS'			=> 'Defaults',
 
 	// messages

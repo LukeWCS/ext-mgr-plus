@@ -273,7 +273,7 @@
 								<a href="{{ action.U_ACTION }}"{{ action.L_ACTION_EXPLAIN ? ' title="' ~ action.L_ACTION_EXPLAIN ~ '"' }}>{{ action.L_ACTION }}</a>
 								{{ !loop.last ? '<span>&nbsp;|&nbsp;</span>' }}
 							{% endfor %}
-							{% if list == 'enabled' %}
+							{% if list == 'enabled' && EXTMGRPLUS_SWITCH_SETTING_LINKS %}
 								<span>&nbsp;|&nbsp;</span>
 								{% if EXTMGRPLUS_LIST_MODULES[ext.NAME] is defined %}
 									<a href="{{ EXTMGRPLUS_LIST_MODULES[ext.NAME] }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_SETTINGS') }}">{{ lang('SETTINGS') }}</a>

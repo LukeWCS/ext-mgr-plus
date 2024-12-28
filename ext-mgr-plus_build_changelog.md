@@ -1,7 +1,24 @@
+#### 3.1.0-b2
+* Die Generierung der Einstellungen-Links kann jetzt optional deaktiviert werden. [Vorschlag von chris1278 (phpBB.de)]
+  * Neuen Schalter im Settings Template eingefügt.
+  * Schalter im Controller verdrahtet.
+  * Schalter im Core verdrahtet.
+  * Schalter im ExtMgr Template verdrahtet.
+  * Standard-Einstellungen für den Schalter angepasst (JS).
+  * 2 neue Sprachvariablen für den Schalter.
+* Core:
+  * Code Optimierung.
+* Details Template:
+  * Da für die Anzeige der zusätzlichen Informationen ein Event genutzt wird, ist ein Footer hier nicht ideal und wurde entfernt.
+    * Einbindung (`import`) der EMP Makros entfernt.
+	* Einbindung (`INCLUDECSS`) des EMP CSS entfernt.
+* Migration: 
+  * Neue Config Variable `extmgrplus_switch_setting_links`.
+
 #### 3.1.0-b1
 * In der Spalte "Vorgänge" gibt es den neuen Link "Einstellungen", mit dem direkt das primäre Einstellungsmodul einer Erweiterung aufgerufen werden kann, also das erste Modul das per Migration installiert wurde.
   * Dabei wird die Modul-Einstellung "Modul anzeigen:" respektiert; ist diese Einstellung deaktiviert, generiert EMP kein Link zum Modul.
-  * Ebenso wird auch die Modul-Einstellung "Modul aktiviert:" aller übergeordneten Gruppen/Kategorien berücksichtigt; Ist diese Einstellung bei einem Element in der Hierarchie deaktiviert, steht auch bei EMP kein Link zu diesem ACP Modul zur Verfügung. 
+  * Ebenso wird auch die Modul-Einstellung "Modul aktiviert:" aller übergeordneten Gruppen/Kategorien berücksichtigt; ist diese Einstellung bei einem Element in der Hierarchie deaktiviert, steht auch bei EMP kein Link zu diesem ACP Modul zur Verfügung. 
   * Auch die individuellen Modul-Rechte werden berücksichtigt; hat der Admin kein Recht für ein Einstellungsmodul, wird kein Link zum Modul generiert.
 * Core:
   * Code Optimierung.
