@@ -206,8 +206,9 @@ class ext_mgr_plus
 			$ext_list_disabled_ignored	= array_intersect_key($ext_list_ignore, $ext_list_disabled);
 		}
 
-		if ($this->config['extmgrplus_switch_setting_links'])
+		if ($this->config['extmgrplus_switch_settings_link'])
 		{
+			// $ext_list_modules = $this->get_module_links_($ext_list_enabled);
 			$ext_list_modules = $this->get_module_links($ext_list_enabled);
 		}
 
@@ -286,7 +287,7 @@ class ext_mgr_plus
 			'EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE'	=> $this->config['extmgrplus_switch_order_and_ignore'],
 			'EXTMGRPLUS_SWITCH_SELF_DISABLE'		=> $this->config['extmgrplus_switch_self_disable'],
 			'EXTMGRPLUS_SWITCH_INSTRUCTIONS'		=> $this->config['extmgrplus_switch_instructions'],
-			'EXTMGRPLUS_SWITCH_SETTING_LINKS'		=> $this->config['extmgrplus_switch_setting_links'],
+			'EXTMGRPLUS_SWITCH_SETTINGS_LINK'		=> $this->config['extmgrplus_switch_settings_link'],
 			'EXTMGRPLUS_SWITCH_MIGRATION_COL'		=> $this->config['extmgrplus_switch_migration_col'],
 			'EXTMGRPLUS_SWITCH_MIGRATIONS'			=> $this->config['extmgrplus_switch_migrations'],
 		]);
@@ -606,14 +607,14 @@ class ext_mgr_plus
 	{
 		$msg_failed = '<br><br>' . $this->language->lang($lang_var);
 		$count_failed = 0;
-		foreach ($ext_list as $name => $vars)
+		foreach ($ext_list as $ext_name => $vars)
 		{
 			if (is_array($vars['message']))
 			{
 				$vars['message'] = implode('<br>', $vars['message']);
 			}
 			$count_failed++;
-			$msg_failed .= $this->create_failed_msg($count_failed . '. ' . $vars['display_name'], $vars['ext_version'], $name, $vars['message']);
+			$msg_failed .= $this->create_failed_msg($count_failed . '. ' . $vars['display_name'], $vars['ext_version'], $ext_name, $vars['message']);
 		}
 
 		return $msg_failed;
@@ -685,7 +686,7 @@ class ext_mgr_plus
 	/*
 		Determine all ACP module links of the active extensions
 	*/
-	private function get_module_links(array &$ext_list): array
+	private function get_module_links_(array &$ext_list): array
 	{
 		$sql = "SELECT module_id, module_enabled, module_basename, parent_id, module_mode, module_auth
 				FROM " . $this->table_prefix . 'modules' . "
@@ -701,13 +702,10 @@ class ext_mgr_plus
 		$modules_db = array_combine(array_column($modules_db, 'module_id'), $modules_db);
 // var_dump($modules_db);
 
-		$check_enabled = function (int $module_id) use ($modules_db): bool
+		$module_hierarchy_enabled = function (int $module_id) use ($modules_db): bool
 		{
-			$c = 0;
-			while ($module_id != 0 && $c <10)
+			while ($module_id > 0)
 			{
-				$c++;
-// var_dump("{$c}>{$module_id}>{$modules_db[$module_id]['module_enabled']}" );
 				if ($modules_db[$module_id]['module_enabled'] == 0)
 				{
 					return false;
@@ -721,21 +719,56 @@ class ext_mgr_plus
 		$module_urls = [];
 		foreach ($modules_db as $row)
 		{
-			$tech_name = preg_replace('/\\\\(.+?)\\\\(.+?)\\\\.*/', '$1/$2', $row['module_basename']);
-// if ($tech_name != 'kirk/sidebar') { continue; }
-			if ($tech_name != ''
-				&& !isset($module_urls[$tech_name])
-				&& isset($ext_list[$tech_name])
-				&& $check_enabled($row['module_id'])
-				&& $module->module_auth($row['module_auth'], 0)
-			)
+			if ($row['module_basename'] != '')
 			{
-				$module_name = str_replace('\\', '-', $row['module_basename']);
-				$module_urls[$tech_name] = append_sid("{$this->phpbb_admin_path}index.{$this->php_ext}", "i={$module_name}&amp;mode={$row['module_mode']}");
-// var_dump($row['module_basename'], $tech_name, $module_urls[$tech_name], '---');
+				$tech_name = preg_replace('/\\\\(.+?)\\\\(.+?)\\\\.*/', '$1/$2', $row['module_basename']);
+// if ($tech_name != 'kirk/sidebar') { continue; }
+				if (isset($ext_list[$tech_name])
+					&& !isset($module_urls[$tech_name])
+					&& $module_hierarchy_enabled($row['module_id'])
+					&& $module->module_auth($row['module_auth'], 0)
+				)
+				{
+					$module_name = str_replace('\\', '-', $row['module_basename']);
+					$module_urls[$tech_name] = append_sid("{$this->phpbb_admin_path}index.{$this->php_ext}", "i={$module_name}&amp;mode={$row['module_mode']}");
+// var_dump($module['module_basename'], $tech_name, $module_urls[$tech_name], '---');
+				}
 			}
 		}
-// var_dump($ext_list);
+// var_dump($module_urls);
+		return $module_urls;
+	}
+
+	/*
+		Determine all ACP module links of the active extensions
+	*/
+	private function get_module_links(array &$ext_list): array
+	{
+		global $module;
+		// $module = new \p_master(false);
+		// $module->list_modules('acp');
+// var_dump($module->module_ary);
+
+		$module_urls = [];
+		foreach ($module->module_ary as $module_)
+		{
+			if ($module_['name'] != '')
+			{
+				preg_match('/\\\\(.+?)\\\\(.+?)\\\\.*/', $module_['name'], $matches);
+				$tech_name = (count($matches) == 3) ? $matches[1] . '/' . $matches[2] : '';
+// if ($tech_name != 'crizzo/aboutus') { continue; }
+				if ($tech_name != ''
+					&& isset($ext_list[$tech_name])
+					&& !isset($module_urls[$tech_name])
+					&& $module_['display'] == 1
+				)
+				{
+					$module_name = str_replace('\\', '-', $module_['name']);
+					$module_urls[$tech_name] = append_sid("{$this->phpbb_admin_path}index.{$this->php_ext}", "i={$module_name}&amp;mode={$module_['mode']}");
+// var_dump($module_['name'], $tech_name, $module_urls[$tech_name], '---');
+				}
+			}
+		}
 // var_dump($module_urls);
 		return $module_urls;
 	}

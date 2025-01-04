@@ -1,3 +1,10 @@
+#### 3.1.0-b3
+* Achtung, Migration hat sich geändert! Bitte b2 deinstallieren bevor b3 installiert wird. Oder in der DB in der Tabelle `_config` die Änderung selber ausführen, wie hier unter "Migration" aufgeführt und dann den phpBB Cache löschen.
+* Die Funktion zur Generierung der Einstellungen-Links komplett umgebaut. Anstatt einen eigenen SQL Query auszuführen und die Modul-Hierarchie sowie die Modul-Rechte selber zu prüfen, wird jetzt direkt auf das fertige Modul Array von phpBB zugegriffen, bei dem die Hierarchie und Rechte bereits berücksichtigt sind. So muss EMP nur noch prüfen, ob ein Modul sichtbar ist, was in einem deutlich kompakteren Code resultiert.
+* Migration:
+  * Config Variable `extmgrplus_switch_setting_links` umbenannt in `extmgrplus_switch_settings_link`.
+* PHP, HTML und JS an den geänderten Variablennamen angepasst.
+
 #### 3.1.0-b2
 * Die Generierung der Einstellungen-Links kann jetzt optional deaktiviert werden. [Vorschlag von chris1278 (phpBB.de)]
   * Neuen Schalter im Settings Template eingefügt.
@@ -11,8 +18,8 @@
 * Details Template:
   * Da für die Anzeige der zusätzlichen Informationen ein Event genutzt wird, ist ein Footer hier nicht ideal und wurde entfernt.
     * Einbindung (`import`) der EMP Makros entfernt.
-	* Einbindung (`INCLUDECSS`) des EMP CSS entfernt.
-* Migration: 
+    * Einbindung (`INCLUDECSS`) des EMP CSS entfernt.
+* Migration:
   * Neue Config Variable `extmgrplus_switch_setting_links`.
 
 #### 3.1.0-b1

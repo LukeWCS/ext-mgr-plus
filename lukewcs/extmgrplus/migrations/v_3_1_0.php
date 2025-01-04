@@ -23,7 +23,7 @@ class v_3_1_0 extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		return [
-			['config.add', ['extmgrplus_switch_setting_links', 1]],
+			['config.add', ['extmgrplus_switch_settings_link', 1]],
 		];
 	}
 }
