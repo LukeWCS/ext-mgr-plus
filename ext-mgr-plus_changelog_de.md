@@ -1,10 +1,11 @@
 ### 3.1.0
 (2025--) / CDB: --)
 
+* Fix: Wenn die PHP INI Variable `max_execution_time` den Wert `0` aufweist, dann bekommt die von phpBB generierte Variable `safe_time_limit` im original ExtMgr ebenfalls den Wert `0`, bedingt durch die Formel `safe_time_limit = max_execution_time / 2`. Das hatte zur Folge, dass beim Schalten von Erweiterungen fälschlicherweise der Timeout-Schutz von EMP gegriffen hat und die Aktion nach der ersten geschalteten Erweiterung abgebrochen wurde. Bei einem Wert `0` wird diese Prüfung jetzt korrekt übersprungen, da es in diesem Fall laut PHP Konfiguration keine Laufzeit-Begrenzung gibt. Das ist zwar ein eher exotisches Problem und wird so in der Realität kaum/selten auftreten, ist jedoch trotzdem ein Fehler gewesen. [Meldung von Scanialady (phpBB.de)]
 * In der Spalte "Vorgänge" gibt es den neuen Link "Einstellungen", mit dem direkt das primäre Einstellungsmodul einer Erweiterung aufgerufen werden kann, also das erste Modul das per Migration installiert wurde.
   * Dabei wird die Modul-Einstellung "Modul anzeigen:" respektiert; ist diese Einstellung deaktiviert, generiert EMP kein Link zum Modul.
-  * Ebenso wird auch die Modul-Einstellung "Modul aktiviert:" aller übergeordneten Gruppen/Kategorien berücksichtigt; ist diese Einstellung bei einem Element in der Hierarchie deaktiviert, steht auch bei EMP kein Link zu diesem ACP Modul zur Verfügung. 
-  * Auch die individuellen Modul-Rechte werden berücksichtigt; hat der Admin kein Recht für ein Einstellungsmodul, wird kein Link zum Modul generiert.
+  * Ebenso wird auch die Modul-Einstellung "Modul aktiviert:" der Modul-Hierarchie berücksichtigt; ist diese Einstellung beim Modul oder bei einem übergeordneten Element deaktiviert, steht auch bei EMP kein Link zu diesem ACP Modul zur Verfügung. 
+  * Auch die individuellen Modul-Rechte werden berücksichtigt; hat der Admin kein Recht für ein Einstellungsmodul, wird auch kein Link zum Modul generiert.
   * Die Generierung der Einstellungen-Links kann optional deaktiviert werden.
 * Kleine Korrekturen.
 * Code Optimierung bei PHP und Twig.

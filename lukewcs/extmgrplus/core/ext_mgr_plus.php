@@ -209,7 +209,7 @@ class ext_mgr_plus
 		if ($this->config['extmgrplus_switch_settings_link'])
 		{
 			// $ext_list_modules = $this->get_module_links_($ext_list_enabled);
-			$ext_list_modules = $this->get_module_links($ext_list_enabled);
+			$ext_list_modules = $this->get_module_links();
 		}
 
 		if ($this->config['extmgrplus_switch_migration_col'])
@@ -455,7 +455,7 @@ class ext_mgr_plus
 				}
 			}
 
-			if ((microtime(true) - $GLOBALS['starttime']) >= $this->safe_time_limit)
+			if ($this->safe_time_limit > 0 && (microtime(true) - $GLOBALS['starttime']) >= $this->safe_time_limit)
 			{
 				$safe_time_exceeded = true;
 				break;
@@ -573,7 +573,7 @@ class ext_mgr_plus
 				}
 			}
 
-			if ((microtime(true) - $GLOBALS['starttime']) >= $this->safe_time_limit)
+			if ($this->safe_time_limit > 0 && (microtime(true) - $GLOBALS['starttime']) >= $this->safe_time_limit)
 			{
 				$safe_time_exceeded = true;
 				break;
@@ -742,31 +742,25 @@ class ext_mgr_plus
 	/*
 		Determine all ACP module links of the active extensions
 	*/
-	private function get_module_links(array &$ext_list): array
+	private function get_module_links(): array
 	{
 		global $module;
-		// $module = new \p_master(false);
-		// $module->list_modules('acp');
 // var_dump($module->module_ary);
 
 		$module_urls = [];
-		foreach ($module->module_ary as $module_)
+		foreach (array_filter($module->module_ary, fn($row) => $row['name'] != '') as $module_)
 		{
-			if ($module_['name'] != '')
-			{
-				preg_match('/\\\\(.+?)\\\\(.+?)\\\\.*/', $module_['name'], $matches);
-				$tech_name = (count($matches) == 3) ? $matches[1] . '/' . $matches[2] : '';
+			preg_match('/\\\\(.+?)\\\\(.+?)\\\\.*/', $module_['name'], $matches);
+			$tech_name = (count($matches) == 3) ? $matches[1] . '/' . $matches[2] : '';
 // if ($tech_name != 'crizzo/aboutus') { continue; }
-				if ($tech_name != ''
-					&& isset($ext_list[$tech_name])
-					&& !isset($module_urls[$tech_name])
-					&& $module_['display'] == 1
-				)
-				{
-					$module_name = str_replace('\\', '-', $module_['name']);
-					$module_urls[$tech_name] = append_sid("{$this->phpbb_admin_path}index.{$this->php_ext}", "i={$module_name}&amp;mode={$module_['mode']}");
+			if ($tech_name != ''
+				&& !isset($module_urls[$tech_name])
+				&& $module_['display'] == 1
+			)
+			{
+				$module_name = str_replace('\\', '-', $module_['name']);
+				$module_urls[$tech_name] = append_sid("{$this->phpbb_admin_path}index.{$this->php_ext}", "i={$module_name}&amp;mode={$module_['mode']}");
 // var_dump($module_['name'], $tech_name, $module_urls[$tech_name], '---');
-				}
 			}
 		}
 // var_dump($module_urls);
