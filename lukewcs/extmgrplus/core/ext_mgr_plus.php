@@ -208,7 +208,6 @@ class ext_mgr_plus
 
 		if ($this->config['extmgrplus_switch_settings_link'])
 		{
-			// $ext_list_modules = $this->get_module_links_($ext_list_enabled);
 			$ext_list_modules = $this->get_module_links();
 		}
 
@@ -680,90 +679,25 @@ class ext_mgr_plus
 		return count($migration_classes_new);
 	}
 
-// http://phpbb33/adm/index.php?sid=c4041b20081b95f07abc20092ab1595d&i=-lukewcs-extmgrplus-acp-settings_module&mode=settings
-// http://phpbb33/adm/index.php?i=-lukewcs-extmgrplus-acp-settings_module&mode=settings&sid=c4041b20081b95f07abc20092ab1595d
-
-	/*
-		Determine all ACP module links of the active extensions
-	*/
-	private function get_module_links_(array &$ext_list): array
-	{
-		$sql = "SELECT module_id, module_enabled, module_basename, parent_id, module_mode, module_auth
-				FROM " . $this->table_prefix . 'modules' . "
-				WHERE module_class = 'acp'
-					AND module_display = 1
-					AND (module_basename LIKE '" . $this->db->sql_escape('\\\\%\\\\%\\\\acp\\\\%') . "'
-						OR module_basename = '')
-				ORDER BY module_id";
-		$result = $this->db->sql_query($sql);
-		$modules_db = $this->db->sql_fetchrowset($result);
-		$this->db->sql_freeresult($result);
-
-		$modules_db = array_combine(array_column($modules_db, 'module_id'), $modules_db);
-// var_dump($modules_db);
-
-		$module_hierarchy_enabled = function (int $module_id) use ($modules_db): bool
-		{
-			while ($module_id > 0)
-			{
-				if ($modules_db[$module_id]['module_enabled'] == 0)
-				{
-					return false;
-				}
-				$module_id = $modules_db[$module_id]['parent_id'];
-			}
-			return true;
-		};
-
-		$module = new \p_master(false);
-		$module_urls = [];
-		foreach ($modules_db as $row)
-		{
-			if ($row['module_basename'] != '')
-			{
-				$tech_name = preg_replace('/\\\\(.+?)\\\\(.+?)\\\\.*/', '$1/$2', $row['module_basename']);
-// if ($tech_name != 'kirk/sidebar') { continue; }
-				if (isset($ext_list[$tech_name])
-					&& !isset($module_urls[$tech_name])
-					&& $module_hierarchy_enabled($row['module_id'])
-					&& $module->module_auth($row['module_auth'], 0)
-				)
-				{
-					$module_name = str_replace('\\', '-', $row['module_basename']);
-					$module_urls[$tech_name] = append_sid("{$this->phpbb_admin_path}index.{$this->php_ext}", "i={$module_name}&amp;mode={$row['module_mode']}");
-// var_dump($module['module_basename'], $tech_name, $module_urls[$tech_name], '---');
-				}
-			}
-		}
-// var_dump($module_urls);
-		return $module_urls;
-	}
-
 	/*
 		Determine all ACP module links of the active extensions
 	*/
 	private function get_module_links(): array
 	{
 		global $module;
-// var_dump($module->module_ary);
 
 		$module_urls = [];
-		foreach (array_filter($module->module_ary, fn($row) => $row['name'] != '') as $module_)
+		foreach (array_filter($module->module_ary, fn($row) => $row['name'] != '' && $row['display'] == 1) as $module_)
 		{
 			preg_match('/\\\\(.+?)\\\\(.+?)\\\\.*/', $module_['name'], $matches);
-			$tech_name = (count($matches) == 3) ? $matches[1] . '/' . $matches[2] : '';
-// if ($tech_name != 'crizzo/aboutus') { continue; }
-			if ($tech_name != ''
-				&& !isset($module_urls[$tech_name])
-				&& $module_['display'] == 1
-			)
+			$tech_name = (count($matches) == 3) ? $matches[1] . '/' . $matches[2] : false;
+			if ($tech_name !== false && !isset($module_urls[$tech_name]))
 			{
 				$module_name = str_replace('\\', '-', $module_['name']);
 				$module_urls[$tech_name] = append_sid("{$this->phpbb_admin_path}index.{$this->php_ext}", "i={$module_name}&amp;mode={$module_['mode']}");
-// var_dump($module_['name'], $tech_name, $module_urls[$tech_name], '---');
 			}
 		}
-// var_dump($module_urls);
+
 		return $module_urls;
 	}
 

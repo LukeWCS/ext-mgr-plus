@@ -1,8 +1,11 @@
+#### 3.1.0-b5
+* Core:
+  * Code Bereinigung bezüglich Einstellungen-Links; veralteter und bereits auskommentierter Code endgültig entfernt, ansonsten keine Änderungen. Somit betrachte ich die Entwicklung der neuen Funktion erst mal als abgeschlossen.
+  * Code Optimierung.
+
 #### 3.1.0-b4
 * Fix: Wenn die PHP INI Variable `max_execution_time` den Wert `0` aufweist, dann bekommt die von phpBB generierte Variable `safe_time_limit` im original ExtMgr ebenfalls den Wert `0`, bedingt durch die Formel `safe_time_limit = max_execution_time / 2`. Das hatte zur Folge, dass beim Schalten von Erweiterungen fälschlicherweise der Timeout-Schutz von EMP gegriffen hat und die Aktion nach der ersten geschalteten Erweiterung abgebrochen wurde. Bei einem Wert `0` wird diese Prüfung jetzt korrekt übersprungen, da es in diesem Fall laut PHP Konfiguration keine Laufzeit-Begrenzung gibt. Das ist zwar ein eher exotisches Problem und wird so in der Realität kaum/selten auftreten, ist jedoch trotzdem ein Fehler gewesen. [Meldung von Scanialady (phpBB.de)]
 * Nach Umbau der Funktion zur Generierung der Einstellungen-Links ist aufgefallen, dass es ebenfalls nicht länger notwendig ist, die Module mit der Liste der aktivierten Erweiterungen abzugleichen und daher wurde das jetzt auch entfernt.
-* Core:
-  * Code Optimierung.
 
 #### 3.1.0-b3
 * Achtung, Migration hat sich geändert! Bitte b2 deinstallieren bevor b3 installiert wird. Oder in der DB in der Tabelle `_config` die Änderung selber ausführen, wie hier unter "Migration" aufgeführt und dann den phpBB Cache löschen.
