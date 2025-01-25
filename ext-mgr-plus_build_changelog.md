@@ -1,3 +1,19 @@
+#### 3.1.0-b6
+* ConfirmBox Template:
+  * Beim original Extension Manager werden beim Schalten der Erweiterungen bei der Rückfrage die Button Beschriftungen "Deaktivieren / Abbrechen" und "Aktivieren / Abbrechen" verwendet, was bei EMP bisher nicht möglich war, da bei der phpBB Funktion `confirm_box` aus technischen Gründen "Ja / Nein" verwendet werden muss. Für diese Buttons werden jetzt `<button>` Elemente verwendet, bei denen Beschriftung und Wert unabhängig definiert werden kann. Somit verhält sich EMP nun auch bei der Rückfrage vollständig wie das Original. Werden im Controller keine alternativen Beschriftungen definiert, gilt automatisch "Ja / Nein".
+  * Für den Hinweis bei Eigendeaktivierung wird keine separate Template Variable mehr benötigt, sondern 2 andere ausgewertet.
+* Core:
+  * Für das EMP-eigene Template der `confirm_box` Funktion von phpBB können jetzt alternative Button Beschriftungen definiert werden.
+  * DIe Generierung der Template-Variable bei Eigendeaktivierung entfernt.
+* Makros Template:
+  * Beim Makro `icon` kann jetzt als dritter Parameter eine Sprachvariable für einen Tooltip übergeben werden, wodurch sich mehrere Vorteile ergeben:
+    * Es wird für den Tooltip kein umschliessender  `span` Container mehr benötigt, da dies direkt im `i` Container des Icons geregelt werden kann.
+	* Neben dem `span` Container ist es ebenfalls nicht mehr nötig das HTML Attribut `title`, sowie die Twig Funktion `lang()` und den Twig Filter `e('html')` notieren zu müssen. Somit einfacherer und kompakterer Template Code.
+* CSS:
+  * Die Buttons "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" haben jetzt das Aussehen und Verhalten von normalen Links, wie die anderen Funktionen der Spalte "Vorgänge". Das betrifft auch die Schriftgrösse, die jetzt wieder dem normalen Wert entspricht und somit grösser ist, als es bei den Buttons der Fall war.
+  * Die original Button Regeln weitestgehend von phpBB übernommen, damit bei der Rückfrage die geänderten Buttons weiterhin wie originale phpBB Buttons aussehen.
+  * Optimierung.
+
 #### 3.1.0-b5
 * Core:
   * Code Bereinigung bezüglich Einstellungen-Links; veralteter und bereits auskommentierter Code endgültig entfernt, ansonsten keine Änderungen. Somit betrachte ich die Entwicklung der neuen Funktion erst mal als abgeschlossen.

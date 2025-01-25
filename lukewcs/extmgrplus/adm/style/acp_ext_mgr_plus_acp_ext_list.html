@@ -211,7 +211,7 @@
 						<td>
 							{% apply spaceless %}
 							{% if vc_obj.cdb_ext === true %}
-								<span title="{{ lang('EXTMGRPLUS_TOOLTIP_CDB_EXT')|e('html') }}">{{ common.icon('fa-database') }}</span>
+								{{ common.icon('fa-database', false, 'EXTMGRPLUS_TOOLTIP_CDB_EXT') }}
 							{% endif %}
 							{% endapply %}
 						</td>
@@ -236,13 +236,13 @@
 									<strong class="{{ vc_obj.current == 'NOUPD' ? 'current-ext' : 'outdated-ext' }}">{{ ext.META_VERSION }}</strong>
 								{% endif %}
 								{% if vc_obj.current === false %}
-									<span title="{{ lang('EXTMGRPLUS_TOOLTIP_NO_VERSIONCHECK')|e('html') }}">&nbsp;{{ common.icon('fa-chain-broken') }}</span>
+									&nbsp;{{ common.icon('fa-chain-broken', false, 'EXTMGRPLUS_TOOLTIP_NO_VERSIONCHECK') }}
 								{% elseif vc_obj.current == 'ERROR' %}
-									<span title="{{ lang('EXTMGRPLUS_TOOLTIP_VERSIONCHECK_ERROR')|e('html') }}">&nbsp;{{ common.icon('fa-exclamation-triangle') }}</span>
+									&nbsp;{{ common.icon('fa-exclamation-triangle', false, 'EXTMGRPLUS_TOOLTIP_VERSIONCHECK_ERROR') }}
 								{% elseif vc_obj.current is empty %}
-									<span title="{{ lang('EXTMGRPLUS_TOOLTIP_VERSIONCHECK_EMPTY')|e('html') }}">&nbsp;{{ common.icon('fa-question-circle') }}</span>
+									&nbsp;{{ common.icon('fa-question-circle', false, 'EXTMGRPLUS_TOOLTIP_VERSIONCHECK_EMPTY') }}
 								{% elseif vc_obj.current != 'NOUPD' %}
-									<span title="{{ lang('EXTMGRPLUS_TOOLTIP_OUTDATED')|e('html') }}">&nbsp;{{ common.icon('fa-exclamation-circle outdated-ext') }}</span>
+									&nbsp;{{ common.icon('fa-exclamation-circle outdated-ext', false, 'EXTMGRPLUS_TOOLTIP_OUTDATED') }}
 									<strong class="current-ext">&nbsp;({{ vc_obj.current }})</strong>
 								{% endif %}
 							{% endif %}
@@ -253,7 +253,7 @@
 							{% if list != 'enabled' && EXTMGRPLUS_SWITCH_MIGRATION_COL %}
 								{% set count = EXTMGRPLUS_LIST_MIGRATIONS[ext.NAME] ?? 0 %}
 								{% if EXTMGRPLUS_LIST_IGNORE[ext.NAME] is defined %}
-									<span title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_IGNORED')|e('html') }}">{{ common.icon('fa-ban') }}</span>
+									{{ common.icon('fa-ban', false, 'EXTMGRPLUS_TOOLTIP_IS_IGNORED') }}
 								{% elseif count %}
 									<span title="{{ lang('EXTMGRPLUS_TOOLTIP_HAS_MIGRATION')|e('html') }}">{{ count }}</span>
 								{% endif %}
@@ -287,7 +287,7 @@
 							{% apply spaceless %}
 							{% if list != 'not_installed' && ext.NAME is defined && (ext.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_SWITCH_SELF_DISABLE) %}
 								{% if EXTMGRPLUS_LIST_IGNORE[ext.NAME] is defined %}
-									<span title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_IGNORED')|e('html') }}">{{ common.icon('fa-ban') }}</span>
+									{{ common.icon('fa-ban', false, 'EXTMGRPLUS_TOOLTIP_IS_IGNORED') }}
 								{% elseif EXTMGRPLUS_LIST_MIGRATIONS[ext.NAME] is defined && !EXTMGRPLUS_SWITCH_MIGRATIONS %}
 									<input type="checkbox" class="checkbox" title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_LOCKED')|e('html') }}" disabled>
 								{% else %}
@@ -366,7 +366,7 @@
 		</fieldset>
 	{% elseif type == 'save_checkboxes' %}
 		<input type="submit" name="extmgrplus_save_checkboxes" value="save_checkboxes" hidden>
-	{% elseif type == 'disable_all' || type == 'enable_all'%}
+	{% elseif type ends with 'able_all' %}
 		{% set type_upper = type|upper %}
 		<input type="submit" name="extmgrplus_{{ type }}" class="button1" title="{{ lang('EXTMGRPLUS_TOOLTIP_' ~ type_upper)|e('html') }}" value="{{ lang('EXTMGRPLUS_' ~ type_upper) }}"{{ !enabled ? ' disabled' }}>
 	{% endif %}

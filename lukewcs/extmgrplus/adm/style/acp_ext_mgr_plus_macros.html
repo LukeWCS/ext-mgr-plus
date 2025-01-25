@@ -20,8 +20,8 @@
 	{% endif %}
 {% endmacro %}
 
-{% macro icon(classes, decorative = true) -%}
-	<i class="icon {{ classes }}"{{ decorative ? ' aria-hidden="true"' }}></i>
+{% macro icon(classes, decorative = true, title = null) -%}
+	<i class="icon {{ classes }}"{{ title != null ? ' title="' ~ lang(title)|e('html') ~ '"' }}{{ decorative ? ' aria-hidden="true"' }}></i>
 {%- endmacro %}
 
 {% macro footer(metadata) %}

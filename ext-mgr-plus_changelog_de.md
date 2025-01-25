@@ -7,7 +7,10 @@
   * Ebenso wird auch die Modul-Einstellung "Modul aktiviert:" der Modul-Hierarchie berücksichtigt; ist diese Einstellung beim Modul oder bei einem übergeordneten Element deaktiviert, steht auch bei EMP kein Link zu diesem ACP Modul zur Verfügung. 
   * Auch die individuellen Modul-Rechte werden berücksichtigt; hat der Admin kein Recht für ein Einstellungsmodul, wird auch kein Link zum Modul generiert.
   * Die Generierung der Einstellungen-Links kann optional deaktiviert werden.
-* Kleine Korrekturen.
+* Kleine optische Änderungen an verschiedenen Buttons:
+  * Bei der Rückfrage beim Schalten mehrerer Erweiterungen, sind die Buttons jetzt mit "Deaktivieren / Abbrechen" und "Aktivieren / Abbrechen" beschriftet, wie es phpBB bei der eigenen Rückfrage beim Schalten einer Erweiterung ebenfalls macht. Bislang mussten die Buttons bei EMP aus technischen Gründen mit "Ja /Nein" beschriftet sein.
+  * Die Buttons "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" haben jetzt das Aussehen und Verhalten von normalen Links, wie die anderen Funktionen der Spalte "Vorgänge". Das betrifft auch die Schriftgrösse, die jetzt wieder dem normalen Wert entspricht und somit grösser ist, als es bei den Buttons der Fall war.
+* Kleine Korrekturen in den Templates.
 * Code Optimierung bei PHP und Twig.
 
 ### 3.0.0

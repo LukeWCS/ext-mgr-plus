@@ -226,6 +226,7 @@ class ext_mgr_plus
 		{
 			$ext_list_enabled_ignored['lukewcs/extmgrplus'] = 0;
 		}
+
 		if (!$this->config['extmgrplus_switch_migrations'])
 		{
 			$ext_list_disabled_ignored = array_merge($ext_list_disabled_ignored, $ext_list_migrations_disabled);
@@ -348,7 +349,8 @@ class ext_mgr_plus
 		{
 			$this->template->assign_vars([
 				'EXTMGRPLUS_ACTION_MODE'	=> 'DISABLE',
-				'EXTMGRPLUS_SELF_DISABLE'	=> array_search('lukewcs/extmgrplus', $ext_mark_enabled) !== false,
+				'EXTMGRPLUS_CONFIRM_YES'	=> 'EXTENSION_DISABLE',
+				'EXTMGRPLUS_CONFIRM_NO'		=> 'CANCEL',
 			]);
 			if (!$this->config['extmgrplus_switch_confirmation'] || confirm_box(true))
 			{
@@ -363,6 +365,8 @@ class ext_mgr_plus
 		{
 			$this->template->assign_vars([
 				'EXTMGRPLUS_ACTION_MODE'	=> 'ENABLE',
+				'EXTMGRPLUS_CONFIRM_YES'	=> 'EXTENSION_ENABLE',
+				'EXTMGRPLUS_CONFIRM_NO'		=> 'CANCEL',
 			]);
 			if (!$this->config['extmgrplus_switch_confirmation'] || confirm_box(true))
 			{
