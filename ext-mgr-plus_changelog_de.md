@@ -2,15 +2,14 @@
 (2025--) / CDB: --)
 
 * Fix: Wenn die PHP INI Variable `max_execution_time` den Wert `0` aufweist, dann bekommt die von phpBB generierte Variable `safe_time_limit` im original ExtMgr ebenfalls den Wert `0`, bedingt durch die Formel `safe_time_limit = max_execution_time / 2`. Das hatte zur Folge, dass beim Schalten von Erweiterungen fälschlicherweise der Timeout-Schutz von EMP gegriffen hat und die Aktion nach der ersten geschalteten Erweiterung abgebrochen wurde. Bei einem Wert `0` wird diese Prüfung jetzt korrekt übersprungen, da es in diesem Fall laut PHP Konfiguration keine Laufzeit-Begrenzung gibt. Das ist zwar ein eher exotisches Problem und wird so in der Realität kaum/selten auftreten, ist jedoch trotzdem ein Fehler gewesen. [Meldung von Scanialady (phpBB.de)]
-* In der Spalte "Vorgänge" gibt es den neuen Link "Einstellungen", mit dem direkt das primäre Einstellungsmodul einer Erweiterung aufgerufen werden kann, also das erste Modul das per Migration installiert wurde.
-  * Dabei wird die Modul-Einstellung "Modul anzeigen:" respektiert; ist diese Einstellung deaktiviert, generiert EMP kein Link zum Modul.
+* In der Spalte "Vorgänge" gibt es den neuen Link "Einstellungen", mit dem direkt das primäre Einstellungsmodul einer Erweiterung aufgerufen werden kann, also das erste Modul das per Migration installiert wurde. Dabei gelten folgende Eigenschaften:
+  * Die Modul-Einstellung "Modul anzeigen:" wird respektiert; ist diese Einstellung deaktiviert, generiert EMP kein Link zum Modul.
   * Ebenso wird auch die Modul-Einstellung "Modul aktiviert:" der Modul-Hierarchie berücksichtigt; ist diese Einstellung beim Modul oder bei einem übergeordneten Element deaktiviert, steht auch bei EMP kein Link zu diesem ACP Modul zur Verfügung. 
   * Auch die individuellen Modul-Rechte werden berücksichtigt; hat der Admin kein Recht für ein Einstellungsmodul, wird auch kein Link zum Modul generiert.
   * Die Generierung der Einstellungen-Links kann optional deaktiviert werden.
-* Kleine optische Änderungen an verschiedenen Buttons:
-  * Bei der Rückfrage beim Schalten mehrerer Erweiterungen, sind die Buttons jetzt mit "Deaktivieren / Abbrechen" und "Aktivieren / Abbrechen" beschriftet, wie es phpBB bei der eigenen Rückfrage beim Schalten einer Erweiterung ebenfalls macht. Bislang mussten die Buttons bei EMP aus technischen Gründen mit "Ja /Nein" beschriftet sein.
-  * Die Buttons "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" haben jetzt das Aussehen und Verhalten von normalen Links, wie die anderen Funktionen der Spalte "Vorgänge". Das betrifft auch die Schriftgrösse, die jetzt wieder dem normalen Wert entspricht und somit grösser ist, als es bei den Buttons der Fall war.
-* Kleine Korrekturen in den Templates.
+* Für das EMP-eigene Template der `confirm_box` Funktion von phpBB können jetzt alternative Button Beschriftungen definiert werden. Dadurch war folgende Änderung möglich:
+  * Bei der Rückfrage beim Schalten mehrerer Erweiterungen, sind die Buttons jetzt mit "Deaktivieren / Abbrechen" und "Aktivieren / Abbrechen" beschriftet, wie es phpBB bei der eigenen Rückfrage beim Schalten einer Erweiterung ebenfalls macht. Bislang mussten diese Buttons bei EMP aus technischen Gründen mit "Ja / Nein" beschriftet sein, da sonst `confirm_box` nicht funktioniert.
+* Kleine Korrekturen in den Templates. Unter anderem wurde ein HTML Container Fehler behoben, der jedoch keine Auswirkung hatte, da Browser den Fehler automatisch behoben haben.
 * Code Optimierung bei PHP und Twig.
 
 ### 3.0.0

@@ -52,7 +52,7 @@ code {
 	font-size: 0.75em;
 }
 
-/* confirm_box (phpBB)*/
+/* confirm_box (phpBB) */
 
 #confirm h2 {
 	margin-bottom: 0.25em;
@@ -70,9 +70,9 @@ button:is(.button1, .button2) {
 }
 
 button:is(.button1, .button2):hover {
-    border: 1px solid #bc2a4d;
-    background: #efefef url("../images/bg_button.gif") repeat bottom;
-    color: #bc2a4d;
+	border: 1px solid #bc2a4d;
+	background: #efefef url("../images/bg_button.gif") repeat bottom;
+	color: #bc2a4d;
 }
 
 button.button1 {
@@ -260,26 +260,8 @@ fieldset.ext_properties dd details div {
 }
 
 #extmgrplus_list input[name$="able_all"] {
-	padding: 0;
-	border: none;
-	background: none;
+	padding: 2px 3px;
 	font-size: inherit;
-	color: #105289;
-}
-
-#extmgrplus_list input[name$="able_all"]:hover {
-	color: #bc2a4d;
-	text-decoration: underline;
-}
-
-#extmgrplus_list input[name$="able_all"]:active {
-	color: #368AD2;
-	text-decoration: none;
-}
-
-#extmgrplus_list input[name$="able_all"]:disabled {
-	color: inherit;
-	text-decoration: none;
 }
 
 #extmgrplus_list input[type="text"] {
