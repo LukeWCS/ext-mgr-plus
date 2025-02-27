@@ -1,3 +1,22 @@
+#### 3.1.0-b8
+* Fix: Durch das geänderte Twig Makro `icon`, bei dem jetzt direkt ein Tooltip definiert werden kann, wurden 2 Fehler verursacht:
+  * In der Spalte "Aktuelle Version" war der Abstand zwischen erster Version und Icon (sofern vorhanden) zu gross. Verursacht wurde das durch die unnötigen Whitespaces (25 Tabs) die vom `spaceless` Filter nicht mehr entfernt werden konnten, da sich zwischen den verschiedenen Tags auch normaler Text befand; das erzwungene Leerzeichen `&nbsp;`. Dadurch wurden effektiv 2 Leerzeichen eingefügt statt 1.
+    * Template: In dieser Spalte alle erzwungenen Leerzeichen im Twig Code entfernt.
+    * CSS: Stattdessen wird jetzt per CSS individuell vor dem Icon oder nach dem Icon oder in beiden Fällen ein Abstand eingefügt.
+  * In der Spalte "Migrationen" wurde bei Icons kein Hilfe-Cursor mehr dargestellt, weil das CSS nur für `span` ausgelegt war.
+    * CSS: Regel für `i.icon` erweitert.
+* Fix: Durch die Änderung von `input` auf `button` im ConfirmBox Template wurde das EMP Padding für diese Buttons nicht mehr angewendet.
+  * CSS: Regel für `button` angepasst.
+* Makros Template:
+  * Bei `icon` den Parameter `decorative` von Position 2 auf 3 geändert, damit man sich bei Icons mit Tooltip in den meisten Fällen die unnötige Angabe `, true` sparen kann.
+* ExtMgr Template:
+  * Im Tabellen-Kopf werden Tooltips nicht mehr auf das `th` Element angewendet, sondern durch das `icon` Makro erzeugt.
+* CSS:
+  * Bei den Buttons "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" ist das vertikale Padding wieder auf 1px gesetzt, damit die Buttons etwas niedriger dargestellt werden.
+  * Es wird jetzt auch bei Icons im Tabellen-Kopf der Hilfe-Cursor dargestellt.
+  * Die verschiedenen Bereiche sind jetzt deutlicher gekennzeichnet, durch einen einleitenden und abschliessenden Kommentar mit `>` und `<`.
+  * Optimierung.
+
 #### 3.1.0-b7
 * CSS:
   * Bei den Aktionen "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" werden jetzt wieder wie gehabt Buttons verwendet mit 2 kleinen Änderungen:

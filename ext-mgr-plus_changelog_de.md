@@ -8,9 +8,10 @@
   * Auch die individuellen Modul-Rechte werden berücksichtigt; hat der Admin kein Recht für ein Einstellungsmodul, wird auch kein Link zum Modul generiert.
   * Die Generierung der Einstellungen-Links kann optional deaktiviert werden.
 * Für das EMP-eigene Template der `confirm_box` Funktion von phpBB können jetzt alternative Button Beschriftungen definiert werden. Dadurch war folgende Änderung möglich:
-  * Bei der Rückfrage beim Schalten mehrerer Erweiterungen, sind die Buttons jetzt mit "Deaktivieren / Abbrechen" und "Aktivieren / Abbrechen" beschriftet, wie es phpBB bei der eigenen Rückfrage beim Schalten einer Erweiterung ebenfalls macht. Bislang mussten diese Buttons bei EMP aus technischen Gründen mit "Ja / Nein" beschriftet sein, da sonst `confirm_box` nicht funktioniert.
+  * Bei der Rückfrage beim Schalten mehrerer Erweiterungen, sind die Buttons jetzt mit "Deaktivieren / Abbrechen" und "Aktivieren / Abbrechen" beschriftet, wie es phpBB bei der eigenen Rückfrage beim Schalten einer Erweiterung ebenfalls macht. Bislang mussten diese Buttons bei EMP aus technischen Gründen mit "Ja / Nein" beschriftet sein, da sonst `confirm_box` nicht funktioniert hätte.
+* Im Tabellen-Kopf wird bei Icons jetzt ebenfalls der Hilfe-Cursor dargestellt, wie bei allen anderen Icons in der Tabelle.
 * Kleine Korrekturen in den Templates. Unter anderem wurde ein HTML Container Fehler behoben, der jedoch keine Auswirkung hatte, da Browser den Fehler automatisch behoben haben.
-* Code Optimierung bei PHP und Twig.
+* Code Optimierung bei PHP, Twig und CSS.
 
 ### 3.0.0
 (2024-11-28) / CDB: --)

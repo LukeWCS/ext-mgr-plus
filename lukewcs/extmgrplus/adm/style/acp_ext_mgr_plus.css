@@ -1,4 +1,4 @@
-/* GENERAL */
+/* GENERAL > */
 
 fieldset {
 	border-radius: 5px;
@@ -23,10 +23,8 @@ legend {
 	top: 0;
 }
 
-input[type="submit"][name="confirm"],
-input[type="submit"][name^="extmgrplus_"],
-input[type="button"][name^="extmgrplus_"],
-input[type="reset"][name^="extmgrplus_"] {
+button[type="submit"]:is([name="confirm"], [name="cancel"]),
+input:is([type="submit"], [type="button"], [type="reset"])[name^="extmgrplus_"] {
 	padding: 3px 4px;
 }
 
@@ -43,8 +41,6 @@ code {
 .unavailable {
 	opacity: 0.3;
 }
-
-/* Footer */
 
 .extmgrplus_footer {
 	margin-top: 1em;
@@ -79,7 +75,9 @@ button.button1 {
 	font-weight: bold;
 }
 
-/* SETTINGS */
+/* < GENERAL */
+
+/* SETTINGS > */
 
 legend.legend_sub {
 	border: 0;
@@ -173,14 +171,15 @@ div[id$="_confirmbox"] input[type="button"] {
 	padding: 3px 4px;
 }
 
-input[type="submit"]:disabled,
-input[type="button"]:disabled,
+input:is([type="submit"], [type="button"]):disabled,
 input.confirmbox_active {
 	opacity: 0.5;
 	cursor: not-allowed;
 }
 
-/* EXTENSION MANAGER */
+/* < SETTINGS */
+
+/* EXTENSION MANAGER > */
 
 .js_link {
 	color: #105289;
@@ -260,7 +259,7 @@ fieldset.ext_properties dd details div {
 }
 
 #extmgrplus_list input[name$="able_all"] {
-	padding: 2px 3px;
+	padding: 1px 3px;
 	font-size: inherit;
 }
 
@@ -299,13 +298,16 @@ fieldset.ext_properties dd details div {
 	width: 1%;
 }
 
-#extmgrplus_list td:nth-of-type(1) i.icon {
+#extmgrplus_list :is(th, td) i.icon {
 	cursor: help;
 }
 
 #extmgrplus_list td:nth-of-type(3) i.icon {
-	cursor: help;
 	font-size: 1.2em;
+}
+
+#extmgrplus_list td:nth-of-type(3) :is(span, strong, i.icon) + :is(strong, i.icon) {
+	margin-left: 0.3em;
 }
 
 #extmgrplus_list td:nth-of-type(3) i.icon:is(.fa-question-circle, .fa-exclamation-triangle) {
@@ -321,11 +323,12 @@ fieldset.ext_properties dd details div {
 }
 
 #extmgrplus_list td:nth-of-type(7) i.icon {
-	cursor: help;
 	font-size: 1.3em;
 }
 
-/* VERSIONCHECK PROGGRESS */
+/* < EXTENSION MANAGER */
+
+/* VERSIONCHECK PROGGRESS > */
 
 .progress_container {
 	background-color: #f9f9f9;
@@ -367,7 +370,9 @@ fieldset.ext_properties dd details div {
 	}
 }
 
-/* RESPONSIVE */
+/* < VERSIONCHECK PROGGRESS */
+
+/* RESPONSIVE > */
 
 @media (max-width: 700px){
 	legend {
@@ -383,3 +388,5 @@ fieldset.ext_properties dd details div {
 		padding: 0.5em 0 0 0;
 	}
 }
+
+/* < RESPONSIVE */

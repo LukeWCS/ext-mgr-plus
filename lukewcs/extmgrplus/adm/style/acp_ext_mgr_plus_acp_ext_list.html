@@ -138,8 +138,8 @@
 		</colgroup>
 		<thead>
 			<tr>
-				<th title="{{ lang('EXTMGRPLUS_COL_CDB') }}">
-					{{ common.icon('fa-database') }}<span style="display: none;">{{ lang('EXTMGRPLUS_COL_CDB') }}</span>
+				<th>
+					{{ common.icon('fa-database', 'EXTMGRPLUS_COL_CDB') }}<span style="display: none;">{{ lang('EXTMGRPLUS_COL_CDB') }}</span>
 				</th>
 				<th>
 					{{ lang('EXTENSION_NAME') }}
@@ -147,8 +147,8 @@
 				<th>
 					{{ lang('CURRENT_VERSION') }}
 				</th>
-				<th{{ !EXTMGRPLUS_SWITCH_MIGRATION_COL ? ' style="display: none;"' }} title="{{ lang('EXTMGRPLUS_COL_MIGRATIONS') }}">
-					{{ common.icon('fa-arrow-up') }}<span style="display: none;">{{ lang('EXTMGRPLUS_COL_MIGRATIONS') }}</span>
+				<th{{ !EXTMGRPLUS_SWITCH_MIGRATION_COL ? ' style="display: none;"' }}>
+					{{ common.icon('fa-arrow-up', 'EXTMGRPLUS_COL_MIGRATIONS') }}<span style="display: none;">{{ lang('EXTMGRPLUS_COL_MIGRATIONS') }}</span>
 				</th>
 				<th>
 					{{ lang('EXTENSION_OPTIONS') }}
@@ -156,14 +156,14 @@
 				<th>
 					{{ lang('EXTENSION_ACTIONS') }}
 				</th>
-				<th title="{{ lang('EXTMGRPLUS_COL_SELECT') }}">
-					{{ common.icon('fa-check') }}<span style="display: none;">{{ lang('EXTMGRPLUS_COL_SELECT') }}</span>
+				<th>
+					{{ common.icon('fa-check', 'EXTMGRPLUS_COL_SELECT') }}<span style="display: none;">{{ lang('EXTMGRPLUS_COL_SELECT') }}</span>
 				</th>
-				<th title="{{ lang('EXTMGRPLUS_COL_ORDER') }}" style="display: none;">
-					{{ common.icon('fa-sort') }}<span style="display: none;">{{ lang('EXTMGRPLUS_COL_ORDER') }}</span>
+				<th style="display: none;">
+					{{ common.icon('fa-sort', 'EXTMGRPLUS_COL_ORDER') }}<span style="display: none;">{{ lang('EXTMGRPLUS_COL_ORDER') }}</span>
 				</th>
-				<th title="{{ lang('EXTMGRPLUS_COL_IGNORE') }}" style="display: none;">
-					{{ common.icon('fa-ban') }}<span style="display: none;">{{ lang('EXTMGRPLUS_COL_IGNORE') }}</span>
+				<th style="display: none;">
+					{{ common.icon('fa-ban', 'EXTMGRPLUS_COL_IGNORE') }}<span style="display: none;">{{ lang('EXTMGRPLUS_COL_IGNORE') }}</span>
 				</th>
 			</tr>
 		</thead>
@@ -211,7 +211,7 @@
 						<td>
 							{% apply spaceless %}
 							{% if vc_obj.cdb_ext === true %}
-								{{ common.icon('fa-database', false, 'EXTMGRPLUS_TOOLTIP_CDB_EXT') }}
+								{{ common.icon('fa-database', 'EXTMGRPLUS_TOOLTIP_CDB_EXT') }}
 							{% endif %}
 							{% endapply %}
 						</td>
@@ -236,14 +236,14 @@
 									<strong class="{{ vc_obj.current == 'NOUPD' ? 'current-ext' : 'outdated-ext' }}">{{ ext.META_VERSION }}</strong>
 								{% endif %}
 								{% if vc_obj.current === false %}
-									&nbsp;{{ common.icon('fa-chain-broken', false, 'EXTMGRPLUS_TOOLTIP_NO_VERSIONCHECK') }}
+									{{ common.icon('fa-chain-broken', 'EXTMGRPLUS_TOOLTIP_NO_VERSIONCHECK') }}
 								{% elseif vc_obj.current == 'ERROR' %}
-									&nbsp;{{ common.icon('fa-exclamation-triangle', false, 'EXTMGRPLUS_TOOLTIP_VERSIONCHECK_ERROR') }}
+									{{ common.icon('fa-exclamation-triangle', 'EXTMGRPLUS_TOOLTIP_VERSIONCHECK_ERROR') }}
 								{% elseif vc_obj.current is empty %}
-									&nbsp;{{ common.icon('fa-question-circle', false, 'EXTMGRPLUS_TOOLTIP_VERSIONCHECK_EMPTY') }}
+									{{ common.icon('fa-question-circle', 'EXTMGRPLUS_TOOLTIP_VERSIONCHECK_EMPTY') }}
 								{% elseif vc_obj.current != 'NOUPD' %}
-									&nbsp;{{ common.icon('fa-exclamation-circle outdated-ext', false, 'EXTMGRPLUS_TOOLTIP_OUTDATED') }}
-									<strong class="current-ext">&nbsp;({{ vc_obj.current }})</strong>
+									{{ common.icon('fa-exclamation-circle outdated-ext', 'EXTMGRPLUS_TOOLTIP_OUTDATED') }}
+									<strong class="current-ext">({{ vc_obj.current }})</strong>
 								{% endif %}
 							{% endif %}
 							{% endapply %}
@@ -253,7 +253,7 @@
 							{% if list != 'enabled' && EXTMGRPLUS_SWITCH_MIGRATION_COL %}
 								{% set count = EXTMGRPLUS_LIST_MIGRATIONS[ext.NAME] ?? 0 %}
 								{% if EXTMGRPLUS_LIST_IGNORE[ext.NAME] is defined %}
-									{{ common.icon('fa-ban', false, 'EXTMGRPLUS_TOOLTIP_IS_IGNORED') }}
+									{{ common.icon('fa-ban', 'EXTMGRPLUS_TOOLTIP_IS_IGNORED') }}
 								{% elseif count %}
 									<span title="{{ lang('EXTMGRPLUS_TOOLTIP_HAS_MIGRATION')|e('html') }}">{{ count }}</span>
 								{% endif %}
@@ -287,7 +287,7 @@
 							{% apply spaceless %}
 							{% if list != 'not_installed' && ext.NAME is defined && (ext.NAME != 'lukewcs/extmgrplus' || EXTMGRPLUS_SWITCH_SELF_DISABLE) %}
 								{% if EXTMGRPLUS_LIST_IGNORE[ext.NAME] is defined %}
-									{{ common.icon('fa-ban', false, 'EXTMGRPLUS_TOOLTIP_IS_IGNORED') }}
+									{{ common.icon('fa-ban', 'EXTMGRPLUS_TOOLTIP_IS_IGNORED') }}
 								{% elseif EXTMGRPLUS_LIST_MIGRATIONS[ext.NAME] is defined && !EXTMGRPLUS_SWITCH_MIGRATIONS %}
 									<input type="checkbox" class="checkbox" title="{{ lang('EXTMGRPLUS_TOOLTIP_IS_LOCKED')|e('html') }}" disabled>
 								{% else %}
