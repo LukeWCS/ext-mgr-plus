@@ -1,3 +1,13 @@
+#### 3.1.0-b9
+* Settings Template:
+  * Makro `button` entfernt und HTML direkt notiert. Ein Makro ist hier nicht sinnvoll, da es zu viele variable Eigenschaften und Kombinationen geben kann.
+  * Den Schalter "Anleitungen anzeigen" in den Abschnitt "Experten-Einstellungen" verschoben.
+* CSS:
+  * Für den Erklärungstext unterhalb der Legende für "Experten-Einstellungen" wird nicht mehr die gesamte verfügbare Breite genutzt, sondern die Breite begrenzt wie bei `dt`, also auf 45%.
+* Sprachdateien:
+  * Den Erklärungstext für "Experten-Einstellungen" so angepasst, dass dieser auch zum verschobenen Schalter passt.
+  * Die Variablen für "Anleitungen anzeigen" ebenfalls verschoben.
+
 #### 3.1.0-b8
 * Fix: Durch das geänderte Twig Makro `icon`, bei dem jetzt direkt ein Tooltip definiert werden kann, wurden 2 Fehler verursacht:
   * In der Spalte "Aktuelle Version" war der Abstand zwischen erster Version und Icon (sofern vorhanden) zu gross. Verursacht wurde das durch die unnötigen Whitespaces (25 Tabs) die vom `spaceless` Filter nicht mehr entfernt werden konnten, da sich zwischen den verschiedenen Tags auch normaler Text befand; das erzwungene Leerzeichen `&nbsp;`. Dadurch wurden effektiv 2 Leerzeichen eingefügt statt 1.
@@ -12,7 +22,7 @@
 * ExtMgr Template:
   * Im Tabellen-Kopf werden Tooltips nicht mehr auf das `th` Element angewendet, sondern durch das `icon` Makro erzeugt.
 * CSS:
-  * Bei den Buttons "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" ist das vertikale Padding wieder auf 1px gesetzt, damit die Buttons etwas niedriger dargestellt werden.
+  * Bei den Buttons "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" ist das vertikale Padding wieder auf `1px` gesetzt, damit die Buttons etwas niedriger dargestellt werden.
   * Es wird jetzt auch bei Icons im Tabellen-Kopf der Hilfe-Cursor dargestellt.
   * Die verschiedenen Bereiche sind jetzt deutlicher gekennzeichnet, durch einen einleitenden und abschliessenden Kommentar mit `>` und `<`.
   * Optimierung.

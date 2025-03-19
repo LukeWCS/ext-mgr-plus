@@ -55,8 +55,6 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_CHECKBOX_MODE_LAST'			=> 'Letzten Zustand merken',
 	'EXTMGRPLUS_SELF_DISABLE'				=> 'Erlaube Eigendeaktivierung',
 	'EXTMGRPLUS_SELF_DISABLE_EXPLAIN'		=> 'Wenn Sie diese Option aktivieren, dann kann sich „Extension Manager Plus“ bei der Aktion „Ausgewählte deaktivieren“ auch selbst deaktivieren, da diese Erweiterung dann wie jede andere ausgewählt werden kann.',
-	'EXTMGRPLUS_INSTRUCTIONS'				=> 'Anleitungen anzeigen',
-	'EXTMGRPLUS_INSTRUCTIONS_EXPLAIN'		=> 'Mit dieser Option können Sie festlegen, ob die Anleitungen für Installieren, Aktualisieren und Deinstallieren am Ende der Erweiterungen-Liste angezeigt werden sollen.',
 	'EXTMGRPLUS_VC_LIMIT'					=> 'Ausführungszeit der Versionsprüfung aufteilen',
 	'EXTMGRPLUS_VC_LIMIT_EXPLAIN'			=> 'Die Versionsprüfung wird blockweise ausgeführt und mit diesem Wert können Sie festlegen, wie lange ein einzelner Block der Versionsprüfung maximal dauern darf. Damit wird verhindert, dass Zeitlimits von PHP oder der Datenbank überschritten werden.',
 	'EXTMGRPLUS_SETTING_LINKS'				=> 'Link zu den Einstellungen erzeugen',
@@ -69,7 +67,9 @@ $lang = array_merge($lang, [
 
 	// settings expert
 	'EXTMGRPLUS_SECTION_EXPERT_SETTINGS'	=> 'Experten-Einstellungen',
-	'EXTMGRPLUS_EXPERT_SETTINGS_EXPLAIN'	=> 'In diesem Abschnitt können besondere Funktionen aktiviert werden, die zum Beispiel für Entwickler relevant sind. Bei Funktionen die problematisch sein können, muss eine Rückfrage bestätigt werden.',
+	'EXTMGRPLUS_EXPERT_SETTINGS_EXPLAIN'	=> 'Dieser Abschnitt ist unter anderem für Entwickler gedacht; hier können besondere Funktionen und Eigenschaften gesteuert werden. Bei Funktionen die problematisch sein können, muss eine Rückfrage bestätigt werden.',
+	'EXTMGRPLUS_INSTRUCTIONS'				=> 'Anleitungen anzeigen',
+	'EXTMGRPLUS_INSTRUCTIONS_EXPLAIN'		=> 'Mit dieser Option können Sie festlegen, ob die Anleitungen für Installieren, Aktualisieren und Deinstallieren am Ende der Erweiterungen-Liste angezeigt werden sollen.',
 	'EXTMGRPLUS_MIGRATION_COL'				=> 'Spalte mit neuen Migrationen anzeigen',
 	'EXTMGRPLUS_MIGRATION_COL_EXPLAIN'		=> 'Wenn diese Option aktiviert ist, dann wird eine zusätzliche Spalte angezeigt, in der die Anzahl neuer Migrationen aufgeführt ist. Die Anzahl wird sowohl bei „Deaktivierte Erweiterungen“ als auch bei „Nicht installierte Erweiterungen“ angezeigt.',
 	'EXTMGRPLUS_MIGRATIONS'					=> 'Erlaube Erweiterungen mit neuen Migrationen',

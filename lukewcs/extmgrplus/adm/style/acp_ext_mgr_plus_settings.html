@@ -94,16 +94,6 @@
 
 		<dl>
 			<dt>
-				<label>{{ lang('EXTMGRPLUS_INSTRUCTIONS') ~ lang('COLON') }}</label><br>
-				<span>{{ lang('EXTMGRPLUS_INSTRUCTIONS_EXPLAIN') }}</span>
-			</dt>
-			<dd>
-				{{ _self.switch('extmgrplus_switch_instructions', EXTMGRPLUS_SWITCH_INSTRUCTIONS, switch_type) }}
-			</dd>
-		</dl>
-
-		<dl>
-			<dt>
 				<label>{{ lang('EXTMGRPLUS_VC_LIMIT') ~ lang('COLON') }}</label><br>
 				<span>{{ lang('EXTMGRPLUS_VC_LIMIT_EXPLAIN') }}</span>
 			</dt>
@@ -136,7 +126,17 @@
 		</dl>
 
 		<legend class="legend_sub">{{ lang('EXTMGRPLUS_SECTION_EXPERT_SETTINGS') }}</legend>
-		<p>{{ lang('EXTMGRPLUS_EXPERT_SETTINGS_EXPLAIN') }}</p>
+		<p class="legend_explain">{{ lang('EXTMGRPLUS_EXPERT_SETTINGS_EXPLAIN') }}</p>
+
+		<dl>
+			<dt>
+				<label>{{ lang('EXTMGRPLUS_INSTRUCTIONS') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('EXTMGRPLUS_INSTRUCTIONS_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				{{ _self.switch('extmgrplus_switch_instructions', EXTMGRPLUS_SWITCH_INSTRUCTIONS, switch_type) }}
+			</dd>
+		</dl>
 
 		<dl>
 			<dt>
@@ -177,7 +177,7 @@
 				<span>{{ lang('EXTMGRPLUS_DEFAULTS_EXP') }}</span>
 			</dt>
 			<dd>
-				{{ _self.button('extmgrplus_defaults', 'EXTMGRPLUS_BUTTON_DEFAULTS') }}
+				<input type="button" class="button2" name="extmgrplus_defaults" value="{{ lang('EXTMGRPLUS_BUTTON_DEFAULTS') }}">
 			</dd>
 		</dl>
 	</fieldset>
@@ -232,10 +232,6 @@
 		(step !== null ? ' step="' ~ step ~ '"') ~
 		(placeholder !== null ? ' placeholder="' ~ placeholder ~ '"')
 	}}>
-{%- endmacro %}
-
-{% macro button(name, lang_var) -%}
-	<input type="button" class="button2" name="{{ name }}" value="{{ lang(lang_var) }}">
 {%- endmacro %}
 
 {% macro confirmbox(name, message, default = false) -%}
