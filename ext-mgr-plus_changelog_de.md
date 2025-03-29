@@ -12,9 +12,11 @@
 * Im Tabellen-Kopf wird bei Icons jetzt ebenfalls der Hilfe-Cursor dargestellt, wie bei allen anderen Icons in der Tabelle.
 * Kleine Korrekturen in den Templates. Unter anderem wurde ein HTML Fehler behoben, der jedoch keine Auswirkung hatte, da Browser den Fehler automatisch behoben haben.
 * Code Optimierung bei PHP, Twig und CSS.
+* Javascript: 
+  * LukeWCSphpBBConfirmBox aktualisiert auf 1.5.0
 
 ### 3.0.0
-(2024-11-28) / CDB: --)
+(2024-11-28) / CDB: 2025-03-16)
 
 * Diese Version stellt eine deutliche Weiterentwicklung dar, da hier neben Neuerungen und Änderungen auch mehrere Workarounds entfernt wurden, die noch für ältere phpBB Versionen nötig waren. Ebenso wurden an vielen Stellen Optimierungen vorgenommen. Die Änderungen haben auch höhere Anforderungen zur Folge. **Wichtig: Wer bereits EMP 2.1 Beta getestet hatte, muss das vorher komplett deinstallieren (Arbeitsdaten löschen), bevor EMP 3.0 installiert werden kann.**
 * Die Voraussetzungen haben sich geändert:

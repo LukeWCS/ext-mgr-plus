@@ -1,3 +1,16 @@
+#### 3.1.0-b10
+* Fix: Bei b9 wurde Responsive bei der Änderung der Breite des Erklärungstextes auf 45% nicht berücksichtigt. [Meldung von Kirk (phpBB.de)]
+* LukeWCSphpBBConfirmBox 1.5.0:
+  * Twig: 
+    * Für den `div` Container wird kein individuelles `id` Attribut mehr generiert, sondern eine Klasse. Der individuelle Element-Name wird jetzt per `data-name` Attribut definiert. 
+	* Die Namen der Buttons enthalten nicht mehr den Element-Namen des Schalters, sondern feste Namen.
+  * JS: 
+    * Zugriffe auf das ConfirmBox Element erfolgen nicht mehr per `id`, sondern per Klasse und je nach Situation zusätzlich über das `data-name` Attribut.
+	* Bei den Buttons wird der Element-Name nicht mehr aus den Button-Namen extrahiert, sondern vom `data-name` Attribut des übergeordneten `div` Containers bezogen. 
+	* Bei aktiver Rückfrage wird bei gesperrten Elementen nicht mehr die Klasse `confirmbox_active` gesetzt, sondern `lukewcs_confirmbox_active`.
+    * Optimierung.
+  * CSS an Twig und JS angepasst.
+
 #### 3.1.0-b9
 * Settings Template:
   * Makro `button` entfernt und HTML direkt notiert. Ein Makro ist hier nicht sinnvoll, da es zu viele variable Eigenschaften und Kombinationen geben kann.
