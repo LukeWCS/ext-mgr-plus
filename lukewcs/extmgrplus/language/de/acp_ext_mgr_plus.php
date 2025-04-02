@@ -111,7 +111,6 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_SPOILER_LABEL'				=> 'Erklärung',
 
 	// details
-	'EXTMGRPLUS_SECTION_DETAILS'			=> 'Informationen von Extension Manager Plus',
 	'EXTMGRPLUS_DETAILS_CDB_PAGE'			=> 'Seite der phpBB-Erweiterungsdatenbank',
 	'EXTMGRPLUS_DETAILS_VERSION_URL'		=> 'Link zur Versionsdatei',
 

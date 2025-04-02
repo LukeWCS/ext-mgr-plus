@@ -66,7 +66,6 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_DEPENDENCY_EXPLAIN'			=> 'Mit einem vorangestelltem <code>+</code> kann eine Erweiterung mit einer Gruppe verknüpft werden. Hat man zum Beispiel die Erweiterung B die von Erweiterung A abhängig ist, kann man bei A <code>0</code> eintragen und bei B <code>+0</code>. Sind beide Erweiterungen aktiviert, wird beim Auswählen von A auch B ausgewählt. Sind beide Erweiterungen deaktiviert, wird beim Auswählen von B auch A ausgewählt.',
 	'EXTMGRPLUS_IGNORE'						=> '%s Ignorieren',
 	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> 'In dieser Spalte können Sie festlegen, welche Erweiterungen bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ ignoriert werden sollen. Ignorierte Erweiterungen können in der Erweiterungen-Liste nicht mehr ausgewählt werden und bei solchen Erweiterungen werden auch keine neuen Migrationen ermittelt und angezeigt. Wenn bei einer ignorierten Erweiterung eine Reihenfolge-Gruppe definiert wurde, dann bleibt diese erhalten, sie hat jedoch keine Bedeutung mehr.',
-	'EXTMGRPLUS_DETAILS_VERSION_URL'		=> 'Link zur Versionsdatei',
 
 	// ext manager
 	'EXTMGRPLUS_COL_CDB'					=> 'Validierte Erweiterung',
@@ -112,8 +111,8 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_SPOILER_LABEL'				=> 'Erklärung',
 
 	// details
-	'EXTMGRPLUS_SECTION_DETAILS'			=> 'Informationen von Extension Manager Plus',
 	'EXTMGRPLUS_DETAILS_CDB_PAGE'			=> 'Seite der phpBB-Erweiterungsdatenbank',
+	'EXTMGRPLUS_DETAILS_VERSION_URL'		=> 'Link zur Versionsdatei',
 
 	// messages
 	'EXTMGRPLUS_MSG_CONFIRM_DISABLE'		=> 'Sind Sie sich sicher, dass Sie %s deaktivieren möchten?',

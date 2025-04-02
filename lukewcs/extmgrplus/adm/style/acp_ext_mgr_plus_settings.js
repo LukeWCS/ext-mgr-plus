@@ -30,23 +30,15 @@ class LukeWCSphpBBConfirmBox {
 		this.$formObject	= this.$submitObject.parents('form');
 		this.animDuration	= animDuration;
 
-		// this.$formObject.find('div[id$="_confirmbox"]').each(function () {
 		this.$formObject.find('div.lukewcs_confirmbox').each(function () {
-			// const elementName = this.id.replace('_confirmbox', '');
-// console.log(this.querySelectorAll('input[type="button"]'));
-
-			// $('input[name="' + elementName + '"]')	.on('change', _this.#Show);
 			$('input[name="' + this.dataset['name'] + '"]')	.on('change', _this.#Show);
-			// $('input[name^="' + elementName + '_confirm_"]').on('click'	, _this.#Button);
 			$(this).find('input[type="button"]')			.on('click'	, _this.#Button);
-console.log($(this).find('input[type="button"]'));
 		});
 		this.$formObject									.on('reset'	, _this.HideAll);
 	}
 
 	#Show = (e) => {
 		const $elementObject	= $('input[name="' + e.target.name + '"]');
-		// const $confirmBoxObject	= $('div[id="' + e.target.name + '_confirmbox"]');
 		const $confirmBoxObject	= $('div.lukewcs_confirmbox[data-name="' + e.target.name + '"]');
 
 		if ($elementObject.prop('checked') != $confirmBoxObject.attr('data-default')) {
@@ -55,18 +47,11 @@ console.log($(this).find('input[type="button"]'));
 	}
 
 	#Button = (e) => {
-		// const elementName		= e.target.name.replace(/_confirm_.*/, '');
 		const elementName		= e.target.closest('div.lukewcs_confirmbox').dataset['name'];
-console.log(e.target.closest('div.lukewcs_confirmbox'));
-console.log(e.target.name);
-console.log(elementName);
-
 		const $elementObject	= $('input[name="' + elementName + '"]');
-		// const $confirmBoxObject	= $('div[id="' + elementName + '_confirmbox"]');
 		const $confirmBoxObject	= $('div.lukewcs_confirmbox[data-name="' + elementName + '"]');
 		const elementType		= $elementObject.attr('type');
 
-		// if (e.target.name.endsWith('_confirm_no')) {
 		if (e.target.name == 'lukewcs_confirmbox_no') {
 			if (elementType == 'checkbox') {
 				$elementObject.prop('checked', $confirmBoxObject.attr('data-default'));
@@ -78,9 +63,7 @@ console.log(elementName);
 	}
 
 	HideAll = () => {
-		// const $elementObject	= this.$formObject.find('input.confirmbox_active');
 		const $elementObject	= this.$formObject.find('input.lukewcs_confirmbox_active');
-		// const $confirmBoxObject	= this.$formObject.find('div[id$="_confirmbox"]');
 		const $confirmBoxObject	= this.$formObject.find('div.lukewcs_confirmbox');
 
 		this.#changeBoxState($elementObject, $confirmBoxObject, false);
@@ -88,10 +71,8 @@ console.log(elementName);
 
 	#changeBoxState = ($elementObject, $confirmBoxObject, showBox) => {
 		$elementObject		.prop('disabled', !!showBox);
-		// $elementObject		.toggleClass('confirmbox_active', !!showBox);
 		$elementObject		.toggleClass('lukewcs_confirmbox_active', !!showBox);
 		$confirmBoxObject	[showBox ? 'show' : 'hide'](this.animDuration);
-		// this.$submitObject	.prop('disabled', showBox ?? this.$formObject.find('input.confirmbox_active').length);
 		this.$submitObject	.prop('disabled', showBox ?? this.$formObject.find('input.lukewcs_confirmbox_active').length);
 	}
 }

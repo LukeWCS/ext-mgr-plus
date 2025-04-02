@@ -112,7 +112,6 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_SPOILER_LABEL'				=> 'Explanation',
 
 	// details
-	'EXTMGRPLUS_SECTION_DETAILS'			=> 'Information from Extension Manager Plus',
 	'EXTMGRPLUS_DETAILS_CDB_PAGE'			=> 'phpBB extension database page',
 	'EXTMGRPLUS_DETAILS_VERSION_URL'		=> 'Link to version file',
 

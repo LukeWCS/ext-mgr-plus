@@ -136,6 +136,8 @@ class ext_mgr_plus
 	{
 		if ($event['action'] == 'details')
 		{
+			$event['tpl_name'] = '@lukewcs_extmgrplus/acp_ext_mgr_plus_acp_ext_details';
+
 			$this->extend_details($event['ext_name']);
 			$this->versioncheck_details($event['ext_name']);
 			return;
@@ -159,6 +161,7 @@ class ext_mgr_plus
 		if ($vc_request)
 		{
 			$event['tpl_name'] = '@lukewcs_extmgrplus/acp_ext_mgr_plus_versioncheck';
+
 			$this->template->assign_vars([
 				'EXTMGRPLUS_VC_DATA'		=> $ext_list_versioncheck['data'],
 				'U_EXTMGRPLUS_VC_CANCEL'	=> $this->u_action,

@@ -4,16 +4,20 @@
 * Fix: Wenn die PHP INI Variable `max_execution_time` den Wert `0` aufweist, dann bekommt die von phpBB generierte Variable `safe_time_limit` im original ExtMgr ebenfalls den Wert `0`, bedingt durch die Formel `safe_time_limit = max_execution_time / 2`. Das hatte zur Folge, dass beim Schalten von Erweiterungen fälschlicherweise der Timeout-Schutz von EMP gegriffen hat und die Aktion nach der ersten geschalteten Erweiterung abgebrochen wurde. Bei einem Wert `0` wird diese Prüfung jetzt korrekt übersprungen, da es in diesem Fall laut PHP Konfiguration keine Laufzeit-Begrenzung gibt. Das ist zwar ein eher exotisches Problem und wird so in der Realität kaum/selten auftreten, ist jedoch trotzdem ein Fehler gewesen. [Meldung von Scanialady (phpBB.de)]
 * In der Spalte "Vorgänge" gibt es den neuen Link "Einstellungen", mit dem direkt das primäre Einstellungsmodul einer Erweiterung aufgerufen werden kann, also das erste Modul das per Migration installiert wurde. Dabei gelten folgende Eigenschaften:
   * Die Modul-Einstellung "Modul anzeigen:" wird respektiert; ist diese Einstellung deaktiviert, generiert EMP kein Link zum Modul.
-  * Ebenso wird auch die Modul-Einstellung "Modul aktiviert:" der Modul-Hierarchie berücksichtigt; ist diese Einstellung beim Modul oder bei einem übergeordneten Element deaktiviert, steht auch bei EMP kein Link zu diesem ACP Modul zur Verfügung. 
+  * Ebenso wird auch die Modul-Einstellung "Modul aktiviert:" der Modul-Hierarchie berücksichtigt; ist diese Einstellung beim Modul oder bei einem übergeordneten Element deaktiviert, steht auch bei EMP kein Link zu diesem ACP Modul zur Verfügung.
   * Auch die individuellen Modul-Rechte werden berücksichtigt; hat der Admin kein Recht für ein Einstellungsmodul, wird auch kein Link zum Modul generiert.
   * Die Generierung der Einstellungen-Links kann optional deaktiviert werden.
+* Die Generierung der "Details" Seite hat sich grundlegend geändert. Das Ziel war es, die zusätzlichen Links von EMP direkt im Abschnitt "Informationen zur Erweiterung" einfügen zu können, wie das auch ursprünglich vorgesehen war. Dazu waren folgende Änderungen notwendig:
+  * EMP generiert nun selber die "Details" Seite. Dazu wurde das original Template `acp_ext_details.html` mittels "Twig Converter" exportiert und an den Code Stil und Layout von EMP angepasst. Ein eigenes Template vereinfacht ausserdem mögliche zukünftige Änderungen der Seite. 
+  * Das ACP Event Template `acp_ext_details_end.html` wird nicht länger benötigt und wurde samt dem Ordner `adm/style/event` entfernt.
+  * Die Sprachvariable `EXTMGRPLUS_SECTION_DETAILS` wurde entfernt, da nicht länger benötigt.
 * In den Einstellungen wurde der Schalter "Anleitungen anzeigen" in den Bereich "Experten-Einstellungen" verschoben.
 * Bei der Rückfrage beim Schalten mehrerer Erweiterungen, sind die Buttons jetzt mit "Deaktivieren / Abbrechen" und "Aktivieren / Abbrechen" beschriftet, wie es phpBB bei der eigenen Rückfrage beim Schalten einer Erweiterung ebenfalls macht. Bislang mussten diese Buttons bei EMP aus technischen Gründen mit "Ja / Nein" beschriftet sein, da sonst `confirm_box` von phpBB nicht funktioniert hätte. Möglich wurde diese Änderung durch eine Anpassung des EMP eigenen Templates der `confirm_box` Funktion, wodurch alternative Button Beschriftungen definiert werden können.
 * Im Tabellen-Kopf wird bei Icons jetzt ebenfalls der Hilfe-Cursor dargestellt, wie bei allen anderen Icons in der Tabelle.
 * Kleine Korrekturen in den Templates. Unter anderem wurde ein HTML Fehler behoben, der jedoch keine Auswirkung hatte, da Browser den Fehler automatisch behoben haben.
 * Code Optimierung bei PHP, Twig und CSS.
-* Javascript: 
-  * LukeWCSphpBBConfirmBox aktualisiert auf 1.5.0
+* Javascript:
+  * LukeWCSphpBBConfirmBox aktualisiert auf 1.5.0.
 
 ### 3.0.0
 (2024-11-28) / CDB: 2025-03-16)
@@ -69,7 +73,7 @@
 
 * Die Anzeige der Anleitungen für Installieren, Aktualisieren und Deinstallieren am Ende der Erweiterungen-Liste, kann jetzt in den Einstellungen deaktiviert werden. [Vorschlag von MattF (phpBB.com)]
 * Code Optimierung bei PHP und Javascript.
-* Javascript: 
+* Javascript:
   * LukeWCSphpBBConfirmBox 1.4.3
   * Überarbeitete Funktion `setSwitch()` von "LF who was here 2" übernommen.
 * Sprachdateien:
@@ -118,7 +122,7 @@
   * Javascript:
     * Bei Javascript und jQuery wurden als DEPRECATED eingestufte Eigenschaften und Funktionen durch aktuelle Varianten ersetzt. Details siehe Build Changelog.
     * Umfangreiche Verbesserungen in Bezug auf Redundanz und umständlichen Code.
-  * Twig: 
+  * Twig:
     * Ist die Funktion Reihenfolge&Ignorieren deaktiviert, wird auch kein unnötiges HTML mehr generiert für die Erklärungstexte, für den Absenden-Block sowie für die Inhalte der Spalten "Reihenfolge" und "Ignorieren".
   * PHP:
     * Zahlreiche Detail-Verbesserungen.
@@ -279,7 +283,7 @@
 * Allgemeine Fehlerbehandlung:
   * Die Bestätigungsmeldung von EMP wird nur noch dann als erfolgreich dargestellt (grüne `successbox`), wenn alle Erweiterungen geschaltet werden konnten. Wenn nur eine Erweiterung nicht geschaltet werden konnte, wird die Meldung als Fehler dargestellt (rote `errorbox`).
   * Bei Meldungen von EMP ist jetzt erkennbar, welche Texte von EMP und welche von phpBB oder von einer Erweiterung stammen. Diejenigen Texte die nicht von EMP stammen, werden kursiv dargestellt.
-  * In allen Fehlermeldungen von EMP, wird jetzt der Anzeigename sowie der technische Name der betroffenen Erweiterung angezeigt, damit die Fehlermeldung zweifelsfrei zugeordnet werden kann. 
+  * In allen Fehlermeldungen von EMP, wird jetzt der Anzeigename sowie der technische Name der betroffenen Erweiterung angezeigt, damit die Fehlermeldung zweifelsfrei zugeordnet werden kann.
 * Neue Fehlerbehandlung bei fehlgeschlagenen Migrationen: Ist die Option "Migrationen erlauben" aktiviert und es kommt während der Aktivierung einer Erweiterung mit neuen Migrationsdateien zu einem Fehler, dann führt das nicht länger zu einem "Fatal error" (quasi ein Absturz von phpBB). Stattdessen wird ein solcher Fehler abgefangen und eine kontrollierte Fehlermeldung ausgegeben.
 * Fehlerbehandlung verbessert bei nicht-erfüllten Voraussetzungen: Wenn bei einer Erweiterung per `ext.php` auf gültige Voraussetzungen geprüft wird, z.B. die phpBB oder PHP Version, dann werden bei negativem Ergebnis in der abschliessenden Bestätigungsmeldung (nach Aktivierung) alle Erweiterungen aufgelistet mit der entsprechenden Fehlermeldung von phpBB. Bisher konnte man in der Bestätigungsmeldung lediglich sehen, wie viele Erweiterungen nicht aktiviert wurden, jedoch keine Details dazu.
 * Fehlerbehandlung verbessert bei Abbruch durch Erweiterungen, die eigene Fehlermeldungen in `ext.php` generieren (`trigger_error`):

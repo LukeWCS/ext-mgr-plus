@@ -151,7 +151,6 @@ p.legend_explain {
 
 /* LukeWCSphpBBConfirmBox */
 
-/* div[id$="_confirmbox"] { */
 div.lukewcs_confirmbox {
 	max-width: 450px;
 	border: 2px solid skyblue;
@@ -162,25 +161,21 @@ div.lukewcs_confirmbox {
 	box-shadow: 2px 2px 10px 1px rgba(121, 162, 179, 0.5);
 }
 
-/* div[id$="_confirmbox"] h2 { */
 div.lukewcs_confirmbox h2 {
 	margin: 0 0 0.25em 0;
 }
 
-/* div[id$="_confirmbox"] p:nth-of-type(2) { */
 div.lukewcs_confirmbox p:last-of-type {
 	text-align: center;
 	margin: 0;
 	padding: 0 4px 4px 4px;
 }
 
-/* div[id$="_confirmbox"] input[type="button"] { */
 div.lukewcs_confirmbox input[type="button"] {
 	padding: 3px 4px;
 }
 
 input:is([type="submit"], [type="button"]):disabled,
-/* input.confirmbox_active { */
 input.lukewcs_confirmbox_active {
 	opacity: 0.5;
 	cursor: not-allowed;

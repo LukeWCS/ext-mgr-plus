@@ -1,15 +1,25 @@
+#### 3.1.0-b11
+* Die Generierung der "Details" Seite hat sich grundlegend geändert. Das Ziel war es, die zusätzlichen Links von EMP direkt im Abschnitt "Informationen zur Erweiterung" einfügen zu können, wie das auch ursprünglich vorgesehen war. Dazu waren folgende Änderungen notwendig:
+  * EMP generiert nun selber die "Details" Seite. Dazu wurde das original Template `acp_ext_details.html` mittels "Twig Converter" exportiert und an den Code Stil und Layout von EMP angepasst. Ein eigenes Template vereinfacht ausserdem mögliche zukünftige Änderungen der Seite.
+  * Das ACP Event Template `acp_ext_details_end.html` wird nicht länger benötigt und wurde samt dem Ordner `adm/style/event` entfernt.
+  * Die Sprachvariable `EXTMGRPLUS_SECTION_DETAILS` wurde entfernt, da nicht länger benötigt.
+* LukeWCSphpBBConfirmBox 1.5.0:
+  * Code bereinigt bei HTML, JS und CSS.
+* Sprachdateien:
+  * In der Sprachdatei `de_x_sie/acp_ext_mgr_plus.php` war die Variable `EXTMGRPLUS_DETAILS_VERSION_URL` an der falschen Stelle.
+
 #### 3.1.0-b10
 * Fix: Bei b9 wurde Responsive bei der Änderung der Breite des Erklärungstextes auf 45% nicht berücksichtigt. [Meldung von Kirk (phpBB.de)]
 * LukeWCSphpBBConfirmBox 1.5.0:
-  * Twig: 
-    * Für den `div` Container wird kein individuelles `id` Attribut mehr generiert, sondern eine Klasse. Der individuelle Element-Name wird jetzt per `data-name` Attribut definiert. 
-	* Die Namen der Buttons enthalten nicht mehr den Element-Namen des Schalters, sondern feste Namen.
-  * JS: 
+  * Twig:
+    * Für den `div` Container wird kein individuelles `id` Attribut mehr generiert, sondern eine Klasse. Der individuelle Element-Name wird jetzt per `data-name` Attribut definiert.
+    * Die Namen der Buttons enthalten nicht mehr den Element-Namen des Schalters, sondern feste Namen.
+  * JS:
     * Zugriffe auf das ConfirmBox Element erfolgen nicht mehr per `id`, sondern per Klasse und je nach Situation zusätzlich über das `data-name` Attribut.
-	* Bei den Buttons wird der Element-Name nicht mehr aus den Button-Namen extrahiert, sondern vom `data-name` Attribut des übergeordneten `div` Containers bezogen. 
-	* Bei aktiver Rückfrage wird bei gesperrten Elementen nicht mehr die Klasse `confirmbox_active` gesetzt, sondern `lukewcs_confirmbox_active`.
+    * Bei den Buttons wird der Element-Name nicht mehr aus den Button-Namen extrahiert, sondern vom `data-name` Attribut des übergeordneten `div` Containers bezogen.
+    * Bei aktiver Rückfrage wird bei gesperrten Elementen nicht mehr die Klasse `confirmbox_active` gesetzt, sondern `lukewcs_confirmbox_active`.
     * Optimierung.
-  * CSS an Twig und JS angepasst.
+  * CSS: an Twig und JS angepasst.
 
 #### 3.1.0-b9
 * Settings Template:
@@ -98,7 +108,7 @@
 #### 3.1.0-b1
 * In der Spalte "Vorgänge" gibt es den neuen Link "Einstellungen", mit dem direkt das primäre Einstellungsmodul einer Erweiterung aufgerufen werden kann, also das erste Modul das per Migration installiert wurde.
   * Dabei wird die Modul-Einstellung "Modul anzeigen:" respektiert; ist diese Einstellung deaktiviert, generiert EMP kein Link zum Modul.
-  * Ebenso wird auch die Modul-Einstellung "Modul aktiviert:" aller übergeordneten Gruppen/Kategorien berücksichtigt; ist diese Einstellung bei einem Element in der Hierarchie deaktiviert, steht auch bei EMP kein Link zu diesem ACP Modul zur Verfügung. 
+  * Ebenso wird auch die Modul-Einstellung "Modul aktiviert:" aller übergeordneten Gruppen/Kategorien berücksichtigt; ist diese Einstellung bei einem Element in der Hierarchie deaktiviert, steht auch bei EMP kein Link zu diesem ACP Modul zur Verfügung.
   * Auch die individuellen Modul-Rechte werden berücksichtigt; hat der Admin kein Recht für ein Einstellungsmodul, wird kein Link zum Modul generiert.
 * Core:
   * Code Optimierung.
@@ -137,7 +147,7 @@
   * 2 Variablen umbenannt.
   * 2 Variablen entfernt.
   * 5 Variablen geändert.
-  
+
 #### 2.1.0-b16
 * Fix: 2 Syntax-Fehler in einem jQuery Selektor behoben, die jedoch seltsamerweise keine Auswirkungen hatten.
 * Core:
@@ -272,7 +282,7 @@
 * Common:
   * Aktuelle PHP Funktion `set_meta_template_vars()` von LMR übernommen.
 * ExtMgr Template:
-  * Twig Makro `version()` erweitert, um ein neues Icon (Fragezeichen in orangem Kreis) mit Tooltip anzeigen zu können, bei noch nicht ausgeführter Versionsprüfung. 
+  * Twig Makro `version()` erweitert, um ein neues Icon (Fragezeichen in orangem Kreis) mit Tooltip anzeigen zu können, bei noch nicht ausgeführter Versionsprüfung.
   * Etliche kleine Struktur-Änderungen.
   * Aktuelles Twig Makro `footer()` von LMR übernommen.
 * CSS:
@@ -312,7 +322,7 @@
   * 2 neue Sprachvariablen für die CDB Spalte.
   * 2 neue Sprachvariablen für die Versionsdatei-Option.
   * 1 Sprachvariable angepasst.
-* Migration: 
+* Migration:
   * Neue Config Variable `extmgrplus_switch_version_url`.
 
 #### 2.1.0-b2
@@ -336,7 +346,7 @@
 * Template:
   * Für die neue Fortschrittsanzeige der VP das Template `acp_ext_mgr_plus_versioncheck.html` hinzugefügt.
 * JS:
-  * Das neue Eingabefeld bei der Funktion "Einstellungen zurücksetzen" berücksichtigt.  
+  * Das neue Eingabefeld bei der Funktion "Einstellungen zurücksetzen" berücksichtigt.
 * CSS:
   * Code hinzugefügt für den Fortschrittsbalken.
 * Code Optimierung:
@@ -345,7 +355,7 @@
 * Sprachdateien:
   * 2 neue Sprachvariablen für das neue VP-Limit.
   * 1 neue Sprachvariable für den Fortschrittsbalken.
-* Migration: 
+* Migration:
   * Neue Config Variable `extmgrplus_number_vc_limit`.
 
 ### 2.0.1
@@ -355,7 +365,7 @@
 * Core:
   * Rückfrage beim Schalten:
     * Redundanten Code bezüglich `confirm_box` beim Aktivieren/Deaktivieren in einer Closure zusammengefasst.
-    * Die unterschiedlichen Erklärungen von phpBB bei Aktivierung/Deaktivierung werden nicht mehr im Core generiert, sondern direkt im Template per Twig geschaltet. 
+    * Die unterschiedlichen Erklärungen von phpBB bei Aktivierung/Deaktivierung werden nicht mehr im Core generiert, sondern direkt im Template per Twig geschaltet.
     * Der Hinweis bei Selbstdeaktivierung von EMP wurde ebenfalls in das Template verlagert.
   * Code Optimierung.
 
@@ -369,19 +379,19 @@
   * Den neuen Schalter berücksichtigt.
 * ACP Controller:
   * Den neuen Schalter berücksichtigt.
-* JS: 
+* JS:
   * Im IIFE Konstrukt wird jetzt explizit das jQuery Objekt übergeben.
   * Code Optimierung.
   * LukeWCSphpBBConfirmBox 1.4.3
   * Überarbeitete Funktion `setSwitch()` von LFWWH 2.2.0 übernommen.
-  * Den neuen Schalter bei der Funktion "Einstellungen zurücksetzen" berücksichtigt.  
+  * Den neuen Schalter bei der Funktion "Einstellungen zurücksetzen" berücksichtigt.
 * CSS:
-  * Harmonisierung der Werte-Notation wie bei meinen anderen Erweiterungen: 
+  * Harmonisierung der Werte-Notation wie bei meinen anderen Erweiterungen:
     * Zahlen kleiner 1 werden mit 0 vor dem Komma definiert.
 	* Hexadezimale Werte werden mit Kleinbuchstaben definiert.
 * Sprachdateien:
   * 2 neue Sprachvariablen für den neuen Schalter.
-* Migration: 
+* Migration:
   * Neue Config Variable `extmgrplus_switch_instructions`.
 
 ### 2.0.0
@@ -389,13 +399,13 @@
 * Letzter Feinschliff.
 
 #### 2.0.0-b4
-* ExtMgr Template: 
+* ExtMgr Template:
   * In der Erklärung der Spalte "Reihenfolge" einen Zusatz für die Abhängigkeiten eingefügt.
 * Sprachdateien:
   * 1 neue Sprachvariable für die Erklärung der Abhängigkeiten bei Reihenfolge&Ignorieren.
   * 1 Sprachvariable geändert für den Tooltip des Eingabefelds der Reihenfolge-Gruppe.
   * 1 Sprachvariable geändert für den Schalter bez. Reihenfolge&Ignorieren.
-* JS: 
+* JS:
   * Code bereinigt.
   * Selektoren vereinfacht.
 * CSS:
@@ -405,9 +415,9 @@
 * Bei Reihenfolge&Ignorieren können nun auch direkte Abhängigkeiten definiert werden. Dadurch werden beim Auswählen/Abwählen automatisch abhängige Erweiterungen berücksichtigt.
   * ExtMgr Template:
     * In der Spalte "Reihenfolge" ist jetzt auch ein `+` am Anfang erlaubt.
-  * JS: 
+  * JS:
     * Neue Funktion `setCheckboxes` mit der die Beziehungen zwischen Erweiterungen und Abhängigkeiten geprüft und Checkboxen entsprechend gesetzt werden können.
-  * Core: 
+  * Core:
     * Prüfung für die Spalte "Reihenfolge" um `+` erweitert.
 	* Beim Aktivieren müssen jetzt Exts aus der Reihenfolge-Liste gefiltert werden, bei denen eine Abhängigkeit  mit `+` definiert wurde.
 
@@ -442,7 +452,7 @@
 #### 1.1.3-b24
 * Letzte Version für phpBB 3.2.
 * EMP ist jetzt kompatibel mit Toggle Control. Somit können Administratoren zentral an einer Stelle entscheiden, ob für Ja/Nein Schalter Radio Buttons, Checkboxen oder Toggles verwendet werden sollen.
-* JS: 
+* JS:
   * LukeWCSphpBBConfirmBox 1.4.0:
     * Die Klasse kann jetzt auch mit Radio-Buttons umgehen. Eine manuelle Anpassung ist dabei nicht notwendig, es wird automatisch erkannt welcher Typ (Checkbox oder Radio) bei einem Schalter verwendet wurde. Notwendig für die TC Kompatibilität.
   * Zurücksetzen auf Installationsstandard musste für Radio Buttons erweitert werden. Notwendig für die TC Kompatibilität.
@@ -453,7 +463,7 @@
 
 #### 1.1.3-b23
 * CSS:
-  * Bei Toggles wird jetzt eine Animation beim Slider verwendet, sowie eine Farb-Animation (Übergang) bei der HG Farbe. [Vorschlag von Kirk (phpBB.de)]  
+  * Bei Toggles wird jetzt eine Animation beim Slider verwendet, sowie eine Farb-Animation (Übergang) bei der HG Farbe. [Vorschlag von Kirk (phpBB.de)]
 * JS:
   * Code Optimierung.
 
@@ -465,7 +475,7 @@
   * LukeWCSphpBBConfirmBox 1.3.0:
     * Redundanten Code zu einer Methode zusammengefasst.
     * Methoden die nur innerhalb der Klasse verwendet werden (für Events), sind jetzt als privat definiert.
-    * Optional kann das Öffnen/Schliessen der ConfirmBox-Fenster jetzt als Animation ausgeführt werden. Dazu unterstützt die Klasse einen zweiten Parameter, mit dem die Animation aktiviert und die Geschwindigkeit geregelt werden kann: 400 = Standard, 0 = Aus. [Vorschlag von IMC (phpBB.de)] 
+    * Optional kann das Öffnen/Schliessen der ConfirmBox-Fenster jetzt als Animation ausgeführt werden. Dazu unterstützt die Klasse einen zweiten Parameter, mit dem die Animation aktiviert und die Geschwindigkeit geregelt werden kann: 400 = Standard, 0 = Aus. [Vorschlag von IMC (phpBB.de)]
     * Code Optimierung.
 * Freigegeben für PHP 8.3.
 
@@ -501,10 +511,10 @@
   * Die Klasse reagiert jetzt direkt auf ein Formular-Reset und schliesst alle geöffneten ConfirmBox-Fenster. Diese Funktionalität muss also nicht mehr separat definiert werden.
   * CSS Code weiter von EMP isoliert.
   * Code optimiert.
- 
+
 #### 1.1.3-b18
 * ExtMgr Template:
-  * In der Info-Box für die Versionsprüfung wird jetzt hinter dem Text das gleiche animierte Icon angezeigt, wie bei den automatischen Bestätigungen. [Vorschlag von Kirk (phpBB.de)] 
+  * In der Info-Box für die Versionsprüfung wird jetzt hinter dem Text das gleiche animierte Icon angezeigt, wie bei den automatischen Bestätigungen. [Vorschlag von Kirk (phpBB.de)]
 * CSS:
   * An das neue Icon angepasst.
 * JS:
@@ -683,7 +693,7 @@
   * Kleine Änderung im Ignoriert-Tooltip, damit unmissverständlich klar ist, dass sich der Ignoriert-Status einer Erweiterung nur auf EMP bezieht.
 
 #### 1.1.2-b3
-* Validierungs-Kritik 1.1.1: 
+* Validierungs-Kritik 1.1.1:
   * Bei Versions-Anzeigen kann das Präfix "v" jetzt per Sprachvariable global angepasst werden. Das betrifft auch das Makro Template mit dem Footer.
 * Das Ignoriert-Icon in der Auswählen-Spalte grösser definiert. [Vorschlag von Kirk (phpBB.de)]
 * In der Tabellen-Überschrift alle Icons etwas grösser definiert und den Standard `font-weight: bold;` entfernt, wodurch die Icons nicht länger unscharf wirken.
@@ -835,7 +845,7 @@
 * Core:
   * Bei der Prüfung der Bedingungen für die Speicherung der Checkboxen wird jetzt auch "Letzten Zustand merken" berücksichtigt.
 * Sprachdateien:
-  * In der Erklärung von "Kontrollkästchen setzen" wird das FA Checkbox Icon jetzt per Platzhalter in der Sprachvariable eingefügt. 
+  * In der Erklärung von "Kontrollkästchen setzen" wird das FA Checkbox Icon jetzt per Platzhalter in der Sprachvariable eingefügt.
   * Bei den Erklärungen für "Reihenfolge" und "Ignorieren" wird das FA Icon jetzt ebenfalls per Platzhalter in der Sprachvariable eingefügt.
 
 #### 1.1.0-b11
@@ -871,7 +881,7 @@
   * Neue Funktion für das Speichern der Checkboxen hinzugefügt. Damit wird ein spezifischer Submit-Button innerhalb eines Formulars simuliert, indem dynamisch eine `hidden` Eigenschaft zum DOM hinzugefügt wird. Dieser Kniff ist nötig, da sich das aufrufende Element ausserhalb des Formulars befindet und zudem ein normaler Link ist, kein Submit-Button.
 * Sprachdateien:
   * Für die neue Checkbox-Save Funktion 2 Variablen hinzugefügt und 2 Variablen geändert.
- 
+
 #### 1.1.0-b8
 * Neue Eigenschaft für Checkboxen: Letzten Zustand merken.
 * ExtMgr Template:
@@ -882,14 +892,14 @@
 * Sprachdateien:
   * Für die neue Checkboxen Eigenschaft 3 Variablen hinzugefügt und 1 Variable geändert.
   * 2 Variablen umbenannt.
-* Migration: 
+* Migration:
   * Neue Config Variable `extmgrplus_enable_checkbox_mode`.
   * Config Variable `extmgrplus_enable_checkboxes_all_set` entfernt.
-  
+
 #### 1.1.0-b7
 * Core:
   * Variablen umbenannt.
-* ExtMgr Template: 
+* ExtMgr Template:
   * Variablen umbenannt.
   * Twig Makro für FA Icons von `<span>` auf `<i>` geändert, was wieder phpBB Standard entspricht.
 * CSS:
@@ -1016,7 +1026,7 @@
   * Optimiert, um im Output unnötige Whitespaces zu eliminieren. Speziell bei EMP dient das dazu, ein unschönes optisches Detail zu eliminieren, das durch unnötige Whitespaces entstanden ist.
 * CSS:
   * Beim Toggle CSS einen kompakten Header eingefügt mit grundlegenden Infos und um Dan Klammer zu benennen, von dessen Webseite wir den CSS Code ursprünglich haben.
-  
+
 #### 1.0.7-b5
 * EC Fehler (PSSE) behoben.
 * ExtMgr Template:
@@ -1048,7 +1058,7 @@
 
 #### 1.0.7-b3
 * ExtMgr Template:
-  * Neues Twig Makro für Ja/Nein Schalter 
+  * Neues Twig Makro für Ja/Nein Schalter
   * Toggle Funktion in angepasster Form von "Style Changer" übernommen. (Danke an Kirk)
   * JS für Toggles angepasst.
   * CSS für Toggles angepasst.
@@ -1168,7 +1178,7 @@
 * Sprachdateien:
   * Neue Sprachvariablen für die getrennte Verwaltung von Reihenfolge/Ignorieren.
   * Mehrere kleine Änderungen.
-  
+
 ### 1.0.2
 * Release (2022-06-17)
 * ExtMgr Template:
