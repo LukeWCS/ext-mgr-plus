@@ -47,36 +47,26 @@
 			<dd><strong id="meta_display_name">{{ META_DISPLAY_NAME }}</strong></dd>
 		</dl>
 	{% endif %}
-		<dl>
-			<dt><label>{{ lang('CLEAN_NAME') }}{{ lang('COLON') }}</label></dt>
-			<dd><strong id="meta_name">{{ META_NAME }}</strong></dd>
-		</dl>
+	<dl>
+		<dt><label>{{ lang('CLEAN_NAME') }}{{ lang('COLON') }}</label></dt>
+		<dd><strong id="meta_name">{{ META_NAME }}</strong></dd>
+	</dl>
 	{% if META_DESCRIPTION %}
 		<dl>
 			<dt><label>{{ lang('DESCRIPTION') }}{{ lang('COLON') }}</label></dt>
 			<dd><span id="meta_description">{{ META_DESCRIPTION }}</span></dd>
 		</dl>
 	{% endif %}
-		<dl>
-			<dt><label>{{ lang('VERSION') }}{{ lang('COLON') }}</label></dt>
-			<dd><span id="meta_version">{{ META_VERSION }}</span></dd>
-		</dl>
+	<dl>
+		<dt><label>{{ lang('VERSION') }}{{ lang('COLON') }}</label></dt>
+		<dd><span id="meta_version">{{ META_VERSION }}</span></dd>
+	</dl>
 	{% if META_HOMEPAGE %}
 		<dl>
 			<dt><label>{{ lang('HOMEPAGE') }}{{ lang('COLON') }}</label></dt>
 			<dd><strong id="meta_homepage"><a href="{{ META_HOMEPAGE }}">{{ META_HOMEPAGE }}</a></strong></dd>
 		</dl>
 	{% endif %}
-	{% if META_TIME %}
-		<dl>
-			<dt><label>{{ lang('TIME') }}{{ lang('COLON') }}</label></dt>
-			<dd><span id="meta_time">{{ META_TIME }}</span></dd>
-		</dl>
-	{% endif %}
-	<dl>
-		<dt><label>{{ lang('LICENSE') }}{{ lang('COLON') }}</label></dt>
-		<dd><span id="meta_license">{{ META_LICENSE }}</span></dd>
-	</dl>
 	{% if EXTMGRPLUS_DETAILS.cdb_page %}
 		<dl>
 			<dt><label>{{ lang('EXTMGRPLUS_DETAILS_CDB_PAGE') ~ lang('COLON') }}</label></dt>
@@ -89,6 +79,16 @@
 			<dd><strong><a href="{{ EXTMGRPLUS_DETAILS.version_url }}">{{ EXTMGRPLUS_DETAILS.version_url }}</a></strong></dd>
 		</dl>
 	{% endif %}
+	{% if META_TIME %}
+		<dl>
+			<dt><label>{{ lang('TIME') }}{{ lang('COLON') }}</label></dt>
+			<dd><span id="meta_time">{{ META_TIME }}</span></dd>
+		</dl>
+	{% endif %}
+	<dl>
+		<dt><label>{{ lang('LICENSE') }}{{ lang('COLON') }}</label></dt>
+		<dd><span id="meta_license">{{ META_LICENSE }}</span></dd>
+	</dl>
 </fieldset>
 
 {% if S_VERSIONCHECK && !S_UP_TO_DATE %}

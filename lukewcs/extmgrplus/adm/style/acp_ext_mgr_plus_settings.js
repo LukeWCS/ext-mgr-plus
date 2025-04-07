@@ -20,7 +20,7 @@
 
 class LukeWCSphpBBConfirmBox {
 /*
-* phpBB ConfirmBox class for checkboxes and yes/no radio buttons - v1.5.0
+* phpBB ConfirmBox class for checkboxes and yes/no radio buttons - v1.5.1
 * @copyright (c) 2023, LukeWCS, https://www.wcsaga.org
 * @license GNU General Public License, version 2 (GPL-2.0-only)
 */
@@ -31,10 +31,17 @@ class LukeWCSphpBBConfirmBox {
 		this.animDuration	= animDuration;
 
 		this.$formObject.find('div.lukewcs_confirmbox').each(function () {
-			$('input[name="' + this.dataset['name'] + '"]')	.on('change', _this.#Show);
+			$('input[name="' + $(this).attr('data-name') + '"]')	.on('change', _this.#Show);
 			$(this).find('input[type="button"]')			.on('click'	, _this.#Button);
 		});
 		this.$formObject									.on('reset'	, _this.HideAll);
+	}
+
+	HideAll = () => {
+		const $elementObject	= this.$formObject.find('input.lukewcs_confirmbox_active');
+		const $confirmBoxObject	= this.$formObject.find('div.lukewcs_confirmbox');
+
+		this.#changeBoxState($elementObject, $confirmBoxObject, false);
 	}
 
 	#Show = (e) => {
@@ -47,10 +54,10 @@ class LukeWCSphpBBConfirmBox {
 	}
 
 	#Button = (e) => {
-		const elementName		= e.target.closest('div.lukewcs_confirmbox').dataset['name'];
+		const elementName		= $(e.target).parents('div.lukewcs_confirmbox').attr('data-name');
 		const $elementObject	= $('input[name="' + elementName + '"]');
-		const $confirmBoxObject	= $('div.lukewcs_confirmbox[data-name="' + elementName + '"]');
 		const elementType		= $elementObject.attr('type');
+		const $confirmBoxObject	= $('div.lukewcs_confirmbox[data-name="' + elementName + '"]');
 
 		if (e.target.name == 'lukewcs_confirmbox_no') {
 			if (elementType == 'checkbox') {
@@ -60,13 +67,6 @@ class LukeWCSphpBBConfirmBox {
 			}
 		}
 		this.#changeBoxState($elementObject, $confirmBoxObject, null);
-	}
-
-	HideAll = () => {
-		const $elementObject	= this.$formObject.find('input.lukewcs_confirmbox_active');
-		const $confirmBoxObject	= this.$formObject.find('div.lukewcs_confirmbox');
-
-		this.#changeBoxState($elementObject, $confirmBoxObject, false);
 	}
 
 	#changeBoxState = ($elementObject, $confirmBoxObject, showBox) => {

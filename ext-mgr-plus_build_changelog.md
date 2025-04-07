@@ -1,6 +1,14 @@
+#### 3.1.0-b12
+* Details Template:
+  * Die beiden zusätzlichen Links von EMP (falls zutreffend) werden jetzt direkt unter "Homepage:" eingefügt, somit alle Links gruppiert. [Vorschlag von Kirk (phpBB.de)]
+  * Einrückungen korrigiert.
+* LukeWCSphpBBConfirmBox 1.5.1:
+  * JS:
+    * Konsequentere Verwendung von jQuery.
+
 #### 3.1.0-b11
 * Die Generierung der "Details" Seite hat sich grundlegend geändert. Das Ziel war es, die zusätzlichen Links von EMP direkt im Abschnitt "Informationen zur Erweiterung" einfügen zu können, wie das auch ursprünglich vorgesehen war. Dazu waren folgende Änderungen notwendig:
-  * EMP generiert nun selber die "Details" Seite. Dazu wurde das original Template `acp_ext_details.html` mittels "Twig Converter" exportiert und an den Code Stil und Layout von EMP angepasst. Ein eigenes Template vereinfacht ausserdem mögliche zukünftige Änderungen der Seite.
+  * EMP generiert nun selber die "Details" Seite. Dazu wurde das original Template `acp_ext_details.html` mittels "Twig Converter" exportiert und an den Code Stil und Layout von EMP angepasst. Durch das eigene Template werden zukünftige Änderungen an der Seite vereinfacht.
   * Das ACP Event Template `acp_ext_details_end.html` wird nicht länger benötigt und wurde samt dem Ordner `adm/style/event` entfernt.
   * Die Sprachvariable `EXTMGRPLUS_SECTION_DETAILS` wurde entfernt, da nicht länger benötigt.
 * LukeWCSphpBBConfirmBox 1.5.0:
