@@ -19,11 +19,12 @@
 */
 
 class LukeWCSphpBBConfirmBox {
-/*
-* phpBB ConfirmBox class for checkboxes and yes/no radio buttons - v1.5.1
-* @copyright (c) 2023, LukeWCS, https://www.wcsaga.org
-* @license GNU General Public License, version 2 (GPL-2.0-only)
-*/
+	/*
+	* phpBB ConfirmBox class for checkboxes and yes/no radio buttons - v1.5.1
+	* @copyright (c) 2023, LukeWCS, https://www.wcsaga.org
+	* @license GNU General Public License, version 2 (GPL-2.0-only)
+	*/
+
 	constructor(submitSelector, animDuration = 0) {
 		let _this = this;
 		this.$submitObject	= $(submitSelector);
@@ -31,10 +32,10 @@ class LukeWCSphpBBConfirmBox {
 		this.animDuration	= animDuration;
 
 		this.$formObject.find('div.lukewcs_confirmbox').each(function () {
-			$('input[name="' + $(this).attr('data-name') + '"]')	.on('change', _this.#Show);
-			$(this).find('input[type="button"]')			.on('click'	, _this.#Button);
+			$('input[name="' + $(this).attr('data-name') + '"]').on('change', _this.#Show);
+			$(this).find('input[type="button"]')				.on('click'	, _this.#Button);
 		});
-		this.$formObject									.on('reset'	, _this.HideAll);
+		this.$formObject										.on('reset'	, _this.HideAll);
 	}
 
 	HideAll = () => {

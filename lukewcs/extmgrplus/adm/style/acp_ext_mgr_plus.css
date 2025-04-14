@@ -13,6 +13,10 @@ fieldset :is(dt, dd) label {
 	cursor: inherit;
 }
 
+fieldset dd a {
+	overflow-wrap: anywhere;
+}
+
 button[type="submit"]:is([name="confirm"], [name="cancel"]),
 input:is([type="submit"], [type="button"], [type="reset"])[name^="extmgrplus_"] {
 	padding: 3px 4px;
@@ -94,7 +98,7 @@ legend.legend_sub:after {
 	margin: 0 0 0.5em 1em;
 }
 
-p.legend_explain {
+legend + .legend_explain {
 	width: 45%;
 }
 
@@ -203,12 +207,6 @@ input.lukewcs_confirmbox_active {
 	opacity: 0.5;
 }
 
-fieldset.quick a i.icon,
-.js_link i.icon {
-	margin: 0 0.3em 0 0;
-	font-size: 1.1em;
-}
-
 div.successbox i.icon,
 fieldset.quick a i.icon,
 .js_link i.icon {
@@ -217,6 +215,12 @@ fieldset.quick a i.icon,
 
 div.successbox.notice i.icon {
 	font-size: 1.2em;
+}
+
+fieldset.quick a i.icon,
+.js_link i.icon {
+	margin: 0 0.3em 0 0;
+	font-size: 1.1em;
 }
 
 fieldset.ext_properties i.icon,
@@ -384,7 +388,7 @@ fieldset.ext_properties dd details div {
 		padding: 2px 5px;
 	}
 
-	p.legend_explain {
+	legend + .legend_explain {
 		width: auto;
 	}
 

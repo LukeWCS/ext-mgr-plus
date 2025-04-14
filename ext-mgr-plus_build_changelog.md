@@ -1,3 +1,7 @@
+#### 3.1.0-b13
+* Fix: Auf der "Details" Seite wurden lange Link-Titel nicht umgebrochen. Das hatte unter Umständen zur Folge, dass in der Responsive-Ansicht die Box "Informationen zur Erweiterung" breiter als die anderen Boxen dargestellt wurde, wodurch das Layout insgesamt auf der Seite nicht mehr stimmte. Dieses Problem ist auch bei phpBB selber vorhanden. [Meldung von Kirk (phpBB.de)]
+  * CSS: Eine Eigenschaft definiert, mit der auch Link-Titel an beliebiger Stelle umgebrochen werden.
+
 #### 3.1.0-b12
 * Details Template:
   * Die beiden zusätzlichen Links von EMP (falls zutreffend) werden jetzt direkt unter "Homepage:" eingefügt, somit alle Links gruppiert. [Vorschlag von Kirk (phpBB.de)]
@@ -11,7 +15,7 @@
   * EMP generiert nun selber die "Details" Seite. Dazu wurde das original Template `acp_ext_details.html` mittels "Twig Converter" exportiert und an den Code Stil und Layout von EMP angepasst. Durch das eigene Template werden zukünftige Änderungen an der Seite vereinfacht.
   * Das ACP Event Template `acp_ext_details_end.html` wird nicht länger benötigt und wurde samt dem Ordner `adm/style/event` entfernt.
   * Die Sprachvariable `EXTMGRPLUS_SECTION_DETAILS` wurde entfernt, da nicht länger benötigt.
-* LukeWCSphpBBConfirmBox 1.5.0:
+* LukeWCSphpBBConfirmBox:
   * Code bereinigt bei HTML, JS und CSS.
 * Sprachdateien:
   * In der Sprachdatei `de_x_sie/acp_ext_mgr_plus.php` war die Variable `EXTMGRPLUS_DETAILS_VERSION_URL` an der falschen Stelle.
