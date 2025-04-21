@@ -2,21 +2,21 @@
 (2025--) / CDB: --)
 
 * Fix: Wenn die PHP INI Variable `max_execution_time` den Wert `0` aufweist, dann bekommt die von phpBB generierte Variable `safe_time_limit` im original ExtMgr ebenfalls den Wert `0`, bedingt durch die Formel `safe_time_limit = max_execution_time / 2`. Das hatte zur Folge, dass beim Schalten von Erweiterungen fälschlicherweise der Timeout-Schutz von EMP gegriffen hat und die Aktion nach der ersten geschalteten Erweiterung abgebrochen wurde. Bei einem Wert `0` wird diese Prüfung jetzt korrekt übersprungen, da es in diesem Fall laut PHP Konfiguration keine Laufzeit-Begrenzung gibt. Das ist zwar ein eher exotisches Problem und wird so in der Realität kaum/selten auftreten, ist jedoch trotzdem ein Fehler gewesen. [Meldung von Scanialady (phpBB.de)]
-* Fix: Auf der "Details" Seite wurden lange Link-Titel nicht umgebrochen. Das hatte unter Umständen zur Folge, dass in der Responsive-Ansicht die Box "Informationen zur Erweiterung" breiter als die anderen Boxen dargestellt wurde, wodurch das Layout insgesamt auf der Seite nicht mehr stimmte. Dieses Problem ist auch bei phpBB selber vorhanden. [Meldung von Kirk (phpBB.de)]
+* Fix: Auf der "Details" Seite wurden lange Link-Titel nicht in allen Fällen korrekt umgebrochen. Das hatte unter Umständen zur Folge, dass in der Responsive-Ansicht die Box "Informationen zur Erweiterung" breiter als die anderen Boxen dargestellt wurde, wodurch das Layout insgesamt auf der Seite nicht mehr stimmte. Dieses Problem ist auch bei phpBB selber vorhanden. [Meldung von Kirk (phpBB.de)]
   * CSS: Eine Eigenschaft definiert, mit der auch Link-Titel an beliebiger Stelle umgebrochen werden.
 * In der Spalte "Vorgänge" gibt es den neuen Link "Einstellungen", mit dem direkt das primäre Einstellungsmodul einer Erweiterung aufgerufen werden kann, also das erste Modul das per Migration installiert wurde. Dabei gelten folgende Eigenschaften:
   * Die Modul-Einstellung "Modul anzeigen:" wird respektiert; ist diese Einstellung deaktiviert, generiert EMP kein Link zum Modul.
   * Ebenso wird auch die Modul-Einstellung "Modul aktiviert:" der Modul-Hierarchie berücksichtigt; ist diese Einstellung beim Modul oder bei einem übergeordneten Element deaktiviert, steht auch bei EMP kein Link zu diesem ACP Modul zur Verfügung.
   * Auch die individuellen Modul-Rechte werden berücksichtigt; hat der Admin kein Recht für ein Einstellungsmodul, wird auch kein Link zum Modul generiert.
   * Die Generierung der Einstellungen-Links kann optional deaktiviert werden.
-* Die Generierung der "Details" Seite hat sich grundlegend geändert. Das Ziel war es, die zusätzlichen Links von EMP direkt im Abschnitt "Informationen zur Erweiterung" einfügen zu können, wie das auch ursprünglich vorgesehen war. Dazu waren folgende Änderungen notwendig:
-  * EMP generiert nun selber die "Details" Seite. Dazu wurde das original Template `acp_ext_details.html` mittels "Twig Converter" exportiert und an den Code Stil und Layout von EMP angepasst. Ein eigenes Template vereinfacht ausserdem mögliche zukünftige Änderungen der Seite. 
+* Die Generierung der "Details" Seite hat sich grundlegend geändert. Das Ziel war es, die zusätzlichen Links von EMP direkt im Abschnitt "Informationen zur Erweiterung" einfügen zu können, wie das auch ursprünglich vorgesehen war. Ein eigenes Template vereinfacht ausserdem mögliche zukünftige Änderungen der Seite. Dazu waren folgende Änderungen notwendig:
+  * EMP generiert nun selber die "Details" Seite. Dazu wurde das original Template `acp_ext_details.html` mittels "Twig Converter" exportiert und an den Code Stil und Layout von EMP angepasst.
   * Das ACP Event Template `acp_ext_details_end.html` wird nicht länger benötigt und wurde samt dem Ordner `adm/style/event` entfernt.
   * Die Sprachvariable `EXTMGRPLUS_SECTION_DETAILS` wurde entfernt, da nicht länger benötigt.
 * In den Einstellungen wurde der Schalter "Anleitungen anzeigen" in den Bereich "Experten-Einstellungen" verschoben.
 * Bei der Rückfrage beim Schalten mehrerer Erweiterungen, sind die Buttons jetzt mit "Deaktivieren / Abbrechen" und "Aktivieren / Abbrechen" beschriftet, wie es phpBB bei der eigenen Rückfrage beim Schalten einer Erweiterung ebenfalls macht. Bislang mussten diese Buttons bei EMP aus technischen Gründen mit "Ja / Nein" beschriftet sein, da sonst `confirm_box` von phpBB nicht funktioniert hätte. Möglich wurde diese Änderung durch eine Anpassung des EMP eigenen Templates der `confirm_box` Funktion, wodurch alternative Button Beschriftungen definiert werden können.
 * Im Tabellen-Kopf wird bei Icons jetzt ebenfalls der Hilfe-Cursor dargestellt, wie bei allen anderen Icons in der Tabelle.
-* Kleine Korrekturen in den Templates. Unter anderem wurde ein HTML Fehler behoben, der jedoch keine Auswirkung hatte, da Browser den Fehler automatisch behoben haben.
+* Kleine Korrekturen in den Templates. Unter anderem wurde ein HTML Fehler behoben, der jedoch keine Auswirkung hatte, da Browser den Fehler automatisch "behoben" haben.
 * Code Optimierung bei PHP, Twig, Javascript und CSS.
 * Javascript:
   * LukeWCSphpBBConfirmBox aktualisiert auf 1.5.1.

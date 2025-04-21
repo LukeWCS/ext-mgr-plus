@@ -43,27 +43,27 @@
 
 	{% if META_DISPLAY_NAME %}
 		<dl>
-			<dt><label>{{ lang('DISPLAY_NAME') }}{{ lang('COLON') }}</label></dt>
+			<dt><label>{{ lang('DISPLAY_NAME') ~ lang('COLON') }}</label></dt>
 			<dd><strong id="meta_display_name">{{ META_DISPLAY_NAME }}</strong></dd>
 		</dl>
 	{% endif %}
 	<dl>
-		<dt><label>{{ lang('CLEAN_NAME') }}{{ lang('COLON') }}</label></dt>
+		<dt><label>{{ lang('CLEAN_NAME') ~ lang('COLON') }}</label></dt>
 		<dd><strong id="meta_name">{{ META_NAME }}</strong></dd>
 	</dl>
 	{% if META_DESCRIPTION %}
 		<dl>
-			<dt><label>{{ lang('DESCRIPTION') }}{{ lang('COLON') }}</label></dt>
+			<dt><label>{{ lang('DESCRIPTION') ~ lang('COLON') }}</label></dt>
 			<dd><span id="meta_description">{{ META_DESCRIPTION }}</span></dd>
 		</dl>
 	{% endif %}
 	<dl>
-		<dt><label>{{ lang('VERSION') }}{{ lang('COLON') }}</label></dt>
+		<dt><label>{{ lang('VERSION') ~ lang('COLON') }}</label></dt>
 		<dd><span id="meta_version">{{ META_VERSION }}</span></dd>
 	</dl>
 	{% if META_HOMEPAGE %}
 		<dl>
-			<dt><label>{{ lang('HOMEPAGE') }}{{ lang('COLON') }}</label></dt>
+			<dt><label>{{ lang('HOMEPAGE') ~ lang('COLON') }}</label></dt>
 			<dd><strong id="meta_homepage"><a href="{{ META_HOMEPAGE }}">{{ META_HOMEPAGE }}</a></strong></dd>
 		</dl>
 	{% endif %}
@@ -81,12 +81,12 @@
 	{% endif %}
 	{% if META_TIME %}
 		<dl>
-			<dt><label>{{ lang('TIME') }}{{ lang('COLON') }}</label></dt>
+			<dt><label>{{ lang('TIME') ~ lang('COLON') }}</label></dt>
 			<dd><span id="meta_time">{{ META_TIME }}</span></dd>
 		</dl>
 	{% endif %}
 	<dl>
-		<dt><label>{{ lang('LICENSE') }}{{ lang('COLON') }}</label></dt>
+		<dt><label>{{ lang('LICENSE') ~ lang('COLON') }}</label></dt>
 		<dd><span id="meta_license">{{ META_LICENSE }}</span></dd>
 	</dl>
 </fieldset>
@@ -98,10 +98,10 @@
 		{% for updates_available in loops.updates_available %}
 			<fieldset>
 				<dl>
-					<dt><label>{{ lang('VERSION') }}{{ lang('COLON') }}</label></dt>
+					<dt><label>{{ lang('VERSION') ~ lang('COLON') }}</label></dt>
 					<dd><strong>{{ updates_available.current }}</strong></dd>
 				</dl>
-				{% if updates_available.download%}
+				{% if updates_available.download %}
 					<dl>
 						<dt><label>{{ lang('DOWNLOAD_LATEST') }}</label></dt>
 						<dd><strong><a href="{{ updates_available.download }}">{{ lang('DOWNLOAD') }} {{ META_NAME }} {{ LATEST_VERSION }}</a></strong></dd>
@@ -124,13 +124,13 @@
 
 		{% if META_REQUIRE_PHPBB %}
 			<dl{% if META_REQUIRE_PHPBB_FAIL %} class="requirements_not_met"{% endif %}>
-				<dt><label>{{ lang('PHPBB_VERSION') }}{{ lang('COLON') }}</label></dt>
+				<dt><label>{{ lang('PHPBB_VERSION') ~ lang('COLON') }}</label></dt>
 				<dd><span id="require_phpbb">{{ META_REQUIRE_PHPBB }}</span></dd>
 			</dl>
 		{% endif %}
 		{% if META_REQUIRE_PHP %}
 			<dl{% if META_REQUIRE_PHP_FAIL %} class="requirements_not_met"{% endif %}>
-				<dt><label>{{ lang('PHP_VERSION') }}{{ lang('COLON') }}</label></dt>
+				<dt><label>{{ lang('PHP_VERSION') ~ lang('COLON') }}</label></dt>
 				<dd><span id="require_php">{{ META_REQUIRE_PHP }}</span></dd>
 			</dl>
 		{% endif %}
@@ -143,24 +143,24 @@
 	{% for meta_authors in loops.meta_authors %}
 		<fieldset>
 			<dl>
-				<dt><label>{{ lang('AUTHOR_NAME') }}{{ lang('COLON') }}</label></dt>
+				<dt><label>{{ lang('AUTHOR_NAME') ~ lang('COLON') }}</label></dt>
 				<dd><strong>{{ meta_authors.AUTHOR_NAME }}</strong></dd>
 			</dl>
 			{% if meta_authors.AUTHOR_EMAIL %}
 				<dl>
-					<dt><label>{{ lang('AUTHOR_EMAIL') }}{{ lang('COLON') }}</label></dt>
+					<dt><label>{{ lang('AUTHOR_EMAIL') ~ lang('COLON') }}</label></dt>
 					<dd><strong><a href="mailto:{{ meta_authors.AUTHOR_EMAIL }}">{{ meta_authors.AUTHOR_EMAIL }}</a></strong></dd>
 				</dl>
 			{% endif %}
 			{% if meta_authors.AUTHOR_HOMEPAGE %}
 				<dl>
-					<dt><label>{{ lang('AUTHOR_HOMEPAGE') }}{{ lang('COLON') }}</label></dt>
+					<dt><label>{{ lang('AUTHOR_HOMEPAGE') ~ lang('COLON') }}</label></dt>
 					<dd><strong><a href="{{ meta_authors.AUTHOR_HOMEPAGE }}">{{ meta_authors.AUTHOR_HOMEPAGE }}</a></strong></dd>
 				</dl>
 			{% endif %}
 			{% if meta_authors.AUTHOR_ROLE %}
 				<dl>
-					<dt><label>{{ lang('AUTHOR_ROLE') }}{{ lang('COLON') }}</label></dt>
+					<dt><label>{{ lang('AUTHOR_ROLE') ~ lang('COLON') }}</label></dt>
 					<dd><strong>{{ meta_authors.AUTHOR_ROLE }}</strong></dd>
 				</dl>
 			{% endif %}

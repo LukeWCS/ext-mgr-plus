@@ -1,3 +1,7 @@
+#### 3.1.0-b14
+* Details Template:
+  * Twig Code optimiert.
+
 #### 3.1.0-b13
 * Fix: Auf der "Details" Seite wurden lange Link-Titel nicht umgebrochen. Das hatte unter Umständen zur Folge, dass in der Responsive-Ansicht die Box "Informationen zur Erweiterung" breiter als die anderen Boxen dargestellt wurde, wodurch das Layout insgesamt auf der Seite nicht mehr stimmte. Dieses Problem ist auch bei phpBB selber vorhanden. [Meldung von Kirk (phpBB.de)]
   * CSS: Eine Eigenschaft definiert, mit der auch Link-Titel an beliebiger Stelle umgebrochen werden.
