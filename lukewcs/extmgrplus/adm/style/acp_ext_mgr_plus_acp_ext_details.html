@@ -14,8 +14,6 @@
 
 {% INCLUDE 'overall_header.html' %}
 
-<a id="maincontent"></a>
-
 <a href="{{ U_BACK }}" style="float: {{ S_CONTENT_FLOW_END }};">&laquo; {{ lang('BACK') }}</a>
 
 <h1>{{ lang('EXTENSIONS_ADMIN') }}</h1>
@@ -44,7 +42,14 @@
 	{% if META_DISPLAY_NAME %}
 		<dl>
 			<dt><label>{{ lang('DISPLAY_NAME') ~ lang('COLON') }}</label></dt>
-			<dd><strong id="meta_display_name">{{ META_DISPLAY_NAME }}</strong></dd>
+			<dd>
+				{{ {
+					0:	'',
+					1:	common.icon('fa-database', 'EXTMGRPLUS_TOOLTIP_CDB_EXT'),
+					2:	common.icon('fa-star', 'EXTMGRPLUS_TOOLTIP_CDB_EXT_OFFICIAL'),
+				}[EXTMGRPLUS_DETAILS.cdb_ext ?? 0] }}
+				<strong id="meta_display_name">{{ META_DISPLAY_NAME }}</strong>
+			</dd>
 		</dl>
 	{% endif %}
 	<dl>
@@ -61,7 +66,7 @@
 		<dt><label>{{ lang('VERSION') ~ lang('COLON') }}</label></dt>
 		<dd><span id="meta_version">{{ META_VERSION }}</span></dd>
 	</dl>
-	{% if META_HOMEPAGE %}
+	{% if META_HOMEPAGE != EXTMGRPLUS_DETAILS.cdb_page %}
 		<dl>
 			<dt><label>{{ lang('HOMEPAGE') ~ lang('COLON') }}</label></dt>
 			<dd><strong id="meta_homepage"><a href="{{ META_HOMEPAGE }}">{{ META_HOMEPAGE }}</a></strong></dd>

@@ -1,3 +1,16 @@
+#### 3.1.0-b15
+* ExtMgr Template: Spalte "Validierte Erweiterung":
+  * Bei offiziellen Erweiterungen von phpBB.com wird nun ein Stern-Icon angezeigt, statt dem Datenbank-Icon.
+  * Dieses Stern-Icon hat einen eigenen Tooltip.
+* Details Template:
+  * Bei CDB Erweiterungen sowie offiziellen Erweiterungen wird jetzt das zugehörige Icon vor dem Namen eingefügt, inklusive Tooltip.
+  * Bei offiziellen Erweiterungen wird die Anzeige des Homepage Links unterdrückt, wenn der Link mit der CDB Seite identisch ist.
+* Sprachdateien:
+  * 1 Variable geändert für Tooltip der CDB Exts.
+  * 1 Variable hinzugefügt für Tooltip der offizielln Exts.
+* Templates: Den Anker mit der ID `maincontent` aus allen Templates (insgesamt 4) entfernt, da bei EMP nicht benötigt. [Meldung von Kirk (phpBB.de)]
+* CSS: Regel für die CDB-Icons auf der Details-Seite erweitert.
+
 #### 3.1.0-b14
 * Details Template:
   * Twig Code optimiert.
@@ -1208,7 +1221,7 @@
   * Neue Sprachvariable für den Checkbox Tooltip.
 
 #### 1.0.2-b1
-* Bei der Prüfung ob eine Erweiterung aktiviert werden kann mittels `is_enableable()` (`ext.php`), wird jetzt auch ein String und ein Array als möglicher Rückgabewert akzeptiert und entsprechend aufbereitet. Diese Methode der Fehlerbehandlung wurde erst in phpBB 3.3.0 eingeführt und kann `trigger_error` ersetzen. [Hinweis von IMC (phpBB.de)]
+* Bei der Prüfung ob eine Erweiterung aktiviert werden kann mittels `is_enableable()` (`ext.php`), wird jetzt auch ein String und ein Array als möglicher Rückgabewert akzeptiert und entsprechend aufbereitet. Diese Methode der Fehlerbehandlung wurde erst in phpBB 3.3.0 eingeführt und kann `trigger_error` ersetzen. [Meldung von IMC (phpBB.de)]
 
 ### 1.0.1
 * Release (2023-06-12)

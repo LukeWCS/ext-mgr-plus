@@ -207,6 +207,11 @@ input.lukewcs_confirmbox_active {
 	opacity: 0.5;
 }
 
+table :is(th, td) i.icon,
+fieldset dd i.icon {
+	cursor: help;
+}
+
 div.successbox i.icon,
 fieldset.quick a i.icon,
 .js_link i.icon {
@@ -304,10 +309,6 @@ fieldset.ext_properties dd details div {
 
 #extmgrplus_list th:nth-of-type(1n+7) {
 	width: 1%;
-}
-
-#extmgrplus_list :is(th, td) i.icon {
-	cursor: help;
 }
 
 #extmgrplus_list td:nth-of-type(3) i.icon {

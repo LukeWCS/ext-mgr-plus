@@ -19,6 +19,9 @@ class ext_mgr_plus
 	protected const  CHECKBOX_ALL	= 1;
 	protected const  CHECKBOX_LAST	= 2;
 
+	protected const  CDB_EXT			= 1;
+	protected const  CDB_EXT_OFFICIAL	= 2;
+
 	protected object $common;
 	protected object $ext_manager;
 	protected object $cache;
@@ -418,17 +421,17 @@ class ext_mgr_plus
 		{
 			try
 			{
-				$ext_metadata = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
+				$ext_meta = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
 			}
 			catch (\RuntimeException $e)
 			{
-				$ext_metadata = null;
+				$ext_meta = null;
 			}
 
-			if (is_array($ext_metadata))
+			if (is_array($ext_meta))
 			{
-				$ext_display_name	= $ext_metadata['extra']['display-name'] ?? '';
-				$ext_version		= $ext_metadata['version'] ?? '';
+				$ext_display_name	= $ext_meta['extra']['display-name'] ?? '';
+				$ext_version		= $ext_meta['version'] ?? '';
 
 				$disable_error = '';
 				if ($this->ext_manager->is_enabled($ext_name))
@@ -523,17 +526,17 @@ class ext_mgr_plus
 		{
 			try
 			{
-				$ext_metadata = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
+				$ext_meta = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
 			}
 			catch (\RuntimeException $e)
 			{
-				$ext_metadata = null;
+				$ext_meta = null;
 			}
 
-			if (is_array($ext_metadata))
+			if (is_array($ext_meta))
 			{
-				$ext_display_name	= $ext_metadata['extra']['display-name'] ?? '';
-				$ext_version		= $ext_metadata['version'] ?? '';
+				$ext_display_name	= $ext_meta['extra']['display-name'] ?? '';
+				$ext_version		= $ext_meta['version'] ?? '';
 
 				if ($this->ext_manager->is_disabled($ext_name))
 				{
@@ -845,8 +848,8 @@ class ext_mgr_plus
 
 		try
 		{
-			$ext_metadata = $md_manager->get_metadata('all');
-			if (isset($ext_metadata['extra']['version-check']))
+			$ext_meta = $md_manager->get_metadata('all');
+			if (isset($ext_meta['extra']['version-check']))
 			{
 				$vc_data = $this->ext_manager->version_check($md_manager, !$read_cache, $read_cache, $this->config['extension_force_unstable'] ? 'unstable' : null);
 				$vc_current = empty($vc_data) ? 'NOUPD' : $vc_data['current'];
@@ -886,10 +889,10 @@ class ext_mgr_plus
 			}
 			if ($this->ext_manager->is_available($ext_name))
 			{
-				$ext_metadata = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
+				$ext_meta = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
 
 				$no_ver_flags = $vc_data['current'] == 'NOUPD' || $vc_data['current'] == 'ERROR' || $vc_data['current'] == '';
-				$has_update = !$no_ver_flags && phpbb_version_compare($ext_metadata['version'], $vc_data['current'], '<');
+				$has_update = !$no_ver_flags && phpbb_version_compare($ext_meta['version'], $vc_data['current'], '<');
 				if ($no_ver_flags || $has_update)
 				{
 					$ext_list_tpl[$ext_name]['current'] = $vc_data['current'];
@@ -930,15 +933,19 @@ class ext_mgr_plus
 		{
 			try
 			{
-				$ext_metadata = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
+				$ext_meta = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
 			}
 			catch (\RuntimeException $e)
 			{
 			}
 
-			if (isset($ext_metadata['extra']['version-check']))
+			if (isset($ext_meta['extra']['version-check']))
 			{
-				$ext_list_tpl[$ext_name]['cdb_ext']	= ($ext_metadata['extra']['version-check']['host'] ?? '') == 'www.phpbb.com';
+				// $ext_list_tpl[$ext_name]['cdb_ext']	= ($ext_meta['extra']['version-check']['host'] ?? '') == 'www.phpbb.com';
+				if (($ext_meta['extra']['version-check']['host'] ?? '') == 'www.phpbb.com')
+				{
+					$ext_list_tpl[$ext_name]['cdb_ext']	= preg_match('/^phpbb\//', $ext_meta['name']) ? self::CDB_EXT_OFFICIAL : self::CDB_EXT;
+				}
 				$count_total++;
 			}
 			else
@@ -963,13 +970,16 @@ class ext_mgr_plus
 	*/
 	private function extend_details(string $ext_name): void
 	{
-		$vc_meta = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all')['extra']['version-check'] ?? null;
-		$details = [];
+		$ext_meta	= $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
+		$vc_meta	= $ext_meta['extra']['version-check'] ?? null;
+		$details	= [];
+
 		if (isset($vc_meta))
 		{
 			if (($vc_meta['host'] ?? '') == 'www.phpbb.com')
 			{
-				$details['cdb_page'] = 'https://www.phpbb.com' . $vc_meta['directory'] . '/';
+				$details['cdb_page']	= 'https://www.phpbb.com' . $vc_meta['directory'] . '/';
+				$details['cdb_ext']		= preg_match('/^phpbb\//', $ext_meta['name']) ? self::CDB_EXT_OFFICIAL : self::CDB_EXT;
 			}
 			if ($this->config['extmgrplus_switch_version_url'])
 			{

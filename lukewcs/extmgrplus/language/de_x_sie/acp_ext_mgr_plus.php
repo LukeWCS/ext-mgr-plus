@@ -45,11 +45,11 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_COL_WITH_VERSIONCHECK'		=> 'Mit Versionsprüfung',
 	'EXTMGRPLUS_COL_LAST_VERSIONCHECK'		=> 'Letzte Versionsprüfung',
 	'EXTMGRPLUS_COL_AVAILABLE_UPDATES'		=> 'Verfügbare Updates',
-	'EXTMGRPLUS_AVAILABLE_EXTENSIONS' => [
+	'EXTMGRPLUS_AVAILABLE_EXTENSIONS'		=> [
 		0									=> '%2$u',
 		1									=> '%2$u (%1$u ungültige)',
 	],
-	'EXTMGRPLUS_VERSIONCHECK_DATE' => [
+	'EXTMGRPLUS_VERSIONCHECK_DATE'			=> [
 		0									=> '%2$s (%3$u Sek.)',
 		1									=> '%2$s (%3$u Sek. / %1$u Fehler)',
 	],
@@ -89,7 +89,8 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_SELECT'				=> 'Erweiterung auswählen.',
 	'EXTMGRPLUS_TOOLTIP_IS_LOCKED'			=> 'Die Auswahl dieser Erweiterung ist wegen neuer Migrationen gesperrt.',
 	// tooltips icons
-	'EXTMGRPLUS_TOOLTIP_CDB_EXT'			=> 'Diese Erweiterung wurde offiziell validiert.',
+	'EXTMGRPLUS_TOOLTIP_CDB_EXT'			=> 'Das ist eine validierte Erweiterung.',
+	'EXTMGRPLUS_TOOLTIP_CDB_EXT_OFFICIAL'	=> 'Das ist eine offizielle Erweiterung von phpBB.com.',
 	'EXTMGRPLUS_TOOLTIP_OUTDATED'			=> 'Die installierte Version dieser Erweiterung ist veraltet.',
 	'EXTMGRPLUS_TOOLTIP_VERSIONCHECK_ERROR'	=> 'Bei der Versionsprüfung ist ein Fehler aufgetreten. Klicken Sie auf „Details“ um mehr zu erfahren.',
 	'EXTMGRPLUS_TOOLTIP_VERSIONCHECK_EMPTY'	=> 'Bei dieser Erweiterung wurde keine Versionsprüfung ausgeführt.',
@@ -98,12 +99,12 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_SETTINGS'			=> 'Das primäre Einstellungsmodul dieser Erweiterung aufrufen.',
 
 	// misc
-	'EXTMGRPLUS_EXTENSION_PLURAL' => [
+	'EXTMGRPLUS_EXTENSION_PLURAL'			=> [
 		0									=> '0 Erweiterungen',
 		1									=> '1 Erweiterung',
 		2									=> '%u Erweiterungen',
 	],
-	'EXTMGRPLUS_SECOND_PLURAL' => [
+	'EXTMGRPLUS_SECOND_PLURAL'				=> [
 		0									=> '0 Sekunden',
 		1									=> '1 Sekunde',
 		2									=> '%u Sekunden',
