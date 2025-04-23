@@ -1,10 +1,21 @@
+#### 3.1.0-b16
+* Fix: Logikfehler bei b15 behoben. Beim Vergleich von Homepage Link und CDB Link wurde nicht berücksichtigt, dass der Homepage Link auch leer sein kann, was dann dazu führen konnte, dass die Zeile für Homepage mit leerem Link angezeigt wurde.
+* Code Optimierung und Bereinigung:
+  * ExtMgr Template.
+  * Details Template.
+  * Core.
+
 #### 3.1.0-b15
 * ExtMgr Template: Spalte "Validierte Erweiterung":
   * Bei offiziellen Erweiterungen von phpBB.com wird nun ein Stern-Icon angezeigt, statt dem Datenbank-Icon.
   * Dieses Stern-Icon hat einen eigenen Tooltip.
 * Details Template:
   * Bei CDB Erweiterungen sowie offiziellen Erweiterungen wird jetzt das zugehörige Icon vor dem Namen eingefügt, inklusive Tooltip.
-  * Bei offiziellen Erweiterungen wird die Anzeige des Homepage Links unterdrückt, wenn der Link mit der CDB Seite identisch ist.
+  * Bei CDB Erweiterungen wird die Anzeige des Homepage Links unterdrückt, wenn dieser Link und die CDB Seite identisch sind.
+* Core:
+  * Im VP-Array für den ExtMgr wird jetzt bei `cdb_ext` zwischen CDB Exts und offiziellen Exts unterschieden.
+  * Das Template-Array für die Details Seite enthält jetzt ebenfalls die `cdb_ext` Eigenschaft, damit das Template passende Icons anzeigen kann.
+  * Code Optimierung.
 * Sprachdateien:
   * 1 Variable geändert für Tooltip der CDB Exts.
   * 1 Variable hinzugefügt für Tooltip der offizielln Exts.
@@ -32,6 +43,7 @@
   * EMP generiert nun selber die "Details" Seite. Dazu wurde das original Template `acp_ext_details.html` mittels "Twig Converter" exportiert und an den Code Stil und Layout von EMP angepasst. Durch das eigene Template werden zukünftige Änderungen an der Seite vereinfacht.
   * Das ACP Event Template `acp_ext_details_end.html` wird nicht länger benötigt und wurde samt dem Ordner `adm/style/event` entfernt.
   * Die Sprachvariable `EXTMGRPLUS_SECTION_DETAILS` wurde entfernt, da nicht länger benötigt.
+* Core: Beim Aufruf der Details-Seite wird jetzt das neue Template geladen.
 * LukeWCSphpBBConfirmBox:
   * Code bereinigt bei HTML, JS und CSS.
 * Sprachdateien:

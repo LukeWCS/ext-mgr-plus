@@ -941,10 +941,9 @@ class ext_mgr_plus
 
 			if (isset($ext_meta['extra']['version-check']))
 			{
-				// $ext_list_tpl[$ext_name]['cdb_ext']	= ($ext_meta['extra']['version-check']['host'] ?? '') == 'www.phpbb.com';
 				if (($ext_meta['extra']['version-check']['host'] ?? '') == 'www.phpbb.com')
 				{
-					$ext_list_tpl[$ext_name]['cdb_ext']	= preg_match('/^phpbb\//', $ext_meta['name']) ? self::CDB_EXT_OFFICIAL : self::CDB_EXT;
+					$ext_list_tpl[$ext_name]['cdb_ext']	= substr($ext_meta['name'], 0, 6) == 'phpbb/' ? self::CDB_EXT_OFFICIAL : self::CDB_EXT;
 				}
 				$count_total++;
 			}
@@ -979,7 +978,7 @@ class ext_mgr_plus
 			if (($vc_meta['host'] ?? '') == 'www.phpbb.com')
 			{
 				$details['cdb_page']	= 'https://www.phpbb.com' . $vc_meta['directory'] . '/';
-				$details['cdb_ext']		= preg_match('/^phpbb\//', $ext_meta['name']) ? self::CDB_EXT_OFFICIAL : self::CDB_EXT;
+				$details['cdb_ext']		= substr($ext_meta['name'], 0, 6) == 'phpbb/' ? self::CDB_EXT_OFFICIAL : self::CDB_EXT;
 			}
 			if ($this->config['extmgrplus_switch_version_url'])
 			{

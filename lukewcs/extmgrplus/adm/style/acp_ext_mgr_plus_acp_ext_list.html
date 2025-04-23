@@ -207,16 +207,10 @@
 					{% set vc_obj = EXTMGRPLUS_LIST_VERSIONCHECK[ext.NAME] ?? {} %}
 					<tr class="ext_{{ list }} row-highlight">
 						<td>
-							{#% apply spaceless %}
-							{% if vc_obj.cdb_ext === true %}
-								{{ common.icon('fa-database', 'EXTMGRPLUS_TOOLTIP_CDB_EXT') }}
-							{% endif %}
-							{% endapply %#}
-							{{ {
-								0:	'',
+							{{ vc_obj.cdb_ext ? {
 								1:	common.icon('fa-database', 'EXTMGRPLUS_TOOLTIP_CDB_EXT'),
 								2:	common.icon('fa-star', 'EXTMGRPLUS_TOOLTIP_CDB_EXT_OFFICIAL'),
-							}[vc_obj.cdb_ext ?? 0] }}
+							}[vc_obj.cdb_ext] }}
 						</td>
 						<td>
 							{% apply spaceless %}
