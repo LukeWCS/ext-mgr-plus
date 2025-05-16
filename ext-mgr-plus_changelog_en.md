@@ -1,5 +1,5 @@
 ### 3.0.0
-(2024-11-28) / CDB: --)
+(2024-11-28) / CDB: 2025-03-16)
 
 * This version represents a significant development, as in addition to new features and changes, several workarounds that were still necessary for older phpBB versions have been removed. Optimizations have also been made in many places. The changes also result in higher requirements. **Important: If you have already tested EMP 2.1 Beta, you must completely uninstall it (delete working data) before you can install EMP 3.0.**
 * The requirements have changed:
