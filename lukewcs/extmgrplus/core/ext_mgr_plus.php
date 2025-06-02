@@ -305,7 +305,7 @@ class ext_mgr_plus
 	*/
 	public function change_msg_template(): void
 	{
-		if ($this->template->retrieve_var('EXTMGRPLUS_TRIGGER_ERROR'))
+		if ($this->template->retrieve_var('EXTMGRPLUS_TRIGGER_ERROR') !== null)
 		{
 			$this->template->set_filenames(['body' => '@lukewcs_extmgrplus/acp_ext_mgr_plus_message_body.html']);
 		}
@@ -486,7 +486,7 @@ class ext_mgr_plus
 		}
 		$this->common->trigger_error_(
 			$this->language->lang('EXTMGRPLUS_MSG_DEACTIVATION', $ext_count_success, $ext_count_enabled) . ($msg_failed ?? ''),
-			(($ext_count_success != $ext_count_enabled || $safe_time_exceeded) ? E_USER_WARNING : E_USER_NOTICE),
+			$this->get_error_level($ext_count_success, $ext_count_enabled, $safe_time_exceeded),
 			'RETURN_TO_EXTENSION_LIST'
 		);
 	}
@@ -604,7 +604,7 @@ class ext_mgr_plus
 		}
 		$this->common->trigger_error_(
 			$this->language->lang('EXTMGRPLUS_MSG_ACTIVATION', $ext_count_success, $ext_count_disabled) . ($msg_failed ?? ''),
-			(($ext_count_success != $ext_count_disabled || $safe_time_exceeded) ? E_USER_WARNING : E_USER_NOTICE),
+			$this->get_error_level($ext_count_success, $ext_count_disabled, $safe_time_exceeded),
 			'RETURN_TO_EXTENSION_LIST'
 		);
 	}
@@ -640,6 +640,25 @@ class ext_mgr_plus
 			/* 3 */	$ext_name,
 			/* 4 */	empty($message) ? '' : "<br><br><em>{$message}</em>"
 		);
+	}
+
+	/*
+		Helper function for trigger_error
+	*/
+	function get_error_level(int $count_success, int $count_total, bool $safe_time_exceeded): int
+	{
+		if ($count_success == 0 || $safe_time_exceeded)
+		{
+			return E_USER_WARNING;
+		}
+		else if ($count_success != $count_total)
+		{
+			return E_USER_NOTICE + E_USER_WARNING;
+		}
+		else
+		{
+			return E_USER_NOTICE;
+		}
 	}
 
 	/*
@@ -697,14 +716,14 @@ class ext_mgr_plus
 		global $module;
 
 		$module_urls = [];
-		foreach (array_filter($module->module_ary, fn($row) => $row['name'] != '' && $row['display'] == 1) as $module_)
+		foreach (array_filter($module->module_ary, fn($row): bool => $row['name'] != '' && $row['display'] == 1) as $module_row)
 		{
-			preg_match('/\\\\(.+?)\\\\(.+?)\\\\.*/', $module_['name'], $matches);
+			preg_match('/\\\\(.+?)\\\\(.+?)\\\\.*/', $module_row['name'], $matches);
 			$tech_name = (count($matches) == 3) ? $matches[1] . '/' . $matches[2] : false;
 			if ($tech_name !== false && !isset($module_urls[$tech_name]))
 			{
-				$module_name = str_replace('\\', '-', $module_['name']);
-				$module_urls[$tech_name] = append_sid("{$this->phpbb_admin_path}index.{$this->php_ext}", "i={$module_name}&amp;mode={$module_['mode']}");
+				$module_name = str_replace('\\', '-', $module_row['name']);
+				$module_urls[$tech_name] = append_sid("{$this->phpbb_admin_path}index.{$this->php_ext}", "i={$module_name}&amp;mode={$module_row['mode']}");
 			}
 		}
 

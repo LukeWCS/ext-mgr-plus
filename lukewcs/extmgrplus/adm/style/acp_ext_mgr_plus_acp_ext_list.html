@@ -88,7 +88,7 @@
 		<fieldset class="ext_properties" style="display: none;">
 			<legend>{{ lang('EXTMGRPLUS_SECTION_SETTINGS') }}</legend>
 
-			<dl{{ !EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE ? ' class="inactive"' }}>
+			<dl{{ !EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE ? ' class="emp_inactive"' }}>
 				<dt>
 					<label>{{ lang('EXTMGRPLUS_ORDER', common.icon('fa-sort')) ~ lang('COLON') }}</label><br>
 				</dt>
@@ -104,7 +104,7 @@
 				</dd>
 			</dl>
 
-			<dl{{ !EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE ? ' class="inactive"' }}>
+			<dl{{ !EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE ? ' class="emp_inactive"' }}>
 				<dt>
 					<label>{{ lang('EXTMGRPLUS_IGNORE', common.icon('fa-ban')) ~ lang('COLON') }}</label><br>
 				</dt>
@@ -275,7 +275,7 @@
 								{% if EXTMGRPLUS_LIST_MODULES[ext.NAME] is defined %}
 									<a href="{{ EXTMGRPLUS_LIST_MODULES[ext.NAME] }}" title="{{ lang('EXTMGRPLUS_TOOLTIP_SETTINGS') }}">{{ lang('SETTINGS') }}</a>
 								{% else %}
-									<span class="unavailable">{{ lang('SETTINGS') }}</span>
+									<span class="emp_unavailable">{{ lang('SETTINGS') }}</span>
 								{% endif %}
 							{% endif %}
 							{% endapply %}
@@ -296,7 +296,7 @@
 						<td style="display: none;">
 							{% apply spaceless %}
 							{% if ext.NAME is defined && ext.NAME != 'lukewcs/extmgrplus' && EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE %}
-								<input type="text" name="ext_order[{{ ext.NAME }}]" size="2" maxlength="3"{{ EXTMGRPLUS_LIST_IGNORE[ext.NAME] is defined ? ' class="inactive"' }} title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER')|e('html') }}" value="{{ EXTMGRPLUS_LIST_ORDER[ext.NAME] ?? '' }}" pattern="^\+?[0-9]{1,2}$">
+								<input type="text" name="ext_order[{{ ext.NAME }}]" size="2" maxlength="3"{{ EXTMGRPLUS_LIST_IGNORE[ext.NAME] is defined ? ' class="emp_inactive"' }} title="{{ lang('EXTMGRPLUS_TOOLTIP_ORDER')|e('html') }}" value="{{ EXTMGRPLUS_LIST_ORDER[ext.NAME] ?? '' }}" pattern="^\+?[0-9]{1,2}$">
 							{% endif %}
 							{% endapply %}
 						</td>

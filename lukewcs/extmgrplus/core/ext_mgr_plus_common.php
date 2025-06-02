@@ -158,15 +158,20 @@ class ext_mgr_plus_common
 	/*
 		Wrapper for trigger_error
 	*/
-	public function trigger_error_(string $message, int $error_type, ?string $back_link_lang_var = null): void
+	public function trigger_error_(string $message, int $error_level, ?string $back_link_lang_var = null): void
 	{
-		if ($error_type == E_USER_NOTICE && $this->config['extmgrplus_switch_auto_redirect'])
+		if ($error_level == E_USER_NOTICE && $this->config['extmgrplus_switch_auto_redirect'])
 		{
 			meta_refresh(1, $this->rotate_get_params($this->u_action));
 			$this->template->assign_var('EXTMGRPLUS_AUTO_REDIRECT', true);
 		}
-		$this->template->assign_var('EXTMGRPLUS_TRIGGER_ERROR', true);
-		trigger_error($message . $this->back_link($back_link_lang_var), $error_type);
+		$error_type = [
+			E_USER_NOTICE					=> 0,
+			E_USER_NOTICE + E_USER_WARNING	=> 1,
+			E_USER_WARNING					=> 2,
+		][$error_level] ?? 1;
+		$this->template->assign_var('EXTMGRPLUS_TRIGGER_ERROR', $error_type);
+		trigger_error($message . $this->back_link($back_link_lang_var), ($error_type == 1) ? E_USER_WARNING : $error_level);
 	}
 
 	public function back_link(?string $lang_var = null): string

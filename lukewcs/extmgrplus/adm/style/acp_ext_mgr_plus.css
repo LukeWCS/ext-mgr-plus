@@ -28,12 +28,24 @@ code {
 	color: black;
 }
 
-.inactive {
+.emp_inactive {
 	opacity: 0.5;
 }
 
-.unavailable {
+.emp_unavailable {
 	opacity: 0.3;
+}
+
+.errorbox.emp_warning {
+	background-color: #ffbb33;
+}
+
+.errorbox.emp_warning :is(a, a:visited) {
+	color: #505050;
+}
+
+.errorbox.emp_warning :is(h3, p, a:hover) {
+	color: #303030;
 }
 
 .extmgrplus_footer {
@@ -49,7 +61,7 @@ code {
 }
 
 button:is(.button1, .button2) {
-	color: #000;
+	color: #000000;
 	background-image: -webkit-linear-gradient(top, #d2d2d2 0%, #efefef 100%);
 	background-image: linear-gradient(to bottom, #d2d2d2 0%, #efefef 100%);
 	padding: 3px 2px;

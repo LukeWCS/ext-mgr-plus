@@ -97,7 +97,7 @@ function setButtonState(e) {
 };
 
 function setInputBoxState(e) {
-	$('input[name="ext_order[' + e.currentTarget.value + ']"]').toggleClass('inactive', e.currentTarget.checked);
+	$('input[name="ext_order[' + e.currentTarget.value + ']"]').toggleClass('emp_inactive', e.currentTarget.checked);
 };
 
 /*
