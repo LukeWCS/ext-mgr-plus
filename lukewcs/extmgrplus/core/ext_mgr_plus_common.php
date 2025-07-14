@@ -15,30 +15,43 @@ namespace lukewcs\extmgrplus\core;
 
 class ext_mgr_plus_common
 {
-	protected object $config;
-	protected object $config_text;
-	protected object $language;
-	protected object $template;
-	protected object $ext_manager;
+	// protected object $config;
+	// protected object $config_text;
+	// protected object $language;
+	// protected object $template;
+	// protected object $ext_manager;
 
-	protected array  $metadata;
-	public    string $u_action;
+	// protected array  $metadata;
+	// public    string $u_action;
+
+	// public function __construct(
+		// \phpbb\config\config $config,
+		// \phpbb\config\db_text $config_text,
+		// \phpbb\language\language $language,
+		// \phpbb\template\template $template,
+		// \phpbb\extension\manager $ext_manager,
+	// )
+	// {
+		// $this->config		= $config;
+		// $this->config_text	= $config_text;
+		// $this->language		= $language;
+		// $this->template		= $template;
+		// $this->ext_manager	= $ext_manager;
+
+		// $this->metadata		= $this->ext_manager->create_extension_metadata_manager('lukewcs/extmgrplus')->get_metadata('all');
+	// }
+	protected array $metadata;
+	public string $u_action;
 
 	public function __construct(
-		\phpbb\config\config $config,
-		\phpbb\config\db_text $config_text,
-		\phpbb\language\language $language,
-		\phpbb\template\template $template,
-		\phpbb\extension\manager $ext_manager
+		protected \phpbb\config\config $config,
+		protected \phpbb\config\db_text $config_text,
+		protected \phpbb\language\language $language,
+		protected \phpbb\template\template $template,
+		protected \phpbb\extension\manager $ext_manager,
 	)
 	{
-		$this->config		= $config;
-		$this->config_text	= $config_text;
-		$this->language		= $language;
-		$this->template		= $template;
-		$this->ext_manager	= $ext_manager;
-
-		$this->metadata		= $this->ext_manager->create_extension_metadata_manager('lukewcs/extmgrplus')->get_metadata('all');
+		$this->metadata = $this->ext_manager->create_extension_metadata_manager('lukewcs/extmgrplus')->get_metadata('all');
 	}
 
 	public function set_meta_template_vars(string $tpl_prefix, string $copyright): void
@@ -95,7 +108,7 @@ class ext_mgr_plus_common
 	/*
 		Set a variable/array in a config_text variable container or delete one or all variables/arrays
 	*/
-	public function config_text_set(string $container, ?string $name, $value): void
+	public function config_text_set(string $container, string|null $name, $value): void
 	{
 		if ($this->config_text->get($container) === null)
 		{
@@ -125,7 +138,7 @@ class ext_mgr_plus_common
 	/*
 		Get a variable/array from a config_text variable container
 	*/
-	public function config_text_get(string $container, ?string $name = null)
+	public function config_text_get(string $container, string|null $name = null)
 	{
 		$config_text = $this->config_text->get($container);
 		if ($config_text === null)
@@ -158,7 +171,7 @@ class ext_mgr_plus_common
 	/*
 		Wrapper for trigger_error
 	*/
-	public function trigger_error_(string $message, int $error_level, ?string $back_link_lang_var = null): void
+	public function trigger_error_(string $message, int $error_level, string|null $back_link_lang_var = null): void
 	{
 		if ($error_level == E_USER_NOTICE && $this->config['extmgrplus_switch_auto_redirect'])
 		{
@@ -166,20 +179,21 @@ class ext_mgr_plus_common
 			$this->template->assign_var('EXTMGRPLUS_AUTO_REDIRECT', true);
 		}
 		$error_type = [
-			E_USER_NOTICE					=> 0,
-			E_USER_NOTICE + E_USER_WARNING	=> 1,
-			E_USER_WARNING					=> 2,
+			E_USER_NOTICE					=> 0, // green box
+			E_USER_WARNING					=> 1, // red box
+			E_USER_NOTICE + E_USER_WARNING	=> 2, // orange box
+			E_USER_NOTICE + E_USER_ERROR	=> 3, // green+red box
 		][$error_level] ?? 1;
 		$this->template->assign_var('EXTMGRPLUS_TRIGGER_ERROR', $error_type);
-		trigger_error($message . $this->back_link($back_link_lang_var), ($error_type == 1) ? E_USER_WARNING : $error_level);
+		trigger_error($message . $this->back_link($back_link_lang_var), ($error_type > 1) ? E_USER_WARNING : $error_level);
 	}
 
-	public function back_link(?string $lang_var = null): string
+	public function back_link(string|null $lang_var = null): string
 	{
-		return sprintf('<br><br><a href="%1$s">%2$s</a>',
-			/* 1 */ $this->u_action,
-			/* 2 */ $this->language->lang($lang_var ?? 'BACK_TO_PREV')
-		);
+		return vsprintf('<br><br><a href="%1$s">%2$s</a>', [
+			1	=> $this->u_action,
+			2	=> $this->language->lang($lang_var ?? 'BACK_TO_PREV')
+		]);
 	}
 
 	/*

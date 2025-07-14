@@ -37,7 +37,7 @@ code {
 }
 
 .errorbox.emp_warning {
-	background-color: #ffbb33;
+	background-color: #ffaa00;
 }
 
 .errorbox.emp_warning :is(a, a:visited) {
@@ -46,6 +46,10 @@ code {
 
 .errorbox.emp_warning :is(h3, p, a:hover) {
 	color: #303030;
+}
+
+.errorbox.emp_success_error {
+	background: linear-gradient(#228822, #bc2a4d);
 }
 
 .extmgrplus_footer {

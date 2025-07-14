@@ -1,6 +1,8 @@
 ### 3.1.0
 (2025--) / CDB: --)
 
+* Die Voraussetzungen haben sich geändert:
+  * PHP: 8.0.0 - 8.4.x (Bisher: 7.4.0 - 8.4.x)
 * Fix: Wenn die PHP INI Variable `max_execution_time` den Wert `0` aufweist, dann bekommt die von phpBB generierte Variable `safe_time_limit` im original ExtMgr ebenfalls den Wert `0`, bedingt durch die Formel `safe_time_limit = max_execution_time / 2`. Das hatte zur Folge, dass beim Schalten von Erweiterungen fälschlicherweise der Timeout-Schutz von EMP gegriffen hat und die Aktion nach der ersten geschalteten Erweiterung abgebrochen wurde. Bei einem Wert `0` wird diese Prüfung jetzt korrekt übersprungen, da es in diesem Fall laut PHP Konfiguration keine Laufzeit-Begrenzung gibt. Das ist zwar ein eher seltenes Problem, ist jedoch trotzdem ein Fehler gewesen. [Meldung von Scanialady (phpBB.de)]
 * Fix: Auf der "Details" Seite wurden lange Link-Titel nicht in allen Fällen korrekt umgebrochen. Das hatte unter Umständen zur Folge, dass in der Responsive-Ansicht die Box "Informationen zur Erweiterung" breiter als die anderen Boxen dargestellt wurde, wodurch das Layout insgesamt auf der Seite nicht mehr stimmte. Dieses Problem ist auch bei phpBB selber vorhanden. [Meldung von Kirk (phpBB.de)]
 * In der Spalte "Vorgänge" gibt es den neuen Link "Einstellungen", mit dem direkt das primäre Einstellungsmodul einer Erweiterung aufgerufen werden kann, also das erste Modul das per Migration installiert wurde. Dabei gelten folgende Eigenschaften:
@@ -19,10 +21,13 @@
   * Bei CDB Erweiterungen wird jetzt das zugehörige Icon vor dem Namen eingefügt, inklusive Tooltip.
   * Bei CDB Erweiterungen wird die Anzeige des Homepage Links unterdrückt, wenn dieser Link identisch zur CDB Seite ist.
 * In den Einstellungen wurde der Schalter "Anleitungen anzeigen" in den Bereich "Experten-Einstellungen" verschoben.
+* Mit der EMP eigenen Variante von `trigger_error` können jetzt nicht nur positive Bestätigungen (Grün) und Fehlermeldungen (Rot) dargestellt werden, sondern auch Warnungen (Orange) und Positiv+Negativ (Grün+Rot).
+  * Basierend auf den neuen Meldungs-Typen, wird jetzt bei teilweise geschalteten Erweiterungen keine rote Box mehr angezeigt, sondern eine grün/rote Box mit Farbverlauf. Eine rote Box wird nur noch dann angezeigt, wenn keine einzige Ext geschaltet werden konnte.
 * Bei der Rückfrage beim Schalten mehrerer Erweiterungen, sind die Buttons jetzt mit "Deaktivieren / Abbrechen" und "Aktivieren / Abbrechen" beschriftet, wie es phpBB bei der eigenen Rückfrage beim Schalten einer Erweiterung ebenfalls macht. Bislang mussten diese Buttons bei EMP aus technischen Gründen mit "Ja / Nein" beschriftet sein, da sonst `confirm_box` von phpBB nicht funktioniert hätte. Möglich wurde diese Änderung durch eine Anpassung des EMP eigenen Templates der `confirm_box` Funktion, wodurch alternative Button Beschriftungen definiert werden können.
 * Im Tabellen-Kopf wird bei Icons jetzt ebenfalls der Hilfe-Cursor dargestellt, wie bei allen anderen Icons in der Tabelle.
 * Kleine Korrekturen in den Templates. Unter anderem wurde ein HTML Fehler behoben, der jedoch keine Auswirkung hatte, da Browser den Fehler automatisch "behoben" haben.
 * Code Optimierung bei PHP, Twig, Javascript und CSS.
+* Code Modernisierung bei PHP.
 * Javascript:
   * LukeWCSphpBBConfirmBox aktualisiert auf 1.5.1.
 

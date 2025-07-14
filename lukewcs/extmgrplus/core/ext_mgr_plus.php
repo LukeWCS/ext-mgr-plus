@@ -22,59 +22,85 @@ class ext_mgr_plus
 	protected const  CDB_EXT			= 1;
 	protected const  CDB_EXT_OFFICIAL	= 2;
 
-	protected object $common;
-	protected object $ext_manager;
-	protected object $cache;
-	protected object $request;
-	protected object $log;
-	protected object $user;
-	protected object $config;
-	protected object $config_text;
-	protected object $language;
-	protected object $template;
-	protected object $db;
-	protected string $table_prefix;
+	// protected object $common;
+	// protected object $ext_manager;
+	// protected object $cache;
+	// protected object $request;
+	// protected object $log;
+	// protected object $user;
+	// protected object $config;
+	// protected object $config_text;
+	// protected object $language;
+	// protected object $template;
+	// protected object $db;
+	// protected string $table_prefix;
+	// protected string $phpbb_root_path;
+	// protected string $php_ext;
+
+	// protected string $u_action;
+	// protected int    $safe_time_limit;
+	// protected string $phpbb_admin_path;
+
+	// public function __construct(
+		// $common,
+		// \phpbb\extension\manager $ext_manager,
+		// \phpbb\cache\driver\driver_interface $cache,
+		// \phpbb\request\request $request,
+		// \phpbb\log\log $log,
+		// \phpbb\user $user,
+		// \phpbb\config\config $config,
+		// \phpbb\config\db_text $config_text,
+		// \phpbb\language\language $language,
+		// \phpbb\template\template $template,
+		// \phpbb\db\driver\driver_interface $db,
+		// \phpbb\path_helper $path_helper,
+		// $table_prefix,
+		// $phpbb_root_path,
+		// $php_ext,
+	// )
+	// {
+		// $this->common			= $common;
+		// $this->ext_manager		= $ext_manager;
+		// $this->cache			= $cache;
+		// $this->request			= $request;
+		// $this->log				= $log;
+		// $this->user				= $user;
+		// $this->config			= $config;
+		// $this->config_text		= $config_text;
+		// $this->language			= $language;
+		// $this->template			= $template;
+		// $this->db				= $db;
+		// $this->table_prefix 	= $table_prefix;
+		// $this->phpbb_root_path	= $phpbb_root_path;
+		// $this->php_ext			= $php_ext;
+
+		// $this->phpbb_admin_path	= $this->phpbb_root_path . $path_helper->get_adm_relative_path();
+	// }
+	protected string $u_action;
+	protected int $safe_time_limit;
 	protected string $phpbb_root_path;
+	protected string $phpbb_admin_path;
 	protected string $php_ext;
 
-	protected string $u_action;
-	protected int    $safe_time_limit;
-	protected string $phpbb_admin_path;
-
 	public function __construct(
-		$common,
-		\phpbb\extension\manager $ext_manager,
-		\phpbb\cache\driver\driver_interface $cache,
-		\phpbb\request\request $request,
-		\phpbb\log\log $log,
-		\phpbb\user $user,
-		\phpbb\config\config $config,
-		\phpbb\config\db_text $config_text,
-		\phpbb\language\language $language,
-		\phpbb\template\template $template,
-		\phpbb\db\driver\driver_interface $db,
-		\phpbb\path_helper $path_helper,
-		$table_prefix,
-		$phpbb_root_path,
-		$php_ext
+		protected object $common,
+		protected \phpbb\extension\manager $ext_manager,
+		protected \phpbb\cache\driver\driver_interface $cache,
+		protected \phpbb\request\request $request,
+		protected \phpbb\log\log $log,
+		protected \phpbb\user $user,
+		protected \phpbb\config\config $config,
+		protected \phpbb\config\db_text $config_text,
+		protected \phpbb\language\language $language,
+		protected \phpbb\template\template $template,
+		protected \phpbb\db\driver\driver_interface $db,
+		protected \phpbb\path_helper $path_helper,
+		protected string $table_prefix,
 	)
 	{
-		$this->common			= $common;
-		$this->ext_manager		= $ext_manager;
-		$this->cache			= $cache;
-		$this->request			= $request;
-		$this->log				= $log;
-		$this->user				= $user;
-		$this->config			= $config;
-		$this->config_text		= $config_text;
-		$this->language			= $language;
-		$this->template			= $template;
-		$this->db				= $db;
-		$this->table_prefix 	= $table_prefix;
-		$this->phpbb_root_path	= $phpbb_root_path;
-		$this->php_ext			= $php_ext;
-
-		$this->phpbb_admin_path	= $this->phpbb_root_path . $path_helper->get_adm_relative_path();
+		$this->phpbb_root_path	= $this->path_helper->get_phpbb_root_path();
+		$this->phpbb_admin_path	= $this->phpbb_root_path . $this->path_helper->get_adm_relative_path();
+		$this->php_ext			= $this->path_helper->get_php_ext();
 	}
 
 	/*
@@ -634,12 +660,12 @@ class ext_mgr_plus
 	*/
 	private function create_failed_msg(string $display_name, string $ext_version, string $ext_name, string $message): string
 	{
-		return sprintf('<br><br><strong>%1$s %2$s (%3$s)</strong>%4$s',
-			/* 1 */	$display_name,
-			/* 2 */	$this->language->lang('EXTMGRPLUS_VERSION_STRING', $ext_version),
-			/* 3 */	$ext_name,
-			/* 4 */	empty($message) ? '' : "<br><br><em>{$message}</em>"
-		);
+		return vsprintf('<br><br><strong>%1$s %2$s (%3$s)</strong>%4$s', [
+			1	=> $display_name,
+			2	=> $this->language->lang('EXTMGRPLUS_VERSION_STRING', $ext_version),
+			3	=> $ext_name,
+			4	=> empty($message) ? '' : "<br><br><em>{$message}</em>"
+		]);
 	}
 
 	/*
@@ -647,17 +673,17 @@ class ext_mgr_plus
 	*/
 	function get_error_level(int $count_success, int $count_total, bool $safe_time_exceeded): int
 	{
-		if ($count_success == 0 || $safe_time_exceeded)
+		if ($count_success == $count_total)
+		{
+			return E_USER_NOTICE;
+		}
+		else if ($count_success == 0 || $safe_time_exceeded)
 		{
 			return E_USER_WARNING;
 		}
-		else if ($count_success != $count_total)
-		{
-			return E_USER_NOTICE + E_USER_WARNING;
-		}
 		else
 		{
-			return E_USER_NOTICE;
+			return E_USER_NOTICE + E_USER_ERROR;
 		}
 	}
 
@@ -741,17 +767,14 @@ class ext_mgr_plus
 			$file_content = file_get_contents($file);
 			if ($file_content !== false)
 			{
-				$check_migration = ((
-						preg_match('/function\s+?(?:depends_on|effectively_installed|update_schema|update_data|revert_data)\s*?\(/', $file_content)
-						&& preg_match('/^\s*?class\s+?' . $file_info['filename'] . '\s+/mi', $file_content)
-					)
-					? 1
-					: 0
-				);
+				return (
+					preg_match('/function\s+?(?:depends_on|effectively_installed|update_schema|update_data|revert_data)\s*?\(/', $file_content)
+					&& preg_match('/^\s*?class\s+?' . $file_info['filename'] . '\s+/mi', $file_content)
+				) ? 1 : 0;
 			}
 		}
 
-		return ($check_migration ?? -1);
+		return -1;
 	}
 
 	/*
@@ -775,7 +798,7 @@ class ext_mgr_plus
 	/*
 		Preparation to be able to run a version check in blocks
 	*/
-	private function versioncheck_prepare(?array &$ext_list_vc): void
+	private function versioncheck_prepare(array|null &$ext_list_vc): void
 	{
 		$ext_list_all	= $this->ext_manager->all_available();
 		$ext_list_vc	= [
@@ -796,6 +819,7 @@ class ext_mgr_plus
 			}
 			catch (\RuntimeException $e)
 			{
+				$vc_meta = null;
 			}
 
 			if (isset($vc_meta))
@@ -806,6 +830,7 @@ class ext_mgr_plus
 				$this->cache->destroy(str_replace(['/', '\\'], '-', $cache_filename));
 			}
 		}
+
 		$ext_list_vc['data']['count_total']	= count($ext_list_vc) - 1;
 		$this->common->config_text_set('extmgrplus_list_version_check', 'updates', $ext_list_vc);
 	}
@@ -891,7 +916,7 @@ class ext_mgr_plus
 	/*
 		Reads the version check data from the database and removes obsolete entries and generates a list for the template
 	*/
-	private function versioncheck_list(array &$ext_list, ?array &$ext_list_vc): array
+	private function versioncheck_list(array &$ext_list, array|null &$ext_list_vc): array
 	{
 		$ext_list_vc ??= [];
 
@@ -908,10 +933,17 @@ class ext_mgr_plus
 			}
 			if ($this->ext_manager->is_available($ext_name))
 			{
-				$ext_meta = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
+				try
+				{
+					$ext_meta = $this->ext_manager->create_extension_metadata_manager($ext_name)->get_metadata('all');
+				}
+				catch (\RuntimeException $e)
+				{
+					$ext_meta = null;
+				}
 
 				$no_ver_flags = $vc_data['current'] == 'NOUPD' || $vc_data['current'] == 'ERROR' || $vc_data['current'] == '';
-				$has_update = !$no_ver_flags && phpbb_version_compare($ext_meta['version'], $vc_data['current'], '<');
+				$has_update = !$no_ver_flags && phpbb_version_compare($ext_meta['version'] ?? '0.0.0', $vc_data['current'], '<');
 				if ($no_ver_flags || $has_update)
 				{
 					$ext_list_tpl[$ext_name]['current'] = $vc_data['current'];
@@ -956,6 +988,7 @@ class ext_mgr_plus
 			}
 			catch (\RuntimeException $e)
 			{
+				$ext_meta = null;
 			}
 
 			if (isset($ext_meta['extra']['version-check']))

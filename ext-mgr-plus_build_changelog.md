@@ -1,6 +1,23 @@
+#### 3.1.0-b18
+* Core:
+  * Sowohl die Funktion für die VP Vorbereitung als auch die Funktion zur Anzeige der VP Daten im ExtMgr wurden robuster gestaltet bezüglich Auslesen der Ext-Metadaten aus `composer.json`.
+* Änderungen bei der Bestätigung bei teilweise geschalteten Erweiterungen:
+  * Statt eine orange Box mit schwarzer Schrift wird jetzt ein Farbverlauf von Grün zu Rot mit den phpBB Farben (`successbox`, `errorbox`) und weisser Schrift verwendet, was bei grösserem Inhalt angenehmer zu lesen ist.
+  * Die möglichen Meldungstypen für `trigger_error_` haben sich geändert:
+	* `0` (Okay: grün)
+	* `1` (Fehler: rot)
+	* `2` (Warnung: orange)
+	* `3` (Okay+Fehler: grün+rot)
+  * Hilfsfunktion `get_error_level` entsprechend angepasst.
+  * Im CSS neue Regeln für `emp_success_error` hinzugefügt.
+* Code Optimierung und weitere Modernisierung. Unter anderem Umstellung auf Union Types bei Funktionsparametern.
+* Code auch bei Listener und ACP Modul strikter gestaltet.
+* Die Voraussetzungen haben sich geändert:
+  * PHP: 8.0.0 - 8.4.x (Bisher: 7.4.0 - 8.4.x)
+
 #### 3.1.0-b17
 * Mit der EMP eigenen Variante von `trigger_error` können jetzt nicht nur positive Bestätigungen (Grün) und Fehlermeldungen (Rot) dargestellt werden, sondern auch Warnungen (Orange). Das ist eine konsequente Weiterentwicklung der Änderung in 1.0.1, bei der bereits eine einzige nicht geschaltete Ext genügte, dass für die Bestätigungsmeldung eine rote Box generiert wurde. Dazu waren Änderungen in verschiedenen Dateien notwendig:
-  * In der PHP Funktion `trigger_error_` wird basierend auf dem übergebenen Error Level in der Template Variable `EXTMGRPLUS_TRIGGER_ERROR` ein Wert von `0` (Info), `1` (Warnung) oder `2` (Fehler) definiert. Bisher wurde in dieser Variable lediglich `true` als Wert verwendet.
+  * In der PHP Funktion `trigger_error_` wird basierend auf dem übergebenen Error Level in der Template Variable `EXTMGRPLUS_TRIGGER_ERROR` ein Wert von `0` (Okay), `1` (Warnung) oder `2` (Fehler) definiert. Bisher wurde in dieser Variable lediglich `true` als Wert verwendet.
   * Im `trigger_error` Template wird anhand `EXTMGRPLUS_TRIGGER_ERROR` die passende CSS Klasse verwendet.
   * Im CSS neue Regeln für `emp_warning` hinzugefügt.
 * Basierend auf der neuen Möglichkeit Warnungen anzeigen zu können, wird jetzt bei teilweise geschalteten Erweiterungen keine rote Box mehr angezeigt, sondern eine orange Box. Eine rote Box wird nur noch dann angezeigt, wenn keine einzige Ext geschaltet werden konnte.
@@ -13,7 +30,6 @@
   * Code an die umbenannten Klassen angepasst.
 * CSS:
   * Regeln an die umbenannten Klassen angepasst.
-  * Regeln für die EMP Warnung hinzugefügt.
 
 #### 3.1.0-b16
 * Fix: Logikfehler bei b15 behoben. Beim Vergleich von Homepage Link und CDB Link wurde nicht berücksichtigt, dass der Homepage Link auch leer sein kann, was dann dazu führen konnte, dass die Zeile für Homepage mit leerem Link angezeigt wurde.

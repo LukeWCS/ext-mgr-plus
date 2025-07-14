@@ -22,7 +22,7 @@
 	<p>{{ lang('EXTENSION_' ~ EXTMGRPLUS_ACTION_MODE ~ '_EXPLAIN') }}</p>
 {%- endif %}
 
-<div class="{{ {0: 'successbox', 1: 'errorbox emp_warning', 2: 'errorbox'}[EXTMGRPLUS_TRIGGER_ERROR] }}">
+<div class="{{ {0: 'successbox', 1: 'errorbox', 2: 'errorbox emp_warning', 3: 'errorbox emp_success_error'}[EXTMGRPLUS_TRIGGER_ERROR] }}">
 	<h3>{{ MESSAGE_TITLE }}</h3>
 
 	<p>{{ MESSAGE_TEXT }}</p>

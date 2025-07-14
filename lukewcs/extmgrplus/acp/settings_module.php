@@ -15,9 +15,9 @@ namespace lukewcs\extmgrplus\acp;
 
 class settings_module
 {
-	public $page_title;
-	public $tpl_name;
-	public $u_action;
+	public string $page_title;
+	public string $tpl_name;
+	public string $u_action;
 
 	public function main()
 	{
