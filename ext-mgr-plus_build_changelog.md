@@ -1,3 +1,8 @@
+#### 3.1.0-b19
+* Fix: Normal sollte für den Einstellungen-Link das erste in der Migration angelegte ACP Modul verlinkt werden, was jedoch u.U. nicht funktionierte, wenn die Ext in verschiedenen Tabs Module eingehängt hat. In solchen Fällen wird jetzt der Tab "Erweiterungen" favorisiert. [Meldung von Kirk (phpBB.de)]
+* Den bei b18 deaktivierten Code in allen Dateien entfernt.
+* Weitere Modernisierung bei PHP.
+
 #### 3.1.0-b18
 * Core:
   * Sowohl die Funktion für die VP Vorbereitung als auch die Funktion zur Anzeige der VP Daten im ExtMgr wurden robuster gestaltet bezüglich Auslesen der Ext-Metadaten aus `composer.json`.
@@ -10,7 +15,7 @@
 	* `3` (Okay+Fehler: grün+rot)
   * Hilfsfunktion `get_error_level` entsprechend angepasst.
   * Im CSS neue Regeln für `emp_success_error` hinzugefügt.
-* Code Optimierung und weitere Modernisierung. Unter anderem Umstellung auf Union Types bei Funktionsparametern.
+* Code Optimierung und weitere Modernisierung bei PHP. Unter anderem Umstellung auf Union Types bei Funktionsparametern.
 * Code auch bei Listener und ACP Modul strikter gestaltet.
 * Die Voraussetzungen haben sich geändert:
   * PHP: 8.0.0 - 8.4.x (Bisher: 7.4.0 - 8.4.x)

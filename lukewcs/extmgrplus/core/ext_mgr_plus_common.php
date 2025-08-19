@@ -15,31 +15,6 @@ namespace lukewcs\extmgrplus\core;
 
 class ext_mgr_plus_common
 {
-	// protected object $config;
-	// protected object $config_text;
-	// protected object $language;
-	// protected object $template;
-	// protected object $ext_manager;
-
-	// protected array  $metadata;
-	// public    string $u_action;
-
-	// public function __construct(
-		// \phpbb\config\config $config,
-		// \phpbb\config\db_text $config_text,
-		// \phpbb\language\language $language,
-		// \phpbb\template\template $template,
-		// \phpbb\extension\manager $ext_manager,
-	// )
-	// {
-		// $this->config		= $config;
-		// $this->config_text	= $config_text;
-		// $this->language		= $language;
-		// $this->template		= $template;
-		// $this->ext_manager	= $ext_manager;
-
-		// $this->metadata		= $this->ext_manager->create_extension_metadata_manager('lukewcs/extmgrplus')->get_metadata('all');
-	// }
 	protected array $metadata;
 	public string $u_action;
 
@@ -178,12 +153,13 @@ class ext_mgr_plus_common
 			meta_refresh(1, $this->rotate_get_params($this->u_action));
 			$this->template->assign_var('EXTMGRPLUS_AUTO_REDIRECT', true);
 		}
+
 		$error_type = [
 			E_USER_NOTICE					=> 0, // green box
 			E_USER_WARNING					=> 1, // red box
 			E_USER_NOTICE + E_USER_WARNING	=> 2, // orange box
 			E_USER_NOTICE + E_USER_ERROR	=> 3, // green+red box
-		][$error_level] ?? 1;
+		][$error_level]						?? 2;
 		$this->template->assign_var('EXTMGRPLUS_TRIGGER_ERROR', $error_type);
 		trigger_error($message . $this->back_link($back_link_lang_var), ($error_type > 1) ? E_USER_WARNING : $error_level);
 	}

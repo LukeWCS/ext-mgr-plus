@@ -17,14 +17,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class listener implements EventSubscriberInterface
 {
-	// protected object $extmgrplus;
-
-	// public function __construct(
-		// \lukewcs\extmgrplus\core\ext_mgr_plus $extmgrplus,
-	// )
-	// {
-		// $this->extmgrplus = $extmgrplus;
-	// }
 	public function __construct(
 		protected \lukewcs\extmgrplus\core\ext_mgr_plus $extmgrplus,
 	)

@@ -22,60 +22,6 @@ class ext_mgr_plus
 	protected const  CDB_EXT			= 1;
 	protected const  CDB_EXT_OFFICIAL	= 2;
 
-	// protected object $common;
-	// protected object $ext_manager;
-	// protected object $cache;
-	// protected object $request;
-	// protected object $log;
-	// protected object $user;
-	// protected object $config;
-	// protected object $config_text;
-	// protected object $language;
-	// protected object $template;
-	// protected object $db;
-	// protected string $table_prefix;
-	// protected string $phpbb_root_path;
-	// protected string $php_ext;
-
-	// protected string $u_action;
-	// protected int    $safe_time_limit;
-	// protected string $phpbb_admin_path;
-
-	// public function __construct(
-		// $common,
-		// \phpbb\extension\manager $ext_manager,
-		// \phpbb\cache\driver\driver_interface $cache,
-		// \phpbb\request\request $request,
-		// \phpbb\log\log $log,
-		// \phpbb\user $user,
-		// \phpbb\config\config $config,
-		// \phpbb\config\db_text $config_text,
-		// \phpbb\language\language $language,
-		// \phpbb\template\template $template,
-		// \phpbb\db\driver\driver_interface $db,
-		// \phpbb\path_helper $path_helper,
-		// $table_prefix,
-		// $phpbb_root_path,
-		// $php_ext,
-	// )
-	// {
-		// $this->common			= $common;
-		// $this->ext_manager		= $ext_manager;
-		// $this->cache			= $cache;
-		// $this->request			= $request;
-		// $this->log				= $log;
-		// $this->user				= $user;
-		// $this->config			= $config;
-		// $this->config_text		= $config_text;
-		// $this->language			= $language;
-		// $this->template			= $template;
-		// $this->db				= $db;
-		// $this->table_prefix 	= $table_prefix;
-		// $this->phpbb_root_path	= $phpbb_root_path;
-		// $this->php_ext			= $php_ext;
-
-		// $this->phpbb_admin_path	= $this->phpbb_root_path . $path_helper->get_adm_relative_path();
-	// }
 	protected string $u_action;
 	protected int $safe_time_limit;
 	protected string $phpbb_root_path;
@@ -113,9 +59,9 @@ class ext_mgr_plus
 			return;
 		}
 
-		$this->u_action = $event['u_action'];
-		$this->common->u_action = $this->u_action;
-		$this->safe_time_limit = $event['safe_time_limit'];
+		$this->u_action			= $event['u_action'];
+		$this->common->u_action	= $this->u_action;
+		$this->safe_time_limit	= $event['safe_time_limit'];
 
 		$this->language->add_lang(['acp_ext_mgr_plus', 'acp_ext_mgr_plus_lang_author'], 'lukewcs/extmgrplus');
 		$this->common->set_meta_template_vars('EXTMGRPLUS', 'LukeWCS');
@@ -134,9 +80,9 @@ class ext_mgr_plus
 
 			if ($this->config['extmgrplus_switch_order_and_ignore'])
 			{
-				$order_list = $this->request->variable('ext_order', ['' => '']);
-				$ignore_list = $this->request->variable('ext_ignore', ['']);
-				$order_list = preg_grep('/^\+?[0-9]{1,2}$/', $order_list);
+				$order_list		= $this->request->variable('ext_order', ['' => '']);
+				$ignore_list	= $this->request->variable('ext_ignore', ['']);
+				$order_list		= preg_grep('/^\+?[0-9]{1,2}$/', $order_list);
 
 				$this->common->config_text_set('extmgrplus_list_order_and_ignore', 'order', count($order_list) ? $order_list : null);
 				$this->common->config_text_set('extmgrplus_list_order_and_ignore', 'ignore', count($ignore_list) ? $ignore_list : null);
@@ -673,18 +619,11 @@ class ext_mgr_plus
 	*/
 	function get_error_level(int $count_success, int $count_total, bool $safe_time_exceeded): int
 	{
-		if ($count_success == $count_total)
-		{
-			return E_USER_NOTICE;
-		}
-		else if ($count_success == 0 || $safe_time_exceeded)
-		{
-			return E_USER_WARNING;
-		}
-		else
-		{
-			return E_USER_NOTICE + E_USER_ERROR;
-		}
+		return match (true) {
+			$count_success == $count_total				=> E_USER_NOTICE,
+			$count_success == 0, $safe_time_exceeded	=> E_USER_WARNING,
+			default										=> E_USER_NOTICE + E_USER_ERROR,
+		};
 	}
 
 	/*
@@ -742,14 +681,34 @@ class ext_mgr_plus
 		global $module;
 
 		$module_urls = [];
-		foreach (array_filter($module->module_ary, fn($row): bool => $row['name'] != '' && $row['display'] == 1) as $module_row)
+		$module_tabs = [];
+
+		$modules = array_combine(array_column($module->module_ary, 'id'), $module->module_ary);
+		$get_module_top_cat = function (int $module_id) use ($modules): string
+		{
+			$parent_id = $modules[$module_id]['parent'];
+			while ($parent_id !== 0)
+			{
+				$module_id = $parent_id;
+				$parent_id = $modules[$module_id]['parent'];
+			}
+
+			return $modules[$module_id]['langname'];
+		};
+
+		foreach (array_filter($modules, fn($row): bool => $row['name'] !== '' && $row['display']) as $module_row)
 		{
 			preg_match('/\\\\(.+?)\\\\(.+?)\\\\.*/', $module_row['name'], $matches);
-			$tech_name = (count($matches) == 3) ? $matches[1] . '/' . $matches[2] : false;
-			if ($tech_name !== false && !isset($module_urls[$tech_name]))
+			$tech_name = (count($matches) === 3) ? $matches[1] . '/' . $matches[2] : false;
+			if ($tech_name !== false)
 			{
-				$module_name = str_replace('\\', '-', $module_row['name']);
-				$module_urls[$tech_name] = append_sid("{$this->phpbb_admin_path}index.{$this->php_ext}", "i={$module_name}&amp;mode={$module_row['mode']}");
+				$module_tab = $get_module_top_cat($module_row['parent']);
+				if (!isset($module_urls[$tech_name]) || ($module_tab === 'ACP_CAT_DOT_MODS' && $module_tabs[$tech_name] !== $module_tab))
+				{
+					$module_name = str_replace('\\', '-', $module_row['name']);
+					$module_urls[$tech_name] = append_sid("{$this->phpbb_admin_path}index.{$this->php_ext}", "i={$module_name}&amp;mode={$module_row['mode']}");
+					$module_tabs[$tech_name] = $module_tab;
+				}
 			}
 		}
 

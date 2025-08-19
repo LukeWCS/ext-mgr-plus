@@ -15,28 +15,6 @@ namespace lukewcs\extmgrplus\controller;
 
 class acp_ext_mgr_plus_controller
 {
-	// protected object $common;
-	// protected object $language;
-	// protected object $template;
-	// protected object $request;
-	// protected object $config;
-
-	// protected string $u_action;
-
-	// public function __construct(
-		// $common,
-		// \phpbb\language\language $language,
-		// \phpbb\template\template $template,
-		// \phpbb\request\request $request,
-		// \phpbb\config\config $config,
-	// )
-	// {
-		// $this->common	= $common;
-		// $this->language	= $language;
-		// $this->template	= $template;
-		// $this->request	= $request;
-		// $this->config	= $config;
-	// }
 	protected string $u_action;
 
 	public function __construct(
