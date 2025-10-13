@@ -1,20 +1,37 @@
 /* GENERAL > */
 
+/* fieldset { */
+	/* border-radius: 5px; */
+/* } */
+
+/* fieldset p.submit-buttons { */
+	/* margin-top: 0; */
+	/* padding: 0 4px 4px 4px; */
+/* } */
+
+/* fieldset :is(dt, dd) label { */
+	/* cursor: inherit; */
+/* } */
+
+/* fieldset dd a { */
+	/* overflow-wrap: anywhere; */
+/* } */
+
 fieldset {
 	border-radius: 5px;
-}
 
-fieldset p.submit-buttons {
-	margin-top: 0;
-	padding: 0 4px 4px 4px;
-}
+	& p.submit-buttons {
+		margin-top: 0;
+		padding: 0 4px 4px 4px;
+	}
 
-fieldset :is(dt, dd) label {
-	cursor: inherit;
-}
+	& :is(dt, dd) label {
+		cursor: inherit;
+	}
 
-fieldset dd a {
-	overflow-wrap: anywhere;
+	& dd a {
+		overflow-wrap: anywhere;
+	}
 }
 
 button[type="submit"]:is([name="confirm"], [name="cancel"]),
@@ -36,20 +53,38 @@ code {
 	opacity: 0.3;
 }
 
-.errorbox.emp_warning {
-	background-color: #ffaa00;
-}
+/* .errorbox.emp_warning { */
+	/* background-color: #ffaa00; */
+/* } */
 
-.errorbox.emp_warning :is(a, a:visited) {
-	color: #505050;
-}
+/* .errorbox.emp_warning :is(a, a:visited) { */
+	/* color: #505050; */
+/* } */
 
-.errorbox.emp_warning :is(h3, p, a:hover) {
-	color: #303030;
-}
+/* .errorbox.emp_warning :is(h3, p, a:hover) { */
+	/* color: #303030; */
+/* } */
 
-.errorbox.emp_success_error {
-	background: linear-gradient(#228822, #bc2a4d);
+/* .errorbox.emp_success_error { */
+	/* background: linear-gradient(#228822, #bc2a4d); */
+/* } */
+
+.errorbox {
+	&.emp_warning {
+		background-color: #ffaa00;
+
+		& :is(a, a:visited) {
+			color: #505050;
+		}
+
+		& :is(h3, p, a:hover) {
+			color: #303030;
+		}
+	}
+
+	&.emp_success_error {
+		background: linear-gradient(#228822, #bc2a4d);
+	}
 }
 
 .extmgrplus_footer {
@@ -64,30 +99,86 @@ code {
 	margin-bottom: 0.25em;
 }
 
-button:is(.button1, .button2) {
-	color: #000000;
-	background-image: -webkit-linear-gradient(top, #d2d2d2 0%, #efefef 100%);
-	background-image: linear-gradient(to bottom, #d2d2d2 0%, #efefef 100%);
-	padding: 3px 2px;
-	border: 1px solid #666666;
-	font-size: 0.85em;
-	font-family: "Lucida Grande", Verdana, Helvetica, Arial, sans-serif;
-	vertical-align: middle;
+/* button:is(.button1, .button2) { */
+	/* color: #000000; */
+	/* background-image: -webkit-linear-gradient(top, #d2d2d2 0%, #efefef 100%); */
+	/* background-image: linear-gradient(to bottom, #d2d2d2 0%, #efefef 100%); */
+	/* padding: 3px 2px; */
+	/* border: 1px solid #666666; */
+	/* font-size: 0.85em; */
+	/* font-family: "Lucida Grande", Verdana, Helvetica, Arial, sans-serif; */
+	/* vertical-align: middle; */
+/* } */
+
+/* button:is(.button1, .button2):hover { */
+	/* border: 1px solid #bc2a4d; */
+	/* background: #efefef url("../images/bg_button.gif") repeat bottom; */
+	/* color: #bc2a4d; */
+/* } */
+
+/* button.button1 { */
+	/* font-weight: bold; */
+/* } */
+
+button {
+	&:is(.button1, .button2) {
+		color: #000000;
+		background-image: -webkit-linear-gradient(top, #d2d2d2 0%, #efefef 100%);
+		background-image: linear-gradient(to bottom, #d2d2d2 0%, #efefef 100%);
+		padding: 3px 2px;
+		border: 1px solid #666666;
+		font-size: 0.85em;
+		font-family: "Lucida Grande", Verdana, Helvetica, Arial, sans-serif;
+		vertical-align: middle;
+
+		&:hover {
+			border: 1px solid #bc2a4d;
+			background: #efefef url("../images/bg_button.gif") repeat bottom;
+			color: #bc2a4d;
+		}
+	}
+
+	&.button1 {
+		font-weight: bold;
+	}
 }
 
-button:is(.button1, .button2):hover {
-	border: 1px solid #bc2a4d;
-	background: #efefef url("../images/bg_button.gif") repeat bottom;
-	color: #bc2a4d;
-}
-
-button.button1 {
-	font-weight: bold;
-}
+/* button.button1 { */
+	/* font-weight: bold; */
+/* } */
 
 /* < GENERAL */
 
 /* SETTINGS > */
+
+/* legend { */
+	/* background: inherit; */
+	/* margin: 2px 0 0 -11px; */
+	/* border-top: inherit; */
+	/* border-left: inherit; */
+	/* border-radius: 5px 5px 0 0; */
+	/* padding: 2px 10px; */
+	/* top: 0; */
+/* } */
+
+/* legend.legend_sub { */
+	/* border: 0; */
+	/* margin: 1em 0; */
+	/* padding: 0; */
+	/* display: flex; */
+	/* white-space: nowrap; */
+/* } */
+
+/* legend.legend_sub:after { */
+	/* content: ""; */
+	/* border-bottom: 1px solid #cccccc; */
+	/* width: 100%; */
+	/* margin: 0 0 0.5em 1em; */
+/* } */
+
+/* legend + .legend_explain { */
+	/* width: 45%; */
+/* } */
 
 legend {
 	background: inherit;
@@ -97,25 +188,25 @@ legend {
 	border-radius: 5px 5px 0 0;
 	padding: 2px 10px;
 	top: 0;
-}
 
-legend.legend_sub {
-	border: 0;
-	margin: 1em 0;
-	padding: 0;
-	display: flex;
-	white-space: nowrap;
-}
+	&.legend_sub {
+		border: 0;
+		margin: 1em 0;
+		padding: 0;
+		display: flex;
+		white-space: nowrap;
 
-legend.legend_sub:after {
-	content: "";
-	border-bottom: 1px solid #cccccc;
-	width: 100%;
-	margin: 0 0 0.5em 1em;
-}
+		&:after {
+			content: "";
+			border-bottom: 1px solid #cccccc;
+			width: 100%;
+			margin: 0 0 0.5em 1em;
+		}
+	}
 
-legend + .legend_explain {
-	width: 45%;
+	& + .legend_explain {
+		width: 45%;
+	}
 }
 
 /*
@@ -124,7 +215,58 @@ legend + .legend_explain {
 * Revision by: Kirk (customization and optimization), LukeWCS (optimization)
 */
 
+/* .toggle { */
+	/* -webkit-appearance: none; */
+	/* -moz-appearance: none; */
+	/* appearance: none; */
+	/* width: 38px; */
+	/* height: 17px; */
+	/* position: relative; */
+	/* border-radius: 50px; */
+	/* cursor: pointer; */
+	/* font-family: FontAwesome; */
+	/* transition: background-color 0.2s; */
+/* } */
+
+/* .toggle:before { */
+	/* position: absolute; */
+	/* width: 14px; */
+	/* height: 13px; */
+	/* background-color: #ffffff; */
+	/* top: 2px; */
+	/* border-radius: 50%; */
+	/* display: flex; */
+	/* justify-content: center; */
+	/* align-items: center; */
+	/* left: 22px; */
+	/* content: "\f00d"; */
+	/* transition: 0.2s; */
+/* } */
+
+/* .toggle, */
+/* .toggle:hover, */
+/* .toggle:focus { */
+	/* background-color: #cccccc; */
+	/* border: none; */
+	/* color: #000000; */
+/* } */
+
+/* .toggle:checked { */
+	/* background-color: #3b87ab; */
+/* } */
+
+/* .toggle:checked:before { */
+	/* left: 2px; */
+	/* content: "\f00c"; */
+/* } */
+
 .toggle {
+	/*
+		phpBB ACP Toggles - A CSS class that makes it easy to display checkboxes as toggles.
+		Source     : https://danklammer.com/articles/simple-css-toggle-switch/
+		Revision by: Kirk (customization and optimization), LukeWCS (optimization)
+	*/
+
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
@@ -135,43 +277,72 @@ legend + .legend_explain {
 	cursor: pointer;
 	font-family: FontAwesome;
 	transition: background-color 0.2s;
+
+	&,
+	&:hover,
+	&:focus {
+		background-color: #cccccc;
+		border: none;
+		color: #000000;
+	}
+
+	&:before {
+		position: absolute;
+		width: 14px;
+		height: 13px;
+		background-color: #ffffff;
+		top: 2px;
+		border-radius: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		left: 22px;
+		content: "\f00d";
+		transition: 0.2s;
+	}
+
+	&:checked {
+		background-color: #3b87ab;
+
+		&:before {
+			left: 2px;
+			content: "\f00c";
+		}
+	}
 }
 
-.toggle:before {
-	position: absolute;
-	width: 14px;
-	height: 13px;
-	background-color: #ffffff;
-	top: 2px;
-	border-radius: 50%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	left: 22px;
-	content: "\f00d";
-	transition: 0.2s;
-}
-
-.toggle,
-.toggle:hover,
-.toggle:focus {
-	background-color: #cccccc;
-	border: none;
-	color: #000000;
-}
-
-.toggle:checked {
-	background-color: #3b87ab;
-}
-
-.toggle:checked:before {
-	left: 2px;
-	content: "\f00c";
-}
 
 /* LukeWCSphpBBConfirmBox */
 
+/* div.lukewcs_confirmbox { */
+	/* max-width: 450px; */
+	/* border: 2px solid skyblue; */
+	/* margin: 0.75em 0.5em; */
+	/* padding: 0.25em 0.5em; */
+	/* border-radius: 5px; */
+	/* -webkit-box-shadow: 2px 2px 10px 1px rgba(121, 162, 179, 0.5); */
+	/* box-shadow: 2px 2px 10px 1px rgba(121, 162, 179, 0.5); */
+/* } */
+
+/* div.lukewcs_confirmbox h2 { */
+	/* margin: 0 0 0.25em 0; */
+/* } */
+
+/* div.lukewcs_confirmbox p:last-of-type { */
+	/* text-align: center; */
+	/* margin: 0; */
+	/* padding: 0 4px 4px 4px; */
+/* } */
+
+/* div.lukewcs_confirmbox input[type="button"] { */
+	/* padding: 3px 4px; */
+/* } */
+
 div.lukewcs_confirmbox {
+	/*
+		LukeWCSphpBBConfirmBox
+	*/
+
 	max-width: 450px;
 	border: 2px solid skyblue;
 	margin: 0.75em 0.5em;
@@ -179,20 +350,20 @@ div.lukewcs_confirmbox {
 	border-radius: 5px;
 	-webkit-box-shadow: 2px 2px 10px 1px rgba(121, 162, 179, 0.5);
 	box-shadow: 2px 2px 10px 1px rgba(121, 162, 179, 0.5);
-}
 
-div.lukewcs_confirmbox h2 {
-	margin: 0 0 0.25em 0;
-}
+	& h2 {
+		margin: 0 0 0.25em 0;
+	}
 
-div.lukewcs_confirmbox p:last-of-type {
-	text-align: center;
-	margin: 0;
-	padding: 0 4px 4px 4px;
-}
+	& p:last-of-type {
+		text-align: center;
+		margin: 0;
+		padding: 0 4px 4px 4px;
+	}
 
-div.lukewcs_confirmbox input[type="button"] {
-	padding: 3px 4px;
+	& input[type="button"] {
+		padding: 3px 4px;
+	}
 }
 
 input:is([type="submit"], [type="button"]):disabled,
@@ -205,22 +376,40 @@ input.lukewcs_confirmbox_active {
 
 /* EXTENSION MANAGER > */
 
+/* .js_link { */
+	/* color: #105289; */
+/* } */
+
+/* .js_link:hover { */
+	/* color: #bc2a4d; */
+	/* text-decoration: underline; */
+	/* cursor: pointer; */
+/* } */
+
+/* .js_link.disabled, */
+/* .js_link.disabled:hover { */
+	/* color: #536482; */
+	/* text-decoration: none; */
+	/* cursor: not-allowed; */
+	/* opacity: 0.5; */
+/* } */
+
 .js_link {
 	color: #105289;
-}
 
-.js_link:hover {
-	color: #bc2a4d;
-	text-decoration: underline;
-	cursor: pointer;
-}
+	&:hover {
+		color: #bc2a4d;
+		text-decoration: underline;
+		cursor: pointer;
+	}
 
-.js_link.disabled,
-.js_link.disabled:hover {
-	color: #536482;
-	text-decoration: none;
-	cursor: not-allowed;
-	opacity: 0.5;
+	&.disabled,
+	&.disabled:hover {
+		color: #536482;
+		text-decoration: none;
+		cursor: not-allowed;
+		opacity: 0.5;
+	}
 }
 
 table :is(th, td) i.icon,
@@ -250,110 +439,243 @@ thead th i.icon {
 	font-weight: normal;
 }
 
+/* fieldset.ext_properties dd { */
+	/* color: inherit; */
+/* } */
+
+/* fieldset.ext_properties dd label { */
+	/* font-size: inherit; */
+	/* font-weight: bold; */
+/* } */
+
+/* fieldset.ext_properties dd label:hover { */
+	/* color: inherit; */
+/* } */
+
+/* fieldset.ext_properties dd details { */
+	/* border: 1px solid #cccccc; */
+	/* border-radius: 3px; */
+/* } */
+
+/* fieldset.ext_properties dd details summary { */
+	/* padding: 0.25em 0.5em; */
+	/* cursor: pointer; */
+	/* -webkit-user-select: none; */
+	/* -moz-user-select: none; */
+	/* -ms-user-select: none; */
+/* } */
+
+/* fieldset.ext_properties dd details div { */
+	/* border-top: 1px solid #cccccc; */
+	/* font-size: inherit; */
+	/* padding: 0.25em 0; */
+	/* margin: 0 0.5em; */
+/* } */
+
 fieldset.ext_properties dd {
 	color: inherit;
+
+	& label {
+		font-size: inherit;
+		font-weight: bold;
+
+		&:hover {
+			color: inherit;
+		}
+	}
+
+	& details {
+		border: 1px solid #cccccc;
+		border-radius: 3px;
+
+		summary {
+			padding: 0.25em 0.5em;
+			cursor: pointer;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+		}
+
+		div {
+			border-top: 1px solid #cccccc;
+			font-size: inherit;
+			padding: 0.25em 0;
+			margin: 0 0.5em;
+		}
+	}
 }
 
-fieldset.ext_properties dd label {
-	font-size: inherit;
-	font-weight: bold;
-}
+/* #extmgrplus_list input[type="checkbox"]:disabled { */
+	/* cursor: not-allowed; */
+/* } */
 
-fieldset.ext_properties dd label:hover {
-	color: inherit;
-}
+/* #extmgrplus_list input[name$="able_all"] { */
+	/* padding: 1px 3px; */
+	/* font-size: inherit; */
+/* } */
 
-fieldset.ext_properties dd details {
-	border: 1px solid #cccccc;
-	border-radius: 3px;
-}
+/* #extmgrplus_list input[type="text"] { */
+	/* text-align: right; */
+	/* padding: 0 2px; */
+	/* margin: 0 2px; */
+	/* background-color: #f9f9f9; */
+/* } */
 
-fieldset.ext_properties dd summary {
-	padding: 0.25em 0.5em;
-	cursor: pointer;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-}
+/* #extmgrplus_list th:nth-of-type(1) { */
+	/* width: 1%; */
+/* } */
 
-fieldset.ext_properties dd details div {
-	border-top: 1px solid #cccccc;
-	font-size: inherit;
-	padding: 0.25em 0;
-	margin: 0 0.5em;
-}
+/* #extmgrplus_list th:nth-of-type(3) { */
+	/* width: 16%; */
+/* } */
 
-#extmgrplus_list input[type="checkbox"]:disabled {
-	cursor: not-allowed;
-}
+/* #extmgrplus_list th:nth-of-type(1n+3) { */
+	/* text-align: center; */
+/* } */
 
-#extmgrplus_list input[name$="able_all"] {
-	padding: 1px 3px;
-	font-size: inherit;
-}
+/* #extmgrplus_list th:nth-of-type(4) { */
+	/* width: 1%; */
+/* } */
 
-#extmgrplus_list input[type="text"] {
-	text-align: right;
-	padding: 0 2px;
-	margin: 0 2px;
-	background-color: #f9f9f9;
-}
+/* #extmgrplus_list th:nth-of-type(5) { */
+	/* width: 10%; */
+/* } */
 
-#extmgrplus_list th:nth-of-type(1) {
-	width: 1%;
-}
+/* #extmgrplus_list th:nth-of-type(6) { */
+	/* width: 25%; */
+/* } */
 
-#extmgrplus_list th:nth-of-type(3) {
-	width: 16%;
-}
+/* #extmgrplus_list th:nth-of-type(1n+7) { */
+	/* width: 1%; */
+/* } */
 
-#extmgrplus_list th:nth-of-type(1n+3) {
-	text-align: center;
-}
+/* #extmgrplus_list td:nth-of-type(3) i.icon { */
+	/* font-size: 1.2em; */
+/* } */
 
-#extmgrplus_list th:nth-of-type(4) {
-	width: 1%;
-}
+/* #extmgrplus_list td:nth-of-type(3) :is(span, strong, i.icon) + :is(strong, i.icon) { */
+	/* margin-left: 0.3em; */
+/* } */
 
-#extmgrplus_list th:nth-of-type(5) {
-	width: 10%;
-}
+/* #extmgrplus_list td:nth-of-type(3) i.icon:is(.fa-question-circle, .fa-exclamation-triangle) { */
+	/* color: #df950d; */
+/* } */
 
-#extmgrplus_list th:nth-of-type(6) {
-	width: 25%;
-}
+/* #extmgrplus_list td:nth-of-type(1n+3) { */
+	/* text-align: center; */
+/* } */
 
-#extmgrplus_list th:nth-of-type(1n+7) {
-	width: 1%;
-}
+/* #extmgrplus_list td:nth-of-type(4) span { */
+	/* cursor: help; */
+/* } */
 
-#extmgrplus_list td:nth-of-type(3) i.icon {
-	font-size: 1.2em;
-}
+/* #extmgrplus_list td:nth-of-type(7) i.icon { */
+	/* font-size: 1.3em; */
+/* } */
 
-#extmgrplus_list td:nth-of-type(3) :is(span, strong, i.icon) + :is(strong, i.icon) {
-	margin-left: 0.3em;
-}
+#extmgrplus_list {
+	& input[type="checkbox"]:disabled {
+		cursor: not-allowed;
+	}
 
-#extmgrplus_list td:nth-of-type(3) i.icon:is(.fa-question-circle, .fa-exclamation-triangle) {
-	color: #df950d;
-}
+	& input[name$="able_all"] {
+		padding: 1px 3px;
+		font-size: inherit;
+	}
 
-#extmgrplus_list td:nth-of-type(1n+3) {
-	text-align: center;
-}
+	& input[type="text"] {
+		text-align: right;
+		padding: 0 2px;
+		margin: 0 2px;
+		background-color: #f9f9f9;
+	}
 
-#extmgrplus_list td:nth-of-type(4) span {
-	cursor: help;
-}
+	& th:nth-of-type(1) {
+		width: 1%;
+	}
 
-#extmgrplus_list td:nth-of-type(7) i.icon {
-	font-size: 1.3em;
+	& th:nth-of-type(3) {
+		width: 16%;
+	}
+
+	& th:nth-of-type(1n+3) {
+		text-align: center;
+	}
+
+	& th:nth-of-type(4) {
+		width: 1%;
+	}
+
+	& th:nth-of-type(5) {
+		width: 10%;
+	}
+
+	& th:nth-of-type(6) {
+		width: 25%;
+	}
+
+	& th:nth-of-type(1n+7) {
+		width: 1%;
+	}
+
+	& td:nth-of-type(3) i.icon {
+		font-size: 1.2em;
+	}
+
+	& td:nth-of-type(3) :is(span, strong, i.icon) + :is(strong, i.icon) {
+		margin-left: 0.3em;
+	}
+
+	& td:nth-of-type(3) i.icon:is(.fa-question-circle, .fa-exclamation-triangle) {
+		color: #df950d;
+	}
+
+	& td:nth-of-type(1n+3) {
+		text-align: center;
+	}
+
+	& td:nth-of-type(4) span {
+		cursor: help;
+	}
+
+	& td:nth-of-type(7) i.icon {
+		font-size: 1.3em;
+	}
 }
 
 /* < EXTENSION MANAGER */
 
 /* VERSIONCHECK PROGGRESS > */
+
+/* .progress_container { */
+	/* background-color: #f9f9f9; */
+	/* height: 1.20em; */
+	/* border-radius: 5px; */
+	/* position: relative; */
+	/* margin: 1em 0 0.25em 0; */
+/* } */
+
+/* .progress_bar { */
+	/* background-color: lightgreen; */
+	/* height: 100%; */
+	/* border-radius: 5px; */
+/* } */
+
+/* .progress_value { */
+	/* color: black; */
+	/* position: absolute; */
+	/* font-size: 0.85em; */
+	/* top: 1px; */
+	/* left: 0; */
+	/* right: 0; */
+/* } */
+
+/* .progress_anim { */
+	/* background-color: lightblue; */
+	/* animation-name: progress_anim_block; */
+	/* animation-timing-function: linear; */
+	/* animation-fill-mode: forwards; */
+/* } */
 
 .progress_container {
 	background-color: #f9f9f9;
@@ -361,28 +683,28 @@ fieldset.ext_properties dd details div {
 	border-radius: 5px;
 	position: relative;
 	margin: 1em 0 0.25em 0;
-}
 
-.progress_bar {
-	background-color: lightgreen;
-	height: 100%;
-	border-radius: 5px;
-}
+	& .progress_bar {
+		background-color: lightgreen;
+		height: 100%;
+		border-radius: 5px;
+	}
 
-.progress_value {
-	color: black;
-	position: absolute;
-	font-size: 0.85em;
-	top: 1px;
-	left: 0;
-	right: 0;
-}
+	& .progress_value {
+		color: black;
+		position: absolute;
+		font-size: 0.85em;
+		top: 1px;
+		left: 0;
+		right: 0;
+	}
 
-.progress_anim {
-	background-color: lightblue;
-	animation-name: progress_anim_block;
-	animation-timing-function: linear;
-	animation-fill-mode: forwards;
+	& .progress_anim {
+		background-color: lightblue;
+		animation-name: progress_anim_block;
+		animation-timing-function: linear;
+		animation-fill-mode: forwards;
+	}
 }
 
 @keyframes progress_anim_block {
@@ -400,13 +722,22 @@ fieldset.ext_properties dd details div {
 /* RESPONSIVE > */
 
 @media (max-width: 700px){
+	/* legend { */
+		/* margin: 2px 0 0 -6px; */
+		/* padding: 2px 5px; */
+	/* } */
+
+	/* legend + .legend_explain { */
+		/* width: auto; */
+	/* } */
+
 	legend {
 		margin: 2px 0 0 -6px;
 		padding: 2px 5px;
-	}
 
-	legend + .legend_explain {
-		width: auto;
+		& + .legend_explain {
+			width: auto;
+		}
 	}
 
 	#extmgrplus_settings dd {

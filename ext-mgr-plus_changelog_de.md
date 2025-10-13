@@ -13,7 +13,7 @@
   * Die Generierung der Einstellungen-Links kann optional deaktiviert werden.
 * Spalte "Validierte Erweiterung":
   * Bei offiziellen Erweiterungen von phpBB.com wird nun ein Stern-Icon angezeigt, inklusive eigenem Tooltip. Bei normalen CDB Erweiterungen bleibt es bei dem gewohnten Datenbank-Icon.
-* Die Handhabung der "Details" Seite hat sich grundlegend geändert; EMP generiert nun selber die "Details" Seite. Das Ziel war es, diese Seite flexibel anpassbar zu machen, da die beiden HTML Events dieser Seite keine Änderungen der bestehenden Abschnitte ermöglichen, sondern lediglich das Hinzufügen von neuen Abschnitten, wodurch Änderungen nur sehr begrenzt möglich sind. Deshalb wurden folgende Umbauten durchgeführt:
+* Die Handhabung der "Details" Seite hat sich grundlegend geändert; EMP generiert nun auch diese Seite selber. Das Ziel war es, diese Seite flexibel anpassbar zu machen, da die beiden HTML Events dieser Seite keine Änderungen der bestehenden Abschnitte ermöglichen, sondern lediglich das Hinzufügen von neuen Abschnitten, wodurch Änderungen nur sehr begrenzt möglich sind. Deshalb wurden folgende Umbauten durchgeführt:
   * Das original Template wurde mittels "Twig Converter" konvertiert und an EMP angepasst.
   * Das EMP Event Template `adm/style/event/acp_ext_details_end.html` wird nicht länger benötigt und wurde samt dem Ordner `event` entfernt.
   * Die Sprachvariable `EXTMGRPLUS_SECTION_DETAILS` wurde entfernt, da nicht länger benötigt.
@@ -28,7 +28,11 @@
 * Im Tabellen-Kopf wird bei Icons jetzt ebenfalls der Hilfe-Cursor dargestellt, wie bei allen anderen Icons in der Tabelle.
 * Kleine Korrekturen in den Templates. Unter anderem wurde ein HTML Fehler behoben, der jedoch keine Auswirkung hatte, da Browser den Fehler automatisch "korrigiert" haben.
 * Code Optimierung bei PHP, Twig, Javascript und CSS.
-* Code Modernisierung bei PHP.
+* Code Modernisierung bei PHP:
+  * Nutzung von PHP 8 Features.
+* Code Modernisierung bei CSS:
+  * Weitestgehende Umstellung der klassischen Notation auf verschachtelte Notation.
+  * Weitestgehende Nutzung der Pseudoklasse `:is()`.
 * Javascript:
   * LukeWCSphpBBConfirmBox aktualisiert auf 1.5.1.
 

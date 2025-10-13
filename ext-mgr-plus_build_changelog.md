@@ -1,3 +1,9 @@
+#### 3.1.0-b20
+* Code Modernisierung bei CSS:
+  * Weitestgehende Umstellung der klassischen Notation auf verschachtelte Notation.
+  * Weitestgehende Nutzung der Pseudoklasse `:is()`.
+  * Hinweis: der jeweils alte Code ist noch auskommentiert über dem neuen Code vorhanden. Das wird erst beim Release entfernt.
+
 #### 3.1.0-b19
 * Fix: Normal sollte für den Einstellungen-Link das erste in der Migration angelegte ACP Modul verlinkt werden, was jedoch u.U. nicht funktionierte, wenn die Ext in verschiedenen Tabs Module eingehängt hat. In solchen Fällen wird jetzt der Tab "Erweiterungen" favorisiert. [Meldung von Kirk (phpBB.de)]
 * Den bei b18 deaktivierten Code in allen Dateien entfernt.
