@@ -1,3 +1,6 @@
+#### 3.1.0-b21
+* CSS: Korrekturen und Optimierung bei Nested CSS.
+
 #### 3.1.0-b20
 * Code Modernisierung bei CSS:
   * Weitestgehende Umstellung der klassischen Notation auf verschachtelte Notation.

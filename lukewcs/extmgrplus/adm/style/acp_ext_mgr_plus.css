@@ -95,9 +95,9 @@ code {
 
 /* confirm_box (phpBB) */
 
-#confirm h2 {
-	margin-bottom: 0.25em;
-}
+/* #confirm h2 { */
+	/* margin-bottom: 0.25em; */
+/* } */
 
 /* button:is(.button1, .button2) { */
 	/* color: #000000; */
@@ -120,12 +120,19 @@ code {
 	/* font-weight: bold; */
 /* } */
 
-button {
-	&:is(.button1, .button2) {
+#confirm {
+	/*
+		confirm_box (phpBB)
+	*/
+
+	& h2 {
+		margin-bottom: 0.25em;
+	}
+
+	& :is(.button1, .button2) {
 		color: #000000;
 		background-image: -webkit-linear-gradient(top, #d2d2d2 0%, #efefef 100%);
 		background-image: linear-gradient(to bottom, #d2d2d2 0%, #efefef 100%);
-		padding: 3px 2px;
 		border: 1px solid #666666;
 		font-size: 0.85em;
 		font-family: "Lucida Grande", Verdana, Helvetica, Arial, sans-serif;
@@ -138,7 +145,7 @@ button {
 		}
 	}
 
-	&.button1 {
+	& .button1 {
 		font-weight: bold;
 	}
 }
@@ -310,7 +317,6 @@ legend {
 		}
 	}
 }
-
 
 /* LukeWCSphpBBConfirmBox */
 
@@ -488,7 +494,7 @@ fieldset.ext_properties dd {
 		border: 1px solid #cccccc;
 		border-radius: 3px;
 
-		summary {
+		& summary {
 			padding: 0.25em 0.5em;
 			cursor: pointer;
 			-webkit-user-select: none;
@@ -496,7 +502,7 @@ fieldset.ext_properties dd {
 			-ms-user-select: none;
 		}
 
-		div {
+		& div {
 			border-top: 1px solid #cccccc;
 			font-size: inherit;
 			padding: 0.25em 0;
