@@ -39,7 +39,7 @@
 ### 3.0.0
 (2024-11-28) / CDB: 2025-03-16)
 
-* Diese Version stellt eine deutliche Weiterentwicklung dar, da hier neben Neuerungen und Änderungen auch mehrere Workarounds entfernt wurden, die noch für ältere phpBB Versionen nötig waren. Ebenso wurden an vielen Stellen Optimierungen vorgenommen. Die Änderungen haben auch höhere Anforderungen zur Folge. **Wichtig: Wer bereits EMP 2.1 Beta getestet hatte, muss das vorher komplett deinstallieren (Arbeitsdaten löschen), bevor EMP 3.0 installiert werden kann.**
+* Diese Version stellt eine deutliche Weiterentwicklung dar, mit etlichen Neuerungen und Änderungen. Es wurden auch mehrere Workarounds entfernt, die noch für ältere phpBB Versionen nötig waren. Ebenso wurden an vielen Stellen Optimierungen vorgenommen. Die Änderungen haben auch höhere Anforderungen zur Folge. **Wichtig: Wer bereits EMP 2.1 Beta getestet hatte, muss das vorher komplett deinstallieren (Arbeitsdaten löschen), bevor EMP 3.0 installiert werden kann.**
 * Die Voraussetzungen haben sich geändert:
   * phpBB: 3.3.8 - 3.3.x (Bisher: 3.3.0 - 3.3.x)
   * PHP: 7.4.0 - 8.4.x (Bisher: 7.1.3 - 8.3.x)

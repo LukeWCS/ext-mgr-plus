@@ -1,3 +1,8 @@
+#### 3.1.0-b22
+* CSS: 
+  * Fix: Bei der phpBB Funktion `confirm_box` wurde beim Hover über den Buttons ein 404 in der Console angezeigt. Grund war ein HG-Bild welches geladen werden sollte, was durch einen falschen relativen Pfad aber fehlschlug. [Meldung von Kirk (phpBB.de)]
+  * 2 kleine Optimierungen in Form von kompakterem Code. [Vorschlag von Kirk (phpBB.de)]
+
 #### 3.1.0-b21
 * CSS: Korrekturen und Optimierung bei Nested CSS.
 
