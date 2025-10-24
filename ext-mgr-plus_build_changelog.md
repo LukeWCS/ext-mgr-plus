@@ -1,3 +1,11 @@
+#### 3.1.0-b23
+* CSS:
+  * Kirk-Toggles aktualisiert auf 2.0.
+  * Obsolete Browser-spezifische Regeln (mit Vendor-prefixes) entfernt.
+  * Code finalisiert und alle beim Umbau auf Nested CSS auskommentierten Blöcke (mit klassischer Notation) entfernt.
+* Javascript überarbeitet.
+* Offizielles Changelog auf aktuellen Stand gebracht und teilweise anders strukturiert.
+
 #### 3.1.0-b22
 * CSS: 
   * Fix: Bei der phpBB Funktion `confirm_box` wurde beim Hover über den Buttons ein 404 in der Console angezeigt. Grund war ein HG-Bild welches geladen werden sollte, was durch einen falschen relativen Pfad aber fehlschlug. [Meldung von Kirk (phpBB.de)]
@@ -9,7 +17,6 @@
 #### 3.1.0-b20
 * Code Modernisierung bei CSS:
   * Weitestgehende Umstellung der klassischen Notation auf verschachtelte Notation.
-  * Weitestgehende Nutzung der Pseudoklasse `:is()`.
   * Hinweis: der jeweils alte Code ist noch auskommentiert über dem neuen Code vorhanden. Das wird erst beim Release entfernt.
 
 #### 3.1.0-b19
