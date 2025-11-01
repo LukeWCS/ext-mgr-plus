@@ -21,8 +21,6 @@ services:
             - '@dbal.conn'
             - '@path_helper'
             - '%core.table_prefix%'
-            # - '%core.root_path%'
-            # - '%core.php_ext%'
     lukewcs.extmgrplus.core.common:
         class: lukewcs\extmgrplus\core\ext_mgr_plus_common
         arguments:

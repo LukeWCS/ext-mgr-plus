@@ -1,3 +1,8 @@
+#### 3.1.0
+* Release (2025-11-01)
+* Umstellung der Version 3.0.0 auf 3.1.0.
+* Letzte Code Berechtigung.
+
 #### 3.1.0-b23
 * CSS:
   * Kirk-Toggles aktualisiert auf 2.0.

@@ -1,5 +1,5 @@
 ### 3.1.0
-(2025--) / CDB: --)
+(2025-11-01) / CDB: --)
 
 * Die Voraussetzungen haben sich geändert:
   * PHP: 8.0.0 - 8.4.x (Bisher: 7.4.0 - 8.4.x)
@@ -13,9 +13,9 @@
   * Ebenso wird auch die Modul-Einstellung "Modul aktiviert:" der Modul-Hierarchie berücksichtigt; ist diese Einstellung beim Modul oder bei einem übergeordneten Element deaktiviert, steht auch bei EMP kein Link zu diesem ACP Modul zur Verfügung.
   * Auch die individuellen Modul-Rechte werden berücksichtigt; hat der Admin kein Recht für ein Einstellungsmodul, wird auch von EMP kein Link zum Modul generiert.
   * Die Generierung der Einstellungen-Links kann optional deaktiviert werden.
-  * Beschränkung: Bei Erweiterungen die kein eigenes ACP Modul mitliefern, welches per Migration eingehängt wird, sondern ihre Einstellungen erst zur Laufzeit direkt bei einem phpBB Modul mit einhängen, ist es technisch nicht möglich einen Link zu generieren aus folgenden Gründen:
-    1. Es gibt keine Funktion bzw. standardisiere Methode, um solche individuell hinzugefügten Einstellungen gezielt ermitteln zu können.
-	2. Derart eingehängte Einstellungen haben keinen standardisierten und eindeutigen Anker im generierten HTML, den man gezielt adressieren könnte.
+  * Beschränkung: Bei Erweiterungen die kein eigenes ACP Modul mitliefern, sondern ihre Einstellungen erst zur Laufzeit direkt bei einem phpBB Modul mit einhängen, ist es nicht möglich einen Link zu generieren aus folgenden Gründen:
+    1. Da die Einstellungen erst existieren, wenn das betreffende phpBB Modul aufgerufen wird, können diese Einstellungen in einem anderen Tab nicht ermittelt werden.
+    2. Diese Einstellungen haben keinen standardisierten und eindeutigen Anker im generierten HTML, den man gezielt adressieren könnte.
 * Seite "Details":
   * Die Handhabung dieser Seite hat sich grundlegend geändert; EMP generiert nun auch diese Seite selber. Das Ziel war es, diese Seite flexibel anpassbar zu machen, da die beiden HTML Events dieser Seite keine Änderungen der bestehenden Abschnitte ermöglichen, sondern lediglich das Hinzufügen von neuen Abschnitten, wodurch Änderungen nur sehr begrenzt möglich sind. Deshalb wurden folgende Umbauten durchgeführt:
     * Das original Template wurde mittels "Twig Converter" konvertiert und an EMP angepasst.
@@ -34,7 +34,7 @@
 * Optimierung und Modernisierung:
   * Code Optimierung bei PHP, Twig, Javascript und CSS.
   * PHP:
-    * Unter anderem Nutzung von PHP 8.0 Features.
+    * Unter anderem Nutzung von PHP 8.0 Features, wie z.B. Constructor Property Promotion.
   * CSS:
     * Weitestgehende Umstellung der klassischen Notation auf verschachtelte Notation.
     * Weitestgehende Nutzung der Pseudoklasse `:is()`.
