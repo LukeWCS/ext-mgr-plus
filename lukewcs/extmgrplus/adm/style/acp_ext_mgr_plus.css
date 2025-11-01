@@ -1,17 +1,94 @@
-/* GENERAL */
+/* GENERAL >>> */
+
+button[type="submit"]:is([name="confirm"], [name="cancel"]),
+input:is([type="submit"], [type="button"], [type="reset"])[name^="extmgrplus_"] {
+	padding: 3px 4px;
+}
+
+code {
+	background-color: #dddddd;
+	padding: 0 0.25em;
+	color: black;
+}
+
+.emp_inactive {
+	opacity: 0.5;
+}
+
+.emp_unavailable {
+	opacity: 0.3;
+}
+
+.errorbox {
+	&.emp_warning {
+		background-color: #ffaa00;
+
+		& :is(a, a:visited) {
+			color: #505050;
+		}
+
+		& :is(h3, p, a:hover) {
+			color: #303030;
+		}
+	}
+
+	&.emp_success_error {
+		background: linear-gradient(#228822, #bc2a4d);
+	}
+}
+
+.extmgrplus_footer {
+	margin-top: 1em;
+	text-align: center;
+	font-size: 0.75em;
+}
+
+#confirm {
+	/* confirm_box (phpBB) */
+
+	& h2 {
+		margin-bottom: 0.25em;
+	}
+
+	& :is(.button1, .button2) {
+		color: #000000;
+		background: linear-gradient(to bottom, #d2d2d2 0%, #efefef 100%);
+		border: 1px solid #666666;
+		font-size: 0.85em;
+		font-family: "Lucida Grande", Verdana, Helvetica, Arial, sans-serif;
+		vertical-align: middle;
+
+		&:hover {
+			border: 1px solid #bc2a4d;
+			background: #efefef url("../../../../../adm/images/bg_button.gif") repeat bottom;
+			color: #bc2a4d;
+		}
+	}
+
+	& .button1 {
+		font-weight: bold;
+	}
+}
+
+/* <<< GENERAL */
+
+/* SETTINGS >>> */
 
 fieldset {
 	border-radius: 5px;
-}
 
-fieldset p.submit-buttons {
-	margin-top: 0;
-	padding: 0 4px 4px 4px;
-}
+	& p.submit-buttons {
+		margin-top: 0;
+		padding: 0 4px 4px 4px;
+	}
 
-fieldset dt label,
-fieldset dd label {
-	cursor: inherit;
+	& :is(dt, dd) label {
+		cursor: inherit;
+	}
+
+	& dd a {
+		overflow-wrap: anywhere;
+	}
 }
 
 legend {
@@ -22,164 +99,136 @@ legend {
 	border-radius: 5px 5px 0 0;
 	padding: 2px 10px;
 	top: 0;
+
+	& + .legend_explain {
+		width: 45%;
+	}
+
+	&.legend_sub {
+		border: 0;
+		margin: 1em 0;
+		padding: 0;
+		display: flex;
+		white-space: nowrap;
+
+		&:after {
+			content: "";
+			border-bottom: 1px solid #cccccc;
+			width: 100%;
+			margin: 0 0 0.5em 1em;
+		}
+	}
 }
-
-input[type="submit"][name="confirm"],
-input[type="submit"][name^="extmgrplus_"],
-input[type="button"][name^="extmgrplus_"],
-input[type="reset"][name^="extmgrplus_"] {
-	padding: 3px 4px;
-}
-
-code {
-	background-color: #dddddd;
-	padding: 0 0.25em;
-	color: black;
-}
-
-.inactive {
-	opacity: 0.5;
-}
-
-/* Footer */
-
-.extmgrplus_footer {
-	margin-top: 1em;
-	text-align: center;
-	font-size: 0.75em;
-}
-
-/* confirm_box (phpBB)*/
-
-#confirm h2 {
-	margin-bottom: 0.25em;
-}
-
-/* SETTINGS */
-
-legend.legend_sub {
-	border: 0;
-	margin: 1em 0;
-	padding: 0;
-	display: flex;
-	white-space: nowrap;
-}
-
-legend.legend_sub:after {
-	content: "";
-	border-bottom: 1px solid #cccccc;
-	width: 100%;
-	margin: 0 0 0.5em 1em;
-}
-
-/*
-* phpBB ACP Toggles - A CSS class that makes it easy to display checkboxes as toggles.
-* Source     : https://danklammer.com/articles/simple-css-toggle-switch/
-* Revision by: Kirk (customization and optimization), LukeWCS (optimization)
-*/
 
 .toggle {
-	-webkit-appearance: none;
-	-moz-appearance: none;
+	/* phpBB Kirk Toggles 2.0 - A CSS class that makes it easy to display checkboxes as toggles.
+	   Source     : https://danklammer.com/articles/simple-css-toggle-switch/
+	   Revision by: Kirk (customization and optimization), LukeWCS (optimization) */
+
+	/* Kirk style: */
+	/* --background-transition: ease 0.3s; */
+	/* --background-color-off: #a00; */
+	/* --background-color-on: #3fa651; */
+	/* --slider-transition: all cubic-bezier(0.3, 1.5, 0.7, 1) 0.3s; */
+
 	appearance: none;
+	position: relative;
 	width: 38px;
 	height: 17px;
-	position: relative;
 	border-radius: 50px;
 	cursor: pointer;
 	font-family: FontAwesome;
-	transition: background-color 0.2s;
+	transition: var(--background-transition, 0.2s);
+
+	&,
+	&:hover,
+	&:focus {
+		background: var(--background-color-off, #ccc);
+		border: none;
+		color: #000;
+	}
+
+	&:before {
+		content: "\f00d";
+		justify-content: center;
+		position: absolute;
+		top: 2px;
+		left: 22px;
+		width: 14px;
+		height: 13px;
+		background: #fff;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		transition: var(--slider-transition, 0.2s);
+	}
+
+	&:checked {
+		background: var(--background-color-on, #3b87ab);
+
+		&:before {
+			content: "\f00c";
+			left: 2px;
+		}
+	}
 }
 
-.toggle:before {
-	position: absolute;
-	width: 14px;
-	height: 13px;
-	background-color: #ffffff;
-	top: 2px;
-	border-radius: 50%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	left: 22px;
-	content: "\f00d";
-	transition: 0.2s;
-}
+div.lukewcs_confirmbox {
+	/* LukeWCSphpBBConfirmBox */
 
-.toggle,
-.toggle:hover,
-.toggle:focus {
-	background-color: #cccccc;
-	border: none;
-	color: #000000;
-}
-
-.toggle:checked {
-	background-color: #3b87ab;
-}
-
-.toggle:checked:before {
-	left: 2px;
-	content: "\f00c";
-}
-
-/* LukeWCSphpBBConfirmBox */
-
-div[id$="_confirmbox"] {
 	max-width: 450px;
 	border: 2px solid skyblue;
 	margin: 0.75em 0.5em;
 	padding: 0.25em 0.5em;
 	border-radius: 5px;
-	-webkit-box-shadow: 2px 2px 10px 1px rgba(121, 162, 179, 0.5);
 	box-shadow: 2px 2px 10px 1px rgba(121, 162, 179, 0.5);
+
+	& h2 {
+		margin: 0 0 0.25em 0;
+	}
+
+	& p:last-of-type {
+		text-align: center;
+		margin: 0;
+		padding: 0 4px 4px 4px;
+	}
+
+	& input[type="button"] {
+		padding: 3px 4px;
+	}
 }
 
-div[id$="_confirmbox"] h2 {
-	margin: 0 0 0.25em 0;
-}
-
-div[id$="_confirmbox"] p:nth-of-type(2) {
-	text-align: center;
-	margin: 0;
-	padding: 0 4px 4px 4px;
-}
-
-div[id$="_confirmbox"] input[type="button"] {
-	padding: 3px 4px;
-}
-
-input[type="submit"]:disabled,
-input[type="button"]:disabled,
-input.confirmbox_active {
+input:is([type="submit"], [type="button"]):disabled,
+input.lukewcs_confirmbox_active {
 	opacity: 0.5;
 	cursor: not-allowed;
 }
 
-/* EXTENSION MANAGER */
+/* <<< SETTINGS */
+
+/* EXTENSION MANAGER >>> */
 
 .js_link {
 	color: #105289;
+
+	&:hover {
+		color: #bc2a4d;
+		text-decoration: underline;
+		cursor: pointer;
+	}
+
+	&.disabled,
+	&.disabled:hover {
+		color: #536482;
+		text-decoration: none;
+		cursor: not-allowed;
+		opacity: 0.5;
+	}
 }
 
-.js_link:hover {
-	color: #bc2a4d;
-	text-decoration: underline;
-	cursor: pointer;
-}
-
-.js_link.disabled,
-.js_link.disabled:hover {
-	color: #536482;
-	text-decoration: none;
-	cursor: not-allowed;
-	opacity: 0.5;
-}
-
-fieldset.quick a i.icon,
-.js_link i.icon {
-	margin: 0 0.3em 0 0;
-	font-size: 1.1em;
+table :is(th, td) i.icon,
+fieldset dd i.icon {
+	cursor: help;
 }
 
 div.successbox i.icon,
@@ -192,6 +241,12 @@ div.successbox.notice i.icon {
 	font-size: 1.2em;
 }
 
+fieldset.quick a i.icon,
+.js_link i.icon {
+	margin: 0 0.3em 0 0;
+	font-size: 1.1em;
+}
+
 fieldset.ext_properties i.icon,
 thead th i.icon {
 	font-size: 1.1em;
@@ -200,107 +255,109 @@ thead th i.icon {
 
 fieldset.ext_properties dd {
 	color: inherit;
+
+	& label {
+		font-size: inherit;
+		font-weight: bold;
+
+		&:hover {
+			color: inherit;
+		}
+	}
+
+	& details {
+		border: 1px solid #cccccc;
+		border-radius: 3px;
+
+		& summary {
+			padding: 0.25em 0.5em;
+			cursor: pointer;
+			-webkit-user-select: none;
+			user-select: none;
+		}
+
+		& div {
+			border-top: 1px solid #cccccc;
+			font-size: inherit;
+			padding: 0.25em 0;
+			margin: 0 0.5em;
+		}
+	}
 }
 
-fieldset.ext_properties dd label {
-	font-size: inherit;
-	font-weight: bold;
+#extmgrplus_list {
+	& input[type="checkbox"]:disabled {
+		cursor: not-allowed;
+	}
+
+	& input[name$="able_all"] {
+		padding: 1px 3px;
+		font-size: inherit;
+	}
+
+	& input[type="text"] {
+		text-align: right;
+		padding: 0 2px;
+		margin: 0 2px;
+		background-color: #f9f9f9;
+	}
+
+	& th:nth-of-type(1) {
+		width: 1%;
+	}
+
+	& th:nth-of-type(3) {
+		width: 16%;
+	}
+
+	& th:nth-of-type(1n+3) {
+		text-align: center;
+	}
+
+	& th:nth-of-type(4) {
+		width: 1%;
+	}
+
+	& th:nth-of-type(5) {
+		width: 10%;
+	}
+
+	& th:nth-of-type(6) {
+		width: 25%;
+	}
+
+	& th:nth-of-type(1n+7) {
+		width: 1%;
+	}
+
+	& td:nth-of-type(3) i.icon {
+		font-size: 1.2em;
+	}
+
+	& td:nth-of-type(3) :is(span, strong, i.icon) + :is(strong, i.icon) {
+		margin-left: 0.3em;
+	}
+
+	& td:nth-of-type(3) i.icon:is(.fa-question-circle, .fa-exclamation-triangle) {
+		color: #df950d;
+	}
+
+	& td:nth-of-type(1n+3) {
+		text-align: center;
+	}
+
+	& td:nth-of-type(4) span {
+		cursor: help;
+	}
+
+	& td:nth-of-type(7) i.icon {
+		font-size: 1.3em;
+	}
 }
 
-fieldset.ext_properties dd label:hover {
-	color: inherit;
-}
+/* <<< EXTENSION MANAGER */
 
-fieldset.ext_properties dd details {
-	border: 1px solid #cccccc;
-	border-radius: 3px;
-}
-
-fieldset.ext_properties dd summary {
-	padding: 0.25em 0.5em;
-	cursor: pointer;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-}
-
-fieldset.ext_properties dd details div {
-	border-top: 1px solid #cccccc;
-	font-size: inherit;
-	padding: 0.25em 0;
-	margin: 0 0.5em;
-}
-
-input[type="checkbox"]:disabled {
-	cursor: not-allowed;
-}
-
-#extmgrplus_list input[name$="able_all"] {
-	padding: 1px 5px;
-}
-
-#extmgrplus_list input[type="text"] {
-	text-align: right;
-	padding: 0 2px;
-	margin: 0 2px;
-	background-color: #f9f9f9;
-}
-
-#extmgrplus_list th:nth-of-type(1) {
-	width: 1%;
-}
-
-#extmgrplus_list th:nth-of-type(3) {
-	width: 16%;
-}
-
-#extmgrplus_list th:nth-of-type(1n+3) {
-	text-align: center;
-}
-
-#extmgrplus_list th:nth-of-type(4) {
-	width: 1%;
-}
-
-#extmgrplus_list th:nth-of-type(5) {
-	width: 10%;
-}
-
-#extmgrplus_list th:nth-of-type(6) {
-	width: 25%;
-}
-
-#extmgrplus_list th:nth-of-type(1n+7) {
-	width: 1%;
-}
-
-#extmgrplus_list td:nth-of-type(1) i.icon {
-	cursor: help;
-}
-
-#extmgrplus_list td:nth-of-type(3) i.icon {
-	cursor: help;
-	font-size: 1.2em;
-}
-
-#extmgrplus_list td:nth-of-type(3) i.icon:is(.fa-question-circle, .fa-exclamation-triangle, .fa-refresh) {
-	color: #df950d;
-}
-
-#extmgrplus_list td:nth-of-type(1n+3) {
-	text-align: center;
-}
-
-#extmgrplus_list td:nth-of-type(4) span {
-	cursor: help;
-}
-
-#extmgrplus_list td:nth-of-type(7) i.icon {
-	cursor: help;
-	font-size: 1.3em;
-}
-
-/* VERSIONCHECK PROGGRESS */
+/* VERSIONCHECK PROGGRESS >>> */
 
 .progress_container {
 	background-color: #f9f9f9;
@@ -308,28 +365,28 @@ input[type="checkbox"]:disabled {
 	border-radius: 5px;
 	position: relative;
 	margin: 1em 0 0.25em 0;
-}
 
-.progress_bar {
-	background-color: lightgreen;
-	height: 100%;
-	border-radius: 5px;
-}
+	& .progress_bar {
+		background-color: lightgreen;
+		height: 100%;
+		border-radius: 5px;
+	}
 
-.progress_value {
-	color: black;
-	position: absolute;
-	font-size: 0.85em;
-	top: 1px;
-	left: 0;
-	right: 0;
-}
+	& .progress_value {
+		color: black;
+		position: absolute;
+		font-size: 0.85em;
+		top: 1px;
+		left: 0;
+		right: 0;
+	}
 
-.progress_anim {
-	background-color: lightblue;
-	animation-name: progress_anim_block;
-	animation-timing-function: linear;
-	animation-fill-mode: forwards;
+	& .progress_anim {
+		background-color: lightblue;
+		animation-name: progress_anim_block;
+		animation-timing-function: linear;
+		animation-fill-mode: forwards;
+	}
 }
 
 @keyframes progress_anim_block {
@@ -342,12 +399,18 @@ input[type="checkbox"]:disabled {
 	}
 }
 
-/* RESPONSIVE */
+/* <<< VERSIONCHECK PROGGRESS */
+
+/* RESPONSIVE >>> */
 
 @media (max-width: 700px){
 	legend {
 		margin: 2px 0 0 -6px;
 		padding: 2px 5px;
+
+		& + .legend_explain {
+			width: auto;
+		}
 	}
 
 	#extmgrplus_settings dd {
@@ -358,3 +421,5 @@ input[type="checkbox"]:disabled {
 		padding: 0.5em 0 0 0;
 	}
 }
+
+/* <<< RESPONSIVE */

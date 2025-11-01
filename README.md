@@ -5,4 +5,4 @@ Extension for phpBB - Adds the option to disable and re-enable all installed ext
 
 ### Requirements
 * phpBB 3.3.8 - 3.3.x
-* PHP 7.4.0 - 8.4.x
+* PHP 8.0.0 - 8.4.x

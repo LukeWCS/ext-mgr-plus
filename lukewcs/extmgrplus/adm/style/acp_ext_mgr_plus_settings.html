@@ -16,8 +16,6 @@
 
 {% set switch_type = TOGGLECTRL_TYPE ?? 'toggle' %}
 
-<a id="maincontent"></a>
-
 <h1>{{ lang('EXTENSIONS_ADMIN') }}</h1>
 
 <p>{{ lang('EXTENSIONS_EXPLAIN') }}</p>
@@ -94,22 +92,22 @@
 
 		<dl>
 			<dt>
-				<label>{{ lang('EXTMGRPLUS_INSTRUCTIONS') ~ lang('COLON') }}</label><br>
-				<span>{{ lang('EXTMGRPLUS_INSTRUCTIONS_EXPLAIN') }}</span>
-			</dt>
-			<dd>
-				{{ _self.switch('extmgrplus_switch_instructions', EXTMGRPLUS_SWITCH_INSTRUCTIONS, switch_type) }}
-			</dd>
-		</dl>
-
-		<dl>
-			<dt>
 				<label>{{ lang('EXTMGRPLUS_VC_LIMIT') ~ lang('COLON') }}</label><br>
 				<span>{{ lang('EXTMGRPLUS_VC_LIMIT_EXPLAIN') }}</span>
 			</dt>
 			<dd>
 				{{ _self.number('extmgrplus_number_vc_limit', EXTMGRPLUS_NUMBER_VC_LIMIT, 1, 99) }}
 				{{ lang('SECONDS') }}
+			</dd>
+		</dl>
+
+		<dl>
+			<dt>
+				<label>{{ lang('EXTMGRPLUS_SETTING_LINKS') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('EXTMGRPLUS_SETTING_LINKS_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				{{ _self.switch('extmgrplus_switch_settings_link', EXTMGRPLUS_SWITCH_SETTINGS_LINK, switch_type) }}
 			</dd>
 		</dl>
 
@@ -126,7 +124,17 @@
 		</dl>
 
 		<legend class="legend_sub">{{ lang('EXTMGRPLUS_SECTION_EXPERT_SETTINGS') }}</legend>
-		<p>{{ lang('EXTMGRPLUS_EXPERT_SETTINGS_EXPLAIN') }}</p>
+		<p class="legend_explain">{{ lang('EXTMGRPLUS_EXPERT_SETTINGS_EXPLAIN') }}</p>
+
+		<dl>
+			<dt>
+				<label>{{ lang('EXTMGRPLUS_INSTRUCTIONS') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('EXTMGRPLUS_INSTRUCTIONS_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				{{ _self.switch('extmgrplus_switch_instructions', EXTMGRPLUS_SWITCH_INSTRUCTIONS, switch_type) }}
+			</dd>
+		</dl>
 
 		<dl>
 			<dt>
@@ -167,7 +175,7 @@
 				<span>{{ lang('EXTMGRPLUS_DEFAULTS_EXP') }}</span>
 			</dt>
 			<dd>
-				{{ _self.button('extmgrplus_defaults', 'EXTMGRPLUS_BUTTON_DEFAULTS') }}
+				<input type="button" class="button2" name="extmgrplus_defaults" value="{{ lang('EXTMGRPLUS_BUTTON_DEFAULTS') }}">
 			</dd>
 		</dl>
 	</fieldset>
@@ -224,17 +232,13 @@
 	}}>
 {%- endmacro %}
 
-{% macro button(name, lang_var) -%}
-	<input type="button" class="button2" name="{{ name }}" value="{{ lang(lang_var) }}">
-{%- endmacro %}
-
 {% macro confirmbox(name, message, default = false) -%}
-	<div id="{{ name }}_confirmbox" data-default="{{ default }}" style="display: none;">
+	<div class="lukewcs_confirmbox" data-name="{{ name }}" data-default="{{ default }}" style="display: none;">
 		<h2>{{ lang('CONFIRM') }}</h2>
 		<p>{{ message }}</p>
 		<p>
-			<input type="button" class="button1" name="{{ name }}_confirm_yes" value="{{ lang('YES') }}">&nbsp;
-			<input type="button" class="button2" name="{{ name }}_confirm_no" value="{{ lang('NO') }}">
+			<input type="button" class="button1" name="lukewcs_confirmbox_yes" value="{{ lang('YES') }}">&nbsp;
+			<input type="button" class="button2" name="lukewcs_confirmbox_no" value="{{ lang('NO') }}">
 		</p>
 	</div>
 {%- endmacro %}

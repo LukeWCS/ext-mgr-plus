@@ -18,10 +18,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class listener implements EventSubscriberInterface
 {
 	public function __construct(
-		\lukewcs\extmgrplus\core\ext_mgr_plus $extmgrplus
+		protected \lukewcs\extmgrplus\core\ext_mgr_plus $extmgrplus,
 	)
 	{
-		$this->extmgrplus = $extmgrplus;
 	}
 
 	public static function getSubscribedEvents(): array
@@ -33,12 +32,12 @@ class listener implements EventSubscriberInterface
 		];
 	}
 
-	public function ext_manager_before($event): void
+	public function ext_manager_before(object $event): void
 	{
 		$this->extmgrplus->ext_manager_before($event);
 	}
 
-	public function ext_manager_after($event): void
+	public function ext_manager_after(object $event): void
 	{
 		$this->extmgrplus->ext_manager_after($event);
 	}

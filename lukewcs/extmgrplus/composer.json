@@ -3,8 +3,8 @@
     "type": "phpbb-extension",
     "description": "Adds the option to disable and re-enable all installed extensions at once to the extension management. Individual selections can be made using checkboxes. In addition, sequence groups and dependencies can be defined or extensions can be ignored. The version check is carried out in blocks and provides detailed information. Additional information is displayed in the extension management.",
     "homepage": "https://github.com/LukeWCS/ext-mgr-plus",
-    "version": "3.0.0",
-    "time": "2024-11-28",
+    "version": "3.1.0",
+    "time": "2025-11-01",
     "license": "GPL-2.0-only",
     "authors": [
         {
@@ -19,12 +19,12 @@
         }
     ],
     "require": {
-        "php": ">=7.4.0,<8.5.0@dev",
+        "php": ">=8.0.0,<8.5.0@dev",
         "composer/installers": "~1.0.0"
     },
     "extra": {
         "display-name": "Extension Manager Plus",
-        "lang-min-ver": "3.0.0",
+        "lang-min-ver": "3.1.0",
         "soft-require": {
             "phpbb/phpbb": ">=3.3.8,<3.4.0@dev"
         },

@@ -18,7 +18,9 @@
 
 <p>{{ lang('EXTENSIONS_EXPLAIN') }}</p>
 
-<p>{{ lang('EXTENSION_' ~ EXTMGRPLUS_ACTION_MODE ~ '_EXPLAIN') }}</p>
+{% if EXTMGRPLUS_ACTION_MODE -%}
+	<p>{{ lang('EXTENSION_' ~ EXTMGRPLUS_ACTION_MODE ~ '_EXPLAIN') }}</p>
+{%- endif %}
 
 <form id="confirm" method="post" action="{{ S_CONFIRM_ACTION }}">
 	<fieldset>
@@ -26,15 +28,15 @@
 
 		<p>{{ MESSAGE_TEXT }}</p>
 
-		{% if EXTMGRPLUS_SELF_DISABLE %}
+		{% if EXTMGRPLUS_ACTION_MODE == 'DISABLE' && 'lukewcs/extmgrplus' in S_HIDDEN_FIELDS -%}
 			<p>{{ lang('EXTMGRPLUS_MSG_SELF_DISABLE') }}</p>
-		{% endif %}
+		{%- endif %}
 
 		{{ S_HIDDEN_FIELDS }}
 
 		<fieldset class="submit-buttons">
-			<input type="submit" name="confirm" value="{{ lang('YES') }}" class="button1">&nbsp;
-			<input type="submit" name="cancel" value="{{ lang('NO') }}" class="button2">
+			<button type="submit" name="confirm" value="{{ lang('YES') }}" class="button1">{{ lang(EXTMGRPLUS_CONFIRM_YES ?? 'YES') }}</button>
+			<button type="submit" name="cancel" value="{{ lang('NO') }}" class="button2">{{ lang(EXTMGRPLUS_CONFIRM_NO ?? 'NO') }}</button>
 		</fieldset>
 	</fieldset>
 

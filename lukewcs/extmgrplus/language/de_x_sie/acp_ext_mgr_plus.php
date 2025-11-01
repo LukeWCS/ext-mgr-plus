@@ -45,11 +45,11 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_COL_WITH_VERSIONCHECK'		=> 'Mit Versionsprüfung',
 	'EXTMGRPLUS_COL_LAST_VERSIONCHECK'		=> 'Letzte Versionsprüfung',
 	'EXTMGRPLUS_COL_AVAILABLE_UPDATES'		=> 'Verfügbare Updates',
-	'EXTMGRPLUS_AVAILABLE_EXTENSIONS' => [
+	'EXTMGRPLUS_AVAILABLE_EXTENSIONS'		=> [
 		0									=> '%2$u',
 		1									=> '%2$u (%1$u ungültige)',
 	],
-	'EXTMGRPLUS_VERSIONCHECK_DATE' => [
+	'EXTMGRPLUS_VERSIONCHECK_DATE'			=> [
 		0									=> '%2$s (%3$u Sek.)',
 		1									=> '%2$s (%3$u Sek. / %1$u Fehler)',
 	],
@@ -66,7 +66,6 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_DEPENDENCY_EXPLAIN'			=> 'Mit einem vorangestelltem <code>+</code> kann eine Erweiterung mit einer Gruppe verknüpft werden. Hat man zum Beispiel die Erweiterung B die von Erweiterung A abhängig ist, kann man bei A <code>0</code> eintragen und bei B <code>+0</code>. Sind beide Erweiterungen aktiviert, wird beim Auswählen von A auch B ausgewählt. Sind beide Erweiterungen deaktiviert, wird beim Auswählen von B auch A ausgewählt.',
 	'EXTMGRPLUS_IGNORE'						=> '%s Ignorieren',
 	'EXTMGRPLUS_IGNORE_EXPLAIN'				=> 'In dieser Spalte können Sie festlegen, welche Erweiterungen bei den Aktionen „Ausgewählte aktivieren“ und „Ausgewählte deaktivieren“ ignoriert werden sollen. Ignorierte Erweiterungen können in der Erweiterungen-Liste nicht mehr ausgewählt werden und bei solchen Erweiterungen werden auch keine neuen Migrationen ermittelt und angezeigt. Wenn bei einer ignorierten Erweiterung eine Reihenfolge-Gruppe definiert wurde, dann bleibt diese erhalten, sie hat jedoch keine Bedeutung mehr.',
-	'EXTMGRPLUS_DETAILS_VERSION_URL'		=> 'Link zur Versionsdatei',
 
 	// ext manager
 	'EXTMGRPLUS_COL_CDB'					=> 'Validierte Erweiterung',
@@ -90,20 +89,22 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_TOOLTIP_SELECT'				=> 'Erweiterung auswählen.',
 	'EXTMGRPLUS_TOOLTIP_IS_LOCKED'			=> 'Die Auswahl dieser Erweiterung ist wegen neuer Migrationen gesperrt.',
 	// tooltips icons
-	'EXTMGRPLUS_TOOLTIP_CDB_EXT'			=> 'Diese Erweiterung wurde offiziell validiert.',
+	'EXTMGRPLUS_TOOLTIP_CDB_EXT'			=> 'Das ist eine validierte Erweiterung.',
+	'EXTMGRPLUS_TOOLTIP_CDB_EXT_OFFICIAL'	=> 'Das ist eine offizielle Erweiterung von phpBB.com.',
 	'EXTMGRPLUS_TOOLTIP_OUTDATED'			=> 'Die installierte Version dieser Erweiterung ist veraltet.',
 	'EXTMGRPLUS_TOOLTIP_VERSIONCHECK_ERROR'	=> 'Bei der Versionsprüfung ist ein Fehler aufgetreten. Klicken Sie auf „Details“ um mehr zu erfahren.',
 	'EXTMGRPLUS_TOOLTIP_VERSIONCHECK_EMPTY'	=> 'Bei dieser Erweiterung wurde keine Versionsprüfung ausgeführt.',
 	'EXTMGRPLUS_TOOLTIP_NO_VERSIONCHECK'	=> 'Diese Erweiterung bietet keine Versionsprüfung.',
 	'EXTMGRPLUS_TOOLTIP_IS_IGNORED'			=> 'Diese Erweiterung wird von „Extension Manager Plus“ ignoriert.',
+	'EXTMGRPLUS_TOOLTIP_SETTINGS'			=> 'Das primäre Einstellungsmodul dieser Erweiterung aufrufen.',
 
 	// misc
-	'EXTMGRPLUS_EXTENSION_PLURAL' => [
+	'EXTMGRPLUS_EXTENSION_PLURAL'			=> [
 		0									=> '0 Erweiterungen',
 		1									=> '1 Erweiterung',
 		2									=> '%u Erweiterungen',
 	],
-	'EXTMGRPLUS_SECOND_PLURAL' => [
+	'EXTMGRPLUS_SECOND_PLURAL'				=> [
 		0									=> '0 Sekunden',
 		1									=> '1 Sekunde',
 		2									=> '%u Sekunden',
@@ -111,8 +112,8 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_SPOILER_LABEL'				=> 'Erklärung',
 
 	// details
-	'EXTMGRPLUS_SECTION_DETAILS'			=> 'Informationen von Extension Manager Plus',
 	'EXTMGRPLUS_DETAILS_CDB_PAGE'			=> 'Seite der phpBB-Erweiterungsdatenbank',
+	'EXTMGRPLUS_DETAILS_VERSION_URL'		=> 'Link zur Versionsdatei',
 
 	// messages
 	'EXTMGRPLUS_MSG_CONFIRM_DISABLE'		=> 'Sind Sie sich sicher, dass Sie %s deaktivieren möchten?',

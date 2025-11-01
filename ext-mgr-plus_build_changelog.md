@@ -1,3 +1,225 @@
+#### 3.1.0
+* Release (2025-11-01)
+* Umstellung der Version 3.0.0 auf 3.1.0.
+* Letzte Code Berechtigung.
+
+#### 3.1.0-b23
+* CSS:
+  * Kirk-Toggles aktualisiert auf 2.0.
+  * Obsolete Browser-spezifische Regeln (mit Vendor-prefixes) entfernt.
+  * Code finalisiert und alle beim Umbau auf Nested CSS auskommentierten Blöcke (mit klassischer Notation) entfernt.
+* Javascript überarbeitet.
+* Offizielles Changelog auf aktuellen Stand gebracht und teilweise anders strukturiert.
+
+#### 3.1.0-b22
+* CSS: 
+  * Fix: Bei der phpBB Funktion `confirm_box` wurde beim Hover über den Buttons ein 404 in der Console angezeigt. Grund war ein HG-Bild welches geladen werden sollte, was durch einen falschen relativen Pfad aber fehlschlug. [Meldung von Kirk (phpBB.de)]
+  * 2 kleine Optimierungen in Form von kompakterem Code. [Vorschlag von Kirk (phpBB.de)]
+
+#### 3.1.0-b21
+* CSS: Korrekturen und Optimierung bei Nested CSS.
+
+#### 3.1.0-b20
+* Code Modernisierung bei CSS:
+  * Weitestgehende Umstellung der klassischen Notation auf verschachtelte Notation.
+  * Hinweis: der jeweils alte Code ist noch auskommentiert über dem neuen Code vorhanden. Das wird erst beim Release entfernt.
+
+#### 3.1.0-b19
+* Fix: Normal sollte für den Einstellungen-Link das erste in der Migration angelegte ACP Modul verlinkt werden, was jedoch u.U. nicht funktionierte, wenn die Ext in verschiedenen Tabs Module eingehängt hat. In solchen Fällen wird jetzt der Tab "Erweiterungen" favorisiert. [Meldung von Kirk (phpBB.de)]
+* Den bei b18 deaktivierten Code in allen Dateien entfernt.
+* Weitere Modernisierung bei PHP.
+
+#### 3.1.0-b18
+* Core:
+  * Sowohl die Funktion für die VP Vorbereitung als auch die Funktion zur Anzeige der VP Daten im ExtMgr wurden robuster gestaltet bezüglich Auslesen der Ext-Metadaten aus `composer.json`.
+* Änderungen bei der Bestätigung bei teilweise geschalteten Erweiterungen:
+  * Statt eine orange Box mit schwarzer Schrift wird jetzt ein Farbverlauf von Grün zu Rot mit den phpBB Farben (`successbox`, `errorbox`) und weisser Schrift verwendet, was bei grösserem Inhalt angenehmer zu lesen ist.
+  * Die möglichen Meldungstypen für `trigger_error_` haben sich geändert:
+	* `0` (Okay: grün)
+	* `1` (Fehler: rot)
+	* `2` (Warnung: orange)
+	* `3` (Okay+Fehler: grün+rot)
+  * Hilfsfunktion `get_error_level` entsprechend angepasst.
+  * Im CSS neue Regeln für `emp_success_error` hinzugefügt.
+* Code Optimierung und weitere Modernisierung bei PHP. Unter anderem Umstellung auf Union Types bei Funktionsparametern.
+* Code auch bei Listener und ACP Modul strikter gestaltet.
+* Die Voraussetzungen haben sich geändert:
+  * PHP: 8.0.0 - 8.4.x (Bisher: 7.4.0 - 8.4.x)
+
+#### 3.1.0-b17
+* Mit der EMP eigenen Variante von `trigger_error` können jetzt nicht nur positive Bestätigungen (Grün) und Fehlermeldungen (Rot) dargestellt werden, sondern auch Warnungen (Orange). Das ist eine konsequente Weiterentwicklung der Änderung in 1.0.1, bei der bereits eine einzige nicht geschaltete Ext genügte, dass für die Bestätigungsmeldung eine rote Box generiert wurde. Dazu waren Änderungen in verschiedenen Dateien notwendig:
+  * In der PHP Funktion `trigger_error_` wird basierend auf dem übergebenen Error Level in der Template Variable `EXTMGRPLUS_TRIGGER_ERROR` ein Wert von `0` (Okay), `1` (Warnung) oder `2` (Fehler) definiert. Bisher wurde in dieser Variable lediglich `true` als Wert verwendet.
+  * Im `trigger_error` Template wird anhand `EXTMGRPLUS_TRIGGER_ERROR` die passende CSS Klasse verwendet.
+  * Im CSS neue Regeln für `emp_warning` hinzugefügt.
+* Basierend auf der neuen Möglichkeit Warnungen anzeigen zu können, wird jetzt bei teilweise geschalteten Erweiterungen keine rote Box mehr angezeigt, sondern eine orange Box. Eine rote Box wird nur noch dann angezeigt, wenn keine einzige Ext geschaltet werden konnte.
+* Core:
+  * Hilfsfunktion `get_error_level` eingebaut zur Ermittlung des Error Levels nach dem Schalten (Deaktivieren/Aktivieren).
+  * Die Funktionen zum Aktivieren/Deaktivieren an die neue Hilfsfunktion angepasst.
+* ExtMgr Template:
+  * Mehrere Klassen umbenannt um Kollisionsgefahr mit anderen Exts zu reduzieren.
+* JS:
+  * Code an die umbenannten Klassen angepasst.
+* CSS:
+  * Regeln an die umbenannten Klassen angepasst.
+
+#### 3.1.0-b16
+* Fix: Logikfehler bei b15 behoben. Beim Vergleich von Homepage Link und CDB Link wurde nicht berücksichtigt, dass der Homepage Link auch leer sein kann, was dann dazu führen konnte, dass die Zeile für Homepage mit leerem Link angezeigt wurde.
+* Code Optimierung und Bereinigung:
+  * ExtMgr Template.
+  * Details Template.
+  * Core.
+
+#### 3.1.0-b15
+* ExtMgr Template: Spalte "Validierte Erweiterung":
+  * Bei offiziellen Erweiterungen von phpBB.com wird nun ein Stern-Icon angezeigt, statt dem Datenbank-Icon.
+  * Dieses Stern-Icon hat einen eigenen Tooltip.
+* Details Template:
+  * Bei CDB Erweiterungen sowie offiziellen Erweiterungen wird jetzt das zugehörige Icon vor dem Namen eingefügt, inklusive Tooltip.
+  * Bei CDB Erweiterungen wird die Anzeige des Homepage Links unterdrückt, wenn dieser Link und die CDB Seite identisch sind.
+* Core:
+  * Im VP-Array für den ExtMgr wird jetzt bei `cdb_ext` zwischen CDB Exts und offiziellen Exts unterschieden.
+  * Das Template-Array für die Details Seite enthält jetzt ebenfalls die `cdb_ext` Eigenschaft, damit das Template passende Icons anzeigen kann.
+  * Code Optimierung.
+* Sprachdateien:
+  * 1 Variable geändert für Tooltip der CDB Exts.
+  * 1 Variable hinzugefügt für Tooltip der offizielln Exts.
+* Templates: Den Anker mit der ID `maincontent` aus allen Templates (insgesamt 4) entfernt, da bei EMP nicht benötigt. [Meldung von Kirk (phpBB.de)]
+* CSS: Regel für die CDB-Icons auf der Details-Seite erweitert.
+
+#### 3.1.0-b14
+* Details Template:
+  * Twig Code optimiert.
+
+#### 3.1.0-b13
+* Fix: Auf der "Details" Seite wurden lange Link-Titel nicht umgebrochen. Das hatte unter Umständen zur Folge, dass in der Responsive-Ansicht die Box "Informationen zur Erweiterung" breiter als die anderen Boxen dargestellt wurde, wodurch das Layout insgesamt auf der Seite nicht mehr stimmte. Dieses Problem ist auch bei phpBB selber vorhanden. [Meldung von Kirk (phpBB.de)]
+  * CSS: Eine Eigenschaft definiert, mit der auch Link-Titel an beliebiger Stelle umgebrochen werden.
+
+#### 3.1.0-b12
+* Details Template:
+  * Die beiden zusätzlichen Links von EMP (falls zutreffend) werden jetzt direkt unter "Homepage:" eingefügt, somit alle Links gruppiert. [Vorschlag von Kirk (phpBB.de)]
+  * Einrückungen korrigiert.
+* LukeWCSphpBBConfirmBox 1.5.1:
+  * JS:
+    * Konsequentere Verwendung von jQuery.
+
+#### 3.1.0-b11
+* Die Generierung der "Details" Seite hat sich grundlegend geändert. Das Ziel war es, die zusätzlichen Links von EMP direkt im Abschnitt "Informationen zur Erweiterung" einfügen zu können, wie das auch ursprünglich vorgesehen war. Dazu waren folgende Änderungen notwendig:
+  * EMP generiert nun selber die "Details" Seite. Dazu wurde das original Template `acp_ext_details.html` mittels "Twig Converter" exportiert und an den Code Stil und Layout von EMP angepasst. Durch das eigene Template werden zukünftige Änderungen an der Seite vereinfacht.
+  * Das ACP Event Template `acp_ext_details_end.html` wird nicht länger benötigt und wurde samt dem Ordner `adm/style/event` entfernt.
+  * Die Sprachvariable `EXTMGRPLUS_SECTION_DETAILS` wurde entfernt, da nicht länger benötigt.
+* Core: Beim Aufruf der Details-Seite wird jetzt das neue Template geladen.
+* LukeWCSphpBBConfirmBox:
+  * Code bereinigt bei HTML, JS und CSS.
+* Sprachdateien:
+  * In der Sprachdatei `de_x_sie/acp_ext_mgr_plus.php` war die Variable `EXTMGRPLUS_DETAILS_VERSION_URL` an der falschen Stelle.
+
+#### 3.1.0-b10
+* Fix: Bei b9 wurde Responsive bei der Änderung der Breite des Erklärungstextes auf 45% nicht berücksichtigt. [Meldung von Kirk (phpBB.de)]
+* LukeWCSphpBBConfirmBox 1.5.0:
+  * Twig:
+    * Für den `div` Container wird kein individuelles `id` Attribut mehr generiert, sondern eine Klasse. Der individuelle Element-Name wird jetzt per `data-name` Attribut definiert.
+    * Die Namen der Buttons enthalten nicht mehr den Element-Namen des Schalters, sondern feste Namen.
+  * JS:
+    * Zugriffe auf das ConfirmBox Element erfolgen nicht mehr per `id`, sondern per Klasse und je nach Situation zusätzlich über das `data-name` Attribut.
+    * Bei den Buttons wird der Element-Name nicht mehr aus den Button-Namen extrahiert, sondern vom `data-name` Attribut des übergeordneten `div` Containers bezogen.
+    * Bei aktiver Rückfrage wird bei gesperrten Elementen nicht mehr die Klasse `confirmbox_active` gesetzt, sondern `lukewcs_confirmbox_active`.
+    * Optimierung.
+  * CSS: an Twig und JS angepasst.
+
+#### 3.1.0-b9
+* Settings Template:
+  * Makro `button` entfernt und HTML direkt notiert. Ein Makro ist hier nicht sinnvoll, da es zu viele variable Eigenschaften und Kombinationen geben kann.
+  * Den Schalter "Anleitungen anzeigen" in den Abschnitt "Experten-Einstellungen" verschoben.
+* CSS:
+  * Für den Erklärungstext unterhalb der Legende für "Experten-Einstellungen" wird nicht mehr die gesamte verfügbare Breite genutzt, sondern die Breite begrenzt wie bei `dt`, also auf 45%.
+* Sprachdateien:
+  * Den Erklärungstext für "Experten-Einstellungen" so angepasst, dass dieser auch zum verschobenen Schalter passt.
+  * Die Variablen für "Anleitungen anzeigen" ebenfalls verschoben.
+
+#### 3.1.0-b8
+* Fix: Durch das geänderte Twig Makro `icon`, bei dem jetzt direkt ein Tooltip definiert werden kann, wurden 2 Fehler verursacht:
+  * In der Spalte "Aktuelle Version" war der Abstand zwischen erster Version und Icon (sofern vorhanden) zu gross. Verursacht wurde das durch die unnötigen Whitespaces (25 Tabs) die vom `spaceless` Filter nicht mehr entfernt werden konnten, da sich zwischen den verschiedenen Tags auch normaler Text befand; das erzwungene Leerzeichen `&nbsp;`. Dadurch wurden effektiv 2 Leerzeichen eingefügt statt 1.
+    * Template: In dieser Spalte alle erzwungenen Leerzeichen im Twig Code entfernt.
+    * CSS: Stattdessen wird jetzt per CSS individuell vor dem Icon oder nach dem Icon oder in beiden Fällen ein Abstand eingefügt.
+  * In der Spalte "Migrationen" wurde bei Icons kein Hilfe-Cursor mehr dargestellt, weil das CSS nur für `span` ausgelegt war.
+    * CSS: Regel für `i.icon` erweitert.
+* Fix: Durch die Änderung von `input` auf `button` im ConfirmBox Template wurde das EMP Padding für diese Buttons nicht mehr angewendet.
+  * CSS: Regel für `button` angepasst.
+* Makros Template:
+  * Bei `icon` den Parameter `decorative` von Position 2 auf 3 geändert, damit man sich bei Icons mit Tooltip in den meisten Fällen die unnötige Angabe `, true` sparen kann.
+* ExtMgr Template:
+  * Im Tabellen-Kopf werden Tooltips nicht mehr auf das `th` Element angewendet, sondern durch das `icon` Makro erzeugt.
+* CSS:
+  * Bei den Buttons "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" ist das vertikale Padding wieder auf `1px` gesetzt, damit die Buttons etwas niedriger dargestellt werden.
+  * Es wird jetzt auch bei Icons im Tabellen-Kopf der Hilfe-Cursor dargestellt.
+  * Die verschiedenen Bereiche sind jetzt deutlicher gekennzeichnet, durch einen einleitenden und abschliessenden Kommentar mit `>` und `<`.
+  * Optimierung.
+
+#### 3.1.0-b7
+* CSS:
+  * Bei den Aktionen "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" werden jetzt wieder wie gehabt Buttons verwendet mit 2 kleinen Änderungen:
+    * Die Buttons sind in der vertikalen nach oben und unten jeweils ein 1 Pixel höher.
+    * Die Schrift ist jetzt genauso gross wie der Text der Überschrift links daneben. Somit ist die gesamte Überschrift einheitlich was Schrift angeht.
+
+#### 3.1.0-b6
+* ConfirmBox Template:
+  * Beim original Extension Manager werden beim Schalten der Erweiterungen bei der Rückfrage die Button Beschriftungen "Deaktivieren / Abbrechen" und "Aktivieren / Abbrechen" verwendet, was bei EMP bisher nicht möglich war, da bei der phpBB Funktion `confirm_box` aus technischen Gründen "Ja / Nein" verwendet werden muss. Für diese Buttons werden jetzt `<button>` Elemente verwendet, bei denen Beschriftung und Wert unabhängig definiert werden kann. Somit verhält sich EMP nun auch bei der Rückfrage vollständig wie das Original. Werden im Controller keine alternativen Beschriftungen definiert, gilt automatisch "Ja / Nein".
+  * Für den Hinweis bei Eigendeaktivierung wird keine separate Template Variable mehr benötigt, sondern 2 andere ausgewertet.
+* Makros Template:
+  * Beim Makro `icon` kann jetzt als dritter Parameter eine Sprachvariable für einen Tooltip übergeben werden, wodurch sich mehrere Vorteile ergeben:
+    * Es wird für den Tooltip kein umschliessender  `span` Container mehr benötigt, da dies direkt im `i` Container des Icons geregelt werden kann.
+    * Neben dem `span` Container ist es ebenfalls nicht mehr nötig das HTML Attribut `title`, sowie die Twig Funktion `lang()` und den Twig Filter `e('html')` notieren zu müssen. Somit einfacherer und kompakterer Template Code.
+* Core:
+  * Für das EMP-eigene Template der `confirm_box` Funktion von phpBB können jetzt alternative Button Beschriftungen definiert werden.
+  * Die Generierung der Template-Variable bei Eigendeaktivierung entfernt.
+* CSS:
+  * Die Buttons "Ausgewählte deaktivieren" und "Ausgewählte aktivieren" haben jetzt das Aussehen und Verhalten von normalen Links, wie die anderen Funktionen der Spalte "Vorgänge". Das betrifft auch die Schriftgrösse, die jetzt wieder dem normalen Wert entspricht und somit grösser ist, als es bei den Buttons der Fall war.
+  * Die original Button Regeln weitestgehend von phpBB übernommen, damit bei der Rückfrage die geänderten Buttons weiterhin wie originale phpBB Buttons aussehen.
+  * Optimierung.
+
+#### 3.1.0-b5
+* Core:
+  * Code Bereinigung bezüglich Einstellungen-Links; veralteter und bereits auskommentierter Code endgültig entfernt, ansonsten keine Änderungen. Somit betrachte ich die Entwicklung der neuen Funktion erst mal als abgeschlossen.
+  * Code Optimierung.
+
+#### 3.1.0-b4
+* Fix: Wenn die PHP INI Variable `max_execution_time` den Wert `0` aufweist, dann bekommt die von phpBB generierte Variable `safe_time_limit` im original ExtMgr ebenfalls den Wert `0`, bedingt durch die Formel `safe_time_limit = max_execution_time / 2`. Das hatte zur Folge, dass beim Schalten von Erweiterungen fälschlicherweise der Timeout-Schutz von EMP gegriffen hat und die Aktion nach der ersten geschalteten Erweiterung abgebrochen wurde. Bei einem Wert `0` wird diese Prüfung jetzt korrekt übersprungen, da es in diesem Fall laut PHP Konfiguration keine Laufzeit-Begrenzung gibt. Das ist zwar ein eher exotisches Problem und wird so in der Realität kaum/selten auftreten, ist jedoch trotzdem ein Fehler gewesen. [Meldung von Scanialady (phpBB.de)]
+* Nach Umbau der Funktion zur Generierung der Einstellungen-Links ist aufgefallen, dass es ebenfalls nicht länger notwendig ist, die Module mit der Liste der aktivierten Erweiterungen abzugleichen und daher wurde das jetzt auch entfernt.
+
+#### 3.1.0-b3
+* Achtung, Migration hat sich geändert! Bitte b2 deinstallieren bevor b3 installiert wird. Oder in der DB in der Tabelle `_config` die Änderung selber ausführen, wie hier unter "Migration" aufgeführt und dann den phpBB Cache löschen.
+* Die Funktion zur Generierung der Einstellungen-Links komplett umgebaut. Anstatt einen eigenen SQL Query auszuführen und die Modul-Hierarchie sowie die Modul-Rechte selber zu prüfen, wird jetzt direkt auf das fertige Modul Array von phpBB zugegriffen, bei dem die Hierarchie und Rechte bereits berücksichtigt sind. So muss EMP nur noch prüfen, ob ein Modul sichtbar ist, was in einem deutlich kompakteren Code resultiert.
+* Migration:
+  * Config Variable `extmgrplus_switch_setting_links` umbenannt in `extmgrplus_switch_settings_link`.
+* PHP, HTML und JS an den geänderten Variablennamen angepasst.
+
+#### 3.1.0-b2
+* Die Generierung der Einstellungen-Links kann jetzt optional deaktiviert werden. [Vorschlag von chris1278 (phpBB.de)]
+  * Neuen Schalter im Settings Template eingefügt.
+  * Schalter im Controller verdrahtet.
+  * Schalter im Core verdrahtet.
+  * Schalter im ExtMgr Template verdrahtet.
+  * Standard-Einstellungen für den Schalter angepasst (JS).
+  * 2 neue Sprachvariablen für den Schalter.
+* Core:
+  * Code Optimierung.
+* Details Template:
+  * Da für die Anzeige der zusätzlichen Informationen ein Event genutzt wird, ist ein Footer hier nicht ideal und wurde entfernt.
+    * Einbindung (`import`) der EMP Makros entfernt.
+    * Einbindung (`INCLUDECSS`) des EMP CSS entfernt.
+* Migration:
+  * Neue Config Variable `extmgrplus_switch_setting_links`.
+
+#### 3.1.0-b1
+* In der Spalte "Vorgänge" gibt es den neuen Link "Einstellungen", mit dem direkt das primäre Einstellungsmodul einer Erweiterung aufgerufen werden kann, also das erste Modul das per Migration installiert wurde.
+  * Dabei wird die Modul-Einstellung "Modul anzeigen:" respektiert; ist diese Einstellung deaktiviert, generiert EMP kein Link zum Modul.
+  * Ebenso wird auch die Modul-Einstellung "Modul aktiviert:" aller übergeordneten Gruppen/Kategorien berücksichtigt; ist diese Einstellung bei einem Element in der Hierarchie deaktiviert, steht auch bei EMP kein Link zu diesem ACP Modul zur Verfügung.
+  * Auch die individuellen Modul-Rechte werden berücksichtigt; hat der Admin kein Recht für ein Einstellungsmodul, wird kein Link zum Modul generiert.
+* Core:
+  * Code Optimierung.
+* ExtMgr Template:
+  * Kleine Korrekturen.
+
 ### 3.0.0
 * Release (2024-11-28)
 * Umstellung der Version 2.1.0 auf 3.0.0.
@@ -30,7 +252,7 @@
   * 2 Variablen umbenannt.
   * 2 Variablen entfernt.
   * 5 Variablen geändert.
-  
+
 #### 2.1.0-b16
 * Fix: 2 Syntax-Fehler in einem jQuery Selektor behoben, die jedoch seltsamerweise keine Auswirkungen hatten.
 * Core:
@@ -165,7 +387,7 @@
 * Common:
   * Aktuelle PHP Funktion `set_meta_template_vars()` von LMR übernommen.
 * ExtMgr Template:
-  * Twig Makro `version()` erweitert, um ein neues Icon (Fragezeichen in orangem Kreis) mit Tooltip anzeigen zu können, bei noch nicht ausgeführter Versionsprüfung. 
+  * Twig Makro `version()` erweitert, um ein neues Icon (Fragezeichen in orangem Kreis) mit Tooltip anzeigen zu können, bei noch nicht ausgeführter Versionsprüfung.
   * Etliche kleine Struktur-Änderungen.
   * Aktuelles Twig Makro `footer()` von LMR übernommen.
 * CSS:
@@ -205,7 +427,7 @@
   * 2 neue Sprachvariablen für die CDB Spalte.
   * 2 neue Sprachvariablen für die Versionsdatei-Option.
   * 1 Sprachvariable angepasst.
-* Migration: 
+* Migration:
   * Neue Config Variable `extmgrplus_switch_version_url`.
 
 #### 2.1.0-b2
@@ -229,7 +451,7 @@
 * Template:
   * Für die neue Fortschrittsanzeige der VP das Template `acp_ext_mgr_plus_versioncheck.html` hinzugefügt.
 * JS:
-  * Das neue Eingabefeld bei der Funktion "Einstellungen zurücksetzen" berücksichtigt.  
+  * Das neue Eingabefeld bei der Funktion "Einstellungen zurücksetzen" berücksichtigt.
 * CSS:
   * Code hinzugefügt für den Fortschrittsbalken.
 * Code Optimierung:
@@ -238,7 +460,7 @@
 * Sprachdateien:
   * 2 neue Sprachvariablen für das neue VP-Limit.
   * 1 neue Sprachvariable für den Fortschrittsbalken.
-* Migration: 
+* Migration:
   * Neue Config Variable `extmgrplus_number_vc_limit`.
 
 ### 2.0.1
@@ -248,7 +470,7 @@
 * Core:
   * Rückfrage beim Schalten:
     * Redundanten Code bezüglich `confirm_box` beim Aktivieren/Deaktivieren in einer Closure zusammengefasst.
-    * Die unterschiedlichen Erklärungen von phpBB bei Aktivierung/Deaktivierung werden nicht mehr im Core generiert, sondern direkt im Template per Twig geschaltet. 
+    * Die unterschiedlichen Erklärungen von phpBB bei Aktivierung/Deaktivierung werden nicht mehr im Core generiert, sondern direkt im Template per Twig geschaltet.
     * Der Hinweis bei Selbstdeaktivierung von EMP wurde ebenfalls in das Template verlagert.
   * Code Optimierung.
 
@@ -262,19 +484,19 @@
   * Den neuen Schalter berücksichtigt.
 * ACP Controller:
   * Den neuen Schalter berücksichtigt.
-* JS: 
+* JS:
   * Im IIFE Konstrukt wird jetzt explizit das jQuery Objekt übergeben.
   * Code Optimierung.
   * LukeWCSphpBBConfirmBox 1.4.3
   * Überarbeitete Funktion `setSwitch()` von LFWWH 2.2.0 übernommen.
-  * Den neuen Schalter bei der Funktion "Einstellungen zurücksetzen" berücksichtigt.  
+  * Den neuen Schalter bei der Funktion "Einstellungen zurücksetzen" berücksichtigt.
 * CSS:
-  * Harmonisierung der Werte-Notation wie bei meinen anderen Erweiterungen: 
+  * Harmonisierung der Werte-Notation wie bei meinen anderen Erweiterungen:
     * Zahlen kleiner 1 werden mit 0 vor dem Komma definiert.
 	* Hexadezimale Werte werden mit Kleinbuchstaben definiert.
 * Sprachdateien:
   * 2 neue Sprachvariablen für den neuen Schalter.
-* Migration: 
+* Migration:
   * Neue Config Variable `extmgrplus_switch_instructions`.
 
 ### 2.0.0
@@ -282,13 +504,13 @@
 * Letzter Feinschliff.
 
 #### 2.0.0-b4
-* ExtMgr Template: 
+* ExtMgr Template:
   * In der Erklärung der Spalte "Reihenfolge" einen Zusatz für die Abhängigkeiten eingefügt.
 * Sprachdateien:
   * 1 neue Sprachvariable für die Erklärung der Abhängigkeiten bei Reihenfolge&Ignorieren.
   * 1 Sprachvariable geändert für den Tooltip des Eingabefelds der Reihenfolge-Gruppe.
   * 1 Sprachvariable geändert für den Schalter bez. Reihenfolge&Ignorieren.
-* JS: 
+* JS:
   * Code bereinigt.
   * Selektoren vereinfacht.
 * CSS:
@@ -298,9 +520,9 @@
 * Bei Reihenfolge&Ignorieren können nun auch direkte Abhängigkeiten definiert werden. Dadurch werden beim Auswählen/Abwählen automatisch abhängige Erweiterungen berücksichtigt.
   * ExtMgr Template:
     * In der Spalte "Reihenfolge" ist jetzt auch ein `+` am Anfang erlaubt.
-  * JS: 
+  * JS:
     * Neue Funktion `setCheckboxes` mit der die Beziehungen zwischen Erweiterungen und Abhängigkeiten geprüft und Checkboxen entsprechend gesetzt werden können.
-  * Core: 
+  * Core:
     * Prüfung für die Spalte "Reihenfolge" um `+` erweitert.
 	* Beim Aktivieren müssen jetzt Exts aus der Reihenfolge-Liste gefiltert werden, bei denen eine Abhängigkeit  mit `+` definiert wurde.
 
@@ -335,7 +557,7 @@
 #### 1.1.3-b24
 * Letzte Version für phpBB 3.2.
 * EMP ist jetzt kompatibel mit Toggle Control. Somit können Administratoren zentral an einer Stelle entscheiden, ob für Ja/Nein Schalter Radio Buttons, Checkboxen oder Toggles verwendet werden sollen.
-* JS: 
+* JS:
   * LukeWCSphpBBConfirmBox 1.4.0:
     * Die Klasse kann jetzt auch mit Radio-Buttons umgehen. Eine manuelle Anpassung ist dabei nicht notwendig, es wird automatisch erkannt welcher Typ (Checkbox oder Radio) bei einem Schalter verwendet wurde. Notwendig für die TC Kompatibilität.
   * Zurücksetzen auf Installationsstandard musste für Radio Buttons erweitert werden. Notwendig für die TC Kompatibilität.
@@ -346,7 +568,7 @@
 
 #### 1.1.3-b23
 * CSS:
-  * Bei Toggles wird jetzt eine Animation beim Slider verwendet, sowie eine Farb-Animation (Übergang) bei der HG Farbe. [Vorschlag von Kirk (phpBB.de)]  
+  * Bei Toggles wird jetzt eine Animation beim Slider verwendet, sowie eine Farb-Animation (Übergang) bei der HG Farbe. [Vorschlag von Kirk (phpBB.de)]
 * JS:
   * Code Optimierung.
 
@@ -358,7 +580,7 @@
   * LukeWCSphpBBConfirmBox 1.3.0:
     * Redundanten Code zu einer Methode zusammengefasst.
     * Methoden die nur innerhalb der Klasse verwendet werden (für Events), sind jetzt als privat definiert.
-    * Optional kann das Öffnen/Schliessen der ConfirmBox-Fenster jetzt als Animation ausgeführt werden. Dazu unterstützt die Klasse einen zweiten Parameter, mit dem die Animation aktiviert und die Geschwindigkeit geregelt werden kann: 400 = Standard, 0 = Aus. [Vorschlag von IMC (phpBB.de)] 
+    * Optional kann das Öffnen/Schliessen der ConfirmBox-Fenster jetzt als Animation ausgeführt werden. Dazu unterstützt die Klasse einen zweiten Parameter, mit dem die Animation aktiviert und die Geschwindigkeit geregelt werden kann: 400 = Standard, 0 = Aus. [Vorschlag von IMC (phpBB.de)]
     * Code Optimierung.
 * Freigegeben für PHP 8.3.
 
@@ -394,10 +616,10 @@
   * Die Klasse reagiert jetzt direkt auf ein Formular-Reset und schliesst alle geöffneten ConfirmBox-Fenster. Diese Funktionalität muss also nicht mehr separat definiert werden.
   * CSS Code weiter von EMP isoliert.
   * Code optimiert.
- 
+
 #### 1.1.3-b18
 * ExtMgr Template:
-  * In der Info-Box für die Versionsprüfung wird jetzt hinter dem Text das gleiche animierte Icon angezeigt, wie bei den automatischen Bestätigungen. [Vorschlag von Kirk (phpBB.de)] 
+  * In der Info-Box für die Versionsprüfung wird jetzt hinter dem Text das gleiche animierte Icon angezeigt, wie bei den automatischen Bestätigungen. [Vorschlag von Kirk (phpBB.de)]
 * CSS:
   * An das neue Icon angepasst.
 * JS:
@@ -576,7 +798,7 @@
   * Kleine Änderung im Ignoriert-Tooltip, damit unmissverständlich klar ist, dass sich der Ignoriert-Status einer Erweiterung nur auf EMP bezieht.
 
 #### 1.1.2-b3
-* Validierungs-Kritik 1.1.1: 
+* Validierungs-Kritik 1.1.1:
   * Bei Versions-Anzeigen kann das Präfix "v" jetzt per Sprachvariable global angepasst werden. Das betrifft auch das Makro Template mit dem Footer.
 * Das Ignoriert-Icon in der Auswählen-Spalte grösser definiert. [Vorschlag von Kirk (phpBB.de)]
 * In der Tabellen-Überschrift alle Icons etwas grösser definiert und den Standard `font-weight: bold;` entfernt, wodurch die Icons nicht länger unscharf wirken.
@@ -728,7 +950,7 @@
 * Core:
   * Bei der Prüfung der Bedingungen für die Speicherung der Checkboxen wird jetzt auch "Letzten Zustand merken" berücksichtigt.
 * Sprachdateien:
-  * In der Erklärung von "Kontrollkästchen setzen" wird das FA Checkbox Icon jetzt per Platzhalter in der Sprachvariable eingefügt. 
+  * In der Erklärung von "Kontrollkästchen setzen" wird das FA Checkbox Icon jetzt per Platzhalter in der Sprachvariable eingefügt.
   * Bei den Erklärungen für "Reihenfolge" und "Ignorieren" wird das FA Icon jetzt ebenfalls per Platzhalter in der Sprachvariable eingefügt.
 
 #### 1.1.0-b11
@@ -764,7 +986,7 @@
   * Neue Funktion für das Speichern der Checkboxen hinzugefügt. Damit wird ein spezifischer Submit-Button innerhalb eines Formulars simuliert, indem dynamisch eine `hidden` Eigenschaft zum DOM hinzugefügt wird. Dieser Kniff ist nötig, da sich das aufrufende Element ausserhalb des Formulars befindet und zudem ein normaler Link ist, kein Submit-Button.
 * Sprachdateien:
   * Für die neue Checkbox-Save Funktion 2 Variablen hinzugefügt und 2 Variablen geändert.
- 
+
 #### 1.1.0-b8
 * Neue Eigenschaft für Checkboxen: Letzten Zustand merken.
 * ExtMgr Template:
@@ -775,14 +997,14 @@
 * Sprachdateien:
   * Für die neue Checkboxen Eigenschaft 3 Variablen hinzugefügt und 1 Variable geändert.
   * 2 Variablen umbenannt.
-* Migration: 
+* Migration:
   * Neue Config Variable `extmgrplus_enable_checkbox_mode`.
   * Config Variable `extmgrplus_enable_checkboxes_all_set` entfernt.
-  
+
 #### 1.1.0-b7
 * Core:
   * Variablen umbenannt.
-* ExtMgr Template: 
+* ExtMgr Template:
   * Variablen umbenannt.
   * Twig Makro für FA Icons von `<span>` auf `<i>` geändert, was wieder phpBB Standard entspricht.
 * CSS:
@@ -909,7 +1131,7 @@
   * Optimiert, um im Output unnötige Whitespaces zu eliminieren. Speziell bei EMP dient das dazu, ein unschönes optisches Detail zu eliminieren, das durch unnötige Whitespaces entstanden ist.
 * CSS:
   * Beim Toggle CSS einen kompakten Header eingefügt mit grundlegenden Infos und um Dan Klammer zu benennen, von dessen Webseite wir den CSS Code ursprünglich haben.
-  
+
 #### 1.0.7-b5
 * EC Fehler (PSSE) behoben.
 * ExtMgr Template:
@@ -941,7 +1163,7 @@
 
 #### 1.0.7-b3
 * ExtMgr Template:
-  * Neues Twig Makro für Ja/Nein Schalter 
+  * Neues Twig Makro für Ja/Nein Schalter
   * Toggle Funktion in angepasster Form von "Style Changer" übernommen. (Danke an Kirk)
   * JS für Toggles angepasst.
   * CSS für Toggles angepasst.
@@ -1061,7 +1283,7 @@
 * Sprachdateien:
   * Neue Sprachvariablen für die getrennte Verwaltung von Reihenfolge/Ignorieren.
   * Mehrere kleine Änderungen.
-  
+
 ### 1.0.2
 * Release (2022-06-17)
 * ExtMgr Template:
@@ -1075,7 +1297,7 @@
   * Neue Sprachvariable für den Checkbox Tooltip.
 
 #### 1.0.2-b1
-* Bei der Prüfung ob eine Erweiterung aktiviert werden kann mittels `is_enableable()` (`ext.php`), wird jetzt auch ein String und ein Array als möglicher Rückgabewert akzeptiert und entsprechend aufbereitet. Diese Methode der Fehlerbehandlung wurde erst in phpBB 3.3.0 eingeführt und kann `trigger_error` ersetzen. [Hinweis von IMC (phpBB.de)]
+* Bei der Prüfung ob eine Erweiterung aktiviert werden kann mittels `is_enableable()` (`ext.php`), wird jetzt auch ein String und ein Array als möglicher Rückgabewert akzeptiert und entsprechend aufbereitet. Diese Methode der Fehlerbehandlung wurde erst in phpBB 3.3.0 eingeführt und kann `trigger_error` ersetzen. [Meldung von IMC (phpBB.de)]
 
 ### 1.0.1
 * Release (2023-06-12)

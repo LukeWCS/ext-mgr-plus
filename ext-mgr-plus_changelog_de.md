@@ -1,7 +1,51 @@
+### 3.1.0
+(2025-11-01) / CDB: --)
+
+* Die Voraussetzungen haben sich geändert:
+  * PHP: 8.0.0 - 8.4.x (Bisher: 7.4.0 - 8.4.x)
+* Fix: Wenn die PHP INI Variable `max_execution_time` den Wert `0` aufweist, dann bekommt die von phpBB generierte Variable `safe_time_limit` im original Extension Manager ebenfalls den Wert `0`, bedingt durch die Formel `safe_time_limit = max_execution_time / 2`. Das hatte zur Folge, dass beim Schalten von Erweiterungen mittels EMP fälschlicherweise der Timeout-Schutz gegriffen hat und die Aktion nach der ersten geschalteten Erweiterung abgebrochen wurde. Bei einem Wert `0` wird diese Prüfung jetzt übersprungen, da es in diesem Fall laut PHP Konfiguration keine Laufzeit-Begrenzung gibt. Das ist ein eher seltenes Problem, war dennoch ein Fehler. [Meldung von Scanialady (phpBB.de)]
+* Fix: Auf der "Details" Seite wurden lange Link-Titel nicht in allen Fällen umgebrochen. Das hatte unter Umständen zur Folge, dass in der Responsive-Ansicht die Box "Informationen zur Erweiterung" breiter als die anderen Boxen dargestellt wurde, wodurch das Layout insgesamt auf der Seite nicht mehr stimmte. Dieses Problem ist auch bei phpBB selber vorhanden und betrifft Browser mit Blink Engine (Edge, Vivaldi, Opera, etc.), während Firefox nicht betroffen ist. [Meldung von Kirk (phpBB.de)]
+* Spalte "Validierte Erweiterung":
+  * Bei offiziellen Erweiterungen von phpBB.com wird nun ein Stern-Icon angezeigt, inklusive eigenem Tooltip. Bei normalen CDB Erweiterungen bleibt es bei dem gewohnten Datenbank-Icon.
+* Spalte "Vorgänge": Hier gibt es den neuen Link "Einstellungen", mit dem direkt das primäre Einstellungsmodul (sofern vorhanden) einer Erweiterung aufgerufen werden kann. Dabei gelten folgende Eigenschaften:
+  * Hat eine Erweiterung mehrere Module in verschiedenen Tabs (Kategorien), wird der Tab "Erweiterungen" favorisiert.
+  * Die Modul-Einstellung "Modul anzeigen:" wird respektiert; ist diese Einstellung deaktiviert, generiert EMP kein Link zum Modul.
+  * Ebenso wird auch die Modul-Einstellung "Modul aktiviert:" der Modul-Hierarchie berücksichtigt; ist diese Einstellung beim Modul oder bei einem übergeordneten Element deaktiviert, steht auch bei EMP kein Link zu diesem ACP Modul zur Verfügung.
+  * Auch die individuellen Modul-Rechte werden berücksichtigt; hat der Admin kein Recht für ein Einstellungsmodul, wird auch von EMP kein Link zum Modul generiert.
+  * Die Generierung der Einstellungen-Links kann optional deaktiviert werden.
+  * Beschränkung: Bei Erweiterungen die kein eigenes ACP Modul mitliefern, sondern ihre Einstellungen erst zur Laufzeit direkt bei einem phpBB Modul mit einhängen, ist es nicht möglich einen Link zu generieren aus folgenden Gründen:
+    1. Da die Einstellungen erst existieren, wenn das betreffende phpBB Modul aufgerufen wird, können diese Einstellungen in einem anderen Tab nicht ermittelt werden.
+    2. Diese Einstellungen haben keinen standardisierten und eindeutigen Anker im generierten HTML, den man gezielt adressieren könnte.
+* Seite "Details":
+  * Die Handhabung dieser Seite hat sich grundlegend geändert; EMP generiert nun auch diese Seite selber. Das Ziel war es, diese Seite flexibel anpassbar zu machen, da die beiden HTML Events dieser Seite keine Änderungen der bestehenden Abschnitte ermöglichen, sondern lediglich das Hinzufügen von neuen Abschnitten, wodurch Änderungen nur sehr begrenzt möglich sind. Deshalb wurden folgende Umbauten durchgeführt:
+    * Das original Template wurde mittels "Twig Converter" konvertiert und an EMP angepasst.
+    * Das EMP Event Template `adm/style/event/acp_ext_details_end.html` wird nicht länger benötigt und wurde samt dem Ordner `event` entfernt.
+    * Die Sprachvariable `EXTMGRPLUS_SECTION_DETAILS` wurde entfernt, da nicht länger benötigt.
+  * Der Umbau auf ein eigenes Template, war die Voraussetzung für folgende Änderungen und Verbesserungen:
+    * Die zusätzlichen Links von EMP für die CDB Seite und für den Link zur Versionsdatei werden jetzt direkt im Abschnitt "Informationen zur Erweiterung" unterhalb von "Homepage" eingefügt und nicht mehr in einem separaten Abschnitt am Ende der Seite. Somit sind jetzt alle Links gruppiert.
+    * Bei CDB Erweiterungen wird jetzt das zugehörige Icon vor dem Namen eingefügt, inklusive Tooltip.
+    * Bei CDB Erweiterungen wird die Anzeige des Homepage Links unterdrückt, wenn dieser Link identisch zur CDB Seite ist.
+* In den Einstellungen wurde der Schalter "Anleitungen anzeigen" in den Bereich "Experten-Einstellungen" verschoben.
+* Mit der EMP eigenen Variante von `trigger_error` können jetzt nicht nur positive Bestätigungen (Grün) und Fehlermeldungen (Rot) dargestellt werden, sondern auch Warnungen (Orange) und Positiv+Negativ (Grün+Rot). Warnungen (Orange) werden von EMP aktuell aber nicht genutzt.
+  * Basierend auf den neuen Meldungs-Typen, wird jetzt bei teilweise geschalteten Erweiterungen keine rote Box mehr angezeigt, sondern eine Box mit einem  Farbverlauf von Grün zu Rot. Eine komplett rote Box wird nur noch dann angezeigt, wenn keine einzige Ext geschaltet werden konnte.
+* Bei der Rückfrage beim Schalten mehrerer Erweiterungen, sind die Buttons jetzt mit "Deaktivieren / Abbrechen" und "Aktivieren / Abbrechen" beschriftet, wie es phpBB bei der eigenen Rückfrage beim Schalten einer Erweiterung ebenfalls macht. Bislang mussten diese Buttons bei EMP aus technischen Gründen mit "Ja / Nein" beschriftet sein, da sonst `confirm_box` von phpBB nicht funktioniert hätte. Möglich wurde diese Änderung durch eine Anpassung des EMP eigenen Templates der `confirm_box` Funktion, wodurch alternative Button Beschriftungen definiert werden können.
+* Im Tabellen-Kopf wird bei Icons jetzt ebenfalls der Hilfe-Cursor dargestellt, wie bei allen anderen Icons in der Tabelle.
+* Kleine Korrekturen in den Templates. Unter anderem wurde ein HTML Fehler behoben, der jedoch keine Auswirkung hatte, da Browser den Fehler automatisch "korrigiert" haben.
+* Optimierung und Modernisierung:
+  * Code Optimierung bei PHP, Twig, Javascript und CSS.
+  * PHP:
+    * Unter anderem Nutzung von PHP 8.0 Features, wie z.B. Constructor Property Promotion.
+  * CSS:
+    * Weitestgehende Umstellung der klassischen Notation auf verschachtelte Notation.
+    * Weitestgehende Nutzung der Pseudoklasse `:is()`.
+    * Kirk-Toggles aktualisiert auf 2.0.
+  * Javascript:
+    * LukeWCSphpBBConfirmBox aktualisiert auf 1.5.1.
+
 ### 3.0.0
 (2024-11-28) / CDB: 2025-03-16)
 
-* Diese Version stellt eine deutliche Weiterentwicklung dar, da hier neben Neuerungen und Änderungen auch mehrere Workarounds entfernt wurden, die noch für ältere phpBB Versionen nötig waren. Ebenso wurden an vielen Stellen Optimierungen vorgenommen. Die Änderungen haben auch höhere Anforderungen zur Folge. **Wichtig: Wer bereits EMP 2.1 Beta getestet hatte, muss das vorher komplett deinstallieren (Arbeitsdaten löschen), bevor EMP 3.0 installiert werden kann.**
+* Diese Version stellt eine deutliche Weiterentwicklung dar, mit etlichen Neuerungen und Änderungen. Es wurden auch mehrere Workarounds entfernt, die noch für ältere phpBB Versionen nötig waren. Ebenso wurden an vielen Stellen Optimierungen vorgenommen. Die Änderungen haben auch höhere Anforderungen zur Folge. **Wichtig: Wer bereits EMP 2.1 Beta getestet hatte, muss das vorher komplett deinstallieren (Arbeitsdaten löschen), bevor EMP 3.0 installiert werden kann.**
 * Die Voraussetzungen haben sich geändert:
   * phpBB: 3.3.8 - 3.3.x (Bisher: 3.3.0 - 3.3.x)
   * PHP: 7.4.0 - 8.4.x (Bisher: 7.1.3 - 8.3.x)
@@ -52,7 +96,7 @@
 
 * Die Anzeige der Anleitungen für Installieren, Aktualisieren und Deinstallieren am Ende der Erweiterungen-Liste, kann jetzt in den Einstellungen deaktiviert werden. [Vorschlag von MattF (phpBB.com)]
 * Code Optimierung bei PHP und Javascript.
-* Javascript: 
+* Javascript:
   * LukeWCSphpBBConfirmBox 1.4.3
   * Überarbeitete Funktion `setSwitch()` von "LF who was here 2" übernommen.
 * Sprachdateien:
@@ -73,8 +117,8 @@
   * Die Auswahlbox "Alle Erweiterungen auswählen" bei Aktivierte und Deaktivierte wurde je nach Situation fälschlicherweise aktiviert.
   * Die Zähler bei "Aktivierte Erweiterungen" und "Deaktivierte Erweiterungen" wurden je nach Situation falsch berechnet.
   * Bei Reihenfolge&Ignorieren wurden für ungültige Erweiterungen fälschlicherweise Eingabe-Elemente generiert, durch die beim Speichern falsche Daten in die DB geschrieben werden konnten.
-* Fix: Das Problem mit dem erneuten Senden der Formulardaten beim Firefox (siehe nächsten Punkt) hatte einen Fehler von EMP aufgedeckt, der dann auftreten konnte, wenn Erweiterungen geschaltet wurden, ohne die ExtMgr Seite vorher neu zu laden. Wenn zwischen zwei Schaltvorgängen eine Erweiterung ungültig wurde, also die Metadaten der Erweiterung nicht mehr gelesen werden konnten, dann führte das zu einem FATAL der nicht abgefangen wurde. [Meldung von Kirk (phpBB.de)]
-* Firefox Workaround: Wenn bei deaktivierter Rückfrage und aktivierter automatischer Bestätigung Erweiterungen geschaltet wurden und dann die ExtMgr Seite manuell neu geladen wurde (z.B. mit F5), dann führte das beim Firefox dazu, dass fälschlicherweise eine Rückfrage zum erneuten Senden der Formulardaten erschien. Wurde diese Rückfrage positiv bestätigt, dann wurde von EMP die letzte Aktion erneut ausgeführt, was je nach Situation zu Fehlern führen konnte. Eine neue Funktion rotiert jetzt die GET Parameter der URL bei einer automatischen Weiterleitung, was beim Firefox dazu führt, dass keine unnötige Rückfrage mehr bezüglich Formulardaten ausgelöst wird. Andere getestete Browser sind von dem Problem nicht betroffen. [Meldung von Kirk (phpBB.de)]
+* Fix: Das Problem mit dem erneuten Senden der Formulardaten beim Firefox (siehe nächsten Punkt) hatte einen Fehler von EMP aufgedeckt, der dann auftreten konnte, wenn Erweiterungen geschaltet wurden, ohne die Extension Manager Seite vorher neu zu laden. Wenn zwischen zwei Schaltvorgängen eine Erweiterung ungültig wurde, also die Metadaten der Erweiterung nicht mehr gelesen werden konnten, dann führte das zu einem FATAL der nicht abgefangen wurde. [Meldung von Kirk (phpBB.de)]
+* Firefox Workaround: Wenn bei deaktivierter Rückfrage und aktivierter automatischer Bestätigung Erweiterungen geschaltet wurden und dann die Extension Manager Seite manuell neu geladen wurde (z.B. mit F5), dann führte das beim Firefox dazu, dass fälschlicherweise eine Rückfrage zum erneuten Senden der Formulardaten erschien. Wurde diese Rückfrage positiv bestätigt, dann wurde von EMP die letzte Aktion erneut ausgeführt, was je nach Situation zu Fehlern führen konnte. Eine neue Funktion rotiert jetzt die GET Parameter der URL bei einer automatischen Weiterleitung, was beim Firefox dazu führt, dass keine unnötige Rückfrage mehr bezüglich Formulardaten ausgelöst wird. Andere getestete Browser sind von dem Problem nicht betroffen. [Meldung von Kirk (phpBB.de)]
 * In der Info-Tabelle wird hinter der Anzahl der verfügbaren Erweiterungen in Klammern auch die Anzahl ungültiger Erweiterungen angezeigt.
 * Konnte die Versionsprüfung einer Erweiterung nicht erfolgreich ausgeführt werden, wird diese Information ebenfalls gespeichert und ausgewertet. Das funktioniert sowohl bei der globalen VP (Alle Versionen erneut prüfen), als auch bei der lokalen VP (Details).
   * In der Info-Tabelle wird hinter dem Datum der letzten Versionsprüfung die Anzahl Fehler angezeigt.
@@ -101,7 +145,7 @@
   * Javascript:
     * Bei Javascript und jQuery wurden als DEPRECATED eingestufte Eigenschaften und Funktionen durch aktuelle Varianten ersetzt. Details siehe Build Changelog.
     * Umfangreiche Verbesserungen in Bezug auf Redundanz und umständlichen Code.
-  * Twig: 
+  * Twig:
     * Ist die Funktion Reihenfolge&Ignorieren deaktiviert, wird auch kein unnötiges HTML mehr generiert für die Erklärungstexte, für den Absenden-Block sowie für die Inhalte der Spalten "Reihenfolge" und "Ignorieren".
   * PHP:
     * Zahlreiche Detail-Verbesserungen.
@@ -262,7 +306,7 @@
 * Allgemeine Fehlerbehandlung:
   * Die Bestätigungsmeldung von EMP wird nur noch dann als erfolgreich dargestellt (grüne `successbox`), wenn alle Erweiterungen geschaltet werden konnten. Wenn nur eine Erweiterung nicht geschaltet werden konnte, wird die Meldung als Fehler dargestellt (rote `errorbox`).
   * Bei Meldungen von EMP ist jetzt erkennbar, welche Texte von EMP und welche von phpBB oder von einer Erweiterung stammen. Diejenigen Texte die nicht von EMP stammen, werden kursiv dargestellt.
-  * In allen Fehlermeldungen von EMP, wird jetzt der Anzeigename sowie der technische Name der betroffenen Erweiterung angezeigt, damit die Fehlermeldung zweifelsfrei zugeordnet werden kann. 
+  * In allen Fehlermeldungen von EMP, wird jetzt der Anzeigename sowie der technische Name der betroffenen Erweiterung angezeigt, damit die Fehlermeldung zweifelsfrei zugeordnet werden kann.
 * Neue Fehlerbehandlung bei fehlgeschlagenen Migrationen: Ist die Option "Migrationen erlauben" aktiviert und es kommt während der Aktivierung einer Erweiterung mit neuen Migrationsdateien zu einem Fehler, dann führt das nicht länger zu einem "Fatal error" (quasi ein Absturz von phpBB). Stattdessen wird ein solcher Fehler abgefangen und eine kontrollierte Fehlermeldung ausgegeben.
 * Fehlerbehandlung verbessert bei nicht-erfüllten Voraussetzungen: Wenn bei einer Erweiterung per `ext.php` auf gültige Voraussetzungen geprüft wird, z.B. die phpBB oder PHP Version, dann werden bei negativem Ergebnis in der abschliessenden Bestätigungsmeldung (nach Aktivierung) alle Erweiterungen aufgelistet mit der entsprechenden Fehlermeldung von phpBB. Bisher konnte man in der Bestätigungsmeldung lediglich sehen, wie viele Erweiterungen nicht aktiviert wurden, jedoch keine Details dazu.
 * Fehlerbehandlung verbessert bei Abbruch durch Erweiterungen, die eigene Fehlermeldungen in `ext.php` generieren (`trigger_error`):

@@ -15,27 +15,16 @@ namespace lukewcs\extmgrplus\controller;
 
 class acp_ext_mgr_plus_controller
 {
-	protected object $common;
-	protected object $language;
-	protected object $template;
-	protected object $request;
-	protected object $config;
-
 	protected string $u_action;
 
 	public function __construct(
-		$common,
-		\phpbb\language\language $language,
-		\phpbb\template\template $template,
-		\phpbb\request\request $request,
-		\phpbb\config\config $config
+		protected object $common,
+		protected \phpbb\language\language $language,
+		protected \phpbb\template\template $template,
+		protected \phpbb\request\request $request,
+		protected \phpbb\config\config $config,
 	)
 	{
-		$this->common	= $common;
-		$this->language	= $language;
-		$this->template	= $template;
-		$this->request	= $request;
-		$this->config	= $config;
 	}
 
 	public function module_settings(): void
@@ -65,6 +54,7 @@ class acp_ext_mgr_plus_controller
 			$this->config->set('extmgrplus_switch_order_and_ignore'	, $this->request->variable('extmgrplus_switch_order_and_ignore'	, 0));
 			$this->config->set('extmgrplus_switch_self_disable'		, $this->request->variable('extmgrplus_switch_self_disable'		, 0));
 			$this->config->set('extmgrplus_switch_instructions'		, $this->request->variable('extmgrplus_switch_instructions'		, 0));
+			$this->config->set('extmgrplus_switch_settings_link'	, $this->request->variable('extmgrplus_switch_settings_link'	, 0));
 			$this->config->set('extmgrplus_number_vc_limit'			, $this->request->variable('extmgrplus_number_vc_limit'			, 0));
 			$this->config->set('extmgrplus_switch_migration_col'	, $this->request->variable('extmgrplus_switch_migration_col'	, 0));
 			$this->config->set('extmgrplus_switch_migrations'		, $this->request->variable('extmgrplus_switch_migrations'		, 0));
@@ -87,6 +77,7 @@ class acp_ext_mgr_plus_controller
 			'EXTMGRPLUS_SWITCH_ORDER_AND_IGNORE'		=> (bool) $this->config['extmgrplus_switch_order_and_ignore'],
 			'EXTMGRPLUS_SWITCH_SELF_DISABLE'			=> (bool) $this->config['extmgrplus_switch_self_disable'],
 			'EXTMGRPLUS_SWITCH_INSTRUCTIONS'			=> (bool) $this->config['extmgrplus_switch_instructions'],
+			'EXTMGRPLUS_SWITCH_SETTINGS_LINK'			=> (bool) $this->config['extmgrplus_switch_settings_link'],
 			'EXTMGRPLUS_NUMBER_VC_LIMIT'				=> (int) $this->config['extmgrplus_number_vc_limit'],
 			'EXTMGRPLUS_SWITCH_MIGRATION_COL'			=> (bool) $this->config['extmgrplus_switch_migration_col'],
 			'EXTMGRPLUS_SWITCH_MIGRATIONS'				=> (bool) $this->config['extmgrplus_switch_migrations'],
