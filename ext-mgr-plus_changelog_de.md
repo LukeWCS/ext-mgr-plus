@@ -1,5 +1,5 @@
 ### 3.1.0
-(2025-11-01) / CDB: --)
+(2025-11-01) / CDB: 2026-03-19)
 
 * Die Voraussetzungen haben sich geändert:
   * PHP: 8.0.0 - 8.4.x (Bisher: 7.4.0 - 8.4.x)
