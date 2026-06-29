@@ -1,4 +1,29 @@
-#### 3.1.0
+#### 3.1.1-b1
+* Fix: Version Constraint für Composer Installer in `composer.json` auf `^1.0 || ^2.0` korrigiert.
+* ACP Template:
+  * Toggle Control Schnittstelle für 1.3 angepasst und nicht mehr benötigen Twig Code entfernt.
+  * Aktualisierte Makros von Toggle Control 1.3.1 übernommen.
+    * `switch()`
+    * `notes()`
+* Details Template:
+  * Code Optimierung.
+* ExtMgr Template:
+  * Code Optimierung.
+* ACP Controller:
+  * Code Optimierung.
+* Progress Template:
+  * Am Ende der Fortschrittsanzeige einen zusätzlichen Bereich eingefügt, der erst dann angezeigt wird, wenn die Zeit abgelaufen ist (blauer Balken). Enthalten ist ein Hinweis, dass der aktuelle Vorgang (Block) noch nicht beendet ist, sowie ein animiertes FA Icon.
+  * Am Ende der Versionsprüfung wird auf der letzten Status-Seite das animierte FA Icon ohne Hinweis angezeigt.
+  * Am Ende der Versionsprüfung wird auf der letzten Status-Seite der Button "Abbrechen" nicht mehr angeboten, da an dieser Stelle nichts mehr abgebrochen werden kann.
+* CSS: 
+  * Eine Animation definiert, die nach Ablauf der Zeit automatisch den Hinweis in der Fortschrittsanzeige einblendet.
+* Aktualisierte Makros von Toggle Control 1.3.1 übernommen.
+  * `switch()`
+  * `notes()`
+* Sprachdateien:
+  * 1 Variable hinzugefügt für den Hinweis.
+
+### 3.1.0
 * Release (2025-11-01)
 * Umstellung der Version 3.0.0 auf 3.1.0.
 * Letzte Code Berichtigung.
@@ -43,7 +68,7 @@
   * Im CSS neue Regeln für `emp_success_error` hinzugefügt.
 * Code Optimierung und weitere Modernisierung bei PHP. Unter anderem Umstellung auf Union Types bei Funktionsparametern.
 * Code auch bei Listener und ACP Modul strikter gestaltet.
-* Die Voraussetzungen haben sich geändert:
+* `ext.php`/`composer.json` angepasst:
   * PHP: 8.0.0 - 8.4.x (Bisher: 7.4.0 - 8.4.x)
 
 #### 3.1.0-b17

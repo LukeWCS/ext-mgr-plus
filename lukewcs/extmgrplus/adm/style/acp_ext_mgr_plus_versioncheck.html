@@ -38,11 +38,17 @@
 			</div>
 		</div>
 	</div>
+
+	<p class="progress_busy" style="animation-duration: {{ seconds }}s;">
+		{{ seconds ? lang('EXTMGRPLUS_MSG_VERSIONCHECK_BUSY') }} {{ common.icon('fa-spinner fa-pulse') }}
+	</p>
 </div>
 
-<p class="submit-buttons">
-	<a href="{{ U_EXTMGRPLUS_VC_CANCEL }}" class="button1">{{ lang('CANCEL') }}</a>
-</p>
+{% if seconds %}
+	<p class="submit-buttons">
+		<a href="{{ U_EXTMGRPLUS_VC_CANCEL }}" class="button1">{{ lang('CANCEL') }}</a>
+	</p>
+{% endif %}
 
 {{ common.footer(EXTMGRPLUS_METADATA) }}
 

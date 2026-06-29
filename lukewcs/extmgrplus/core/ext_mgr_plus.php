@@ -696,13 +696,13 @@ class ext_mgr_plus
 			return $modules[$module_id]['langname'];
 		};
 
-		foreach (array_filter($modules, fn($row): bool => $row['name'] !== '' && $row['display']) as $module_row)
+		foreach (array_filter($modules, fn(array $row): bool => $row['name'] !== '' && $row['display']) as $module_row)
 		{
 			preg_match('/\\\\(.+?)\\\\(.+?)\\\\.*/', $module_row['name'], $matches);
 			$tech_name = (count($matches) === 3) ? $matches[1] . '/' . $matches[2] : false;
 			if ($tech_name !== false)
 			{
-				$module_tab = $get_module_top_cat($module_row['parent']);
+				$module_tab = $get_module_top_cat($module_row['id']);
 				if (!isset($module_urls[$tech_name]) || ($module_tab === 'ACP_CAT_DOT_MODS' && $module_tabs[$tech_name] !== $module_tab))
 				{
 					$module_name = str_replace('\\', '-', $module_row['name']);
@@ -855,6 +855,7 @@ class ext_mgr_plus
 			if (isset($ext_meta['extra']['version-check']))
 			{
 				$vc_data = $this->ext_manager->version_check($md_manager, !$read_cache, $read_cache, $this->config['extension_force_unstable'] ? 'unstable' : null);
+				// sleep(rand(0, 1));
 				$vc_current = empty($vc_data) ? 'NOUPD' : $vc_data['current'];
 			}
 		}

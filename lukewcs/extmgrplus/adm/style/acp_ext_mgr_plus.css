@@ -364,7 +364,7 @@ fieldset.ext_properties dd {
 	height: 1.20em;
 	border-radius: 5px;
 	position: relative;
-	margin: 1em 0 0.25em 0;
+	margin: 0.75em 0 0.75em 0;
 
 	& .progress_bar {
 		background-color: lightgreen;
@@ -389,13 +389,25 @@ fieldset.ext_properties dd {
 	}
 }
 
+.progress_busy {
+	visibility: hidden;
+	animation-name: progress_busy_message;
+	animation-timing-function: steps(1, jump-end);
+	animation-fill-mode: forwards;
+}
+
 @keyframes progress_anim_block {
 	from {
 		width: 0%;
 	}
-
 	to {
 		width: 100%;
+	}
+}
+
+@keyframes progress_busy_message {
+	to {
+		visibility: visible;
 	}
 }
 

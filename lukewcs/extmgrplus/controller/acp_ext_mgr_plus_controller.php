@@ -36,8 +36,7 @@ class acp_ext_mgr_plus_controller
 		$this->common->u_action = $this->u_action;
 		$this->common->set_meta_template_vars('EXTMGRPLUS', 'LukeWCS');
 
-		$lang_outdated_msg = $this->common->lang_ver_check_msg('EXTMGRPLUS_LANG_VER', 'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED');
-		if ($lang_outdated_msg)
+		if ($lang_outdated_msg = $this->common->lang_ver_check_msg('EXTMGRPLUS_LANG_VER', 'EXTMGRPLUS_MSG_LANGUAGEPACK_OUTDATED'))
 		{
 			$notes[] = $lang_outdated_msg;
 		}
@@ -92,7 +91,7 @@ class acp_ext_mgr_plus_controller
 		$this->u_action = $u_action;
 	}
 
-	private function select_struct($cfg_value, array $options): array
+	private function select_struct(array|int|string $cfg_value, array $options): array
 	{
 		$options_tpl = [];
 

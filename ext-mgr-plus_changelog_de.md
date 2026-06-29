@@ -1,3 +1,16 @@
+### 3.1.1
+(2026--) / CDB: 202--)
+
+* Die Voraussetzungen haben sich geändert:
+  * PHP: 8.0.0 - 8.5.x (Bisher: 8.0.0 - 8.4.x)
+* Fix: In `composer.json` wurde ein falscher Version Constraint (`~1.0.0`) für `"require":` > `"composer/installers":` verwendet, was beim Aktualisieren mittels Composer dazu führen kann, dass keine gültige Version der Ext zur Verfügung steht und die Aktualisierung abgebrochen wird, wenn für Composer selber zum Beispiel eine Mindestversion von 1.10 definiert wurde. Im Zuge des Fixes wurde im Version Constraint auch gleich Composer 2 freigegeben. [Meldung: Crizzo (phpBB.de)]
+* Änderungen bei der Versionsprüfung:
+  * Bei der Fortschrittsanzeige wird jetzt nach Ablauf der Zeit (blauer Balken) ein Hinweis angezeigt, dass der aktuelle Block abgeschlossen wird und somit signalisiert, dass der aktuelle Vorgang noch nicht beendet ist. Zusätzlich wird hinter dem Hinweis ein animiertes FA Icon dargestellt. Diese Neuerung dient als zusätzlicher Aktivitäts-Indikator, wenn der aktuelle Block länger dauert als das eingestellte Maximum.
+  * Am Ende der Versionsprüfung wird auf der letzten Status-Seite nur das animierte FA Icon ohne Hinweis gezeigt.
+  * Am Ende der Versionsprüfung wird auf der letzten Status-Seite der Button "Abbrechen" nicht mehr angeboten, da an dieser Stelle nichts mehr abgebrochen werden kann.
+* Aktualisierte Makros von Toggle Control 1.3.1 übernommen.
+* Code Optimierung bei PHP und Twig.
+
 ### 3.1.0
 (2025-11-01) / CDB: 2026-03-19)
 

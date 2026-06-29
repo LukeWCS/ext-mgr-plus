@@ -131,4 +131,5 @@ $lang = array_merge($lang, [
 	'EXTMGRPLUS_MSG_VERSIONCHECK_HINT'		=> 'Die Erweiterungen werden auf neue Versionen geprüft.',
 	'EXTMGRPLUS_MSG_VERSIONCHECK_BLOCK'		=> 'Aktueller Block (maximal %s)',
 	'EXTMGRPLUS_MSG_VERSIONCHECK_PROGRESS'	=> 'Erweiterungen geprüft: %1$u / %2$u',
+	'EXTMGRPLUS_MSG_VERSIONCHECK_BUSY'		=> 'Aktueller Block wird beendet...',
 ]);

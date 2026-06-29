@@ -99,22 +99,22 @@
 	<fieldset>
 		<legend>{{ lang('LATEST_VERSION') }}</legend>
 
-		{% for updates_available in loops.updates_available %}
+		{% for update_available in updates_available %}
 			<fieldset>
 				<dl>
 					<dt><label>{{ lang('VERSION') ~ lang('COLON') }}</label></dt>
-					<dd><strong>{{ updates_available.current }}</strong></dd>
+					<dd><strong>{{ update_available.current }}</strong></dd>
 				</dl>
-				{% if updates_available.download %}
+				{% if update_available.download %}
 					<dl>
 						<dt><label>{{ lang('DOWNLOAD_LATEST') }}</label></dt>
-						<dd><strong><a href="{{ updates_available.download }}">{{ lang('DOWNLOAD') }} {{ META_NAME }} {{ LATEST_VERSION }}</a></strong></dd>
+						<dd><strong><a href="{{ update_available.download }}">{{ lang('DOWNLOAD') }} {{ META_NAME }} {{ LATEST_VERSION }}</a></strong></dd>
 					</dl>
 				{% endif %}
-				{% if updates_available.announcement %}
+				{% if update_available.announcement %}
 					<dl>
 						<dt><label>{{ lang('ANNOUNCEMENT_TOPIC') }}</label></dt>
-						<dd><strong><a href="{{ updates_available.announcement }}">{{ lang('RELEASE_ANNOUNCEMENT') }}</a></strong></dd>
+						<dd><strong><a href="{{ update_available.announcement }}">{{ lang('RELEASE_ANNOUNCEMENT') }}</a></strong></dd>
 					</dl>
 				{% endif %}
 			</fieldset>
@@ -144,28 +144,28 @@
 <fieldset>
 	<legend>{{ lang('AUTHOR_INFORMATION') }}</legend>
 
-	{% for meta_authors in loops.meta_authors %}
+	{% for meta_author in meta_authors %}
 		<fieldset>
 			<dl>
 				<dt><label>{{ lang('AUTHOR_NAME') ~ lang('COLON') }}</label></dt>
-				<dd><strong>{{ meta_authors.AUTHOR_NAME }}</strong></dd>
+				<dd><strong>{{ meta_author.AUTHOR_NAME }}</strong></dd>
 			</dl>
-			{% if meta_authors.AUTHOR_EMAIL %}
+			{% if meta_author.AUTHOR_EMAIL %}
 				<dl>
 					<dt><label>{{ lang('AUTHOR_EMAIL') ~ lang('COLON') }}</label></dt>
-					<dd><strong><a href="mailto:{{ meta_authors.AUTHOR_EMAIL }}">{{ meta_authors.AUTHOR_EMAIL }}</a></strong></dd>
+					<dd><strong><a href="mailto:{{ meta_author.AUTHOR_EMAIL }}">{{ meta_author.AUTHOR_EMAIL }}</a></strong></dd>
 				</dl>
 			{% endif %}
-			{% if meta_authors.AUTHOR_HOMEPAGE %}
+			{% if meta_author.AUTHOR_HOMEPAGE %}
 				<dl>
 					<dt><label>{{ lang('AUTHOR_HOMEPAGE') ~ lang('COLON') }}</label></dt>
-					<dd><strong><a href="{{ meta_authors.AUTHOR_HOMEPAGE }}">{{ meta_authors.AUTHOR_HOMEPAGE }}</a></strong></dd>
+					<dd><strong><a href="{{ meta_author.AUTHOR_HOMEPAGE }}">{{ meta_author.AUTHOR_HOMEPAGE }}</a></strong></dd>
 				</dl>
 			{% endif %}
-			{% if meta_authors.AUTHOR_ROLE %}
+			{% if meta_author.AUTHOR_ROLE %}
 				<dl>
 					<dt><label>{{ lang('AUTHOR_ROLE') ~ lang('COLON') }}</label></dt>
-					<dd><strong>{{ meta_authors.AUTHOR_ROLE }}</strong></dd>
+					<dd><strong>{{ meta_author.AUTHOR_ROLE }}</strong></dd>
 				</dl>
 			{% endif %}
 		</fieldset>

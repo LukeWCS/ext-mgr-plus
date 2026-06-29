@@ -11,10 +11,11 @@
 #}
 
 {% macro notes(notes) %}
+	{% set note_dot = notes|length > 1 ? '&bull; ' %}
 	{% if notes|length %}
 		<div class="successbox notice">
 			{% for note in notes %}
-				<p>{{ note }}</p>
+				<p>{{ note_dot }}{{ note }}</p>
 			{% endfor %}
 		</div>
 	{% endif %}
